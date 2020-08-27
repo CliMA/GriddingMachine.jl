@@ -1,0 +1,10 @@
+name = "GlobalCanopy"
+uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
+authors = ["Climate Modeling Alliance"]
+version = "0.1.0"
+
+[deps]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1.3"

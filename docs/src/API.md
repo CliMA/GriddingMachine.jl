@@ -1,0 +1,4 @@
+# API
+```@meta
+CurrentModule = GlobalCanopy
+```
