@@ -1,5 +1,0 @@
-module GlobalCanopy
-
-
-
-end # module
