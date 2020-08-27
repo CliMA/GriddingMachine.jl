@@ -1,5 +1,5 @@
 using Documenter
-using GlobalCanopy
+using GriddingMachine
 
 pages = Any[
     "Home" => "index.md",
@@ -21,16 +21,16 @@ format = Documenter.HTML(
 )
 
 makedocs(
-    sitename = "GlobalCanopy",
+    sitename = "GriddingMachine",
     format = format,
 
     clean = false,
-    modules = [GlobalCanopy],
+    modules = [GriddingMachine],
     pages = pages,
 )
 
 deploydocs(
-    repo = "github.com/CliMA/GlobalCanopy.jl.git",
+    repo = "github.com/CliMA/GriddingMachine.jl.git",
     target = "build",
     push_preview = true,
 )

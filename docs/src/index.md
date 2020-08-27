@@ -1,4 +1,4 @@
-# GlobalCanopy
+# GriddingMachine
 
 Global canopy datasets
 
@@ -6,7 +6,7 @@ Global canopy datasets
 ```julia
 # not registered for now
 using Pkg;
-Pkg.add("https://github.com/CliMA/GlobalCanopy.jl.git");
+Pkg.add("https://github.com/CliMA/GriddingMachine.jl.git");
 
-using GlobalCanopy
+using GriddingMachine
 ```

@@ -1,4 +1,4 @@
 # API
 ```@meta
-CurrentModule = GlobalCanopy
+CurrentModule = GriddingMachine
 ```
