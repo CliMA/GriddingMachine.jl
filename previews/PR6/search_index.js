@@ -1,0 +1,3 @@
+var documenterSearchIndex = {"docs":
+[{"location":"#GriddingMachine","page":"Home","title":"GriddingMachine","text":"","category":"section"},{"location":"","page":"Home","title":"Home","text":"Global canopy datasets","category":"page"},{"location":"#Usage","page":"Home","title":"Usage","text":"","category":"section"},{"location":"","page":"Home","title":"Home","text":"# not registered for now\nusing Pkg;\nPkg.add(\"https://github.com/CliMA/GriddingMachine.jl.git\");\n\nusing GriddingMachine","category":"page"},{"location":"API/#API","page":"API","title":"API","text":"","category":"section"},{"location":"API/","page":"API","title":"API","text":"CurrentModule = GriddingMachine","category":"page"}]
+}
