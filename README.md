@@ -26,7 +26,7 @@
 
 ## About
 
-[`GriddingMachine.jl`][wp-url] includes a collection of global canopy propertie.
+[`GriddingMachine.jl`][wp-url] includes a collection of global canopy propertie. Due to the use of `Base.@kwdef`, [`GriddingMachine.jl`][wp-url] only supports julia 1.3 and above.
 
 | Documentation                                   | CI Status             | Benchmarks            | Compatibility                                   |
 |:------------------------------------------------|:----------------------|:----------------------|:------------------------------------------------|
@@ -37,9 +37,12 @@
 
 ## Dependencies
 
-| Dependency      | Version | Requirements |
-|:----------------|:--------|:-------------|
-|                 |         |              |
+| Dependency          | Version  | Requirements |
+|:--------------------|:---------|:-------------|
+| DocStringExtensions | 0.8.0 +  | Julia 0.7+   |
+| HTTP                | 0.8.0 +  | Julia 0.7+   |
+| NetCDF              | 0.10.0 + | Julia 1.2+   |
+| GriddingMachine     | 0.1.0 +  | Julia 1.3+   |
 
 
 
