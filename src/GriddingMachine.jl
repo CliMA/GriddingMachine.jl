@@ -1,7 +1,9 @@
 module GriddingMachine
 
 using DocStringExtensions
+using HTTP
 using NetCDF
+using Pkg.Artifacts
 
 
 
@@ -20,7 +22,8 @@ export mean_LAI_map,
 
 
 # include the types
-include("DatasetType.jl")
+include("Datasets/Artifacts.jl"  )
+include("Datasets/DatasetType.jl")
 
 # The Util functions
 include("Utils/lat_lon_index.jl")
