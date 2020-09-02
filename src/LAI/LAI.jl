@@ -4,7 +4,7 @@
 #
 ###############################################################################
 """
-    mean_LAI_map(FT, filename::String)
+    mean_LAI_map(FT)
 
 Load average monthly LAI from year 1981 to 2015, given
 - `FT` FLoating number type
@@ -13,9 +13,11 @@ Load average monthly LAI from year 1981 to 2015, given
 Note that the monthly mean LAI map starts from 1981-08-01, and thus `[:,:,1]`
     views the LAI for Augest, and `[:,:,12]` views that of July.
 """
-function mean_LAI_map(FT, filename::String)
+function mean_LAI_map(FT)
     # read data
-    _data = ncread(filename, "LAI");
+    _data = ncread(joinpath(artifact"lai_monthly_mean",
+                            "lai_monthly_mean.nc4"),
+                   "LAI");
 
     return MeanMonthlyLAI{FT}(FT(0.25), FT(0.25), FT.(_data))
 end
