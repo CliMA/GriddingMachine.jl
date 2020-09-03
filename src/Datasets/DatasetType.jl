@@ -15,18 +15,20 @@ abstract type AbstractDataset{FT} end
 
 
 """
-    mutable struct MeanMonthlyLAI{FT<:AbstractFloat}
+    struct MeanMonthlyLAI{FT<:AbstractFloat}
 
 A struct that contains monthly mean LAI
 
 # Fields
 $(DocStringExtensions.FIELDS)
 """
-mutable struct MeanMonthlyLAI{FT<:AbstractFloat} <: AbstractDataset{FT}
-    "Latitude resolution `[°]`"
-    res_lat::FT
-    "Longitude resolution `[°]`"
-    res_lon::FT
+Base.@kwdef struct MeanMonthlyLAI{FT<:AbstractFloat} <: AbstractDataset{FT}
     "Monthly mean LAI"
-    LAI::Array{FT,3}
+    LAI::Array{FT,3} = ncread(joinpath(artifact"lai_monthly_mean",
+                                               "lai_monthly_mean.nc4"),
+                              "LAI");
+    "Latitude resolution `[°]`"
+    res_lat::FT = 180 / size(LAI)[2]
+    "Longitude resolution `[°]`"
+    res_lon::FT = 360 / size(LAI)[1]
 end

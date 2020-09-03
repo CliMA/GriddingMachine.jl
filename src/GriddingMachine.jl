@@ -15,8 +15,7 @@ export MeanMonthlyLAI
 
 
 #export public functions
-export mean_LAI_map,
-       read_LAI
+export read_LUT
 
 
 
@@ -28,8 +27,8 @@ include("Datasets/DatasetType.jl")
 # The Util functions
 include("Utils/lat_lon_index.jl")
 
-# include LAI function
-include("LAI/LAI.jl")
+# load and read datasets
+include("read.jl")
 
 
 
