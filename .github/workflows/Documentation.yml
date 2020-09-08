@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Install matplotlib
-        run: sudo apt install python3-matplotlib
       - name: Set up Julia
         uses: julia-actions/setup-julia@v1
         with:

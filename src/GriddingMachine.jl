@@ -21,7 +21,6 @@ export read_LUT
 
 
 # include the types
-include("Datasets/Artifacts.jl"  )
 include("Datasets/DatasetType.jl")
 
 # The Util functions

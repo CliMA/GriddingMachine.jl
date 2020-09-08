@@ -3,5 +3,5 @@ git-tree-sha1 = "1d329dc163fc9c54d0e529246dde4c82049b509e"
 lazy = true
 
     [[lai_monthly_mean.download]]
-    sha256 = "b5d9065f2599e933b74ac5f4ff7bf8aef14060441bceb813179348119c8344b1"
+    sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/LAI_mean_monthly_1981-2015.tar.gz"

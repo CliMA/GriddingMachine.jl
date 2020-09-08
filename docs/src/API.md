@@ -21,11 +21,3 @@ lat_ind
 lon_ind
 read_LUT
 ```
-
-
-
-
-## Function to deploy Artifacts
-```@docs
-deploy_artifacts
-```
