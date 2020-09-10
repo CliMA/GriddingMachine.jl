@@ -1,3 +1,5 @@
 docs/build/*
-*.tar.gz
+
+*.nc
 *.nc4
+*.tar.gz
