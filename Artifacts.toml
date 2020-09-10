@@ -1,3 +1,27 @@
+[VPM_GPP_v20_0_083_deg]
+git-tree-sha1 = "d41a15f9a22dd54432024590c25f37388b198e38"
+lazy = true
+
+    [[VPM_GPP_v20_0_083_deg.download]]
+    sha256 = "79dc9130a6fdef03cd1a343d4e56aed7228444231b10c1f8306d08e6bf2e4a0d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_083_deg_2000_2019.tar.gz"
+
+[VPM_GPP_v20_0_2_deg]
+git-tree-sha1 = "8350d7bfe5ae37ddda0a7093ef344780d566174a"
+lazy = true
+
+    [[VPM_GPP_v20_0_2_deg.download]]
+    sha256 = "924a20e74c59c0b66690140eb20864182c426bb6dadd05063324ffdf45c36c45"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_2_deg_2000_2019.tar.gz"
+
+[example]
+git-tree-sha1 = "ce1c8212fdd9e3003f05da77271a2928593298be"
+lazy = true
+
+    [[example.download]]
+    sha256 = "171675246d4201464804af38b53c97f10ae27ede721c181b372b40a34eab8143"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/example/example.tar.gz"
+
 [lai_monthly_mean]
 git-tree-sha1 = "1d329dc163fc9c54d0e529246dde4c82049b509e"
 lazy = true
