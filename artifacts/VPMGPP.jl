@@ -21,9 +21,9 @@ ftp_loc = "/net/fluo/data1/ftp/XYZT_CLIMA_LUT";
 
 
 
-# Gridded per 0.2 degree
+# Gridded per 0.2 degree per 8 day
 # Query the VPM hash from Artifacts.toml, if not existing create one
-vpm_hash = artifact_hash("VPM_GPP_v20_0_2_deg", artifact_toml);
+vpm_hash = artifact_hash("VPM_GPP_v20_0_2_deg_8D", artifact_toml);
 
 # need to run this for every new installation, because the calcualted SHA
 # differs among computers
@@ -41,12 +41,12 @@ if isnothing(vpm_hash) || !artifact_exists(vpm_hash)
     end
     @show vpm_hash;
 
-    tar_url  = "$(ftp_url)/GPP/VPM_GPP_v20_0_2_deg_2000_2019.tar.gz";
-    tar_loc  = "$(ftp_loc)/GPP/VPM_GPP_v20_0_2_deg_2000_2019.tar.gz";
+    tar_url  = "$(ftp_url)/GPP/VPM_GPP_v20_0_2_deg_8D_2000_2019.tar.gz";
+    tar_loc  = "$(ftp_loc)/GPP/VPM_GPP_v20_0_2_deg_8D_2000_2019.tar.gz";
     tar_hash = archive_artifact(vpm_hash, tar_loc);
     @show tar_hash;
 
-    bind_artifact!(artifact_toml, "VPM_GPP_v20_0_2_deg", vpm_hash;
+    bind_artifact!(artifact_toml, "VPM_GPP_v20_0_2_deg_8D", vpm_hash;
                    download_info=[(tar_url, tar_hash)],
                    lazy=true,
                    force=true);
@@ -57,9 +57,9 @@ end
 
 
 
-# Gridded per 0.083 degree
+# Gridded per 0.083 degree per 8 day
 # Query the VPM hash from Artifacts.toml, if not existing create one
-vpm_hash = artifact_hash("VPM_GPP_v20_0_083_deg", artifact_toml);
+vpm_hash = artifact_hash("VPM_GPP_v20_0_083_deg_8D", artifact_toml);
 
 # need to run this for every new installation, because the calcualted SHA
 # differs among computers
@@ -77,12 +77,12 @@ if isnothing(vpm_hash) || !artifact_exists(vpm_hash)
     end
     @show vpm_hash;
 
-    tar_url  = "$(ftp_url)/GPP/VPM_GPP_v20_0_083_deg_2000_2019.tar.gz";
-    tar_loc  = "$(ftp_loc)/GPP/VPM_GPP_v20_0_083_deg_2000_2019.tar.gz";
+    tar_url  = "$(ftp_url)/GPP/VPM_GPP_v20_0_083_deg_8D_2000_2019.tar.gz";
+    tar_loc  = "$(ftp_loc)/GPP/VPM_GPP_v20_0_083_deg_8D_2000_2019.tar.gz";
     tar_hash = archive_artifact(vpm_hash, tar_loc);
     @show tar_hash;
 
-    bind_artifact!(artifact_toml, "VPM_GPP_v20_0_083_deg", vpm_hash;
+    bind_artifact!(artifact_toml, "VPM_GPP_v20_0_083_deg_8D", vpm_hash;
                    download_info=[(tar_url, tar_hash)],
                    lazy=true,
                    force=true);

@@ -9,8 +9,11 @@ using Pkg.Artifacts
 
 
 # export public types
-export MeanMonthlyLAI,
-       VPMGPPv20
+export GPPMPIv006,
+       GPPVPMv20,
+       GriddedDataset,
+       LAIMonthlyMean,
+       VcmaxOptimalCiCa
 
 
 
@@ -23,7 +26,7 @@ export load_LUT,
 
 
 # include the types
-include("Datasets/DatasetType.jl"   )
+include("Datasets/DatasetType.jl")
 
 # The Util functions
 include("Utils/lat_lon_index.jl")
