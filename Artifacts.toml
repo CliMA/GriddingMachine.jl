@@ -1,18 +1,34 @@
-[VPM_GPP_v20_0_083_deg]
+[MPI_GPP_v006_0_5_deg_1M]
+git-tree-sha1 = "22ff8a354850c862b76a5e647d450b60cbb2543e"
+lazy = true
+
+    [[MPI_GPP_v006_0_5_deg_1M.download]]
+    sha256 = "e6d9a945c975b636c29955b301eb5867e77dba3121c2f15af57d1e8c5e86316a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/MPI_GPP_v006_0_5_deg_1M_2001_2019.tar.gz"
+
+[MPI_GPP_v006_0_5_deg_8D]
+git-tree-sha1 = "6ae8a9d274ccc72aaae0c723170470c82f6d6f1e"
+lazy = true
+
+    [[MPI_GPP_v006_0_5_deg_8D.download]]
+    sha256 = "2d15b3d34baa2a04b0712b533f02a997c0126082beae1eaf69cfdc72d1c722ad"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/MPI_GPP_v006_0_5_deg_8D_2001_2019.tar.gz"
+
+[VPM_GPP_v20_0_083_deg_8D]
 git-tree-sha1 = "d41a15f9a22dd54432024590c25f37388b198e38"
 lazy = true
 
-    [[VPM_GPP_v20_0_083_deg.download]]
+    [[VPM_GPP_v20_0_083_deg_8D.download]]
     sha256 = "79dc9130a6fdef03cd1a343d4e56aed7228444231b10c1f8306d08e6bf2e4a0d"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_083_deg_2000_2019.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_083_deg_8D_2000_2019.tar.gz"
 
-[VPM_GPP_v20_0_2_deg]
+[VPM_GPP_v20_0_2_deg_8D]
 git-tree-sha1 = "8350d7bfe5ae37ddda0a7093ef344780d566174a"
 lazy = true
 
-    [[VPM_GPP_v20_0_2_deg.download]]
+    [[VPM_GPP_v20_0_2_deg_8D.download]]
     sha256 = "924a20e74c59c0b66690140eb20864182c426bb6dadd05063324ffdf45c36c45"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_2_deg_2000_2019.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_2_deg_8D_2000_2019.tar.gz"
 
 [example]
 git-tree-sha1 = "ce1c8212fdd9e3003f05da77271a2928593298be"
@@ -29,3 +45,11 @@ lazy = true
     [[lai_monthly_mean.download]]
     sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/LAI_mean_monthly_1981-2015.tar.gz"
+
+[vcmax_0_5_deg]
+git-tree-sha1 = "924c1c00e43eead8b9d9f4740a1000fe628f3de8"
+lazy = true
+
+    [[vcmax_0_5_deg.download]]
+    sha256 = "2e4a6dacc3323db5bcd6f17cef750daf3d5f0f9687d3ee333ea4d6fbe1afbd37"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Vcmax/vcmax_0_5_deg.tar.gz"

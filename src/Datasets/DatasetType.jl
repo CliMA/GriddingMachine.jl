@@ -7,53 +7,143 @@
     abstract type AbstractDataset{FT}
 
 Hierachy of AbstractDataset
-- [`MeanMonthlyLAI`](@ref)
-- [`VPMGPPv20`](@ref)
+- [`AbstractGPP`](@ref)
+- [`AbstractLAI`](@ref)
 """
 abstract type AbstractDataset{FT} end
 
 
 
 
-"""
-    struct MeanMonthlyLAI{FT<:AbstractFloat}
 
-A struct that contains monthly mean LAI
+
+
+
+###############################################################################
+#
+# GPP
+#
+###############################################################################
+"""
+    abstract type AbstractGPP{FT}
+
+Hierachy of AbstractGPP
+- [`GPPMPIv006`](@ref)
+- [`GPPVPMv20`](@ref)
+"""
+abstract type AbstractGPP{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct GPPMPIv006{FT}
+
+Struct for MPI GPP v006
+"""
+struct GPPMPIv006{FT} <: AbstractGPP{FT} end
+
+
+
+
+"""
+    struct GPPVPMv20{FT}
+
+Struct for VPM GPP v20
+"""
+struct GPPVPMv20{FT}  <: AbstractGPP{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# LAI
+#
+###############################################################################
+"""
+    abstract type AbstractLAI{FT}
+
+Hierachy of AbstractLAI
+- [`LAIMonthlyMean`](@ref)
+"""
+abstract type AbstractLAI{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct LAIMonthlyMean{FT}
+
+Struct for monthly mean MODIS LAI
+"""
+struct LAIMonthlyMean{FT}  <: AbstractLAI{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# Vcmax
+#
+###############################################################################
+"""
+    abstract type AbstractLAI{FT}
+
+Hierachy of AbstractVcmax
+- [`VcmaxOptimalCiCa`](@ref)
+"""
+abstract type AbstractVcmax{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct VcmaxOptimalCiCa{FT}
+
+Struct for Vcmax estimated from optimal Ci:Ca ratio
+"""
+struct VcmaxOptimalCiCa{FT} <: AbstractVcmax{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# General data struct
+#
+###############################################################################
+"""
+    struct GriddedDataset{FT<:AbstractFloat}
+
+A general struct to store data
 
 # Fields
 $(DocStringExtensions.FIELDS)
 """
-Base.@kwdef struct MeanMonthlyLAI{FT<:AbstractFloat} <: AbstractDataset{FT}
+Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Monthly mean LAI"
-    LAI::Array{FT,3} = FT.(ncread(joinpath(artifact"example",
-                                           "lai_example.nc"),
-                                  "LAI"));
-    "Latitude resolution `[°]`"
-    res_lat::FT = 180 / size(LAI,2)
-    "Longitude resolution `[°]`"
-    res_lon::FT = 360 / size(LAI,1)
-end
-
-
-
-
-"""
-    struct VPMGPPv20{FT<:AbstractFloat}
-
-A struct that contains monthly mean LAI, default at year 2000
-
-# Fields
-$(DocStringExtensions.FIELDS)
-"""
-Base.@kwdef struct VPMGPPv20{FT<:AbstractFloat} <: AbstractDataset{FT}
-    "Monthly mean LAI"
-    GPP::Array{FT,3} = FT.(ncread(joinpath(artifact"example",
+    data::Array{FT,3} = FT.(ncread(joinpath(artifact"example",
                                            "gpp_example.nc"),
                                   "GPP"));
     "Latitude resolution `[°]`"
-    res_lat::FT = 180 / size(GPP,2)
+    res_lat::FT = 180 / size(data,2)
     "Longitude resolution `[°]`"
-    res_lon::FT = 360 / size(GPP,1)
-    "Time resolution `[day]`"
-    res_day::Int = 8
+    res_lon::FT = 360 / size(data,1)
+    "Time resolution: D-M-Y-C: day-month-year-century"
+    resolution::String = "8D"
+    "Type label"
+    data_type::AbstractDataset = AbstractGPP{FT}()
 end

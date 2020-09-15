@@ -9,7 +9,7 @@ CurrentModule = GriddingMachine
 ## Datasets for Clima Look-Up-Table
 ```@docs
 AbstractDataset
-MeanMonthlyLAI
+LAIMonthlyMean
 ```
 
 
