@@ -214,9 +214,9 @@ version = "2020.7.22+0"
 
 [[NetCDF]]
 deps = ["BinDeps", "CondaBinDeps", "DiskArrays", "Formatting", "Libdl"]
-git-tree-sha1 = "0c6a63d16e9261bf2fa4eecbab575ae7e7fef11c"
+git-tree-sha1 = "dda7b49694d15d7d1a1ba1d7c2a9142777028bd5"
 uuid = "30363a11-5582-574a-97bb-aa9a979735b9"
-version = "0.10.2"
+version = "0.10.3"
 
 [[OpenJpeg_jll]]
 deps = ["Libdl", "Libtiff_jll", "LittleCMS_jll", "Pkg", "libpng_jll"]
