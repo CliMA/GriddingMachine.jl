@@ -10,7 +10,7 @@
     read_LUT(ds::GriddedDataset{FT}, data_type::AbstractDataset{FT}, lat::FT, lon::FT, ind::Int) where {FT<:AbstractFloat}
 
 Read the LAI from given
-- `ds` [`LAIMonthlyMean`](@ref) type struct
+- `ds` [`GriddedDataset`](@ref) type struct
 - `data_type` Dataset type, subtype of [`AbstractDataset`](@ref)
 - `lat` Latitude
 - `lon` Longitude

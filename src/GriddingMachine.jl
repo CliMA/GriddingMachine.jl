@@ -4,6 +4,7 @@ using ArchGDAL
 using DocStringExtensions
 using HTTP
 using NetCDF
+using Parameters
 using Pkg.Artifacts
 
 
@@ -28,7 +29,8 @@ export CanopyHeightGLAS,
 export lat_ind,
        load_LUT,
        lon_ind,
-       read_LUT
+       read_LUT,
+       regrid_LUT
 
 
 
@@ -40,8 +42,9 @@ include("Datasets/DatasetType.jl")
 include("Utils/lat_lon_index.jl")
 
 # load and read datasets
-include("load.jl")
-include("read.jl")
+include("load.jl"  )
+include("read.jl"  )
+include("regrid.jl")
 
 
 
