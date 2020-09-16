@@ -11,8 +11,8 @@ Pkg.add(PackageSpec(url="https://github.com/CliMA/GriddingMachine.jl.git"));
 using GriddingMachine
 
 FT = Float32;
-LAI_LUT = LAIMonthlyMean{FT}();
-# read the lai at lat=30, lon=-118, month=Augest
+LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
+# read the lai at lat=30, lon=-100, month=Augest
 lai_val = read_LUT(LAI_LUT, FT(30), FT(-100), 8);
 @show lai_val;
 ```

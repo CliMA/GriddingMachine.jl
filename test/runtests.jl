@@ -24,11 +24,13 @@ test_load_LUT = false;
         LPC_LUT = load_LUT(LeafPhosphorus{FT}());
         SLA_LUT = load_LUT(LeafSLA{FT}());
         VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
+        REG_SLA = regrid_LUT(SLA_LUT, 2; nan_weight=true);
         for _val in [ read_LUT(CHT_LUT, FT(30), FT(110)),
                       read_LUT(GPP_LUT, FT(30), FT(110), 2),
                       read_LUT(LAI_LUT, FT(30), FT(110), 8),
                       read_LUT(LNC_LUT, FT(30), FT(110)),
                       read_LUT(LPC_LUT, FT(30), FT(110)),
+                      read_LUT(REG_SLA, FT(30), FT(110)),
                       read_LUT(SLA_LUT, FT(30), FT(110)),
                       read_LUT(VCM_LUT, FT(30), FT(110))]
             @test typeof(_val) == FT;

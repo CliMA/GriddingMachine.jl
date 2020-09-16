@@ -47,7 +47,8 @@ function load_LUT(dt::ClumpingIndexMODIS{FT}) where {FT<:AbstractFloat}
 
     # filter and redo mat
     _mat ./= 100;
-    _New   = cat(_mat; dims=3);
+    _mat[_mat .> 1] .= NaN;
+    _New = cat(_mat; dims=3);
 
     return GriddedDataset{FT}(data       = _New,
                               resolution = "1Y",
@@ -74,7 +75,14 @@ function load_LUT(
     end
     _GPP = FT.(ncread(joinpath(_arti, _file), "GPP"));
 
-    return GriddedDataset{FT}(data       = _GPP    ,
+    # note that lat of dataset does not start from -90 and end from 90
+    # store the data into a new data array
+    _NewVM::Array{FT,3} = _GPP[:,end:-1:1,:];
+
+    # use NaN for unrealistic values
+    _NewVM[_NewVM .< -100] .= NaN;
+
+    return GriddedDataset{FT}(data       = _NewVM  ,
                               resolution = res_time,
                               data_type  = dt      )
 end
@@ -97,7 +105,14 @@ function load_LUT(
     end
     _GPP = FT.(ncread(joinpath(_arti, _file), "GPP"));
 
-    return GriddedDataset{FT}(data       = _GPP    ,
+    # note that lat of dataset does not start from -90 and end from 90
+    # store the data into a new data array
+    _NewVM::Array{FT,3} = _GPP[:,end:-1:1,:];
+
+    # use NaN for unrealistic values
+    _NewVM[_NewVM .< -100] .= NaN;
+
+    return GriddedDataset{FT}(data       = _NewVM  ,
                               resolution = res_time,
                               data_type  = dt      )
 end
@@ -109,6 +124,9 @@ function load_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
     _LAI = FT.(ncread(joinpath(artifact"lai_monthly_mean",
                                "lai_monthly_mean.nc4"),
                       "LAI"));
+
+    # use NaN for unrealistic values
+    _LAI[_LAI .< 0] .= NaN;
 
     return GriddedDataset{FT}(data       = _LAI,
                               resolution = "1M",
@@ -124,6 +142,9 @@ function load_LUT(dt::LeafNitrogen{FT}) where {FT<:AbstractFloat}
                       "leaf_nitrogen_content_mean"));
     _New = cat(_LN; dims=3);
 
+    # use NaN for unrealistic values
+    _New[_New .< 0] .= NaN;
+
     return GriddedDataset{FT}(data       = _New,
                               resolution = "1Y",
                               data_type  = dt  )
@@ -137,6 +158,9 @@ function load_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
                                "leaf_phosphorus.nc"),
                       "leaf_phosphorus_content_mean"));
     _New = cat(_LP; dims=3);
+
+    # use NaN for unrealistic values
+    _New[_New .< 0] .= NaN;
 
     return GriddedDataset{FT}(data       = _New,
                               resolution = "1Y",
@@ -152,6 +176,9 @@ function load_LUT(dt::LeafSLA{FT}) where {FT<:AbstractFloat}
                       "specific_leaf_area_mean"));
     _New = cat(_SLA; dims=3);
 
+    # use NaN for unrealistic values
+    _New[_New .< 0] .= NaN;
+
     return GriddedDataset{FT}(data       = _New,
                               resolution = "1Y",
                               data_type  = dt  )
@@ -164,7 +191,7 @@ function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     _Vcmax = FT.(ncread(joinpath(artifact"vcmax_0_5_deg",
                                  "optimal_vcmax_globe.nc"),
                         "vcmax"));
-    _Vcmax[ _Vcmax .< -100] .= NaN
+    _Vcmax[ _Vcmax .< 0] .= NaN
 
     # note that lat of dataset does not start from -90 and end from 90
     # store the data into a new data array
