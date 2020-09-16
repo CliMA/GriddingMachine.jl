@@ -58,7 +58,7 @@ ftp_loc = "/net/fluo/data1/ftp/XYZT_CLIMA_LUT";
 
 
 
-# Gridded per 0.2 degree
+# Gridded per 5 degree, using for test
 # Query the example hash from Artifacts.toml, if not existing create one
 exa_hash = artifact_hash("example", artifact_toml);
 

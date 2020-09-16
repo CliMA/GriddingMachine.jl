@@ -21,6 +21,37 @@ abstract type AbstractDataset{FT} end
 
 ###############################################################################
 #
+# Canopy Height
+#
+###############################################################################
+"""
+abstract type AbstractCanopyHeight{FT}
+
+Hierachy of AbstractCanopyHeight
+- [`GPPMPIv006`](@ref)
+- [`GPPVPMv20`](@ref)
+"""
+abstract type AbstractCanopyHeight{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct GPPMPIv006{FT}
+
+Struct for canopy height from GLAS ICESat
+"""
+struct CanopyHeightGLAS{FT} <: AbstractCanopyHeight{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
 # GPP
 #
 ###############################################################################
@@ -82,6 +113,58 @@ abstract type AbstractLAI{FT} <: AbstractDataset{FT} end
 Struct for monthly mean MODIS LAI
 """
 struct LAIMonthlyMean{FT}  <: AbstractLAI{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# Leaf properties
+#
+###############################################################################
+"""
+    abstract type AbstractLeafMN{FT}
+
+Hierachy of AbstractLAI
+- [`LeafNitrogen`](@ref)
+- [`LeafPhosphorus`](@ref)
+- [`LeafSLA`](@ref)
+"""
+abstract type AbstractLeafMN{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct LeafNitrogen{FT}
+
+Struct for leaf nitrogen content
+"""
+struct LeafNitrogen{FT}  <: AbstractLeafMN{FT} end
+
+
+
+
+"""
+    struct LeafPhosphorus{FT}
+
+Struct for leaf specific leaf area (inverse of leaf mass per area)
+"""
+struct LeafPhosphorus{FT}  <: AbstractLeafMN{FT} end
+
+
+
+
+"""
+    struct LeafSLA{FT}
+
+Struct for leaf specific leaf area (inverse of leaf mass per area)
+"""
+struct LeafSLA{FT}  <: AbstractLeafMN{FT} end
 
 
 

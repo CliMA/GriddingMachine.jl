@@ -10,7 +10,7 @@ Round the latitude and return the index in a matrix, Given
 - `lat` Latitude
 - `res` Resolution in latitude
 """
-function lat_ind(lat::FT; res::FT=1) where {FT<:AbstractFloat}
+function lat_ind(lat::FT; res::FT=FT(1)) where {FT<:AbstractFloat}
     # judge if lat is within -90 to 90
     if -90 <= lat <= 90
         return Int(fld(lat + 90, res)) + 1
@@ -29,7 +29,7 @@ Round the longitude and return the index in a matrix, Given
 - `lon` Longitude
 - `res` Resolution in longitude
 """
-function lon_ind(lon::FT; res::FT=1) where {FT<:AbstractFloat}
+function lon_ind(lon::FT; res::FT=FT(1)) where {FT<:AbstractFloat}
     # judge if lat is within -90 to 90
     if -180 <= lon <= 180
         return Int(fld(lon + 180, res)) + 1
