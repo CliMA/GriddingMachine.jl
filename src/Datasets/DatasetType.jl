@@ -7,8 +7,12 @@
     abstract type AbstractDataset{FT}
 
 Hierachy of AbstractDataset
+- [`AbstractCanopyHeight`](@ref)
+- [`AbstractClumpingIndex`](@ref)
 - [`AbstractGPP`](@ref)
 - [`AbstractLAI`](@ref)
+- [`AbstractLeafMN`](@ref)
+- [`AbstractVcmax`](@ref)
 """
 abstract type AbstractDataset{FT} end
 
@@ -28,8 +32,7 @@ abstract type AbstractDataset{FT} end
 abstract type AbstractCanopyHeight{FT}
 
 Hierachy of AbstractCanopyHeight
-- [`GPPMPIv006`](@ref)
-- [`GPPVPMv20`](@ref)
+- [`CanopyHeightGLAS`](@ref)
 """
 abstract type AbstractCanopyHeight{FT} <: AbstractDataset{FT} end
 
@@ -42,6 +45,36 @@ abstract type AbstractCanopyHeight{FT} <: AbstractDataset{FT} end
 Struct for canopy height from GLAS ICESat
 """
 struct CanopyHeightGLAS{FT} <: AbstractCanopyHeight{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# Clumping index
+#
+###############################################################################
+"""
+abstract type AbstractCanopyHeight{FT}
+
+Hierachy of AbstractCanopyHeight
+- [`ClumpingIndexMODIS`](@ref)
+"""
+abstract type AbstractClumpingIndex{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct GPPMPIv006{FT}
+
+Struct for canopy height from GLAS ICESat
+"""
+struct ClumpingIndexMODIS{FT} <: AbstractClumpingIndex{FT} end
 
 
 
