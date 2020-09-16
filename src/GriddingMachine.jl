@@ -9,17 +9,23 @@ using Pkg.Artifacts
 
 
 # export public types
-export GPPMPIv006,
+export CanopyHeightGLAS,
+       GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,
        LAIMonthlyMean,
+       LeafNitrogen,
+       LeafPhosphorus,
+       LeafSLA,
        VcmaxOptimalCiCa
 
 
 
 
 #export public functions
-export load_LUT,
+export lat_ind,
+       load_LUT,
+       lon_ind,
        read_LUT
 
 

@@ -8,37 +8,42 @@ test_load_LUT = false;
 
 # testing the module
 @testset "GriddingMachine --- Monthly mean LAI" begin
+    # test the lat_ind and lon_ind
+    @test typeof(lat_ind(  0.0)) == Int           ;
+    @test typeof(lat_ind( 91.0)) == ErrorException;
+    @test typeof(lon_ind(  0.0)) == Int           ;
+    @test typeof(lon_ind(350.0)) == Int           ;
+    @test typeof(lat_ind(361.0)) == ErrorException;
+
+    # test the look up table functions
     for FT in [Float32, Float64]
-        GPP_TYPE = GPPVPMv20{FT}();
-        LAI_TYPE = LAIMonthlyMean{FT}();
-        VCM_TYPE = VcmaxOptimalCiCa{FT}();
-        GPP_LUT  = GriddedDataset{FT}(data_type=GPP_TYPE);
-        LAI_LUT  = load_LUT(LAI_TYPE);
-        VCM_LUT  = load_LUT(VCM_TYPE);
-        _gpp     = read_LUT(GPP_LUT, FT(30), FT(290), 2);
-        _lai     = read_LUT(LAI_LUT, FT(30), FT(110), 8);
-        _vcm     = read_LUT(VCM_LUT, FT(30), FT(110));
-        @test typeof(_gpp) == FT;
-        @test typeof(_lai) == FT;
-        @test typeof(_vcm) == FT;
+        GPP_LUT = GriddedDataset{FT}(data_type=GPPVPMv20{FT}());
+        CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+        LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
+        LNC_LUT = load_LUT(LeafNitrogen{FT}());
+        LPC_LUT = load_LUT(LeafPhosphorus{FT}());
+        SLA_LUT = load_LUT(LeafSLA{FT}());
+        VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
+        for _val in [ read_LUT(CHT_LUT, FT(30), FT(110)),
+                      read_LUT(GPP_LUT, FT(30), FT(110), 2),
+                      read_LUT(LAI_LUT, FT(30), FT(110), 8),
+                      read_LUT(LNC_LUT, FT(30), FT(110)),
+                      read_LUT(LPC_LUT, FT(30), FT(110)),
+                      read_LUT(SLA_LUT, FT(30), FT(110)),
+                      read_LUT(VCM_LUT, FT(30), FT(110))]
+            @test typeof(_val) == FT;
+        end
 
         # test the load_LUT function
         if test_load_LUT
             GPP_LUT1 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "8D");
             GPP_LUT2 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "1M");
             GPP_LUT3 = load_LUT(GPPVPMv20{FT}() , 2005, 0.2, "8D");
-            LAI_LUT1 = load_LUT(LAI_TYPE);
-            VCM_LUT1 = load_LUT(VCM_TYPE);
-            _gpp1    = read_LUT(GPP_LUT1, FT(30), FT(290), 2);
-            _gpp2    = read_LUT(GPP_LUT2, FT(30), FT(290), 2);
-            _gpp3    = read_LUT(GPP_LUT3, FT(30), FT(290), 2);
-            _lai1    = read_LUT(LAI_LUT1, FT(30), FT(110), 8);
-            _vcm1    = read_LUT(VCM_LUT1, FT(30), FT(110));
-            @test typeof(_gpp1) == FT;
-            @test typeof(_gpp2) == FT;
-            @test typeof(_gpp3) == FT;
-            @test typeof(_lai1) == FT;
-            @test typeof(_vcm1) == FT;
+            for _val in [ read_LUT(GPP_LUT1, FT(30), FT(110), 2),
+                          read_LUT(GPP_LUT2, FT(30), FT(110), 2),
+                          read_LUT(GPP_LUT3, FT(30), FT(110), 2)]
+                @test typeof(_val) == FT;
+            end
         end
     end
 end

@@ -30,6 +30,14 @@ lazy = true
     sha256 = "924a20e74c59c0b66690140eb20864182c426bb6dadd05063324ffdf45c36c45"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/VPM_GPP_v20_0_2_deg_8D_2000_2019.tar.gz"
 
+[canopy_height_0_05_deg]
+git-tree-sha1 = "4e22842241cf9c4df5971f4afdf17f584115b67e"
+lazy = true
+
+    [[canopy_height_0_05_deg.download]]
+    sha256 = "058e17a66929659af2cd0ece3860c3f5bf092ecf273e731d323c1b717349a3f4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH/canopy_height_0_05_deg.tar.gz"
+
 [example]
 git-tree-sha1 = "ce1c8212fdd9e3003f05da77271a2928593298be"
 lazy = true
@@ -45,6 +53,14 @@ lazy = true
     [[lai_monthly_mean.download]]
     sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/LAI_mean_monthly_1981-2015.tar.gz"
+
+[leaf_sla_n_p_0_5_deg]
+git-tree-sha1 = "af35d29fdfe0f387f003cf054f8a44484c9b0a43"
+lazy = true
+
+    [[leaf_sla_n_p_0_5_deg.download]]
+    sha256 = "885d0dd338cb843fb53f3dd4f0dae1860c9e8386fa39d5b186ef73f19e40a238"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_sla_n_p_0_5_deg.tar.gz"
 
 [vcmax_0_5_deg]
 git-tree-sha1 = "924c1c00e43eead8b9d9f4740a1000fe628f3de8"

@@ -4,20 +4,41 @@
 #
 ###############################################################################
 """
-    load_LUT(dataset::GPPVPMv20{FT}, year::Int, res_geom::Number) where {FT<:AbstractFloat}
-    load_LUT(dataset::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::GPPMPIv006{FT}, year::Int, res_geom::Number) where {FT<:AbstractFloat}
+    load_LUT(dt::GPPVPMv20{FT}, year::Int, res_geom::Number) where {FT<:AbstractFloat}
+    load_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::LeafNitrogen{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::LeafSLA{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
 
 Load look up table and return the struct, given
-- `dataset` Dataset type (this function does not overwrite the `dataset`)
+- `dt` Dataset type, subtype of [`AbstractDataset`](@ref)
 - `year` Which year
 - `res_geom` Resolution in degree
+- `res_time` Resolution in time
 
 Note that the artifact for GPP is about
 - `500` MB for 0.2 degree resolution (5^2 * 360*180*46)
 - `2600` MB for 0.083 degree resolution (12^2 * 360*180*46)
 """
+function load_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
+    _file = "canopy_height_0_05_deg.nc";
+    _arti = artifact"canopy_height_0_05_deg";
+    _CH   = FT.(ncread(joinpath(_arti, _file), "Band1"));
+    _New  = cat(_CH; dims=3);
+
+    return GriddedDataset{FT}(data       = _New,
+                              resolution = "1Y",
+                              data_type  = dt  )
+end
+
+
+
+
 function load_LUT(
-            dataset::GPPMPIv006{FT},
+            dt::GPPMPIv006{FT},
             year::Int,
             res_geom::Number,
             res_time::String
@@ -35,14 +56,14 @@ function load_LUT(
 
     return GriddedDataset{FT}(data       = _GPP    ,
                               resolution = res_time,
-                              data_type  = dataset )
+                              data_type  = dt      )
 end
 
 
 
 
 function load_LUT(
-            dataset::GPPVPMv20{FT},
+            dt::GPPVPMv20{FT},
             year::Int,
             res_geom::Number,
             res_time::String
@@ -58,26 +79,68 @@ function load_LUT(
 
     return GriddedDataset{FT}(data       = _GPP    ,
                               resolution = res_time,
-                              data_type  = dataset )
+                              data_type  = dt      )
 end
 
 
 
 
-function load_LUT(dataset::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
+function load_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
     _LAI = FT.(ncread(joinpath(artifact"lai_monthly_mean",
                                "lai_monthly_mean.nc4"),
                       "LAI"));
 
-    return GriddedDataset{FT}(data       = _LAI   ,
-                              resolution = "1M"   ,
-                              data_type  = dataset)
+    return GriddedDataset{FT}(data       = _LAI,
+                              resolution = "1M",
+                              data_type  = dt  )
 end
 
 
 
 
-function load_LUT(dataset::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
+function load_LUT(dt::LeafNitrogen{FT}) where {FT<:AbstractFloat}
+    _LN  = FT.(ncread(joinpath(artifact"leaf_sla_n_p_0_5_deg",
+                               "leaf_nitrogen.nc"),
+                      "leaf_nitrogen_content_mean"));
+    _New = cat(_LN; dims=3);
+
+    return GriddedDataset{FT}(data       = _New,
+                              resolution = "1Y",
+                              data_type  = dt  )
+end
+
+
+
+
+function load_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
+    _LP  = FT.(ncread(joinpath(artifact"leaf_sla_n_p_0_5_deg",
+                               "leaf_phosphorus.nc"),
+                      "leaf_phosphorus_content_mean"));
+    _New = cat(_LP; dims=3);
+
+    return GriddedDataset{FT}(data       = _New,
+                              resolution = "1Y",
+                              data_type  = dt  )
+end
+
+
+
+
+function load_LUT(dt::LeafSLA{FT}) where {FT<:AbstractFloat}
+    _SLA = FT.(ncread(joinpath(artifact"leaf_sla_n_p_0_5_deg",
+                               "leaf_sla.nc"),
+                      "specific_leaf_area_mean"));
+    _New = cat(_SLA; dims=3);
+
+    return GriddedDataset{FT}(data       = _New,
+                              resolution = "1Y",
+                              data_type  = dt  )
+end
+
+
+
+
+function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     _Vcmax = FT.(ncread(joinpath(artifact"vcmax_0_5_deg",
                                  "optimal_vcmax_globe.nc"),
                         "vcmax"));
@@ -96,5 +159,5 @@ function load_LUT(dataset::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
                               res_lat    = FT(0.5),
                               res_lon    = FT(0.5),
                               resolution = "1Y"   ,
-                              data_type  = dataset)
+                              data_type  = dt     )
 end
