@@ -33,17 +33,20 @@ test_load_LUT = false;
                       read_LUT(VCM_LUT, FT(30), FT(110))]
             @test typeof(_val) == FT;
         end
+    end
 
-        # test the load_LUT function
-        if test_load_LUT
-            GPP_LUT1 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "8D");
-            GPP_LUT2 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "1M");
-            GPP_LUT3 = load_LUT(GPPVPMv20{FT}() , 2005, 0.2, "8D");
-            for _val in [ read_LUT(GPP_LUT1, FT(30), FT(110), 2),
-                          read_LUT(GPP_LUT2, FT(30), FT(110), 2),
-                          read_LUT(GPP_LUT3, FT(30), FT(110), 2)]
-                @test typeof(_val) == FT;
-            end
+    # test the load_LUT function using Float32
+    FT = Float32;
+    if test_load_LUT
+        CLI_LUT1 = load_LUT(ClumpingIndexMODIS{FT}());
+        GPP_LUT1 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "8D");
+        GPP_LUT2 = load_LUT(GPPMPIv006{FT}(), 2005, 0.5, "1M");
+        GPP_LUT3 = load_LUT(GPPVPMv20{FT}() , 2005, 0.2, "8D");
+        for _val in [ read_LUT(CLI_LUT1, FT(30), FT(110)),
+                      read_LUT(GPP_LUT1, FT(30), FT(110), 2),
+                      read_LUT(GPP_LUT2, FT(30), FT(110), 2),
+                      read_LUT(GPP_LUT3, FT(30), FT(110), 2)]
+            @test typeof(_val) == FT;
         end
     end
 end

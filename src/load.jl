@@ -5,6 +5,7 @@
 ###############################################################################
 """
     load_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
+    load_LUT(dt::ClumpingIndexMODIS{FT}) where {FT<:AbstractFloat}
     load_LUT(dt::GPPMPIv006{FT}, year::Int, res_geom::Number) where {FT<:AbstractFloat}
     load_LUT(dt::GPPVPMv20{FT}, year::Int, res_geom::Number) where {FT<:AbstractFloat}
     load_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
@@ -28,6 +29,25 @@ function load_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
     _arti = artifact"canopy_height_0_05_deg";
     _CH   = FT.(ncread(joinpath(_arti, _file), "Band1"));
     _New  = cat(_CH; dims=3);
+
+    return GriddedDataset{FT}(data       = _New,
+                              resolution = "1Y",
+                              data_type  = dt  )
+end
+
+
+
+
+function load_LUT(dt::ClumpingIndexMODIS{FT}) where {FT<:AbstractFloat}
+    _file = "global_clumping_index.tif";
+    _arti = artifact"clumping_index_500_m";
+    _tif  = ArchGDAL.read(joinpath(_arti, _file));
+    _band = ArchGDAL.getband(_tif, 1);
+    _mat  = convert(Matrix{FT}, ArchGDAL.read(_band));
+
+    # filter and redo mat
+    _mat ./= 100;
+    _New   = cat(_mat; dims=3);
 
     return GriddedDataset{FT}(data       = _New,
                               resolution = "1Y",

@@ -38,6 +38,14 @@ lazy = true
     sha256 = "058e17a66929659af2cd0ece3860c3f5bf092ecf273e731d323c1b717349a3f4"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH/canopy_height_0_05_deg.tar.gz"
 
+[clumping_index_500_m]
+git-tree-sha1 = "355ce5fff1c4e005f45285924a5b32a11a622d55"
+lazy = true
+
+    [[clumping_index_500_m.download]]
+    sha256 = "c531b52e38fe8db459438f7cddb3e82619c0912ada65168f72bf6e4badccef7d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_500_m.tar.gz"
+
 [example]
 git-tree-sha1 = "ce1c8212fdd9e3003f05da77271a2928593298be"
 lazy = true

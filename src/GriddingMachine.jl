@@ -1,5 +1,6 @@
 module GriddingMachine
 
+using ArchGDAL
 using DocStringExtensions
 using HTTP
 using NetCDF
@@ -10,6 +11,7 @@ using Pkg.Artifacts
 
 # export public types
 export CanopyHeightGLAS,
+       ClumpingIndexMODIS,
        GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,
