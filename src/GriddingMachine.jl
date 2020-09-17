@@ -13,6 +13,7 @@ using Pkg.Artifacts
 # export public types
 export CanopyHeightGLAS,
        ClumpingIndexMODIS,
+       ClumpingIndexPFT,
        GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,
@@ -29,6 +30,7 @@ export CanopyHeightGLAS,
 export lat_ind,
        load_LUT,
        lon_ind,
+       query_LUT,
        read_LUT,
        regrid_LUT
 
@@ -37,14 +39,14 @@ export lat_ind,
 
 # include the types
 include("Datasets/DatasetType.jl")
+include("Datasets/FormatType.jl" )
+include("Datasets/load.jl"       )
+include("Datasets/query.jl"      )
+include("Datasets/read.jl"       )
+include("Datasets/regrid.jl"     )
 
 # The Util functions
 include("Utils/lat_lon_index.jl")
-
-# load and read datasets
-include("load.jl"  )
-include("read.jl"  )
-include("regrid.jl")
 
 
 

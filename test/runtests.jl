@@ -15,17 +15,30 @@ test_load_LUT = false;
     @test typeof(lon_ind(350.0)) == Int           ;
     @test typeof(lat_ind(361.0)) == ErrorException;
 
+    # test the query functions
+    for tmp in [ query_LUT(CanopyHeightGLAS{Float32}()),
+                 query_LUT(ClumpingIndexPFT{Float32}()),
+                 query_LUT(LAIMonthlyMean{Float32}()),
+                 query_LUT(LeafNitrogen{Float32}()),
+                 query_LUT(LeafPhosphorus{Float32}()),
+                 query_LUT(LeafSLA{Float32}()) ]
+        @test true;
+    end
+
     # test the look up table functions
     for FT in [Float32, Float64]
-        GPP_LUT = GriddedDataset{FT}(data_type=GPPVPMv20{FT}());
+        GPP_LUT = GriddedDataset{FT}(dt=GPPVPMv20{FT}());
         CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+        CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());
         LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
         LNC_LUT = load_LUT(LeafNitrogen{FT}());
         LPC_LUT = load_LUT(LeafPhosphorus{FT}());
         SLA_LUT = load_LUT(LeafSLA{FT}());
         VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
+        SLA_LUT.data[2,2,1] = NaN;
         REG_SLA = regrid_LUT(SLA_LUT, 2; nan_weight=true);
         for _val in [ read_LUT(CHT_LUT, FT(30), FT(110)),
+                      read_LUT(CLI_PFT, FT(30), FT(110), 2),
                       read_LUT(GPP_LUT, FT(30), FT(110), 2),
                       read_LUT(LAI_LUT, FT(30), FT(110), 8),
                       read_LUT(LNC_LUT, FT(30), FT(110)),

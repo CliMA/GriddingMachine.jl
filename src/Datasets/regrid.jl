@@ -4,10 +4,9 @@
 #
 ###############################################################################
 """
-    regrid_LUT(
-                ds::AbstractDataset{FT},
-                zoom::Int;
-                nan_weight::Bool=false
+    regrid_LUT(ds::AbstractDataset{FT},
+               zoom::Int;
+               nan_weight::Bool=false
     ) where {FT<:AbstractFloat}
 
 Regrid the data from high to low resolution and return the struct, given
@@ -52,6 +51,6 @@ function regrid_LUT(
     mat_data ./= mat_count;
 
     return GriddedDataset{FT}(data       = mat_data     ,
-                              resolution = ds.resolution,
-                              data_type  = ds.data_type )
+                              res_time = ds.res_time,
+                              dt         = ds.dt        )
 end

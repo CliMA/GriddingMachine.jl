@@ -63,6 +63,7 @@ abstract type AbstractCanopyHeight{FT}
 
 Hierachy of AbstractCanopyHeight
 - [`ClumpingIndexMODIS`](@ref)
+- [`ClumpingIndexPFT`](@ref)
 """
 abstract type AbstractClumpingIndex{FT} <: AbstractDataset{FT} end
 
@@ -75,6 +76,18 @@ abstract type AbstractClumpingIndex{FT} <: AbstractDataset{FT} end
 Struct for canopy height from GLAS ICESat
 """
 struct ClumpingIndexMODIS{FT} <: AbstractClumpingIndex{FT} end
+
+
+
+
+"""
+    struct GPPMPIv006{FT}
+
+Struct for canopy height from GLAS ICESat, for different plant functional
+    types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses,
+    and shrubland
+"""
+struct ClumpingIndexPFT{FT} <: AbstractClumpingIndex{FT} end
 
 
 
@@ -259,7 +272,7 @@ Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Longitude resolution `[°]`"
     res_lon::FT = 360 / size(data,1)
     "Time resolution: D-M-Y-C: day-month-year-century"
-    resolution::String = "8D"
+    res_time::String = "8D"
     "Type label"
-    data_type::AbstractDataset = AbstractGPP{FT}()
+    dt::AbstractDataset = AbstractGPP{FT}()
 end
