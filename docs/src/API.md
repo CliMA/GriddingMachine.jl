@@ -15,10 +15,21 @@ All data are stored in a general structure, but they are catergorized to
 GriddedDataset
 ```
 
-Note it here that the `data_type` field in [`GriddedDataset`](@ref) is the data
+Note it here that the `dt` field in [`GriddedDataset`](@ref) is the data
     identity of the stored `data`. Please refer the lists below
 
+
+
+
 ## Dataset types
+
+Current supported dataset formats are
+
+```@docs
+AbstractFormat
+FormatNC
+FormatTIFF
+```
 
 ### General type
 
@@ -38,6 +49,7 @@ CanopyHeightGLAS
 ```@docs
 AbstractClumpingIndex
 ClumpingIndexMODIS
+ClumpingIndexPFT
 ```
 
 ### Gross primary productivity
@@ -76,14 +88,24 @@ VcmaxOptimalCiCa
 
 ## LOAD and READ Look-Up-Table
 
+Griddingmachine package allows for reading data from both the artifact and
+    local files. To read the artifacts, function [`query_LUT`](@ref) is
+    provided:
+
+```@docs
+query_LUT
+```
+
 A general function is provided to load the look-up tables. Before you load the
     table, you need to know what data you want to read (see
     [`AbstractDataset`](@ref)), data from which year (required for some
     datasets), geophysical resolution (required for some datasets), and time
-    resolution (resuired for some datasets). Be aware that some datasets may be
-    very big, be patient when downloading the data files. Also, you need to use
-    computers/servers with enough memory, otherwise the program may crash when
-    loading the data.
+    resolution (resuired for some datasets). Also, if you want to load local
+    files, you need to know the file name, dataset format, and the dataset
+    label (e.g., variable name in *.nc files, or band number in *.tif files).
+    Be aware that some datasets may be very big, be patient when downloading
+    the data files. Also, you need to use computers or servers with enough
+    memory, otherwise the program may crash when loading the data.
 
 ```@docs
 load_LUT

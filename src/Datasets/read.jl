@@ -4,14 +4,26 @@
 #
 ###############################################################################
 """
-    read_LUT(ds::GriddedDataset{FT}, lat::FT, lon::FT) where {FT<:AbstractFloat}
-    read_LUT(ds::GriddedDataset{FT}, lat::FT, lon::FT, ind::Int) where {FT<:AbstractFloat}
-    read_LUT(ds::GriddedDataset{FT}, data_type::AbstractDataset{FT}, lat::FT, lon::FT) where {FT<:AbstractFloat}
-    read_LUT(ds::GriddedDataset{FT}, data_type::AbstractDataset{FT}, lat::FT, lon::FT, ind::Int) where {FT<:AbstractFloat}
+    read_LUT(ds::GriddedDataset{FT},
+             lat::FT,
+             lon::FT) where {FT<:AbstractFloat}
+    read_LUT(ds::GriddedDataset{FT},
+             lat::FT,
+             lon::FT,
+             ind::Int) where {FT<:AbstractFloat}
+    read_LUT(ds::GriddedDataset{FT},
+             dt::AbstractDataset{FT},
+             lat::FT,
+             lon::FT) where {FT<:AbstractFloat}
+    read_LUT(ds::GriddedDataset{FT},
+             dt::AbstractDataset{FT},
+             lat::FT,
+             lon::FT,
+             ind::Int) where {FT<:AbstractFloat}
 
 Read the LAI from given
 - `ds` [`GriddedDataset`](@ref) type struct
-- `data_type` Dataset type, subtype of [`AbstractDataset`](@ref)
+- `dt` Dataset type, subtype of [`AbstractDataset`](@ref)
 - `lat` Latitude
 - `lon` Longitude
 - `ind` Index of cycle in the year, e.g., 1-46, or Month number from 1 to 12
@@ -22,7 +34,7 @@ function read_LUT(
             lat::FT,
             lon::FT
 ) where {FT<:AbstractFloat}
-    return read_LUT(ds, ds.data_type, lat, lon)
+    return read_LUT(ds, ds.dt, lat, lon)
 end
 
 
@@ -34,7 +46,7 @@ function read_LUT(
             lon::FT,
             ind::Int
 ) where {FT<:AbstractFloat}
-    return read_LUT(ds, ds.data_type, lat, lon, ind)
+    return read_LUT(ds, ds.dt, lat, lon, ind)
 end
 
 
@@ -42,7 +54,7 @@ end
 
 function read_LUT(
             ds::GriddedDataset{FT},
-            data_type::LAIMonthlyMean{FT},
+            dt::LAIMonthlyMean{FT},
             lat::FT,
             lon::FT,
             ind::Int
@@ -59,7 +71,7 @@ end
 
 function read_LUT(
             ds::GriddedDataset{FT},
-            data_type::AbstractDataset{FT},
+            dt::AbstractDataset{FT},
             lat::FT,
             lon::FT
 ) where {FT<:AbstractFloat}
@@ -74,7 +86,7 @@ end
 
 function read_LUT(
             ds::GriddedDataset{FT},
-            data_type::AbstractDataset{FT},
+            dt::AbstractDataset{FT},
             lat::FT,
             lon::FT,
             ind::Int
