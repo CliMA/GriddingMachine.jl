@@ -6,6 +6,7 @@ using HTTP
 using NetCDF
 using Parameters
 using Pkg.Artifacts
+using ProgressMeter
 
 
 
@@ -30,6 +31,7 @@ export CanopyHeightGLAS,
 export lat_ind,
        load_LUT,
        lon_ind,
+       mask_LUT!,
        query_LUT,
        read_LUT,
        regrid_LUT
@@ -41,6 +43,7 @@ export lat_ind,
 include("Datasets/DatasetType.jl")
 include("Datasets/FormatType.jl" )
 include("Datasets/load.jl"       )
+include("Datasets/mask.jl"       )
 include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )

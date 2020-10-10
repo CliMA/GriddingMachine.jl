@@ -111,11 +111,10 @@ function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     _Vcmax = FT.(ncread(joinpath(artifact"vcmax_0_5_deg",
                                  "optimal_vcmax_globe.nc"),
                         "vcmax"));
-    _Vcmax[ _Vcmax .< 0] .= NaN
 
     # note that lat of dataset does not start from -90 and end from 90
     # store the data into a new data array
-    _NewVM::Array{FT,3} = zeros(FT, (720,360,1)) .* NaN;
+    _NewVM::Array{FT,3} = ones(FT, (720,360,1)) .* -999;
     lat_array = collect(FT,83.75:-0.5:-55.75);
     for i in eachindex(lat_array)
         lat_indx = lat_ind(lat_array[i]; res = FT(0.5));

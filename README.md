@@ -10,13 +10,13 @@
 [rel-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [rel-url]: https://CliMA.github.io/GriddingMachine.jl/stable/
 
-[st-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/JuliaStable/badge.svg?branch=master
-[st-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"master"++workflow%3A"JuliaStable"
+[st-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/JuliaStable/badge.svg?branch=main
+[st-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"JuliaStable"
 
-[min-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/Julia-1.3/badge.svg?branch=master
-[min-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"master"++workflow%3A"Julia-1.3"
+[min-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/Julia-1.3/badge.svg?branch=main
+[min-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.3"
 
-[cov-img]: https://codecov.io/gh/CliMA/GriddingMachine.jl/branch/master/graph/badge.svg
+[cov-img]: https://codecov.io/gh/CliMA/GriddingMachine.jl/branch/main/graph/badge.svg
 [cov-url]: https://codecov.io/gh/CliMA/GriddingMachine.jl
 
 ## About

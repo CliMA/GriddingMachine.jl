@@ -48,6 +48,9 @@ test_load_LUT = false;
                       read_LUT(VCM_LUT, FT(30), FT(110))]
             @test typeof(_val) == FT;
         end
+        mask_LUT!(REG_SLA, FT[0,Inf]);
+        mask_LUT!(REG_SLA);
+        @test true;
     end
 
     # test the load_LUT function using Float32
