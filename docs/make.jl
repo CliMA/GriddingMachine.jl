@@ -23,7 +23,6 @@ format = Documenter.HTML(
 makedocs(
     sitename = "GriddingMachine",
     format = format,
-
     clean = false,
     modules = [GriddingMachine],
     pages = pages,
@@ -32,5 +31,6 @@ makedocs(
 deploydocs(
     repo = "github.com/CliMA/GriddingMachine.jl.git",
     target = "build",
+    devbranch = "main",
     push_preview = true,
 )

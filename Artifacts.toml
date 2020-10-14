@@ -38,25 +38,37 @@ lazy = true
     sha256 = "058e17a66929659af2cd0ece3860c3f5bf092ecf273e731d323c1b717349a3f4"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH/canopy_height_0_05_deg.tar.gz"
 
+    [[canopy_height_0_05_deg.download]]
+    sha256 = "058e17a66929659af2cd0ece3860c3f5bf092ecf273e731d323c1b717349a3f4"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/canopy_height_0_05_deg.tar.gz"
+
 [clumping_index_0_5_deg_PFT]
 git-tree-sha1 = "6ccd759540f20e0dda2e9b58c74cd6f2e7fa84c9"
 lazy = true
 
     [[clumping_index_0_5_deg_PFT.download]]
-    sha256 = "0cde75dabc5b2d20444bc41cbb19def672d7571431c7204f1eb378f13a789511"
+    sha256 = "5eca860754a164d5ec05ef57548efb11ea985cabe7451675b5fa61c5ea2437ce"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/clumping_index_0_5_deg_PFT.tar.gz"
+
+    [[clumping_index_0_5_deg_PFT.download]]
+    sha256 = "5eca860754a164d5ec05ef57548efb11ea985cabe7451675b5fa61c5ea2437ce"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_0_5_deg_PFT.tar.gz"
 
 [clumping_index_500_m]
-git-tree-sha1 = "355ce5fff1c4e005f45285924a5b32a11a622d55"
+git-tree-sha1 = "b340a88b57bd4a633ed4c084120496f0460c3a10"
 lazy = true
 
     [[clumping_index_500_m.download]]
-    sha256 = "c531b52e38fe8db459438f7cddb3e82619c0912ada65168f72bf6e4badccef7d"
+    sha256 = "29157c5028f2a0ea79c060bae91cc90952ffc54f30bb601b7f9254696b4616c9"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_500_m.tar.gz"
 
 [example]
 git-tree-sha1 = "ce1c8212fdd9e3003f05da77271a2928593298be"
 lazy = true
+
+    [[example.download]]
+    sha256 = "171675246d4201464804af38b53c97f10ae27ede721c181b372b40a34eab8143"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/example.tar.gz"
 
     [[example.download]]
     sha256 = "171675246d4201464804af38b53c97f10ae27ede721c181b372b40a34eab8143"
@@ -68,6 +80,10 @@ lazy = true
 
     [[lai_monthly_mean.download]]
     sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/LAI_mean_monthly_1981-2015.tar.gz"
+
+    [[lai_monthly_mean.download]]
+    sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/LAI_mean_monthly_1981-2015.tar.gz"
 
 [leaf_sla_n_p_0_5_deg]
@@ -76,11 +92,19 @@ lazy = true
 
     [[leaf_sla_n_p_0_5_deg.download]]
     sha256 = "885d0dd338cb843fb53f3dd4f0dae1860c9e8386fa39d5b186ef73f19e40a238"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_sla_n_p_0_5_deg.tar.gz"
+
+    [[leaf_sla_n_p_0_5_deg.download]]
+    sha256 = "885d0dd338cb843fb53f3dd4f0dae1860c9e8386fa39d5b186ef73f19e40a238"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_sla_n_p_0_5_deg.tar.gz"
 
 [vcmax_0_5_deg]
 git-tree-sha1 = "924c1c00e43eead8b9d9f4740a1000fe628f3de8"
 lazy = true
+
+    [[vcmax_0_5_deg.download]]
+    sha256 = "2e4a6dacc3323db5bcd6f17cef750daf3d5f0f9687d3ee333ea4d6fbe1afbd37"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/vcmax_0_5_deg.tar.gz"
 
     [[vcmax_0_5_deg.download]]
     sha256 = "2e4a6dacc3323db5bcd6f17cef750daf3d5f0f9687d3ee333ea4d6fbe1afbd37"

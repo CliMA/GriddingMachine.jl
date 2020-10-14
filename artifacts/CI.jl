@@ -24,6 +24,7 @@ ftp_loc = "/net/fluo/data1/ftp/XYZT_CLIMA_LUT";
 
 # Gridded per 500 m (0.00417 deg) per year? decade?
 # Query the cli hash from Artifacts.toml, if not existing create one
+# Use gdal to transform the data to WGS84 projection a priori
 cli_hash = artifact_hash("clumping_index_500_m", artifact_toml);
 
 # need to run this for every new installation, because the calcualted SHA
@@ -34,7 +35,7 @@ if isnothing(cli_hash) || !artifact_exists(cli_hash)
     cli_fold = joinpath(ftp_loc, "CI");
 
     cli_hash = create_artifact() do artifact_dir
-        _file = "global_clumping_index.tif";
+        _file = "global_clumping_index_WGS84.tif";
         _path = joinpath(cli_fold, _file);
         cp(_path, joinpath(artifact_dir, _file));
     end
