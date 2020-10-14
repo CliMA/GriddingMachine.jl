@@ -15,6 +15,8 @@ using ProgressMeter
 export CanopyHeightGLAS,
        ClumpingIndexMODIS,
        ClumpingIndexPFT,
+       FormatNC,
+       FormatTIFF,
        GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,

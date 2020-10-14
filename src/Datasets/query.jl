@@ -22,7 +22,8 @@ end
 
 
 function query_LUT(dt::ClumpingIndexMODIS)
-    _file = artifact"clumping_index_500_m" * "/global_clumping_index.tif";
+    _file = artifact"clumping_index_500_m" *
+            "/global_clumping_index_WGS84.tif";
     return _file, FormatTIFF(), 1, "1Y", false
 end
 

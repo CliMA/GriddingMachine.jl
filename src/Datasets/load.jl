@@ -95,6 +95,11 @@ function load_LUT(
     _band = ArchGDAL.getband(_tiff, label);
     _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
+    # reverse latitude
+    if rev_lat
+        _data = _data[:,end:-1:1,:];
+    end
+
     # filter data
     _data ./= 100;
     data = cat(_data; dims=3);
