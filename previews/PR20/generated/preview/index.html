@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Data Preview · GriddingMachine</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit">GriddingMachine</span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../API/">API</a></li><li class="is-active"><a class="tocitem" href>Data Preview</a><ul class="internal"><li><a class="tocitem" href="#Canopy-height"><span>Canopy height</span></a></li><li><a class="tocitem" href="#Clumping-index"><span>Clumping index</span></a></li><li><a class="tocitem" href="#Leaf-area-index"><span>Leaf area index</span></a></li><li><a class="tocitem" href="#Leaf-nitrogen-content"><span>Leaf nitrogen content</span></a></li><li><a class="tocitem" href="#Leaf-phosphorus-content"><span>Leaf phosphorus content</span></a></li><li><a class="tocitem" href="#Net-primary-productivity"><span>Net primary productivity</span></a></li><li><a class="tocitem" href="#Specific-leaf-area"><span>Specific leaf area</span></a></li><li><a class="tocitem" href="#Vcmax"><span>Vcmax</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Data Preview</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Data Preview</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/CliMA/GriddingMachine.jl/blob/master/docs/src/preview.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Dataset-Previews"><a class="docs-heading-anchor" href="#Dataset-Previews">Dataset Previews</a><a id="Dataset-Previews-1"></a><a class="docs-heading-anchor-permalink" href="#Dataset-Previews" title="Permalink"></a></h1><p>First, initialize by adding tools and declare floating type</p><pre><code class="language-">using GriddingMachine
+using Plots
+using Plots.PlotMeasures
+pyplot();
+
+FT = Float32;
+nothing #hide</code></pre><p>Then, define a function to plot the dataset</p><pre><code class="language-">function preview_data(ds::GriddedDataset{FT}, ind::Int)
+    # regrid data if needed
+    lat_size = size(ds.data,2);
+    if (lat_size &gt; 180) &amp;&amp; (lat_size%180 == 0)
+        _ds = regrid_LUT(ds, Int(lat_size/180));
+    else
+        _ds = ds;
+    end
+
+    # preview data
+    map = heatmap(view(_ds.data,:,:,ind)&#39;,
+                  origin=&quot;lower&quot;,
+                  aspect_ratio=1,
+                  xticks=[],
+                  yticks=[],
+                  c=:viridis,
+                  size=(700,300),
+                  framestyle=:none,
+                  right_margin=10px);
+
+    return map
+end
+
+function preview_data(ds::GriddedDataset{FT}, ind::Int, clim::Tuple)
+    # regrid data if needed
+    lat_size = size(ds.data,2);
+    if (lat_size &gt; 180) &amp;&amp; (lat_size%180 == 0)
+        _ds = regrid_LUT(ds, Int(lat_size/180));
+    else
+        _ds = ds;
+    end
+
+    # preview data
+    map = heatmap(view(_ds.data,:,:,ind)&#39;,
+                  origin=&quot;lower&quot;,
+                  aspect_ratio=1,
+                  xticks=[],
+                  yticks=[],
+                  c=:viridis,
+                  clim=clim,
+                  size=(700,300),
+                  framestyle=:none,
+                  right_margin=10px);
+
+    return map
+end</code></pre><h2 id="Canopy-height"><a class="docs-heading-anchor" href="#Canopy-height">Canopy height</a><a id="Canopy-height-1"></a><a class="docs-heading-anchor-permalink" href="#Canopy-height" title="Permalink"></a></h2><pre><code class="language-">CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+preview_data(CHT_LUT, 1)</code></pre><h2 id="Clumping-index"><a class="docs-heading-anchor" href="#Clumping-index">Clumping index</a><a id="Clumping-index-1"></a><a class="docs-heading-anchor-permalink" href="#Clumping-index" title="Permalink"></a></h2><pre><code class="language-">CLI_LUT = load_LUT(ClumpingIndexPFT{FT}());
+mask_LUT!(CLI_LUT, FT[0,1])
+anim = @animate for i ∈ 1:size(CLI_LUT.data,3)
+    preview_data(CLI_LUT, i, (0,1));
+end
+gif(anim, fps=1)</code></pre><h2 id="Leaf-area-index"><a class="docs-heading-anchor" href="#Leaf-area-index">Leaf area index</a><a id="Leaf-area-index-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-area-index" title="Permalink"></a></h2><pre><code class="language-">LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
+anim = @animate for i ∈ 1:size(LAI_LUT.data,3)
+    preview_data(LAI_LUT, i, (0,6));
+end
+gif(anim, fps=1)</code></pre><h2 id="Leaf-nitrogen-content"><a class="docs-heading-anchor" href="#Leaf-nitrogen-content">Leaf nitrogen content</a><a id="Leaf-nitrogen-content-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-nitrogen-content" title="Permalink"></a></h2><pre><code class="language-">LNC_LUT = load_LUT(LeafNitrogen{FT}());
+mask_LUT!(LNC_LUT, FT[0,Inf]);
+preview_data(LNC_LUT, 1)</code></pre><h2 id="Leaf-phosphorus-content"><a class="docs-heading-anchor" href="#Leaf-phosphorus-content">Leaf phosphorus content</a><a id="Leaf-phosphorus-content-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-phosphorus-content" title="Permalink"></a></h2><pre><code class="language-">LPC_LUT = load_LUT(LeafPhosphorus{FT}());
+mask_LUT!(LPC_LUT, FT[0,Inf]);
+preview_data(LPC_LUT, 1)</code></pre><h2 id="Net-primary-productivity"><a class="docs-heading-anchor" href="#Net-primary-productivity">Net primary productivity</a><a id="Net-primary-productivity-1"></a><a class="docs-heading-anchor-permalink" href="#Net-primary-productivity" title="Permalink"></a></h2><pre><code class="language-">NPP_LUT = load_LUT(NPPModis{FT}());
+mask_LUT!(NPP_LUT, FT[-Inf,1e19]);
+NPP_LUT.data .*= 1e9;
+preview_data(NPP_LUT, 1)</code></pre><h2 id="Specific-leaf-area"><a class="docs-heading-anchor" href="#Specific-leaf-area">Specific leaf area</a><a id="Specific-leaf-area-1"></a><a class="docs-heading-anchor-permalink" href="#Specific-leaf-area" title="Permalink"></a></h2><pre><code class="language-">SLA_LUT = load_LUT(LeafSLA{FT}());
+mask_LUT!(SLA_LUT, FT[0,Inf]);
+preview_data(SLA_LUT, 1)</code></pre><h2 id="Vcmax"><a class="docs-heading-anchor" href="#Vcmax">Vcmax</a><a id="Vcmax-1"></a><a class="docs-heading-anchor-permalink" href="#Vcmax" title="Permalink"></a></h2><pre><code class="language-">VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
+mask_LUT!(VCM_LUT, FT[0,Inf]);
+preview_data(VCM_LUT, 1)</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../API/">« API</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Wednesday 14 October 2020 19:43">Wednesday 14 October 2020</span>. Using Julia version 1.5.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
