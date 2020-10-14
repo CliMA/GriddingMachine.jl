@@ -50,7 +50,7 @@ function regrid_LUT(
     # refactor the matrix by taking the mean
     mat_data ./= mat_count;
 
-    return GriddedDataset{FT}(data       = mat_data     ,
+    return GriddedDataset{FT}(data     = mat_data   ,
                               res_time = ds.res_time,
-                              dt         = ds.dt        )
+                              dt       = ds.dt      )
 end
