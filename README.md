@@ -30,22 +30,10 @@
 
 
 
-## Dependencies
-
-| Dependency          | Version  | Requirements |
-|:--------------------|:---------|:-------------|
-| DocStringExtensions | 0.8.0 +  | Julia 0.7 +  |
-| HTTP                | 0.8.0 +  | Julia 0.7 +  |
-| NetCDF              | 0.10.0 + | Julia 1.2 +  |
-| GriddingMachine     |          | Julia 1.3 +  |
-
-
-
-
 ## Installation
 ```julia
 julia> using Pkg;
-Pkg.add(PackageSpec(url="https://github.com/CliMA/GriddingMachine.jl.git"));
+Pkg.add(PackageSpec(url="https://github.com/CliMA/GriddingMachine.jl.git", rev="main"));
 ```
 
 

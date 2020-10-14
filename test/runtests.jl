@@ -21,7 +21,8 @@ test_load_LUT = false;
                  query_LUT(LAIMonthlyMean{Float32}()),
                  query_LUT(LeafNitrogen{Float32}()),
                  query_LUT(LeafPhosphorus{Float32}()),
-                 query_LUT(LeafSLA{Float32}()) ]
+                 query_LUT(LeafSLA{Float32}()),
+                 query_LUT(NPPModis{Float32}()) ]
         @test true;
     end
 
@@ -33,6 +34,7 @@ test_load_LUT = false;
         LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
         LNC_LUT = load_LUT(LeafNitrogen{FT}());
         LPC_LUT = load_LUT(LeafPhosphorus{FT}());
+        NPP_LUT = load_LUT(NPPModis{FT}());
         SLA_LUT = load_LUT(LeafSLA{FT}());
         VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
         SLA_LUT.data[2,2,1] = NaN;
@@ -43,6 +45,7 @@ test_load_LUT = false;
                       read_LUT(LAI_LUT, FT(30), FT(110), 8),
                       read_LUT(LNC_LUT, FT(30), FT(110)),
                       read_LUT(LPC_LUT, FT(30), FT(110)),
+                      read_LUT(NPP_LUT, FT(30), FT(110)),
                       read_LUT(REG_SLA, FT(30), FT(110)),
                       read_LUT(SLA_LUT, FT(30), FT(110)),
                       read_LUT(VCM_LUT, FT(30), FT(110))]

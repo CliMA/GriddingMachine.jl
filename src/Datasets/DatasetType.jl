@@ -12,6 +12,7 @@ Hierachy of AbstractDataset
 - [`AbstractGPP`](@ref)
 - [`AbstractLAI`](@ref)
 - [`AbstractLeafMN`](@ref)
+- [`AbstractNPP`](@ref)
 - [`AbstractVcmax`](@ref)
 """
 abstract type AbstractDataset{FT} end
@@ -211,6 +212,36 @@ struct LeafPhosphorus{FT}  <: AbstractLeafMN{FT} end
 Struct for leaf specific leaf area (inverse of leaf mass per area)
 """
 struct LeafSLA{FT}  <: AbstractLeafMN{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# NPP
+#
+###############################################################################
+"""
+    abstract type AbstractNPP{FT}
+
+Hierachy of AbstractLAI
+- [`NPPModis`](@ref)
+"""
+abstract type AbstractNPP{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct NPPModis{FT}
+
+Struct for Modis NPP
+"""
+struct NPPModis{FT} <: AbstractNPP{FT} end
 
 
 

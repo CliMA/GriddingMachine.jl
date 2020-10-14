@@ -81,9 +81,9 @@ version = "0.4.1"
 
 [[GDAL]]
 deps = ["CEnum", "GDAL_jll", "MozillaCACerts_jll", "PROJ_jll"]
-git-tree-sha1 = "484b4e3a5c7e6c5ef2757d122f80185aa1a12420"
+git-tree-sha1 = "353f6c9c3bc096ef76f4b697ca327950a9803d0f"
 uuid = "add2ef01-049f-52c4-9ee2-e494f65e021a"
-version = "1.1.4"
+version = "1.1.5"
 
 [[GDAL_jll]]
 deps = ["GEOS_jll", "LibCURL_jll", "Libdl", "OpenJpeg_jll", "PROJ_jll", "Pkg", "SQLite_jll", "Zlib_jll"]
@@ -130,9 +130,9 @@ uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
 
 [[JLLWrappers]]
-git-tree-sha1 = "dbc0967f6403829a6682493fdb4ec7c0ebfd2e68"
+git-tree-sha1 = "7cec881362e5b4e367ff0279dd99a06526d51a55"
 uuid = "692b3bcd-3c85-4b1f-b108-f13ce0eb3210"
-version = "1.1.1"
+version = "1.1.2"
 
 [[JSON]]
 deps = ["Dates", "Mmap", "Parsers", "Unicode"]

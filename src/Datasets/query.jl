@@ -99,3 +99,11 @@ function query_LUT(dt::LeafSLA)
     _file = artifact"leaf_sla_n_p_0_5_deg" * "/leaf_sla.nc";
     return _file, FormatNC(), "specific_leaf_area_mean", "1Y", false
 end
+
+
+
+
+function query_LUT(dt::NPPModis)
+    _file = artifact"npp_1_deg" * "/npp_modis_2000.nc";
+    return _file, FormatNC(), "npp", "1Y", false
+end

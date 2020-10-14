@@ -76,6 +76,12 @@ LeafNitrogen
 LeafPhosphorus
 ```
 
+### Net primary productivity
+```@docs
+AbstractNPP
+NPPModis
+```
+
 ### Vcmax
 
 ```@docs
@@ -110,6 +116,15 @@ A general function is provided to load the look-up tables. Before you load the
 ```@docs
 load_LUT
 ```
+
+The loaded data may contain null values filled with different default values.
+    To remove these unexpected data, a general function is provided to mask out
+    these values.
+
+```@docs
+mask_LUT!
+```
+
 A general function is provided to read the look-up tables. Note that you need
     to use realistic latitude, longitude, and index (required for some
     datasets) to read the data properly. For example, latitude must be within
