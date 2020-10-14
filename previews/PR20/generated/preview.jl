@@ -1,7 +1,6 @@
 using GriddingMachine
 using Plots
 using Plots.PlotMeasures
-pyplot();
 
 FT = Float32;
 
