@@ -82,6 +82,17 @@ lazy = true
     sha256 = "483b45eaf7728963bb66c12201ab81f22cd4df906814afb69df31c150695c1e9"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/LAI_mean_monthly_1981-2015.tar.gz"
 
+[leaf_chlorophyll_0_5_deg_7D]
+git-tree-sha1 = "4e5fcbe0b57df838a59d404f2a1f7cc574c7e1d8"
+lazy = true
+
+    [[leaf_chlorophyll_0_5_deg_7D.download]]
+    sha256 = "823a1f3a49143aefe7562a76cc0ecd056a0b917122d3eab0803f97832ef9bcec"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_chlorophyll_0_5_deg_7D.tar.gz"
+    [[leaf_chlorophyll_0_5_deg_7D.download]]
+    sha256 = "823a1f3a49143aefe7562a76cc0ecd056a0b917122d3eab0803f97832ef9bcec"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_chlorophyll_0_5_deg_7D.tar.gz"
+
 [leaf_sla_n_p_0_5_deg]
 git-tree-sha1 = "af35d29fdfe0f387f003cf054f8a44484c9b0a43"
 lazy = true

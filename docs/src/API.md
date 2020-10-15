@@ -71,6 +71,7 @@ LAIMonthlyMean
 
 ```@docs
 AbstractLeafMN
+LeafChlorophyll
 LeafSLA
 LeafNitrogen
 LeafPhosphorus

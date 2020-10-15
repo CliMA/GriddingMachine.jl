@@ -79,6 +79,15 @@ end
 
 
 
+function query_LUT(dt::LeafChlorophyll)
+    _file = artifact"leaf_chlorophyll_0_5_deg_7D" *
+            "/Chl_Mean_2003-2011_Weekly_0.50deg.nc";
+    return _file, FormatNC(), "chl", "7D", true
+end
+
+
+
+
 function query_LUT(dt::LeafNitrogen)
     _file = artifact"leaf_sla_n_p_0_5_deg" * "/leaf_nitrogen.nc";
     return _file, FormatNC(), "leaf_nitrogen_content_mean", "1Y", false
