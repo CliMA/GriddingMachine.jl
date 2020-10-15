@@ -177,11 +177,22 @@ struct LAIMonthlyMean{FT}  <: AbstractLAI{FT} end
     abstract type AbstractLeafMN{FT}
 
 Hierachy of AbstractLAI
+- [`LeafChlorophyll`]9@ref
 - [`LeafNitrogen`](@ref)
 - [`LeafPhosphorus`](@ref)
 - [`LeafSLA`](@ref)
 """
 abstract type AbstractLeafMN{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct LeafChlorophyll{FT}
+
+Struct for leaf chlorophyll content
+"""
+struct LeafChlorophyll{FT}  <: AbstractLeafMN{FT} end
 
 
 
