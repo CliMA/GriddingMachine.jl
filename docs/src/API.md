@@ -6,7 +6,7 @@ CurrentModule = GriddingMachine
 
 
 
-## Datasets for Clima Look-Up-Table
+## Datasets for CliMA Look-Up-Table
 
 All data are stored in a general structure, but they are catergorized to
     different data types. The general data structure is
@@ -151,4 +151,16 @@ For better matching the gridded data, we also provide a function to regrid the
 
 ```@docs
 regrid_LUT
+```
+
+
+
+
+## Save the Look-Up-Table
+
+To avoid unnecessary reading or regridding the dataset, a function is provided
+    to save the dataset to `.nc` file
+
+```@docs
+save_LUT
 ```

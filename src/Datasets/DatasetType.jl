@@ -305,16 +305,21 @@ A general struct to store data
 $(DocStringExtensions.FIELDS)
 """
 Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
-    "Monthly mean LAI"
-    data::Array{FT,3} = FT.(ncread(joinpath(artifact"example",
-                                           "gpp_example.nc"),
-                                  "GPP"));
+    "Gridded dataset"
+    data::Array{FT,3} = FT.(ncread(joinpath(artifact"NPP_MODIS_1X_1Y",
+                                           "npp_modis_1X_1Y_2000.nc"),
+                                   "npp"));
     "Latitude resolution `[°]`"
     res_lat::FT = 180 / size(data,2)
     "Longitude resolution `[°]`"
     res_lon::FT = 360 / size(data,1)
     "Time resolution: D-M-Y-C: day-month-year-century"
     res_time::String = "8D"
+    "Variable name"
+    var_name::String = "NPP"
+    "Variable attribute"
+    var_attr::Dict{String,String} = Dict("longname" => "NPP",
+                                         "units"    => "kg C m⁻² s⁻¹")
     "Type label"
     dt::AbstractDataset = AbstractGPP{FT}()
 end

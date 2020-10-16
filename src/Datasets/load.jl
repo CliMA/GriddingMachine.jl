@@ -7,14 +7,16 @@
     load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              year::Int,
-             res_g::Number,
+             res_g::String,
              res_t::String) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              file::String,
              format::AbstractFormat,
              label::String,
              res_t::String,
-             rev_lat::Bool) where {FT<:AbstractFloat}
+             rev_lat::Bool,
+             var_name::String,
+             var_attr::Dict{String,String}) where {FT<:AbstractFloat}
 
 Load look up table and return the struct, given
 - `dt` Dataset type, subtype of [`AbstractDataset`](@ref)
@@ -27,14 +29,16 @@ Load look up table and return the struct, given
     .tif files
 - `rev_lat` Whether latitude is stored reversely in the dataset, e.g., 90 to
     -90. If true, mirror the dataset on latitudinal direction
+- `var_name` Variable name of [`GriddedDataset`](@ref)
+- `var_attr` Variable attributes of [`GriddedDataset`](@ref)
 
 Note that the artifact for GPP is about
 - `500` MB for 0.2 degree resolution (5^2 * 360*180*46)
 - `2600` MB for 0.083 degree resolution (12^2 * 360*180*46)
 """
 function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
-    _file, _fmt, _lab, _res, _rev = query_LUT(dt);
-    return load_LUT(dt, _file, _fmt, _lab, _res, _rev)
+    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
 end
 
 
@@ -43,11 +47,11 @@ end
 function load_LUT(
             dt::AbstractDataset{FT},
             year::Int,
-            res_g::Number,
+            res_g::String,
             res_t::String
 ) where {FT<:AbstractFloat}
-    _file, _fmt, _lab, _res, _rev = query_LUT(dt, year, res_g, res_t);
-    return load_LUT(dt, _file, _fmt, _lab, _res, _rev)
+    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt, year, res_g, res_t);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
 end
 
 
@@ -59,7 +63,9 @@ function load_LUT(
             format::FormatNC,
             label::String,
             res_t::String,
-            rev_lat::Bool
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
 ) where {FT<:AbstractFloat}
     _data = FT.(ncread(file, label));
 
@@ -75,9 +81,11 @@ function load_LUT(
         data = _data;
     end
 
-    return GriddedDataset{FT}(data     = data ,
-                              res_time = res_t,
-                              dt       = dt   )
+    return GriddedDataset{FT}(data     = data    ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
 end
 
 
@@ -89,7 +97,9 @@ function load_LUT(
             format::FormatTIFF,
             label::Int,
             res_t::String,
-            rev_lat::Bool
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -104,17 +114,19 @@ function load_LUT(
     _data ./= 100;
     data = cat(_data; dims=3);
 
-    return GriddedDataset{FT}(data     = data ,
-                              res_time = res_t,
-                              dt       = dt   )
+    return GriddedDataset{FT}(data     = data    ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
 end
 
 
 
 
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
-    _Vcmax = FT.(ncread(joinpath(artifact"vcmax_0_5_deg",
-                                 "optimal_vcmax_globe.nc"),
+    _Vcmax = FT.(ncread(joinpath(artifact"leaf_traits_2X_1Y",
+                                 "vcmax_optimal_cica_2X_1Y.nc"),
                         "vcmax"));
 
     # note that lat of dataset does not start from -90 and end from 90
@@ -125,10 +137,15 @@ function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
         lat_indx = lat_ind(lat_array[i]; res = FT(0.5));
         _NewVM[:,lat_indx,1] .= _Vcmax[:,i];
     end
+    _varn = "Vcmax";
+    _vara = Dict("longname" => "Maximal carboxylation rate at 25 °C",
+                 "units"    => "μmol m⁻² s⁻¹")
 
     return GriddedDataset{FT}(data     = _NewVM ,
                               res_lat  = FT(0.5),
                               res_lon  = FT(0.5),
                               res_time = "1Y"   ,
-                              dt       = dt     )
+                              dt       = dt     ,
+                              var_name = _varn  ,
+                              var_attr = _vara  )
 end
