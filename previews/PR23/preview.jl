@@ -56,9 +56,10 @@ preview_data(CHT_LUT, 1)
 
 # ## Clumping index
 ## global clumping index
-CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X");
+CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y");
 CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
-preview_data(CLI_LUT, 1)
+mask_LUT!(CLI_LUT, FT[0,1]);
+preview_data(CLI_LUT, 1, (0.4,1));
 #------------------------------------------------------------------------------
 
 
@@ -69,7 +70,7 @@ CLI_LUT = load_LUT(ClumpingIndexPFT{FT}());
 CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
 mask_LUT!(CLI_LUT, FT[0,1]);
 anim = @animate for i ∈ 1:size(CLI_LUT.data,3)
-    preview_data(CLI_LUT, i, (0,1));
+    preview_data(CLI_LUT, i, (0.4,1));
 end
 gif(anim, fps=1)
 #------------------------------------------------------------------------------
