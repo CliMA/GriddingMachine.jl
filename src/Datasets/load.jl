@@ -73,6 +73,31 @@ end
 
 
 function load_LUT(
+            dt::LandMaskERA5{FT},
+            file::String,
+            format::FormatNC,
+            label::String,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
+) where {FT<:AbstractFloat}
+    # land mask used is specified, cannot be used directly
+    _data   = FT.(ncread(file, label));
+    _data .+= 32766;
+    _data ./= 65533;
+
+    return GriddedDataset{FT}(data     = _data   ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
+function load_LUT(
             dt::AbstractDataset{FT},
             file::String,
             format::FormatNC,

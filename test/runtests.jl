@@ -1,11 +1,7 @@
 using GriddingMachine
 using Test
 
-
-
-# WARNING change this to false when merging into main branch
 FT = Float32;
-test_huge_LUT = false;
 
 
 
@@ -33,6 +29,7 @@ end
     MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "1X", "8D");    @test true;
     VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "1X", "8D");    @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
+    LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
     CHL_LUT = load_LUT(LeafChlorophyll{FT}());                 @test true;
     LNC_LUT = load_LUT(LeafNitrogen{FT}());                    @test true;
     LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
@@ -51,7 +48,8 @@ end
     read_LUT(LAI_LUT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
 
-    if test_huge_LUT
+    # only for high memory and storage cases, e.g., server
+    if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
         CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
         VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "12X", "8D");    @test true;
         TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;

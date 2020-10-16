@@ -179,6 +179,16 @@ struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
 
 """
+    struct LandMaskERA5{FT}
+
+Struct for land mask from ERA5
+"""
+struct LandMaskERA5{FT}  <: AbstractStandDataset{FT} end
+
+
+
+
+"""
     struct NPPModis{FT}
 
 Struct for Modis NPP

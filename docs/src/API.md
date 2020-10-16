@@ -58,6 +58,7 @@ ClumpingIndexPFT
 GPPMPIv006
 GPPVPMv20
 LAIMonthlyMean
+LandMaskERA5
 NPPModis
 TreeDensity
 ```
