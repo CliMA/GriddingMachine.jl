@@ -37,57 +37,29 @@ FormatTIFF
 AbstractDataset
 ```
 
-### Canopy height
+### Leaf level dataset
 
 ```@docs
-AbstractCanopyHeight
-CanopyHeightGLAS
-```
-
-### Clumping index
-
-```@docs
-AbstractClumpingIndex
-ClumpingIndexMODIS
-ClumpingIndexPFT
-```
-
-### Gross primary productivity
-
-```@docs
-AbstractGPP
-GPPMPIv006
-GPPVPMv20
-```
-
-### Leaf area index
-
-```@docs
-AbstractLAI
-LAIMonthlyMean
-```
-
-### Leaf mass and nutrients
-
-```@docs
-AbstractLeafMN
+AbstractLeafDataset
 LeafChlorophyll
-LeafSLA
 LeafNitrogen
 LeafPhosphorus
-```
-
-### Net primary productivity
-```@docs
-AbstractNPP
-NPPModis
-```
-
-### Vcmax
-
-```@docs
-AbstractVcmax
+LeafSLA
 VcmaxOptimalCiCa
+```
+
+### Stand level datasets
+
+```@docs
+AbstractStandDataset
+CanopyHeightGLAS
+ClumpingIndexMODIS
+ClumpingIndexPFT
+GPPMPIv006
+GPPVPMv20
+LAIMonthlyMean
+NPPModis
+TreeDensity
 ```
 
 

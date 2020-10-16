@@ -184,3 +184,20 @@ function query_LUT(dt::NPPModis)
 
     return _file, FormatNC(), "npp", "1Y", false, _varn, _vara
 end
+
+
+
+
+function query_LUT(dt::TreeDensity, res_g::String, res_t::String)
+    if (res_g=="120X") && (res_t=="1Y")
+        _file = artifact"tree_density_120X_1Y" *
+                "/tree_density_120X_1Y_WGS84.tif";
+    elseif (res_g=="12X") && (res_t=="1Y")
+        _file = artifact"tree_density_12X_1Y" *
+                "/tree_density_12X_1Y_WGS84.tif";
+    end
+    _varn = "TD";
+    _vara = Dict("longname" => "Tree density" , "units" => "km⁻²");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end

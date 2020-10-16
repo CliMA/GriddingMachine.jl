@@ -17,11 +17,11 @@ function mask_LUT!(ds::GriddedDataset, default::Number=-9999)
 
     # to avoid memory overflow, filter the data per line
     _size = size(data,1) * size(data,2) * size(data,3);
-    if _size < 6e8
+    if _size < 1e7
         _mask = isnan.(data);
         data[_mask] .= default;
     else
-        println("Filtering out the unrealistic values...");
+        println("Replacing NaN with unrealistic values...");
         @showprogress for i in 1:size(data,2)
             _mask = isnan.(view(data,:,i,:));
             view(data,:,i,:)[_mask] .= default;
@@ -40,11 +40,11 @@ function mask_LUT!(ds::GriddedDataset, lims::Array)
 
     # to avoid memory overflow, filter the data per line
     _size = size(data,1) * size(data,2) * size(data,3);
-    if _size < 6e8
+    if _size < 1e7
         _mask = (_lower .<= data .<= _upper);
         data[.!_mask] .= NaN;
     else
-        println("Filtering out the unrealistic values...");
+        println("Replacing unrealistic values with NaN...");
         @showprogress for i in 1:size(data,2)
             _mask = (_lower .<= view(data,:,i,:) .<= _upper);
             view(data,:,i,:)[.!_mask] .= NaN;

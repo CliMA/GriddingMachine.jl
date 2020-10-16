@@ -13,13 +13,8 @@ using ProgressMeter
 
 # export public types
 export AbstractDataset,
-       AbstractCanopyHeight,
-       AbstractClumpingIndex,
-       AbstractGPP,
-       AbstractLAI,
-       AbstractLeafMN,
-       AbstractNPP,
-       AbstractVcmax,
+       AbstractLeafDataset,
+       AbstractStandDataset,
        CanopyHeightGLAS,
        ClumpingIndexMODIS,
        ClumpingIndexPFT,
@@ -34,6 +29,7 @@ export AbstractDataset,
        LeafPhosphorus,
        LeafSLA,
        NPPModis,
+       TreeDensity,
        VcmaxOptimalCiCa
 
 

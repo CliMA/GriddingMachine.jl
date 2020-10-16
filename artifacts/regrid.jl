@@ -1,3 +1,10 @@
+###############################################################################
+#
+# Re-grid the GPP and save it to new nc files
+# Un-comment the #==# to redo the regridding
+#
+###############################################################################
+#=
 using GriddingMachine
 
 FT = Float32;
@@ -21,3 +28,4 @@ for year in 2000:2019
     rm(_file, force=true);
     save_LUT(reg_lut, _file);
 end
+=#

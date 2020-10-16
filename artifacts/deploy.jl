@@ -17,7 +17,7 @@ artifact_toml = joinpath(@__DIR__, "../Artifacts.toml");
 # FTP url for the datasets
 ftp_url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT";
 ftp_loc = "/net/fluo/data1/ftp/XYZT_CLIMA_LUT";
-git_url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/"
+git_url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT"
 
 
 
@@ -176,3 +176,11 @@ deploy_artifact(vpm_gpps_12, "GPP_VPM_v20_12X_8D", "GPP", vpm_fold_12, out_gpps_
 deploy_artifact(["npp_modis_1X_1Y_2000.nc"],
                 "NPP_MODIS_1X_1Y",
                 "NPP");
+
+# Stand --- tree density
+deploy_artifact(["tree_density_120X_1Y_WGS84.tif"],
+                "tree_density_120X_1Y",
+                "TD"; git_copy=false);
+deploy_artifact(["tree_density_12X_1Y_WGS84.tif"],
+                "tree_density_12X_1Y",
+                "TD");
