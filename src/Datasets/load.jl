@@ -73,6 +73,36 @@ end
 
 
 function load_LUT(
+            dt::LAIMonthlyMean{FT},
+            file::String,
+            format::FormatNC,
+            label::String,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
+) where {FT<:AbstractFloat}
+    _data = FT.(ncread(file, label));
+    data  = similar(_data);
+
+    for _mon in 1:7
+        data[:,:,_mon] .= _data[:,:,_mon+5];
+    end
+    for _mon in 8:12
+        data[:,:,_mon] .= _data[:,:,_mon-7];
+    end
+
+    return GriddedDataset{FT}(data     = data    ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
+function load_LUT(
             dt::LandMaskERA5{FT},
             file::String,
             format::FormatNC,

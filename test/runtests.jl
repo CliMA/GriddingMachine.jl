@@ -45,8 +45,14 @@ end
     end
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
-    read_LUT(LAI_LUT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
+    read_LUT(CLI_PFT, (FT(30),FT(40)), (FT(80),FT(115)), (1,5)); @test true;
+    read_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115))       ); @test true;
+
+    view_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
+    view_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
+    view_LUT(CLI_PFT, (FT(30),FT(40)), (FT(80),FT(115)), (1,5)); @test true;
+    view_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115))       ); @test true;
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
