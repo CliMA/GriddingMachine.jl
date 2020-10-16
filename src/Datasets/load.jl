@@ -6,6 +6,9 @@
 """
     load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
+             res_g::String,
+             res_t::String) where {FT<:AbstractFloat}
+    load_LUT(dt::AbstractDataset{FT},
              year::Int,
              res_g::String,
              res_t::String) where {FT<:AbstractFloat}
@@ -38,6 +41,18 @@ Note that the artifact for GPP is about
 """
 function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
+end
+
+
+
+
+function load_LUT(
+            dt::AbstractDataset{FT},
+            res_g::String,
+            res_t::String
+) where {FT<:AbstractFloat}
+    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt, res_g, res_t);
     return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
 end
 

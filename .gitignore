@@ -1,6 +1,10 @@
 docs/build/*
 docs/src/generated/*
 
+*.gif
+*.jpg
 *.nc
 *.nc4
+*.pdf
+*.png
 *.tar.gz
