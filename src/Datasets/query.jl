@@ -34,18 +34,18 @@ end
 
 
 
-function query_LUT(dt::ClumpingIndexMODIS, res_g::String="12X")
-    if res_g == "240X"
+function query_LUT(dt::ClumpingIndexMODIS, res_g::String, res_t::String)
+    if (res_g=="240X") && (res_t=="1Y")
         _file = artifact"clumping_index_240X_1Y" *
                 "/global_clumping_index_240X_WGS84.tif";
-    else
+    elseif (res_g=="12X") && (res_t=="1Y")
         _file = artifact"clumping_index_12X_1Y" *
                 "/global_clumping_index_12X_WGS84.tif";
     end
     _varn = "CI";
     _vara = Dict("longname" => "Clumping index" , "units" => "-");
 
-    return _file, FormatTIFF(), 1, "1Y", false, _varn, _vara
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
 end
 
 
@@ -64,38 +64,50 @@ end
 
 
 function query_LUT(dt::GPPMPIv006, year::Int, res_g::String, res_t::String)
-    if (res_g == "2X") && (res_t=="8D")
+    if (res_g == "1X") && (res_t=="8D")
+        _name = "GPP_MPI_v006_1X_8D_" * string(year) * ".nc";
+        _arti = artifact"GPP_MPI_v006_1X_8D";
+        _revl = false;
+    elseif (res_g == "2X") && (res_t=="8D")
         _name = "GPP_MPI_v006_2X_8D_" * string(year) * ".nc";
         _arti = artifact"GPP_MPI_v006_2X_8D";
+        _revl = true;
     elseif (res_g == "2X") && (res_t=="1M")
         _name = "GPP_MPI_v006_2X_1M_" * string(year) * ".nc";
         _arti = artifact"GPP_MPI_v006_2X_1M";
+        _revl = true;
     end
     _file = joinpath(_arti, _name);
     _varn = "GPP";
     _vara = Dict("longname" => "Gross primary productivity",
                  "units" => "μmol m⁻² s⁻¹");
 
-    return _file, FormatNC(), "GPP", res_t, true, _varn, _vara
+    return _file, FormatNC(), "GPP", res_t, _revl, _varn, _vara
 end
 
 
 
 
 function query_LUT(dt::GPPVPMv20, year::Int, res_g::String, res_t::String)
-    if (res_g == "5X") && (res_t=="8D")
+    if (res_g == "1X") && (res_t=="8D")
+        _name = "GPP_VPM_v20_1X_8D_" * string(year) * ".nc";
+        _arti = artifact"GPP_VPM_v20_1X_8D";
+        _revl = false;
+    elseif (res_g == "5X") && (res_t=="8D")
         _name = "GPP_VPM_v20_5X_8D_" * string(year) * ".nc";
         _arti = artifact"GPP_VPM_v20_5X_8D";
+        _revl = true;
     elseif (res_g == "12X") && (res_t=="8D")
         _name = "GPP_VPM_v20_12X_8D_" * string(year) * ".nc";
         _arti = artifact"GPP_VPM_v20_12X_8D";
+        _revl = true;
     end
     _file = joinpath(_arti, _name);
     _varn = "GPP";
     _vara = Dict("longname" => "Gross primary productivity",
                  "units" => "μmol m⁻² s⁻¹");
 
-    return _file, FormatNC(), "GPP", res_t, true, _varn, _vara
+    return _file, FormatNC(), "GPP", res_t, _revl, _varn, _vara
 end
 
 

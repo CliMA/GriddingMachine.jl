@@ -8,6 +8,7 @@ using GriddingMachine
 using Plots
 using Plots.PlotMeasures
 
+ENV["GKSwstype"]="100";
 FT = Float32;
 #------------------------------------------------------------------------------
 
@@ -54,13 +55,48 @@ preview_data(CHT_LUT, 1)
 
 
 # ## Clumping index
+## global clumping index
+CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y");
+CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
+mask_LUT!(CLI_LUT, FT[0,1]);
+preview_data(CLI_LUT, 1, (0.4,1))
+#------------------------------------------------------------------------------
+
+
+
+
+## global clumping index per PFT
 CLI_LUT = load_LUT(ClumpingIndexPFT{FT}());
 CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
-mask_LUT!(CLI_LUT, FT[0,1])
+mask_LUT!(CLI_LUT, FT[0,1]);
 anim = @animate for i ∈ 1:size(CLI_LUT.data,3)
-    preview_data(CLI_LUT, i, (0,1));
+    preview_data(CLI_LUT, i, (0.4,1));
 end
 gif(anim, fps=1)
+#------------------------------------------------------------------------------
+
+
+
+
+# ## Gross primary productivity
+## MPI GPP
+anim = @animate for year ∈ 2001:2019, i ∈ 1:46
+    GPP_LUT = load_LUT(GPPMPIv006{FT}(), year, "1X", "8D");
+    preview_data(GPP_LUT, i, (0,10));
+end
+gif(anim, fps=20)
+#------------------------------------------------------------------------------
+
+
+
+
+## VPM GPP
+anim = @animate for year ∈ 2000:2019, i ∈ 1:46
+    @show year;
+    GPP_LUT = load_LUT(GPPVPMv20{FT}(), year, "1X", "8D");
+    preview_data(GPP_LUT, i, (0,10));
+end
+gif(anim, fps=20)
 #------------------------------------------------------------------------------
 
 
@@ -81,7 +117,7 @@ gif(anim, fps=1)
 # ## Leaf chlorophyll content
 LCH_LUT = load_LUT(LeafChlorophyll{FT}());
 LCH_LUT = regrid_LUT(LCH_LUT, Int(size(LCH_LUT.data,2)/180));
-mask_LUT!(CLI_LUT, FT[0,Inf])
+mask_LUT!(CLI_LUT, FT[0,Inf]);
 anim = @animate for i ∈ 1:size(LCH_LUT.data,3)
     preview_data(LCH_LUT, i, (0,80));
 end

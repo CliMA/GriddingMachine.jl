@@ -1,119 +1,20 @@
-###############################################################################
-#
-# canopy level datasets, including
-#     20X  resolution of 1Y mean canopy height
-#     12X  resolution of 1Y mean climping index
-#     240X resolution of 1Y mean climping index
-#     2X   resolution of 1Y mean climping index per PFT
-#     4X   resolution of 1M mean leaf area index
-#
-###############################################################################
-[canopy_height_20X_1Y]
-git-tree-sha1 = "4e1afeec382946404479013c75461e720594fb1b"
+[GPP_MPI_v006_1X_8D]
+git-tree-sha1 = "42d5776ab710d82e8314e4ea184a0fd5550e4b34"
 lazy = true
 
-    [[canopy_height_20X_1Y.download]]
-    sha256 = "f75e366fda8a2432ca2584ba7e7e23e96abd8b5c4091ece6856011b8cdffe4ce"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH/canopy_height_20X_1Y.tar.gz"
-    [[canopy_height_20X_1Y.download]]
-    sha256 = "f75e366fda8a2432ca2584ba7e7e23e96abd8b5c4091ece6856011b8cdffe4ce"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/canopy_height_20X_1Y.tar.gz"
+    [[GPP_MPI_v006_1X_8D.download]]
+    sha256 = "ae72bb97353e2c622acb8633769b02114cfccad4f45e73bac7aa16e386389761"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/regridded/GPP_MPI_v006_1X_8D.tar.gz"
+    [[GPP_MPI_v006_1X_8D.download]]
+    sha256 = "ae72bb97353e2c622acb8633769b02114cfccad4f45e73bac7aa16e386389761"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//GPP_MPI_v006_1X_8D.tar.gz"
 
-[clumping_index_12X_1Y]
-git-tree-sha1 = "9caa40994933cfb596bb30b1a040a2ce5f4d8f3e"
-lazy = true
-
-    [[clumping_index_12X_1Y.download]]
-    sha256 = "ec7e5d6a95fd16bb70d93d495f35775753a18c2a97f9f2ac671eabd3098d7183"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_12X_1Y.tar.gz"
-    [[clumping_index_12X_1Y.download]]
-    sha256 = "ec7e5d6a95fd16bb70d93d495f35775753a18c2a97f9f2ac671eabd3098d7183"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/clumping_index_12X_1Y.tar.gz"
-
-[clumping_index_240X_1Y]
-git-tree-sha1 = "21118d78829bb865af8dbe15193c5fd30331841e"
-lazy = true
-
-    [[clumping_index_240X_1Y.download]]
-    sha256 = "4c1b51e50d024a2d0470ffa09e056d0eda8df5425548e75fd587b4a1597e85d3"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_240X_1Y.tar.gz"
-
-[clumping_index_2X_1Y_PFT]
-git-tree-sha1 = "3ac2afe0638bfcc5a0e361a5a63536d1df852bce"
-lazy = true
-
-    [[clumping_index_2X_1Y_PFT.download]]
-    sha256 = "2cb8e9864cb1f65eb938d4d33f617cc26ce8bdf17c0b2cbb0f17a6b137cc9f1a"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_2X_1Y_PFT.tar.gz"
-    [[clumping_index_2X_1Y_PFT.download]]
-    sha256 = "2cb8e9864cb1f65eb938d4d33f617cc26ce8bdf17c0b2cbb0f17a6b137cc9f1a"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/clumping_index_2X_1Y_PFT.tar.gz"
-
-[leaf_area_index_4X_1M]
-git-tree-sha1 = "fc6392b3813ce18ff0a7035c6aaccf6bbaaf7e0e"
-lazy = true
-
-    [[leaf_area_index_4X_1M.download]]
-    sha256 = "cc2a11bca94a1713207fe1017ecc65251a3ccac611f23dc6c34bd0b171759401"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/leaf_area_index_4X_1M.tar.gz"
-    [[leaf_area_index_4X_1M.download]]
-    sha256 = "cc2a11bca94a1713207fe1017ecc65251a3ccac611f23dc6c34bd0b171759401"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_area_index_4X_1M.tar.gz"
-
-
-
-
-###############################################################################
-#
-# leaf traits including
-#     2X resolution of 7 days mean chlorophyll content
-#     2X resolution of 1 year leaf nitrogen
-#     2X resolution of 1 year leaf phosphorus
-#     2X resolution of 1 year specific leaf area
-#     2X resolution of 1 year Vcmax based on Ci/Ca
-#
-###############################################################################
-[leaf_chlorophyll_2X_7D]
-git-tree-sha1 = "b198272164957ba32d4162b0fa767b2aee998066"
-lazy = true
-
-    [[leaf_chlorophyll_2X_7D.download]]
-    sha256 = "d1f8aaa839becfa7f08b0a7f532dbabded6d2bca6b8bd6ec28b983f1848da7ef"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_chlorophyll_2X_7D.tar.gz"
-    [[leaf_chlorophyll_2X_7D.download]]
-    sha256 = "d1f8aaa839becfa7f08b0a7f532dbabded6d2bca6b8bd6ec28b983f1848da7ef"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_chlorophyll_2X_7D.tar.gz"
-
-[leaf_traits_2X_1Y]
-git-tree-sha1 = "0e9051ff9b9efd502404bd10790d6f18c49bbb24"
-lazy = true
-
-    [[leaf_traits_2X_1Y.download]]
-    sha256 = "7f0d5399c49c9649e0c6f8430f9e0ce975de2def97dd5a4dea5a066b04de2a08"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_traits_2X_1Y.tar.gz"
-    [[leaf_traits_2X_1Y.download]]
-    sha256 = "7f0d5399c49c9649e0c6f8430f9e0ce975de2def97dd5a4dea5a066b04de2a08"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_traits_2X_1Y.tar.gz"
-
-
-
-
-###############################################################################
-#
-# Pixel level datasets, including
-#     2X  resolution of 1M mean MPI GPP (year 2001-2019)
-#     2X  resolution of 8D mean MPI GPP (year 2001-2019)
-#     5X  resolution of 8D mean VPM GPP (year 2000-2019)
-#     12X resolution of 8D mean VPM GPP (year 2000-2019)
-#     1X  resolution of 1Y net primary productivity (year 2000)
-#
-###############################################################################
 [GPP_MPI_v006_2X_1M]
 git-tree-sha1 = "7de1254527927fd0b97469d486e4997390f30f7b"
 lazy = true
 
     [[GPP_MPI_v006_2X_1M.download]]
-    sha256 = "26a1ea34a956c264a3e5fd2528e3d5a4c09086396a230a6b437c3fbad4b14770"
+    sha256 = "0868911837eb1aa3d76651ef63e60f026f61090c3e32848566601db9d76b12ab"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/GPP_MPI_v006_2X_1M.tar.gz"
 
 [GPP_MPI_v006_2X_8D]
@@ -121,7 +22,7 @@ git-tree-sha1 = "d2154d60597582eb2eac9515bc4bde9ffe269d2b"
 lazy = true
 
     [[GPP_MPI_v006_2X_8D.download]]
-    sha256 = "daa138b2d826c54b8e0368f5e3b906375ad8d4178585570fa19fd61fe12e83a7"
+    sha256 = "6198ffe41badc98dca8302a32822a804b067828fb3d70871645d498d4e604b7e"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/GPP_MPI_v006_2X_8D.tar.gz"
 
 [GPP_VPM_v20_12X_8D]
@@ -129,15 +30,26 @@ git-tree-sha1 = "d177c059d5ac3329f453b1d7cecc01d3b0c5c4bd"
 lazy = true
 
     [[GPP_VPM_v20_12X_8D.download]]
-    sha256 = "21b1a5e1317adbda8d82d2bf71429436ed105a45a986cba7752047e5404a448c"
+    sha256 = "9fb07c22a624ae980b882c960c6c33ef3f1463d1e3f1f3b1a7a58894eee3dde4"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/GPP_VPM_v20_12X_8D.tar.gz"
+
+[GPP_VPM_v20_1X_8D]
+git-tree-sha1 = "b38a1bf226aa4bf503f91bc3c19ac05a2f751f37"
+lazy = true
+
+    [[GPP_VPM_v20_1X_8D.download]]
+    sha256 = "762ab90811ce88fef3f7c468b68e16185d56b98b63e363d2b4947f99aee396a9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/regridded/GPP_VPM_v20_1X_8D.tar.gz"
+    [[GPP_VPM_v20_1X_8D.download]]
+    sha256 = "762ab90811ce88fef3f7c468b68e16185d56b98b63e363d2b4947f99aee396a9"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//GPP_VPM_v20_1X_8D.tar.gz"
 
 [GPP_VPM_v20_5X_8D]
 git-tree-sha1 = "8b9864c92630fdf53c12dc99100c9538d05320f3"
 lazy = true
 
     [[GPP_VPM_v20_5X_8D.download]]
-    sha256 = "1475e5244f66629be78f021dacaf97d9044b3ab02e562b1ac927b2df67be3583"
+    sha256 = "d8249631dcadaffff2bfde92566509422c38942c1a1c2ee8c6743fb3e4096d38"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/GPP_VPM_v20_5X_8D.tar.gz"
 
 [NPP_MODIS_1X_1Y]
@@ -145,8 +57,82 @@ git-tree-sha1 = "322972ce0a6c3250a4cd4563f05b6214668ea86a"
 lazy = true
 
     [[NPP_MODIS_1X_1Y.download]]
-    sha256 = "eb7d338f75f58e0015a2f0361c32b869f70319491d3f6a0a9117ac6f1e01a36a"
+    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/NPP/NPP_MODIS_1X_1Y.tar.gz"
     [[NPP_MODIS_1X_1Y.download]]
-    sha256 = "eb7d338f75f58e0015a2f0361c32b869f70319491d3f6a0a9117ac6f1e01a36a"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/NPP_MODIS_1X_1Y.tar.gz"
+    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//NPP_MODIS_1X_1Y.tar.gz"
+
+[canopy_height_20X_1Y]
+git-tree-sha1 = "4e1afeec382946404479013c75461e720594fb1b"
+lazy = true
+
+    [[canopy_height_20X_1Y.download]]
+    sha256 = "d883316717c758c69eaca38d413b28a551eefe7d30cdad0acd93cc082359f641"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH/canopy_height_20X_1Y.tar.gz"
+    [[canopy_height_20X_1Y.download]]
+    sha256 = "d883316717c758c69eaca38d413b28a551eefe7d30cdad0acd93cc082359f641"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//canopy_height_20X_1Y.tar.gz"
+
+[clumping_index_12X_1Y]
+git-tree-sha1 = "9caa40994933cfb596bb30b1a040a2ce5f4d8f3e"
+lazy = true
+
+    [[clumping_index_12X_1Y.download]]
+    sha256 = "a6aade7eb54ab16f521b020de46f04c866f44b7c114aaa7e67c0c2f9ea269ded"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_12X_1Y.tar.gz"
+    [[clumping_index_12X_1Y.download]]
+    sha256 = "a6aade7eb54ab16f521b020de46f04c866f44b7c114aaa7e67c0c2f9ea269ded"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//clumping_index_12X_1Y.tar.gz"
+
+[clumping_index_240X_1Y]
+git-tree-sha1 = "21118d78829bb865af8dbe15193c5fd30331841e"
+lazy = true
+
+    [[clumping_index_240X_1Y.download]]
+    sha256 = "0e92f6c44f819b2a20695d67a67ed924dbf12ed9df38d1c89404816efdea7f73"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_240X_1Y.tar.gz"
+
+[clumping_index_2X_1Y_PFT]
+git-tree-sha1 = "3ac2afe0638bfcc5a0e361a5a63536d1df852bce"
+lazy = true
+
+    [[clumping_index_2X_1Y_PFT.download]]
+    sha256 = "e9a849a731469191f366c5d0fcd21aed8c027824c33da5925b989174accfc9f6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI/clumping_index_2X_1Y_PFT.tar.gz"
+    [[clumping_index_2X_1Y_PFT.download]]
+    sha256 = "e9a849a731469191f366c5d0fcd21aed8c027824c33da5925b989174accfc9f6"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//clumping_index_2X_1Y_PFT.tar.gz"
+
+[leaf_area_index_4X_1M]
+git-tree-sha1 = "fc6392b3813ce18ff0a7035c6aaccf6bbaaf7e0e"
+lazy = true
+
+    [[leaf_area_index_4X_1M.download]]
+    sha256 = "9838806fbb1bc374bd9fb7d343108d5f8ec7efc91d75525ace82c1959a2b1677"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI/leaf_area_index_4X_1M.tar.gz"
+    [[leaf_area_index_4X_1M.download]]
+    sha256 = "9838806fbb1bc374bd9fb7d343108d5f8ec7efc91d75525ace82c1959a2b1677"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//leaf_area_index_4X_1M.tar.gz"
+
+[leaf_chlorophyll_2X_7D]
+git-tree-sha1 = "b198272164957ba32d4162b0fa767b2aee998066"
+lazy = true
+
+    [[leaf_chlorophyll_2X_7D.download]]
+    sha256 = "912f3638c440948e14b6aa28a843d3f576da12d838228210f7c2da18eed0123d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_chlorophyll_2X_7D.tar.gz"
+    [[leaf_chlorophyll_2X_7D.download]]
+    sha256 = "912f3638c440948e14b6aa28a843d3f576da12d838228210f7c2da18eed0123d"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//leaf_chlorophyll_2X_7D.tar.gz"
+
+[leaf_traits_2X_1Y]
+git-tree-sha1 = "0e9051ff9b9efd502404bd10790d6f18c49bbb24"
+lazy = true
+
+    [[leaf_traits_2X_1Y.download]]
+    sha256 = "fd45618e762c9763efe8d6e5b976efdd2318473d7d22d84f557480974e9d42b3"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/Leaf/leaf_traits_2X_1Y.tar.gz"
+    [[leaf_traits_2X_1Y.download]]
+    sha256 = "fd45618e762c9763efe8d6e5b976efdd2318473d7d22d84f557480974e9d42b3"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT//leaf_traits_2X_1Y.tar.gz"
