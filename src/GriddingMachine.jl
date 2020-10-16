@@ -46,7 +46,8 @@ export lat_ind,
        mask_LUT!,
        query_LUT,
        read_LUT,
-       regrid_LUT
+       regrid_LUT,
+       save_LUT
 
 
 
@@ -59,6 +60,7 @@ include("Datasets/mask.jl"       )
 include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )
+include("Datasets/save.jl"       )
 
 # The Util functions
 include("Utils/lat_lon_index.jl")

@@ -52,5 +52,7 @@ function regrid_LUT(
 
     return GriddedDataset{FT}(data     = mat_data   ,
                               res_time = ds.res_time,
-                              dt       = ds.dt      )
+                              dt       = ds.dt      ,
+                              var_name = ds.var_name,
+                              var_attr = ds.var_attr)
 end

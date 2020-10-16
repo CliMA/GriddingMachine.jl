@@ -27,18 +27,20 @@ lai_val = read_LUT(LAI_LUT, FT(30), FT(-100), 8);
 
 ## Collected Datasets
 
-| Structure Name     | Artifact                     | Description                                             |
-|:-------------------|:-----------------------------|:--------------------------------------------------------|
-| CanopyHeightGLAS   | `canopy_height_0_05_deg`     | 1/2 degree resolution, year 2005                        |
-| ClumpingIndexMODIS | `clumping_index_500_m`       | 1/240 degree resolution, year 2006                      |
-| ClumpingIndexPFT   | `clumping_index_0_5_deg_PFT` | 1/2 degree resolution per PFT, year 2006                |
-| GPPMPIv006         | `MPI_GPP_v006_0_5_deg_8D`    | 1/2 degree resolution per 8 days, year 2001-2019        |
-|                    | `MPI_GPP_v006_0_5_deg_1M`    | 1/2 degree resolution per month, year 2001-2019         |
-| GPPVPMv20          | `VPM_GPP_v20_0_2_deg_8D`     | 1/5 degree resolution per 8 days, year 2000-2019        |
-|                    | `VPM_GPP_v20_0_083_deg_8D`   | 1/12 degree resolution per 8 days, year 2000-2019       |
-| LAIMonthlyMean     | `lai_monthly_mean`           | 1/4 degree resolution per month, mean of year 1981-2015 |
-| LeafNitrogen       | `leaf_sla_n_p_0_5_deg`       | 1/2 degree resolution, mean from report literature      |
-| LeafPhosphorus     |                              |                                                         |
-| LeafSLA            |                              |                                                         |
-| NPPModis           | `npp_1_deg`                  | 1 degree resolution, year 2000                          |
-| VcmaxOptimalCiCa   | `vcmax_0_5_deg`              | 1/2 degree resolution, derived from optimal Ci/Ca       |
+| Structure Name     | Artifact                   | Description                                             |
+|:-------------------|:---------------------------|:--------------------------------------------------------|
+| CanopyHeightGLAS   | `canopy_height_20X_1Y`     | 1/20 degree resolution, year 2005                       |
+| ClumpingIndexMODIS | `clumping_index_12X_1Y`    | 1/240 degree resolution, year 2006                      |
+|                    | `clumping_index_240X_1Y`   | 1/240 degree resolution, year 2006                      |
+| ClumpingIndexPFT   | `clumping_index_2X_1Y_PFT` | 1/2 degree resolution per PFT, year 2006                |
+| GPPMPIv006         | `GPP_MPI_v006_2X_8D`       | 1/2 degree resolution per 8 days, year 2001-2019        |
+|                    | `GPP_MPI_v006_2X_1M`       | 1/2 degree resolution per month, year 2001-2019         |
+| GPPVPMv20          | `GPP_VPM_v20_5X_8D`        | 1/5 degree resolution per 8 days, year 2000-2019        |
+|                    | `GPP_VPM_v20_12X_8D`       | 1/12 degree resolution per 8 days, year 2000-2019       |
+| LAIMonthlyMean     | `leaf_area_index_4X_1M`    | 1/4 degree resolution per month, mean of year 1981-2015 |
+| LeafChlorophyll    | `leaf_chlorophyll_2X_7D`   | 1/2 degree resolution per week, mean of year 2003-2011  |
+| LeafNitrogen       | `leaf_traits_2X_1Y`        | 1/2 degree resolution, mean from report literature      |
+| LeafPhosphorus     |                            |                                                         |
+| LeafSLA            |                            |                                                         |
+| NPPModis           | `NPP_MODIS_1X_1Y`          | 1 degree resolution, year 2000                          |
+| VcmaxOptimalCiCa   | `leaf_traits_2X_1Y`        | 1/2 degree resolution, derived from optimal Ci/Ca       |
