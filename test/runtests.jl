@@ -31,7 +31,6 @@ end
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
     MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "1X", "8D");    @test true;
-    MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
     VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "1X", "8D");    @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     CHL_LUT = load_LUT(LeafChlorophyll{FT}());                 @test true;
@@ -42,15 +41,19 @@ end
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
 
+    if Sys.islinux()
+        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M"); @test true;
+        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D"); @test true;
+        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D"); @test true;
+    end
+
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
     read_LUT(LAI_LUT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
 
     if test_huge_LUT
         CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D");     @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");     @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "20X", "8D");    @test true;
+        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "12X", "8D");    @test true;
         TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
     end
 end
