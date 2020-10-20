@@ -95,6 +95,10 @@ anim = @animate for year ∈ 2000:2019, i ∈ 1:46
 end
 gif(anim, fps=20)
 
+LMK_LUT = load_LUT(LandMaskERA5{FT}());
+LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
+preview_data(LMK_LUT, 1)
+
 LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
 LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
 anim = @animate for i ∈ 1:size(LAI_LUT.data,3)

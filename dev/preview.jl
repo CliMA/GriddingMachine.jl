@@ -133,6 +133,12 @@ end
 gif(anim, fps=20)
 #------------------------------------------------------------------------------
 
+# ### Land mask
+LMK_LUT = load_LUT(LandMaskERA5{FT}());
+LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
+preview_data(LMK_LUT, 1)
+#------------------------------------------------------------------------------
+
 # ### Leaf area index
 LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
 LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
