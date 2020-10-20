@@ -104,6 +104,17 @@ lazy = true
     sha256 = "e9a849a731469191f366c5d0fcd21aed8c027824c33da5925b989174accfc9f6"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/clumping_index_2X_1Y_PFT.tar.gz"
 
+[land_mask_ERA5_4X_1Y]
+git-tree-sha1 = "8df55fedf0f45cb465500d938a865ced297a01c7"
+lazy = true
+
+    [[land_mask_ERA5_4X_1Y.download]]
+    sha256 = "773bdea7e158d767283998e4f689b05fd0035b04b3d94e909e2d2b315300ab17"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LM/land_mask_ERA5_4X_1Y.tar.gz"
+    [[land_mask_ERA5_4X_1Y.download]]
+    sha256 = "773bdea7e158d767283998e4f689b05fd0035b04b3d94e909e2d2b315300ab17"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_mask_ERA5_4X_1Y.tar.gz"
+
 [leaf_area_index_4X_1M]
 git-tree-sha1 = "fc6392b3813ce18ff0a7035c6aaccf6bbaaf7e0e"
 lazy = true

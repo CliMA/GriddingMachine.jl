@@ -141,10 +141,10 @@ uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.1"
 
 [[JpegTurbo_jll]]
-deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "76e28bf35d0c179531b11e254f66bbcc1fd268ca"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "9aff0587d9603ea0de2c6f6300d9f9492bbefbd3"
 uuid = "aacddb02-875f-59d6-b918-886e6ef4fbf8"
-version = "2.0.1+2"
+version = "2.0.1+3"
 
 [[LibCURL_jll]]
 deps = ["LibSSH2_jll", "Libdl", "MbedTLS_jll", "Pkg", "Zlib_jll", "nghttp2_jll"]
@@ -166,10 +166,10 @@ version = "1.9.0+3"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[Libtiff_jll]]
-deps = ["JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
-git-tree-sha1 = "84ad722d8b9c6d3b3ca3a067d1da12b641352584"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
+git-tree-sha1 = "291dd857901f94d683973cdf679984cdf73b56d0"
 uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-version = "4.1.0+1"
+version = "4.1.0+2"
 
 [[LinearAlgebra]]
 deps = ["Libdl"]
@@ -335,15 +335,15 @@ version = "1.2.0"
 
 [[Zlib_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "ded43825988ace7a311ee7e1d0f09571822509c4"
+git-tree-sha1 = "320228915c8debb12cb434c59057290f0834dbf6"
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
-version = "1.2.11+17"
+version = "1.2.11+18"
 
 [[Zstd_jll]]
-deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "4de91f4313d9e88162d461e282fe3066ab3a3c09"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "6f1abcb0c44f184690912aa4b0ba861dd64f11b9"
 uuid = "3161d3a3-bdf6-5164-811a-617609db77b4"
-version = "1.4.5+1"
+version = "1.4.5+2"
 
 [[libpng_jll]]
 deps = ["Libdl", "Pkg", "Zlib_jll"]

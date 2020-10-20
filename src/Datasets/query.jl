@@ -124,6 +124,17 @@ end
 
 
 
+function query_LUT(dt::LandMaskERA5)
+    _file = artifact"land_mask_ERA5_4X_1Y" * "/land_mask_ERA5_4X_1Y.nc";
+    _varn = "LM";
+    _vara = Dict("longname" => "Land mask", "units" => "-");
+
+    return _file, FormatNC(), "lsm", "1M", false, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::LeafChlorophyll)
     _file = artifact"leaf_chlorophyll_2X_7D" *
             "/leaf_chlorophyll_2X_7D.nc";

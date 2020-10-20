@@ -38,6 +38,7 @@ lai_val = read_LUT(LAI_LUT, FT(30), FT(-100), 8);
 | GPPVPMv20          | `GPP_VPM_v20_5X_8D`        | 1/5   degree resolution per 8 days, year 2000-2019        |
 |                    | `GPP_VPM_v20_12X_8D`       | 1/12  degree resolution per 8 days, year 2000-2019        |
 | LAIMonthlyMean     | `leaf_area_index_4X_1M`    | 1/4   degree resolution per month, mean of year 1981-2015 |
+| LandMaskERA5       | `land_mask_ERA5_4X_1Y`     | 1/4   degree resolution                                   |
 | LeafChlorophyll    | `leaf_chlorophyll_2X_7D`   | 1/2   degree resolution per week, mean of year 2003-2011  |
 | LeafNitrogen       | `leaf_traits_2X_1Y`        | 1/2   degree resolution, mean from report literature      |
 | LeafPhosphorus     |                            |                                                           |

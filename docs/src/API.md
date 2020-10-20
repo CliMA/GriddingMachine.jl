@@ -58,6 +58,7 @@ ClumpingIndexPFT
 GPPMPIv006
 GPPVPMv20
 LAIMonthlyMean
+LandMaskERA5
 NPPModis
 TreeDensity
 ```
@@ -111,6 +112,15 @@ A general function is provided to read the look-up tables. Note that you need
 read_LUT
 lat_ind
 lon_ind
+```
+
+An alternative `view` method is provided in parallel with `read_LUT`. The
+    difference is that there is no memory allocation using `view_LUT` so that
+    changes can be made directly to the `view`, whereas `read_LUT` creates new
+    number or arrays and changes cannot be made to original data directly.
+
+```@docs
+view_LUT
 ```
 
 

@@ -24,6 +24,7 @@ export AbstractDataset,
        GPPVPMv20,
        GriddedDataset,
        LAIMonthlyMean,
+       LandMaskERA5,
        LeafChlorophyll,
        LeafNitrogen,
        LeafPhosphorus,
@@ -43,7 +44,8 @@ export lat_ind,
        query_LUT,
        read_LUT,
        regrid_LUT,
-       save_LUT
+       save_LUT,
+       view_LUT
 
 
 
@@ -57,6 +59,7 @@ include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )
 include("Datasets/save.jl"       )
+include("Datasets/view.jl"       )
 
 # The Util functions
 include("Utils/lat_lon_index.jl")
