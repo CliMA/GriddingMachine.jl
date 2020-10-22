@@ -1,17 +1,29 @@
 module GriddingMachine
 
 using ArchGDAL
+using CSV
+using DataFrames
+using Dates
+using Distributed
 using DocStringExtensions
-using HTTP
+using Glob
 using NetCDF
 using Parameters
 using Pkg.Artifacts
 using ProgressMeter
+using Statistics
 
 
 
 
-# export public types
+# global MODIS grid information to avoid repeated memory copy
+MODIS_GRID_LAT = 0
+MODIS_GRID_LON = 0
+
+
+
+
+# export public types for GriddedDataset
 export AbstractDataset,
        AbstractLeafDataset,
        AbstractStandDataset,
@@ -36,7 +48,16 @@ export AbstractDataset,
 
 
 
-#export public functions
+# export public types for UngriddedDataset
+export AbstractUngriddedData,
+       AbstractMODIS500m,
+       AbstractMODIS1km,
+       MODISv006LAI
+
+
+
+
+#export public functions for GriddedDataset
 export lat_ind,
        load_LUT,
        lon_ind,
@@ -50,7 +71,18 @@ export lat_ind,
 
 
 
-# include the types
+#export public functions for GriddedDataset
+export compile_RAW,
+       dynamic_workers,
+       grid_RAW,
+       load_MODIS!,
+       parse_HV,
+       query_RAW
+
+
+
+
+# include functions to load/read datasets
 include("Datasets/DatasetType.jl")
 include("Datasets/FormatType.jl" )
 include("Datasets/load.jl"       )
@@ -60,6 +92,15 @@ include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )
 include("Datasets/save.jl"       )
 include("Datasets/view.jl"       )
+
+# include functions to grid datasets
+include("Gridding/DataType.jl")
+include("Gridding/compile.jl" )
+include("Gridding/grid.jl"    )
+include("Gridding/load.jl"    )
+include("Gridding/parse.jl"   )
+include("Gridding/query.jl"   )
+include("Gridding/workers.jl" )
 
 # The Util functions
 include("Utils/lat_lon_index.jl")

@@ -52,6 +52,22 @@ lazy = true
     sha256 = "d8249631dcadaffff2bfde92566509422c38942c1a1c2ee8c6743fb3e4096d38"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP/GPP_VPM_v20_5X_8D.tar.gz"
 
+[MODIS_1km_grid]
+git-tree-sha1 = "d70ac2e6c4c74b48d426d1a14af46a405c1ff4ee"
+lazy = true
+
+    [[MODIS_1km_grid.download]]
+    sha256 = "081b705764e2d0163128cac780322b21b8a8cdad39f74647cf9552fb81066978"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_1km_grid.tar.gz"
+
+[MODIS_500m_grid]
+git-tree-sha1 = "50638e48fab53e6f708f388674d7f44e4aa7982a"
+lazy = true
+
+    [[MODIS_500m_grid.download]]
+    sha256 = "6efeffe26de19e9c2c8919d790c2356682ecea83e3c81527baf2a6a691f5d42d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_500m_grid.tar.gz"
+
 [NPP_MODIS_1X_1Y]
 git-tree-sha1 = "322972ce0a6c3250a4cd4563f05b6214668ea86a"
 lazy = true
@@ -114,6 +130,17 @@ lazy = true
     [[land_mask_ERA5_4X_1Y.download]]
     sha256 = "773bdea7e158d767283998e4f689b05fd0035b04b3d94e909e2d2b315300ab17"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_mask_ERA5_4X_1Y.tar.gz"
+
+[land_mask_MODIS_12X_1Y]
+git-tree-sha1 = "fd2791b4024dfa618b87d43529254952b466dd1f"
+lazy = true
+
+    [[land_mask_MODIS_12X_1Y.download]]
+    sha256 = "70dc650efcc8c762050a4f5156e38ae399f78418ca3534f36ea6d55ee625315b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LM/land_mask_MODIS_12X_1Y.tar.gz"
+    [[land_mask_MODIS_12X_1Y.download]]
+    sha256 = "70dc650efcc8c762050a4f5156e38ae399f78418ca3534f36ea6d55ee625315b"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_mask_MODIS_12X_1Y.tar.gz"
 
 [leaf_area_index_4X_1M]
 git-tree-sha1 = "fc6392b3813ce18ff0a7035c6aaccf6bbaaf7e0e"
