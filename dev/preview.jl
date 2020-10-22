@@ -160,5 +160,5 @@ preview_data(NPP_LUT, 1)
 TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");
 mask_LUT!(TDT_LUT, FT[0,Inf]);
 TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
-preview_data(TDT_LUT, 1, (0, 1500))
+preview_data(TDT_LUT, 1, (0, 150000))
 #------------------------------------------------------------------------------
