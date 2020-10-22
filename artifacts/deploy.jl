@@ -176,6 +176,9 @@ deploy_artifact(vpm_gpps_12, "GPP_VPM_v20_12X_8D", "GPP", vpm_fold_12, out_gpps_
 deploy_artifact(["land_mask_ERA5_4X_1Y.nc"],
                 "land_mask_ERA5_4X_1Y",
                 "LM");
+deploy_artifact(["land_mask_MODIS_12X_1Y.nc"],
+                "land_mask_MODIS_12X_1Y",
+                "LM");
 
 # Stand --- net primary productivity
 deploy_artifact(["npp_modis_1X_1Y_2000.nc"],
@@ -189,3 +192,11 @@ deploy_artifact(["tree_density_120X_1Y_WGS84.tif"],
 deploy_artifact(["tree_density_12X_1Y_WGS84.tif"],
                 "tree_density_12X_1Y",
                 "TD");
+
+# Tools --- MODIS grid information
+deploy_artifact(["MODIS_1km_grid.nc"],
+                "MODIS_1km_grid",
+                "MODIS"; git_copy=false);
+deploy_artifact(["MODIS_500m_grid.nc"],
+                "MODIS_500m_grid",
+                "MODIS"; git_copy=false);

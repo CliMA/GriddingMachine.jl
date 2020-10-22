@@ -146,3 +146,98 @@ To avoid unnecessary reading or regridding the dataset, a function is provided
 ```@docs
 save_LUT
 ```
+
+
+
+
+## Gridding RAW data
+
+### RAW dataset types
+
+Currently, `GriddingMachine` supports the following raw dataset types:
+
+```@docs
+AbstractUngriddedData
+```
+
+The 500 m resolution datasets include
+```@docs
+AbstractMODIS500m
+MODISv006LAI
+```
+
+The 1 km resolution datasets include
+```@docs
+AbstractMODIS1km
+```
+
+### Steps to grid RAW data
+
+`GriddingMachine` allows to grid the data in a multiple threading manner, to
+    realize this while avoid extensive memory quota, some CSV cache files will
+    be created during the process (with the risk of high disk usage). To
+    make it more user friendly, a customized function is used to dynamically
+    regulate the number of threadings:
+
+```@docs
+dynamic_workers
+```
+
+However, because the MODIS tile information file is very large (e.g., 500 m
+    resolution tile infomation takes up to >40 GB memory to load), the tile
+    matricies (for both latitude and longitude) will not be loaded a priori. To
+    load the tile matricies, you will need to call `load_MODIS!` function
+    manually,
+
+```@docs
+load_MODIS!
+```
+
+Note that, if you want to load the matricies in every thread, you will need
+    command like `@everywhere load_MODIS!(MODISv006LAI{Float32}())`. What the
+    command does is loading 500 m resolution tiles information to every thread
+    (worker). If you pass a 1 km data set type to `load_MODIS!`, it will load
+    1 km resolution tiles information automatically, you don't need to worry
+    about it. However, be cautious to use corresponding tile information for
+    your project.
+
+Once the tile information is loaded, you may query the files you want to work
+    on using `query_RAW`, which returns an array of paramters to pass to
+    different threads.
+
+```@docs
+query_RAW
+```
+
+Next, you should be able to grid the RAW files using [`grid_RAW`](@ref), which
+    extract tile information from file name using `parse_HV`
+
+```@docs
+parse_HV
+```
+
+Then, [`grid_RAW`](@ref) will match the data information with tile latitude and
+    longitude, and save the data to cache CSV files, which will stay on your
+    hard drive until you remove them manually.
+
+```@docs
+grid_RAW
+```
+
+The last step you need is to read the cache CSV files and compile them to nc
+    datasets. As the file may be extremely large for very high resolution data
+    (e.g., 500 m), files are again stored as cache nc files, and then they will
+    be compile into one nc file.
+
+```@docs
+compile_RAW
+```
+
+The disadvantage is that you need a huge space to store the cache file, whereas
+    the advantages are
+
+- all cache files can be reused, no recalculation is required if you need to
+    grid the data to another resolution
+- if you encounter any error (e.g., memory shortage), you don't need to redo
+    the calculations for cached files
+- you can run the gridding and compiling in multi-thread manner
