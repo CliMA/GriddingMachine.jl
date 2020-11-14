@@ -20,7 +20,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 ArchGDAL = "0.5"
-CSV = "0.7"
+CSV = "0.7, 0.8"
 DataFrames = "0.21"
 DocStringExtensions = "0.8"
 Glob = "1.3"
