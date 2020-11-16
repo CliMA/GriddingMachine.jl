@@ -7,7 +7,7 @@
     query_RAW(dt::AbstractUngriddedData,
               year::Int,
               days::Int) where {FT<:AbstractFloat}
-    query_RAW(dt::MODISv006LAI,
+    query_RAW(dt::MOD15A2Hv006LAI,
               year::Int) where {FT<:AbstractFloat}
 
 Prepare parameters (file name and etc) to work on, given
@@ -60,7 +60,7 @@ end
 
 
 
-function query_RAW(dt::MODISv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
+function query_RAW(dt::MOD15A2Hv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
     _folder = joinpath("/net/fluo/data2/data/MODIS/MOD15A2H.006/original",
                        string(year));
     _naming = "MOD15A2H.AYYYYDOY.*.hdf";

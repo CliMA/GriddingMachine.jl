@@ -5,7 +5,7 @@
 ###############################################################################
 """
     grid_RAW(param::Array)
-    grid_RAW(dt::MODISv006LAI{FT},
+    grid_RAW(dt::MOD15A2Hv006LAI{FT},
              params::Array{Array,1},
              nthread::Int) where {FT<:AbstractFloat}
 
@@ -68,7 +68,7 @@ end
 
 
 function grid_RAW(
-            dt::MODISv006LAI{FT},
+            dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
             nthread::Int=8
 ) where {FT<:AbstractFloat}

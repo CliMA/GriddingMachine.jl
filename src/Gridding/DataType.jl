@@ -28,7 +28,7 @@ abstract type AbstractUngriddedData{FT} end
     abstract type AbstractMODIS500m{FT}
 
 Hierachy of AbstractMODIS500m
-- [`MODISv006LAI`](@ref)
+- [`MOD15A2Hv006LAI`](@ref)
 """
 abstract type AbstractMODIS500m{FT} <: AbstractUngriddedData{FT} end
 
@@ -44,7 +44,7 @@ abstract type AbstractMODIS500m{FT} <: AbstractUngriddedData{FT} end
 
 Leaf area index
 """
-struct MODISv006LAI{FT} <: AbstractMODIS500m{FT} end
+struct MOD15A2Hv006LAI{FT} <: AbstractMODIS500m{FT} end
 
 
 

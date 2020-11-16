@@ -52,7 +52,7 @@ export AbstractDataset,
 export AbstractUngriddedData,
        AbstractMODIS500m,
        AbstractMODIS1km,
-       MODISv006LAI
+       MOD15A2Hv006LAI
 
 
 
@@ -96,6 +96,7 @@ include("Datasets/view.jl"       )
 # include functions to grid datasets
 include("Gridding/DataType.jl")
 include("Gridding/compile.jl" )
+include("Gridding/fetch.jl"   )
 include("Gridding/grid.jl"    )
 include("Gridding/load.jl"    )
 include("Gridding/parse.jl"   )

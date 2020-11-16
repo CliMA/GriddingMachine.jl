@@ -163,7 +163,7 @@ AbstractUngriddedData
 The 500 m resolution datasets include
 ```@docs
 AbstractMODIS500m
-MODISv006LAI
+MOD15A2Hv006LAI
 ```
 
 The 1 km resolution datasets include
@@ -194,8 +194,8 @@ load_MODIS!
 ```
 
 Note that, if you want to load the matricies in every thread, you will need
-    command like `@everywhere load_MODIS!(MODISv006LAI{Float32}())`. What the
-    command does is loading 500 m resolution tiles information to every thread
+    command like `@everywhere load_MODIS!(MOD15A2Hv006LAI{Float32}())`. What it
+    does is loading 500 m resolution tiles information to every thread
     (worker). If you pass a 1 km data set type to `load_MODIS!`, it will load
     1 km resolution tiles information automatically, you don't need to worry
     about it. However, be cautious to use corresponding tile information for
@@ -206,6 +206,7 @@ Once the tile information is loaded, you may query the files you want to work
     different threads.
 
 ```@docs
+fetch_raw
 query_RAW
 ```
 
