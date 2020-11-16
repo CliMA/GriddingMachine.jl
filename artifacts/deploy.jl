@@ -123,6 +123,11 @@ deploy_artifact(["leaf_area_index_4X_1M.nc"],
                 "leaf_area_index_4X_1M",
                 "LAI");
 
+# Model --- land model spectrums
+deploy_artifact(["Optipar2017_ProspectD.mat", "sun.mat"],
+                "land_model_spectrum",
+                "LandModel");
+
 # Stand --- gross primary productivity
 mpi_fold_8D = "/net/fluo/data2/data/MPI-FLUXCOM-GPP-NEE-TER/original/720_360/8daily";
 mpi_fold_1M = "/net/fluo/data2/data/MPI-FLUXCOM-GPP-NEE-TER/original/720_360/monthly";
@@ -176,8 +181,8 @@ deploy_artifact(vpm_gpps_12, "GPP_VPM_v20_12X_8D", "GPP", vpm_fold_12, out_gpps_
 deploy_artifact(["land_mask_ERA5_4X_1Y.nc"],
                 "land_mask_ERA5_4X_1Y",
                 "LM");
-deploy_artifact(["land_mask_MODIS_12X_1Y.nc"],
-                "land_mask_MODIS_12X_1Y",
+deploy_artifact(["river_maps_4X_1Y.nc"],
+                "river_maps_4X_1Y",
                 "LM");
 
 # Stand --- net primary productivity

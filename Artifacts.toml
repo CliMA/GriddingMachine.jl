@@ -131,16 +131,16 @@ lazy = true
     sha256 = "773bdea7e158d767283998e4f689b05fd0035b04b3d94e909e2d2b315300ab17"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_mask_ERA5_4X_1Y.tar.gz"
 
-[land_mask_MODIS_12X_1Y]
-git-tree-sha1 = "fd2791b4024dfa618b87d43529254952b466dd1f"
+[land_model_spectrum]
+git-tree-sha1 = "5f60e2aba2640828adf889f3070d064b602386ed"
 lazy = true
 
-    [[land_mask_MODIS_12X_1Y.download]]
-    sha256 = "70dc650efcc8c762050a4f5156e38ae399f78418ca3534f36ea6d55ee625315b"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LM/land_mask_MODIS_12X_1Y.tar.gz"
-    [[land_mask_MODIS_12X_1Y.download]]
-    sha256 = "70dc650efcc8c762050a4f5156e38ae399f78418ca3534f36ea6d55ee625315b"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_mask_MODIS_12X_1Y.tar.gz"
+    [[land_model_spectrum.download]]
+    sha256 = "d9e93d13529ec35872a4849d346efd94580788a8e62dfc1c65e3c2f31c582589"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LandModel/land_model_spectrum.tar.gz"
+    [[land_model_spectrum.download]]
+    sha256 = "d9e93d13529ec35872a4849d346efd94580788a8e62dfc1c65e3c2f31c582589"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/land_model_spectrum.tar.gz"
 
 [leaf_area_index_4X_1M]
 git-tree-sha1 = "fc6392b3813ce18ff0a7035c6aaccf6bbaaf7e0e"
@@ -174,6 +174,17 @@ lazy = true
     [[leaf_traits_2X_1Y.download]]
     sha256 = "fd45618e762c9763efe8d6e5b976efdd2318473d7d22d84f557480974e9d42b3"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/leaf_traits_2X_1Y.tar.gz"
+
+[river_maps_4X_1Y]
+git-tree-sha1 = "f39c7c82583193af2a5d455dd4842ac0b7db7df2"
+lazy = true
+
+    [[river_maps_4X_1Y.download]]
+    sha256 = "7822ab76d8f2a445f8142e94d35ae987a8c8f164c8972a680adf65d45256ad16"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LM/river_maps_4X_1Y.tar.gz"
+    [[river_maps_4X_1Y.download]]
+    sha256 = "7822ab76d8f2a445f8142e94d35ae987a8c8f164c8972a680adf65d45256ad16"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/river_maps_4X_1Y.tar.gz"
 
 [tree_density_120X_1Y]
 git-tree-sha1 = "22988af1291aecec12a5cfa814d37b19d79fae59"

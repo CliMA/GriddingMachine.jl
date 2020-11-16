@@ -5,7 +5,7 @@
 ###############################################################################
 """
     compile_RAW(param::Array)
-    compile_RAW(dt::MODISv006LAI{FT},
+    compile_RAW(dt::MOD15A2Hv006LAI{FT},
                 params::Array{Any,1},
                 zooms::Int) where {FT<:AbstractFloat}
 
@@ -58,7 +58,7 @@ end
 
 
 function compile_RAW(
-            dt::MODISv006LAI{FT},
+            dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
             zooms::Int
 ) where {FT<:AbstractFloat}
