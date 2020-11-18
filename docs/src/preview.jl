@@ -133,12 +133,6 @@ end
 gif(anim, fps=20)
 #------------------------------------------------------------------------------
 
-# ### Land mask
-LMK_LUT = load_LUT(LandMaskERA5{FT}());
-LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
-preview_data(LMK_LUT, 1)
-#------------------------------------------------------------------------------
-
 # ### Leaf area index
 LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
 LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
@@ -161,4 +155,14 @@ TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");
 mask_LUT!(TDT_LUT, FT[0,Inf]);
 TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
 preview_data(TDT_LUT, 1, (0, 150000))
+#------------------------------------------------------------------------------
+
+
+
+
+# ## Land surface
+# ### Land mask
+LMK_LUT = load_LUT(LandMaskERA5{FT}());
+LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
+preview_data(LMK_LUT, 1)
 #------------------------------------------------------------------------------
