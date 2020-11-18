@@ -16,7 +16,12 @@ GriddedDataset
 ```
 
 Note it here that the `dt` field in [`GriddedDataset`](@ref) is the data
-    identity of the stored `data`. Please refer the lists below
+    identity of the stored `data`. Please refer the lists below. You may
+    pre-download the artifacts using
+
+```@docs
+predownload_artifact
+```
 
 
 

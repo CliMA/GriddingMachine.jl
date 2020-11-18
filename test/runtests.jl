@@ -22,6 +22,15 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
+    println("Downloading the artifacts, please wait...");
+    predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
+                           "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
+                           "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
+                           "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
+                           "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
+                           "river_maps_4X_1Y", "surface_data_2X_1Y",
+                           "tree_density_12X_1Y"]);
+
     println("");
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
@@ -46,6 +55,9 @@ end
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
 
     if Sys.islinux()
+        println("Downloading the artifacts, please wait...");
+        predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
+                               "GPP_VPM_v20_5X_8D"]);
         MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M"); @test true;
         MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D"); @test true;
         VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D"); @test true;
@@ -63,6 +75,9 @@ end
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
+        println("Downloading the artifacts, please wait...");
+        predownload_artifact.(["clumping_index_240X_1Y", "GPP_VPM_v20_12X_8D",
+                               "tree_density_120X_1Y"]);
         CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
         VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "12X", "8D");    @test true;
         TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;

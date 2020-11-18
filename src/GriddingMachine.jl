@@ -66,7 +66,8 @@ export AbstractUngriddedData,
 
 
 #export public functions for GriddedDataset
-export lat_ind,
+export predownload_artifact,
+       lat_ind,
        load_LUT,
        lon_ind,
        mask_LUT!,
@@ -113,6 +114,7 @@ include("Gridding/query.jl"   )
 include("Gridding/workers.jl" )
 
 # The Util functions
+include("Utils/download.jl"     )
 include("Utils/lat_lon_index.jl")
 
 
