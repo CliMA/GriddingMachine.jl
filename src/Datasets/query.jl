@@ -63,6 +63,18 @@ end
 
 
 
+function query_LUT(dt::FloodPlainHeight)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "FloodPlainHeight";
+    _vara = Dict("longname" => "Flood plain height",
+                 "units"    => "m")
+
+    return _file, FormatNC(), "fldhgt", "1Y", true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::GPPMPIv006, year::Int, res_g::String, res_t::String)
     if (res_g == "1X") && (res_t=="8D")
         _name = "GPP_MPI_v006_1X_8D_" * string(year) * ".nc";
@@ -119,6 +131,18 @@ function query_LUT(dt::LAIMonthlyMean)
     _vara = Dict("longname" => "Leaf area index", "units" => "-");
 
     return _file, FormatNC(), "LAI", "1M", false, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LandElevation)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "Elevation";
+    _vara = Dict("longname" => "Elevation",
+                 "units"    => "m")
+
+    return _file, FormatNC(), "elevtn", "1Y", true, _varn, _vara
 end
 
 
@@ -199,6 +223,54 @@ end
 
 
 
+function query_LUT(dt::RiverHeight)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "RiverHeight";
+    _vara = Dict("longname" => "River height",
+                 "units"    => "m")
+
+    return _file, FormatNC(), "rivhgt", "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::RiverLength)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "RiverLength";
+    _vara = Dict("longname" => "River length",
+                 "units"    => "m")
+
+    return _file, FormatNC(), "rivlen", "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::RiverManning)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "RiverManning";
+    _vara = Dict("longname" => "River manning coefficient",
+                 "units"    => "-")
+
+    return _file, FormatNC(), "rivman", "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::RiverWidth)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "RiverWidth";
+    _vara = Dict("longname" => "River width",
+                 "units"    => "m")
+
+    return _file, FormatNC(), "rivwth", "1Y", true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::TreeDensity, res_g::String, res_t::String)
     if (res_g=="120X") && (res_t=="1Y")
         _file = artifact"tree_density_120X_1Y" *
@@ -211,4 +283,16 @@ function query_LUT(dt::TreeDensity, res_g::String, res_t::String)
     _vara = Dict("longname" => "Tree density" , "units" => "km⁻²");
 
     return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::UnitCatchmentArea)
+    _file = artifact"river_maps_4X_1Y" * "/river_maps_4X_1Y.nc";
+    _varn = "UnitCatchmentArea";
+    _vara = Dict("longname" => "Unit catchment area",
+                 "units"    => "m²")
+
+    return _file, FormatNC(), "ctmare", "1Y", true, _varn, _vara
 end

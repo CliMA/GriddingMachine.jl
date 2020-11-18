@@ -26,16 +26,23 @@ end
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
     MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "1X", "8D");    @test true;
     VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "1X", "8D");    @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
+    CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;
     LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
     CHL_LUT = load_LUT(LeafChlorophyll{FT}());                 @test true;
     LNC_LUT = load_LUT(LeafNitrogen{FT}());                    @test true;
     LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
-    NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
     SLA_LUT = load_LUT(LeafSLA{FT}());                         @test true;
+    NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
+    SLA_LUT = load_LUT(RiverHeight{FT}());                     @test true;
+    SLA_LUT = load_LUT(RiverLength{FT}());                     @test true;
+    SLA_LUT = load_LUT(RiverManning{FT}());                    @test true;
+    SLA_LUT = load_LUT(RiverWidth{FT}());                      @test true;
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
+    SLA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
 
     if Sys.islinux()

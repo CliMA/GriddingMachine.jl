@@ -161,8 +161,55 @@ preview_data(TDT_LUT, 1, (0, 150000))
 
 
 # ## Land surface
+# ### Land elevation
+ELE_LUT = load_LUT(LandElevation{FT}());
+mask_LUT!(ELE_LUT, FT[0,Inf]);
+ELE_LUT = regrid_LUT(ELE_LUT, Int(size(ELE_LUT.data,2)/180));
+preview_data(ELE_LUT, 1)
+#------------------------------------------------------------------------------
+
 # ### Land mask
 LMK_LUT = load_LUT(LandMaskERA5{FT}());
 LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
 preview_data(LMK_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River flood plain height
+FLD_LUT = load_LUT(FloodPlainHeight{FT}());
+mask_LUT!(FLD_LUT, FT[0,Inf]);
+FLD_LUT = regrid_LUT(FLD_LUT, Int(size(FLD_LUT.data,2)/180));
+preview_data(FLD_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River height
+RVH_LUT = load_LUT(RiverHeight{FT}());
+mask_LUT!(RVH_LUT, FT[0,Inf]);
+RVH_LUT = regrid_LUT(RVH_LUT, Int(size(RVH_LUT.data,2)/180));
+preview_data(RVH_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River width
+RVW_LUT = load_LUT(RiverWidth{FT}());
+mask_LUT!(RVW_LUT, FT[0,Inf]);
+RVW_LUT = regrid_LUT(RVW_LUT, Int(size(RVW_LUT.data,2)/180));
+preview_data(RVW_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River length
+RVL_LUT = load_LUT(RiverLength{FT}());
+mask_LUT!(RVL_LUT, FT[0,Inf]);
+RVL_LUT = regrid_LUT(RVL_LUT, Int(size(RVL_LUT.data,2)/180));
+preview_data(RVL_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River manning coefficient
+RVM_LUT = load_LUT(LandMaskERA5{FT}());
+RVM_LUT = regrid_LUT(RVM_LUT, Int(size(RVM_LUT.data,2)/180));
+preview_data(RVM_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### River unit catchment area
+UCA_LUT = load_LUT(UnitCatchmentArea{FT}());
+UCA_LUT = regrid_LUT(UCA_LUT, Int(size(UCA_LUT.data,2)/180));
+preview_data(UCA_LUT, 1)
 #------------------------------------------------------------------------------
