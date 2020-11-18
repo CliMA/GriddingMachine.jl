@@ -5,6 +5,14 @@ using Plots.PlotMeasures
 ENV["GKSwstype"]="100";
 FT = Float32;
 
+predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
+                       "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
+                       "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
+                       "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
+                       "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
+                       "river_maps_4X_1Y", "surface_data_2X_1Y",
+                       "tree_density_12X_1Y"]);
+
 function preview_data(ds::GriddedDataset{FT}, ind::Int)
     # preview data
     return heatmap(view(ds.data,:,:,ind)',
@@ -95,10 +103,6 @@ anim = @animate for year ∈ 2000:2019, i ∈ 1:46
 end
 gif(anim, fps=20)
 
-LMK_LUT = load_LUT(LandMaskERA5{FT}());
-LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
-preview_data(LMK_LUT, 1)
-
 LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
 LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
 anim = @animate for i ∈ 1:size(LAI_LUT.data,3)
@@ -116,6 +120,43 @@ TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");
 mask_LUT!(TDT_LUT, FT[0,Inf]);
 TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
 preview_data(TDT_LUT, 1, (0, 150000))
+
+ELE_LUT = load_LUT(LandElevation{FT}());
+mask_LUT!(ELE_LUT, FT[0,Inf]);
+ELE_LUT = regrid_LUT(ELE_LUT, Int(size(ELE_LUT.data,2)/180));
+preview_data(ELE_LUT, 1)
+
+LMK_LUT = load_LUT(LandMaskERA5{FT}());
+LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
+preview_data(LMK_LUT, 1)
+
+FLD_LUT = load_LUT(FloodPlainHeight{FT}());
+mask_LUT!(FLD_LUT, FT[0,Inf]);
+FLD_LUT = regrid_LUT(FLD_LUT, Int(size(FLD_LUT.data,2)/180));
+preview_data(FLD_LUT, 1)
+
+RVH_LUT = load_LUT(RiverHeight{FT}());
+mask_LUT!(RVH_LUT, FT[0,Inf]);
+RVH_LUT = regrid_LUT(RVH_LUT, Int(size(RVH_LUT.data,2)/180));
+preview_data(RVH_LUT, 1)
+
+RVW_LUT = load_LUT(RiverWidth{FT}());
+mask_LUT!(RVW_LUT, FT[0,Inf]);
+RVW_LUT = regrid_LUT(RVW_LUT, Int(size(RVW_LUT.data,2)/180));
+preview_data(RVW_LUT, 1)
+
+RVL_LUT = load_LUT(RiverLength{FT}());
+mask_LUT!(RVL_LUT, FT[0,Inf]);
+RVL_LUT = regrid_LUT(RVL_LUT, Int(size(RVL_LUT.data,2)/180));
+preview_data(RVL_LUT, 1)
+
+RVM_LUT = load_LUT(LandMaskERA5{FT}());
+RVM_LUT = regrid_LUT(RVM_LUT, Int(size(RVM_LUT.data,2)/180));
+preview_data(RVM_LUT, 1)
+
+UCA_LUT = load_LUT(UnitCatchmentArea{FT}());
+UCA_LUT = regrid_LUT(UCA_LUT, Int(size(UCA_LUT.data,2)/180));
+preview_data(UCA_LUT, 1)
 
 # This file was generated using Literate.jl, https://github.com/fredrikekre/Literate.jl
 
