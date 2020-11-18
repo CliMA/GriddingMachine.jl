@@ -5,14 +5,6 @@ using Plots.PlotMeasures
 ENV["GKSwstype"]="100";
 FT = Float32;
 
-predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
-                       "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
-                       "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
-                       "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
-                       "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
-                       "river_maps_4X_1Y", "surface_data_2X_1Y",
-                       "tree_density_12X_1Y"]);
-
 function preview_data(ds::GriddedDataset{FT}, ind::Int)
     # preview data
     return heatmap(view(ds.data,:,:,ind)',
