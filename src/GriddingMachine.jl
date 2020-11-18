@@ -27,22 +27,30 @@ MODIS_GRID_LON = 0
 export AbstractDataset,
        AbstractLeafDataset,
        AbstractStandDataset,
+       AbstractSurfaceDataset,
        CanopyHeightGLAS,
        ClumpingIndexMODIS,
        ClumpingIndexPFT,
+       FloodPlainHeight,
        FormatNC,
        FormatTIFF,
        GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,
        LAIMonthlyMean,
+       LandElevation,
        LandMaskERA5,
        LeafChlorophyll,
        LeafNitrogen,
        LeafPhosphorus,
        LeafSLA,
        NPPModis,
+       RiverHeight,
+       RiverLength,
+       RiverManning,
+       RiverWidth,
        TreeDensity,
+       UnitCatchmentArea,
        VcmaxOptimalCiCa
 
 
@@ -58,7 +66,8 @@ export AbstractUngriddedData,
 
 
 #export public functions for GriddedDataset
-export lat_ind,
+export predownload_artifact,
+       lat_ind,
        load_LUT,
        lon_ind,
        mask_LUT!,
@@ -74,6 +83,7 @@ export lat_ind,
 #export public functions for GriddedDataset
 export compile_RAW,
        dynamic_workers,
+       fetch_RAW,
        grid_RAW,
        load_MODIS!,
        parse_HV,
@@ -104,6 +114,7 @@ include("Gridding/query.jl"   )
 include("Gridding/workers.jl" )
 
 # The Util functions
+include("Utils/download.jl"     )
 include("Utils/lat_lon_index.jl")
 
 

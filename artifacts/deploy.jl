@@ -177,14 +177,6 @@ deploy_artifact(vpm_gpps_1X, "GPP_VPM_v20_1X_8D" , "GPP/regridded");
 deploy_artifact(vpm_gpps_5X, "GPP_VPM_v20_5X_8D" , "GPP", vpm_fold_5X, out_gpps_5X; git_copy=false);
 deploy_artifact(vpm_gpps_12, "GPP_VPM_v20_12X_8D", "GPP", vpm_fold_12, out_gpps_12; git_copy=false);
 
-# Stand --- land mask
-deploy_artifact(["land_mask_ERA5_4X_1Y.nc"],
-                "land_mask_ERA5_4X_1Y",
-                "LM");
-deploy_artifact(["river_maps_4X_1Y.nc"],
-                "river_maps_4X_1Y",
-                "LM");
-
 # Stand --- net primary productivity
 deploy_artifact(["npp_modis_1X_1Y_2000.nc"],
                 "NPP_MODIS_1X_1Y",
@@ -205,3 +197,18 @@ deploy_artifact(["MODIS_1km_grid.nc"],
 deploy_artifact(["MODIS_500m_grid.nc"],
                 "MODIS_500m_grid",
                 "MODIS"; git_copy=false);
+
+# Surface --- land mask
+deploy_artifact(["land_mask_ERA5_4X_1Y.nc"],
+                "land_mask_ERA5_4X_1Y",
+                "LM");
+
+# Surface --- river
+deploy_artifact(["river_maps_4X_1Y.nc"],
+                "river_maps_4X_1Y",
+                "LM");
+
+# Surface --- surface data
+deploy_artifact(["surface_data_2X_1Y.nc"],
+                "surface_data_2X_1Y",
+                "LM");

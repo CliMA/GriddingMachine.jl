@@ -16,7 +16,12 @@ GriddedDataset
 ```
 
 Note it here that the `dt` field in [`GriddedDataset`](@ref) is the data
-    identity of the stored `data`. Please refer the lists below
+    identity of the stored `data`. Please refer the lists below. You may
+    pre-download the artifacts using
+
+```@docs
+predownload_artifact
+```
 
 
 
@@ -58,9 +63,22 @@ ClumpingIndexPFT
 GPPMPIv006
 GPPVPMv20
 LAIMonthlyMean
-LandMaskERA5
 NPPModis
 TreeDensity
+```
+
+### Surface datasets
+
+```@docs
+AbstractSurfaceDataset
+FloodPlainHeight
+LandMaskERA5
+LandElevation
+RiverHeight
+RiverLength
+RiverManning
+RiverWidth
+UnitCatchmentArea
 ```
 
 
@@ -203,10 +221,11 @@ Note that, if you want to load the matricies in every thread, you will need
 
 Once the tile information is loaded, you may query the files you want to work
     on using `query_RAW`, which returns an array of paramters to pass to
-    different threads.
+    different threads. Note, you may need to use `fetch_RAW` to download the
+    datasets first.
 
 ```@docs
-fetch_raw
+fetch_RAW
 query_RAW
 ```
 

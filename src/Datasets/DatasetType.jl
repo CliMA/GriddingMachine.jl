@@ -179,16 +179,6 @@ struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
 
 """
-    struct LandMaskERA5{FT}
-
-Struct for land mask from ERA5
-"""
-struct LandMaskERA5{FT}  <: AbstractStandDataset{FT} end
-
-
-
-
-"""
     struct NPPModis{FT}
 
 Struct for Modis NPP
@@ -204,6 +194,106 @@ struct NPPModis{FT} <: AbstractStandDataset{FT} end
 Struct for tree density (number of trees per km⁻²)
 """
 struct TreeDensity{FT} <: AbstractStandDataset{FT} end
+
+
+
+
+
+
+
+
+###############################################################################
+#
+# Surface level land mark
+#
+###############################################################################
+"""
+    abstract type AbstractSurfaceDataset{FT}
+
+Hierachy of AbstractSurfaceDataset
+- [`LandMaskERA5`](@ref)
+"""
+abstract type AbstractSurfaceDataset{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct FloodPlainHeight{FT}
+
+Flood plain height
+"""
+struct FloodPlainHeight{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct LandElevation{FT}
+
+Land elevation (height above mean sea level)
+"""
+struct LandElevation{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct LandMaskERA5{FT}
+
+Struct for land mask from ERA5
+"""
+struct LandMaskERA5{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct RiverHeight{FT}
+
+River height
+"""
+struct RiverHeight{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct RiverLength{FT}
+
+River length
+"""
+struct RiverLength{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct RiverManning{FT}
+
+River manning coefficient
+"""
+struct RiverManning{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct RiverWidth{FT}
+
+River width
+"""
+struct RiverWidth{FT}  <: AbstractSurfaceDataset{FT} end
+
+
+
+
+"""
+    struct UnitCatchmentArea{FT}
+
+Unit catchment area
+"""
+struct UnitCatchmentArea{FT}  <: AbstractSurfaceDataset{FT} end
 
 
 

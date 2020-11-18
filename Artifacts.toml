@@ -186,6 +186,17 @@ lazy = true
     sha256 = "7822ab76d8f2a445f8142e94d35ae987a8c8f164c8972a680adf65d45256ad16"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/river_maps_4X_1Y.tar.gz"
 
+[surface_data_2X_1Y]
+git-tree-sha1 = "bf0142aa9cd1ed9db43700f58febfe04a4c75de1"
+lazy = true
+
+    [[surface_data_2X_1Y.download]]
+    sha256 = "393ac3c452bf3d4fd254ed999989a53b24c3b7eda588d124e856295c650cb037"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LM/surface_data_2X_1Y.tar.gz"
+    [[surface_data_2X_1Y.download]]
+    sha256 = "393ac3c452bf3d4fd254ed999989a53b24c3b7eda588d124e856295c650cb037"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/surface_data_2X_1Y.tar.gz"
+
 [tree_density_120X_1Y]
 git-tree-sha1 = "22988af1291aecec12a5cfa814d37b19d79fae59"
 lazy = true
