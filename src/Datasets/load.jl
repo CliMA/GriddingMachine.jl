@@ -73,6 +73,40 @@ end
 
 
 function load_LUT(
+            dt::AbstractDataset{FT},
+            file::String,
+            format::FormatNC,
+            label::String,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
+) where {FT<:AbstractFloat}
+    _data = FT.(ncread(file, label));
+
+    # reverse latitude
+    if rev_lat
+        _data = _data[:,end:-1:1,:];
+    end
+
+    # convert data to 3D array
+    if length(size(_data)) == 2
+        data = cat(_data; dims=3);
+    else
+        data = _data;
+    end
+
+    return GriddedDataset{FT}(data     = data    ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
+function load_LUT(
             dt::LAIMonthlyMean{FT},
             file::String,
             format::FormatNC,
@@ -128,7 +162,7 @@ end
 
 
 function load_LUT(
-            dt::AbstractDataset{FT},
+            dt::SIFTropomi740{FT},
             file::String,
             format::FormatNC,
             label::String,
@@ -137,19 +171,45 @@ function load_LUT(
             var_name::String,
             var_attr::Dict{String,String}
 ) where {FT<:AbstractFloat}
-    _data = FT.(ncread(file, label));
+    # SIF data is stored differently
+    _dat  = FT.(ncread(file, label));
+    _size = size(_dat);
+    _data = zeros(FT, (_size[2], _size[3], _size[1]));
+    for i in 1:_size[1]
+        view(_data, :, :, i) .= view(_dat, i, :, :);
+    end
+
+    return GriddedDataset{FT}(data     = _data   ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
+function load_LUT(
+            dt::AbstractDataset{FT},
+            file::String,
+            format::FormatTIFF,
+            label::Int,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
+) where {FT<:AbstractFloat}
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
         _data = _data[:,end:-1:1,:];
     end
 
-    # convert data to 3D array
-    if length(size(_data)) == 2
-        data = cat(_data; dims=3);
-    else
-        data = _data;
-    end
+    # filter data
+    data = cat(_data; dims=3);
 
     return GriddedDataset{FT}(data     = data    ,
                               res_time = res_t   ,
@@ -182,38 +242,6 @@ function load_LUT(
 
     # filter data by 0.01 for clumping index
     _data ./= 100;
-    data = cat(_data; dims=3);
-
-    return GriddedDataset{FT}(data     = data    ,
-                              res_time = res_t   ,
-                              dt       = dt      ,
-                              var_name = var_name,
-                              var_attr = var_attr)
-end
-
-
-
-
-function load_LUT(
-            dt::AbstractDataset{FT},
-            file::String,
-            format::FormatTIFF,
-            label::Int,
-            res_t::String,
-            rev_lat::Bool,
-            var_name::String,
-            var_attr::Dict{String,String}
-) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
-
-    # reverse latitude
-    if rev_lat
-        _data = _data[:,end:-1:1,:];
-    end
-
-    # filter data
     data = cat(_data; dims=3);
 
     return GriddedDataset{FT}(data     = data    ,

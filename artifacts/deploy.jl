@@ -4,6 +4,7 @@
 #
 ###############################################################################
 using Pkg.Artifacts
+using PkgUtility
 
 
 
@@ -22,111 +23,66 @@ git_url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT"
 
 
 
-# function to create artifact
-"""
-    deploy_artifact(files::Array{String,1},
-                    art_name::String,
-                    data_folder::String,
-                    art_folder::String,
-                    new_files::Array{String,1})
-
-Deploy the artifact, given
-- `files` Array of file names
-- `art_name` Artifact identity
-- `art_folder` Artifact folder name on FTP
-- `data_folder` Optional. Path to original files
-- `new_files` Optional. New file names
-"""
-function deploy_artifact(
-            files::Array{String,1},
-            art_name::String,
-            art_folder::String,
-            data_folder::String = joinpath(ftp_loc, art_folder),
-            new_files::Array{String,1} = files;
-            git_copy::Bool = true
-)
-    # querry whether the artifact exists
-    art_hash = artifact_hash(art_name, artifact_toml);
-
-    # create artifact
-    if isnothing(art_hash) || !artifact_exists(art_hash)
-        println("\nArtifact ", art_name, " not found, deploy it now...");
-
-        art_hash = create_artifact() do artifact_dir
-            for i in eachindex(files)
-                _in   = files[i];
-                _out  = new_files[i];
-                _path = joinpath(data_folder, _in);
-                println("Copying file ", _in);
-                cp(_path, joinpath(artifact_dir, _out));
-            end
-        end
-        @show art_hash;
-
-        tar_ftp  = "$(ftp_url)/$(art_folder)/$(art_name).tar.gz";
-        tar_git  = "$(git_url)/$(art_name).tar.gz";
-        tar_loc  = "$(ftp_loc)/$(art_folder)/$(art_name).tar.gz";
-        println("Compressing artifact...");
-        tar_hash = archive_artifact(art_hash, tar_loc);
-        @show tar_hash;
-
-        if git_copy
-            download_info = [(tar_ftp, tar_hash),(tar_git, tar_hash)];
-        else
-            download_info = [(tar_ftp, tar_hash)];
-        end
-        bind_artifact!(artifact_toml, art_name, art_hash;
-                       download_info=download_info,
-                       lazy=true,
-                       force=true);
-    else
-        println("\nArtifact ", art_name, " already exists, skip it");
-    end
-
-    return nothing
-end
-
-
-
-
 # Leaf --- leaf chlorophyll
-deploy_artifact(["leaf_chlorophyll_2X_7D.nc"],
+deploy_artifact(artifact_toml,
                 "leaf_chlorophyll_2X_7D",
-                "Leaf");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/Leaf",
+                ["leaf_chlorophyll_2X_7D.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/Leaf",
+                [ftp_url*"/Leaf", git_url]);
 
 # Leaf --- leaf traits
-deploy_artifact(["leaf_nitrogen_2X_1Y.nc",
-                 "leaf_phosphorus_2X_1Y.nc",
-                 "specific_leaf_area_2X_1Y.nc",
-                 "vcmax_optimal_cica_2X_1Y.nc"],
+deploy_artifact(artifact_toml,
                 "leaf_traits_2X_1Y",
-                "Leaf");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/Leaf",
+                ["leaf_nitrogen_2X_1Y.nc", "leaf_phosphorus_2X_1Y.nc",
+                 "specific_leaf_area_2X_1Y.nc", "vcmax_optimal_cica_2X_1Y.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/Leaf",
+                [ftp_url*"/Leaf", git_url]);
 
 # Canopy --- canopy height
-deploy_artifact(["canopy_height_20X_1Y.nc"],
+deploy_artifact(artifact_toml,
                 "canopy_height_20X_1Y",
-                "CH");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CH",
+                ["canopy_height_20X_1Y.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CH",
+                [ftp_url*"/CH", git_url]);
 
 # Canopy --- clumping index
-deploy_artifact(["global_clumping_index_2X_PFT.nc"],
+deploy_artifact(artifact_toml,
                 "clumping_index_2X_1Y_PFT",
-                "CI")
-deploy_artifact(["global_clumping_index_12X_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                ["global_clumping_index_2X_PFT.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                [ftp_url*"/CI", git_url]);
+deploy_artifact(artifact_toml,
                 "clumping_index_12X_1Y",
-                "CI");
-deploy_artifact(["global_clumping_index_240X_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                ["global_clumping_index_12X_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                [ftp_url*"/CI", git_url]);
+deploy_artifact(artifact_toml,
                 "clumping_index_240X_1Y",
-                "CI"; git_copy=false);
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                ["global_clumping_index_240X_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/CI",
+                [ftp_url*"/CI"]);
 
 # Canopy --- leaf area index
-deploy_artifact(["leaf_area_index_4X_1M.nc"],
+deploy_artifact(artifact_toml,
                 "leaf_area_index_4X_1M",
-                "LAI");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LAI",
+                ["leaf_area_index_4X_1M.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LAI",
+                [ftp_url*"/LAI", git_url]);
 
 # Model --- land model spectrums
-deploy_artifact(["Optipar2017_ProspectD.mat", "sun.mat"],
+deploy_artifact(artifact_toml,
                 "land_model_spectrum",
-                "LandModel");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LandModel",
+                ["Optipar2017_ProspectD.mat", "sun.mat"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LandModel",
+                [ftp_url*"LandModel", git_url]);
 
 # Stand --- gross primary productivity
 mpi_fold_8D = "/net/fluo/data2/data/MPI-FLUXCOM-GPP-NEE-TER/original/720_360/8daily";
@@ -150,9 +106,26 @@ for year in 2001:2019
     push!(mpi_gpps_1M, _in_1M );
     push!(out_gpps_1M, _out_1M);
 end
-deploy_artifact(mpi_gpps_1X, "GPP_MPI_v006_1X_8D", "GPP/regridded");
-deploy_artifact(mpi_gpps_8D, "GPP_MPI_v006_2X_8D", "GPP", mpi_fold_8D, out_gpps_8D; git_copy=false);
-deploy_artifact(mpi_gpps_1M, "GPP_MPI_v006_2X_1M", "GPP", mpi_fold_1M, out_gpps_1M; git_copy=false);
+deploy_artifact(artifact_toml,
+                "GPP_MPI_v006_1X_8D",
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP/regridded",
+                mpi_gpps_1X,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP/regridded",
+                [ftp_url*"/GPP/regridded", git_url]);
+deploy_artifact(artifact_toml,
+                "GPP_MPI_v006_2X_8D",
+                mpi_fold_8D,
+                mpi_gpps_8D,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP",
+                [ftp_url*"/GPP"];
+                new_file = out_gpps_8D);
+deploy_artifact(artifact_toml,
+                "GPP_MPI_v006_2X_1M",
+                mpi_fold_1M,
+                mpi_gpps_1M,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP",
+                [ftp_url*"/GPP"];
+                new_file = out_gpps_1M);
 
 vpm_fold_5X = "/net/fluo/data2/data/VPM-GPP/original/0.20-degree";
 vpm_fold_12 = "/net/fluo/data2/data/VPM-GPP/original/0.083-degree";
@@ -173,42 +146,103 @@ for year in 2000:2019
     push!(vpm_gpps_12, _in_12 );
     push!(out_gpps_12, _out_12);
 end
-deploy_artifact(vpm_gpps_1X, "GPP_VPM_v20_1X_8D" , "GPP/regridded");
-deploy_artifact(vpm_gpps_5X, "GPP_VPM_v20_5X_8D" , "GPP", vpm_fold_5X, out_gpps_5X; git_copy=false);
-deploy_artifact(vpm_gpps_12, "GPP_VPM_v20_12X_8D", "GPP", vpm_fold_12, out_gpps_12; git_copy=false);
+deploy_artifact(artifact_toml,
+                "GPP_VPM_v20_1X_8D",
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP/regridded",
+                vpm_gpps_1X,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP/regridded",
+                [ftp_url*"/GPP/regridded", git_url]);
+deploy_artifact(artifact_toml,
+                "GPP_VPM_v20_5X_8D",
+                vpm_fold_5X,
+                vpm_gpps_5X,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP",
+                [ftp_url*"/GPP"];
+                new_file = out_gpps_5X);
+deploy_artifact(artifact_toml,
+                "GPP_VPM_v20_12X_8D",
+                vpm_fold_12,
+                vpm_gpps_12,
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/GPP",
+                [ftp_url*"/GPP"];
+                new_file = out_gpps_12);
 
 # Stand --- net primary productivity
-deploy_artifact(["npp_modis_1X_1Y_2000.nc"],
+deploy_artifact(artifact_toml,
                 "NPP_MODIS_1X_1Y",
-                "NPP");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/NPP",
+                ["npp_modis_1X_1Y_2000.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/NPP",
+                [ftp_url*"/NPP", git_url]);
+
+# Stand --- sun induced fluorescence
+deploy_artifact(artifact_toml,
+                "SIF_TROPOMI_740_12X_8D",
+                "/net/fluo/data2/data/TROPOMI_SIF740nm/reprocessed/0.0833_lat-lon_8d/global",
+                ["TROPOMI_SIF740nm-v1.00833deg_regrid.8d.2018.nc",
+                 "TROPOMI_SIF740nm-v1.00833deg_regrid.8d.2019.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/SIF",
+                [ftp_url*"/SIF"];
+                new_file=["SIF_TROPOMI_740_12X_8D_2018.nc",
+                          "SIF_TROPOMI_740_12X_8D_2019.nc"]);
+deploy_artifact(artifact_toml,
+                "SIF_TROPOMI_740_1X_1M",
+                "/net/fluo/data2/data/TROPOMI_SIF740nm/reprocessed/1deg_lat-lon_1M/global",
+                ["TROPOMI_SIF740nm-v1.1deg_regrid.1d.2018.nc",
+                 "TROPOMI_SIF740nm-v1.1deg_regrid.1d.2019.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/SIF",
+                [ftp_url*"/SIF", git_url];
+                new_file=["SIF_TROPOMI_740_1X_1M_2018.nc",
+                          "SIF_TROPOMI_740_1X_1M_2019.nc"]);
 
 # Stand --- tree density
-deploy_artifact(["tree_density_120X_1Y_WGS84.tif"],
+deploy_artifact(artifact_toml,
                 "tree_density_120X_1Y",
-                "TD"; git_copy=false);
-deploy_artifact(["tree_density_12X_1Y_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/TD",
+                ["tree_density_120X_1Y_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/TD",
+                [ftp_url*"/TD"]);
+deploy_artifact(artifact_toml,
                 "tree_density_12X_1Y",
-                "TD");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/TD",
+                ["tree_density_12X_1Y_WGS84.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/TD",
+                [ftp_url*"/TD", git_url]);
 
 # Tools --- MODIS grid information
-deploy_artifact(["MODIS_1km_grid.nc"],
+deploy_artifact(artifact_toml,
                 "MODIS_1km_grid",
-                "MODIS"; git_copy=false);
-deploy_artifact(["MODIS_500m_grid.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/MODIS",
+                ["MODIS_1km_grid.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/MODIS",
+                [ftp_url*"/MODIS"]);
+deploy_artifact(artifact_toml,
                 "MODIS_500m_grid",
-                "MODIS"; git_copy=false);
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/MODIS",
+                ["MODIS_500m_grid.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/MODIS",
+                [ftp_url*"/MODIS"]);
 
 # Surface --- land mask
-deploy_artifact(["land_mask_ERA5_4X_1Y.nc"],
+deploy_artifact(artifact_toml,
                 "land_mask_ERA5_4X_1Y",
-                "LM");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                ["land_mask_ERA5_4X_1Y.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                [ftp_url*"/LM", git_url]);
 
 # Surface --- river
-deploy_artifact(["river_maps_4X_1Y.nc"],
+deploy_artifact(artifact_toml,
                 "river_maps_4X_1Y",
-                "LM");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                ["river_maps_4X_1Y.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                [ftp_url*"/LM", git_url]);
 
 # Surface --- surface data
-deploy_artifact(["surface_data_2X_1Y.nc"],
+deploy_artifact(artifact_toml,
                 "surface_data_2X_1Y",
-                "LM");
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                ["surface_data_2X_1Y.nc"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/LM",
+                [ftp_url*"/LM", git_url]);

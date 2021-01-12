@@ -28,7 +28,7 @@ abstract type AbstractDataset{FT} end
     abstract type AbstractLeafDataset{FT}
 
 Hierachy of AbstractLeafDataset
-- [`LeafChlorophyll`]9@ref
+- [`LeafChlorophyll`](@ref)
 - [`LeafNitrogen`](@ref)
 - [`LeafPhosphorus`](@ref)
 - [`LeafSLA`](@ref)
@@ -42,7 +42,24 @@ abstract type AbstractLeafDataset{FT} <: AbstractDataset{FT} end
 """
     struct LeafChlorophyll{FT}
 
+<details>
+<summary>
 Struct for leaf chlorophyll content
+[Link to Dataset Source](https://doi.org/10.1016/j.rse.2019.111479)
+</summary>
+
+```
+@article{croft2020global,
+    author = {Croft, H and Chen, JM and Wang, R and Mo, G and Luo, S and Luo, X
+        and He, L and Gonsamo, A and Arabian, J and Zhang, Y and others},
+    year = {2020},
+    title = {The global distribution of leaf chlorophyll content},
+    journal = {Remote Sensing of Environment},
+    volume = {236},
+    pages = {111479},
+}
+```
+</details>
 """
 struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
 
@@ -52,7 +69,28 @@ struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
 """
     struct LeafNitrogen{FT}
 
+<details>
+<summary>
 Struct for leaf nitrogen content
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
+
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
 
@@ -61,8 +99,28 @@ struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
 
 """
     struct LeafPhosphorus{FT}
+<details>
+<summary>
+Struct for leaf phosphorus content
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
 
-Struct for leaf specific leaf area (inverse of leaf mass per area)
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
 
@@ -72,7 +130,28 @@ struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
 """
     struct LeafSLA{FT}
 
+<details>
+<summary>
 Struct for leaf specific leaf area (inverse of leaf mass per area)
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
+
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafSLA{FT}  <: AbstractLeafDataset{FT} end
 
@@ -82,7 +161,27 @@ struct LeafSLA{FT}  <: AbstractLeafDataset{FT} end
 """
     struct VcmaxOptimalCiCa{FT}
 
+<details>
+<summary>
 Struct for Vcmax estimated from optimal Ci:Ca ratio
+[Link to Dataset Source](https://doi.org/10.1111/ele.13210)
+</summary>
+
+```
+@article{smith2019global,
+    author = {Smith, Nicholas G. and Keenan, Trevor F. and Prentice, I. Colin
+        and Wang, Han and Wright, Ian J. and Niinemets, Ülo and Crous, Kristine
+        Y. and Domingues, Tomas F. and Guerrieri, Rossella and {Yoko Ishida},
+        F. and Zhou, Shuangxi},
+    year = {2019},
+    title = {Global photosynthetic capacity is optimized to the environment},
+    journal = {Ecology Letters},
+    volume = {22},
+    number = {3},
+    pages = {506–517}
+}
+```
+</details>
 """
 struct VcmaxOptimalCiCa{FT} <: AbstractLeafDataset{FT} end
 
@@ -117,9 +216,26 @@ abstract type AbstractStandDataset{FT} <: AbstractDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct CanopyHeightGLAS{FT}
 
+<details>
+<summary>
 Struct for canopy height from GLAS ICESat
+[Link to Dataset Source](https://doi.org/10.1029/2011JG001708)
+</summary>
+
+```
+@article{simard2011mapping,
+    author = {Simard, Marc and Pinto, Naiara and Fisher, Joshua B and Baccini,
+        Alessandro},
+    year = {2011},
+    title = {Mapping forest canopy height globally with spaceborne lidar},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {116},
+    number = {G4021}
+}
+```
+</details>
 """
 struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
 
@@ -127,9 +243,26 @@ struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct ClumpingIndexMODIS{FT}
 
-Struct for canopy height from GLAS ICESat
+<details>
+<summary>
+Global clumping index data from MODIS BRDF 2006
+[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1531)
+</summary>
+
+```
+@article{he2012global,
+    author={He, Liming and Chen, Jing M and Pisek, Jan and Schaaf, Crystal B
+        and Strahler, Alan H},
+    year={2012},
+    title={Global clumping index map derived from the MODIS BRDF product},
+    journal={Remote Sensing of Environment},
+    volume={119},
+    pages={118--130}
+}
+```
+</details>
 """
 struct ClumpingIndexMODIS{FT} <: AbstractStandDataset{FT} end
 
@@ -137,11 +270,30 @@ struct ClumpingIndexMODIS{FT} <: AbstractStandDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct ClumpingIndexPFT{FT}
 
+<details>
+<summary>
 Struct for canopy height from GLAS ICESat, for different plant functional
-    types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses,
-    and shrubland
+    types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and
+    shrubland. Data from Global clumping index data from MODIS BRDF 2006.
+[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1531)
+</summary>
+
+```
+@article{braghiere2019underestimation,
+    author = {Braghiere, R{\'e}nato Kerches and Quaife, T and Black, E and He,
+        L and Chen, JM},
+    year = {2019},
+    title = {Underestimation of global photosynthesis in Earth System Models
+        due to representation of vegetation structure},
+    journal = {Global Biogeochemical Cycles},
+    volume = {33},
+    number = {11},
+    pages = {1358--1369}
+}
+```
+</details>
 """
 struct ClumpingIndexPFT{FT} <: AbstractStandDataset{FT} end
 
@@ -151,7 +303,28 @@ struct ClumpingIndexPFT{FT} <: AbstractStandDataset{FT} end
 """
     struct GPPMPIv006{FT}
 
+<details>
+<summary>
 Struct for MPI GPP v006
+[Link to Dataset Source](https://doi.org/10.5194/bg-17-1343-2020)
+</summary>
+
+```
+@article{jung2020scaling,
+    author = {Jung, Martin and Schwalm, Christopher and Migliavacca, Mirco and
+        Walther, Sophia and Camps-Valls, Gustau and Koirala, Sujan and Anthoni,
+        Peter and Besnard, Simon and Bodesheim, Paul and Carvalhais, Nuno and
+        others},
+    year = {2020},
+    title = {Scaling carbon fluxes from eddy covariance sites to globe:
+        {S}ynthesis and evaluation of the {FLUXCOM} approach},
+    journal = {Biogeosciences},
+    volume = {17},
+    number = {5},
+    pages = {1343--1365}
+}
+```
+</details>
 """
 struct GPPMPIv006{FT} <: AbstractStandDataset{FT} end
 
@@ -161,7 +334,25 @@ struct GPPMPIv006{FT} <: AbstractStandDataset{FT} end
 """
     struct GPPVPMv20{FT}
 
+<details>
+<summary>
 Struct for VPM GPP v20
+[Link to Dataset Source](https://doi.org/10.1038/sdata.2017.165)
+</summary>
+
+```
+@article{zhang2017global,
+    author = {Zhang, Yao and Xiao, Xiangming and Wu, Xiaocui and Zhou, Sha and
+        Zhang, Geli and Qin, Yuanwei and Dong, Jinwei},
+    year = {2017},
+    title = {A global moderate resolution dataset of gross primary production
+        of vegetation for 2000--2016},
+    journal = {Scientific data},
+    volume = {4},
+    pages = {170165}
+}
+```
+</details>
 """
 struct GPPVPMv20{FT}  <: AbstractStandDataset{FT} end
 
@@ -171,7 +362,21 @@ struct GPPVPMv20{FT}  <: AbstractStandDataset{FT} end
 """
     struct LAIMonthlyMean{FT}
 
+<details>
+<summary>
 Struct for monthly mean MODIS LAI
+[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1653)
+</summary>
+
+```
+@article{mao2019global,
+    author = {Mao, J and Yan, B},
+    year = {2019},
+    title = {Global monthly mean leaf area index climatology, 1981-2015},
+    journal = {ORNL DAAC}
+}
+```
+</details>
 """
 struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
@@ -189,9 +394,58 @@ struct NPPModis{FT} <: AbstractStandDataset{FT} end
 
 
 """
+    struct SIFTropomi740{FT}
+
+<details>
+<summary>
+Struct for TROPOMI SIF @ 740 nm
+[Link to Dataset Source](https://doi.org/10.1029/2018GL079031)
+</summary>
+
+```
+@article{kohler2018global,
+    author = {K{\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy S
+        and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
+    year = {2018},
+    title = {Global retrievals of solar-induced chlorophyll fluorescence with
+        {TROPOMI}: {F}irst results and intersensor comparison to {OCO-2}},
+    journal = {Geophysical Research Letters},
+    volume = {45},
+    number = {19},
+    pages = {10,456--10,463}
+}
+```
+</details>
+"""
+struct SIFTropomi740{FT} <: AbstractStandDataset{FT} end
+
+
+
+
+"""
     struct TreeDensity{FT}
 
+<details>
+<summary>
 Struct for tree density (number of trees per km⁻²)
+[Link to Dataset Source](https://doi.org/10.1038/nature14967)
+</summary>
+
+```
+@article{crowther2015mapping,
+    author = {Crowther, Thomas W and Glick, Henry B and Covey, Kristofer R and
+        Bettigole, Charlie and Maynard, Daniel S and Thomas, Stephen M and
+        Smith, Jeffrey R and Hintler, Gregor and Duguid, Marlyse C and
+        Amatulli, Giuseppe and others},
+	year = {2015},
+	title = {Mapping tree density at a global scale},
+	journal = {Nature},
+	volume = {525},
+	number = {7568},
+	pages = {201--205}
+}
+```
+</details>
 """
 struct TreeDensity{FT} <: AbstractStandDataset{FT} end
 

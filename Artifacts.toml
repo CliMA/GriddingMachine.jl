@@ -79,6 +79,25 @@ lazy = true
     sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/NPP_MODIS_1X_1Y.tar.gz"
 
+[SIF_TROPOMI_740_12X_8D]
+git-tree-sha1 = "8f82b4523c020f0198f976662ff33852cfa3a692"
+lazy = true
+
+    [[SIF_TROPOMI_740_12X_8D.download]]
+    sha256 = "052fab51590f587147511570bcecf007aaa13bbf3ed41355683e06dd621092e1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_12X_8D.tar.gz"
+
+[SIF_TROPOMI_740_1X_1M]
+git-tree-sha1 = "9d939badac4761cc5d56a2841d6fe3e1592a283c"
+lazy = true
+
+    [[SIF_TROPOMI_740_1X_1M.download]]
+    sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_1X_1M.tar.gz"
+    [[SIF_TROPOMI_740_1X_1M.download]]
+    sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/SIF_TROPOMI_740_1X_1M.tar.gz"
+
 [canopy_height_20X_1Y]
 git-tree-sha1 = "4e1afeec382946404479013c75461e720594fb1b"
 lazy = true
