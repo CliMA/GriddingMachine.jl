@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Data Preview · GriddingMachine</title><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script><link href="../../assets/favicon.ico" rel="icon" type="image/x-icon"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.svg" alt="GriddingMachine logo"/></a><div class="docs-package-name"><span class="docs-autofit">GriddingMachine</span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../API/">API</a></li><li class="is-active"><a class="tocitem" href>Data Preview</a><ul class="internal"><li><a class="tocitem" href="#Leaf-level-datasets"><span>Leaf level datasets</span></a></li><li><a class="tocitem" href="#Stand-level-datasets"><span>Stand level datasets</span></a></li><li><a class="tocitem" href="#Land-surface"><span>Land surface</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Data Preview</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Data Preview</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/CliMA/GriddingMachine.jl/blob/master/docs/src/preview.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Dataset-Previews"><a class="docs-heading-anchor" href="#Dataset-Previews">Dataset Previews</a><a id="Dataset-Previews-1"></a><a class="docs-heading-anchor-permalink" href="#Dataset-Previews" title="Permalink"></a></h1><p>First, initialize by adding tools and declare floating type</p><pre><code class="language-">using GriddingMachine
+using PkgUtility
+using Plots
+using Plots.PlotMeasures
+
+ENV[&quot;GKSwstype&quot;]=&quot;100&quot;;
+FT = Float32;
+# use this to fix the problem in generated preview.jl file
+F1 = joinpath(@__DIR__, &quot;../../Artifacts.toml&quot;);
+F2 = joinpath(@__DIR__, &quot;../../../Artifacts.toml&quot;);
+GRIDDINGMACHINE_ARTIFACTS = (isfile(F1) ? F1 : F2);
+
+predownload_artifact.([&quot;GPP_MPI_v006_1X_8D&quot;, &quot;GPP_VPM_v20_1X_8D&quot;,
+                       &quot;NPP_MODIS_1X_1Y&quot;, &quot;canopy_height_20X_1Y&quot;,
+                       &quot;clumping_index_12X_1Y&quot;, &quot;clumping_index_2X_1Y_PFT&quot;,
+                       &quot;land_mask_ERA5_4X_1Y&quot;, &quot;leaf_area_index_4X_1M&quot;,
+                       &quot;leaf_chlorophyll_2X_7D&quot;, &quot;leaf_traits_2X_1Y&quot;,
+                       &quot;river_maps_4X_1Y&quot;, &quot;SIF_TROPOMI_740_1X_1M&quot;,
+                       &quot;surface_data_2X_1Y&quot;, &quot;tree_density_12X_1Y&quot;],
+                      GRIDDINGMACHINE_ARTIFACTS);
+nothing #hide</code></pre><p>Then, define a function to plot the dataset</p><pre><code class="language-">function preview_data(ds::GriddedDataset{FT}, ind::Int)
+    # preview data
+    return heatmap(view(ds.data,:,:,ind)&#39;,
+                   origin=&quot;lower&quot;,
+                   aspect_ratio=1,
+                   xticks=[],
+                   yticks=[],
+                   c=:viridis,
+                   size=(700,300),
+                   framestyle=:none)
+end
+
+function preview_data(ds::GriddedDataset{FT}, ind::Int, clim::Tuple)
+    # preview data
+    return heatmap(view(ds.data,:,:,ind)&#39;,
+                   origin=&quot;lower&quot;,
+                   aspect_ratio=1,
+                   xticks=[],
+                   yticks=[],
+                   c=:viridis,
+                   clim=clim,
+                   size=(700,300),
+                   framestyle=:none)
+end</code></pre><h2 id="Leaf-level-datasets"><a class="docs-heading-anchor" href="#Leaf-level-datasets">Leaf level datasets</a><a id="Leaf-level-datasets-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-level-datasets" title="Permalink"></a></h2><h3 id="Leaf-chlorophyll-content"><a class="docs-heading-anchor" href="#Leaf-chlorophyll-content">Leaf chlorophyll content</a><a id="Leaf-chlorophyll-content-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-chlorophyll-content" title="Permalink"></a></h3><pre><code class="language-">LCH_LUT = load_LUT(LeafChlorophyll{FT}());
+mask_LUT!(LCH_LUT, FT[0,Inf]);
+LCH_LUT = regrid_LUT(LCH_LUT, Int(size(LCH_LUT.data,2)/180));
+anim = @animate for i ∈ 1:size(LCH_LUT.data,3)
+    preview_data(LCH_LUT, i, (0,80));
+end
+gif(anim, fps=5)</code></pre><h3 id="Leaf-nitrogen-content"><a class="docs-heading-anchor" href="#Leaf-nitrogen-content">Leaf nitrogen content</a><a id="Leaf-nitrogen-content-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-nitrogen-content" title="Permalink"></a></h3><pre><code class="language-">LNC_LUT = load_LUT(LeafNitrogen{FT}());
+mask_LUT!(LNC_LUT, FT[0,Inf]);
+LNC_LUT = regrid_LUT(LNC_LUT, Int(size(LNC_LUT.data,2)/180));
+preview_data(LNC_LUT, 1)</code></pre><h3 id="Leaf-phosphorus-content"><a class="docs-heading-anchor" href="#Leaf-phosphorus-content">Leaf phosphorus content</a><a id="Leaf-phosphorus-content-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-phosphorus-content" title="Permalink"></a></h3><pre><code class="language-">LPC_LUT = load_LUT(LeafPhosphorus{FT}());
+mask_LUT!(LPC_LUT, FT[0,Inf]);
+LPC_LUT = regrid_LUT(LPC_LUT, Int(size(LPC_LUT.data,2)/180));
+preview_data(LPC_LUT, 1)</code></pre><h3 id="Specific-leaf-area"><a class="docs-heading-anchor" href="#Specific-leaf-area">Specific leaf area</a><a id="Specific-leaf-area-1"></a><a class="docs-heading-anchor-permalink" href="#Specific-leaf-area" title="Permalink"></a></h3><pre><code class="language-">SLA_LUT = load_LUT(LeafSLA{FT}());
+mask_LUT!(SLA_LUT, FT[0,Inf]);
+SLA_LUT = regrid_LUT(SLA_LUT, Int(size(SLA_LUT.data,2)/180));
+preview_data(SLA_LUT, 1)</code></pre><h3 id="Vcmax"><a class="docs-heading-anchor" href="#Vcmax">Vcmax</a><a id="Vcmax-1"></a><a class="docs-heading-anchor-permalink" href="#Vcmax" title="Permalink"></a></h3><pre><code class="language-">VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());
+mask_LUT!(VCM_LUT, FT[0,Inf]);
+VCM_LUT = regrid_LUT(VCM_LUT, Int(size(VCM_LUT.data,2)/180));
+preview_data(VCM_LUT, 1)</code></pre><h2 id="Stand-level-datasets"><a class="docs-heading-anchor" href="#Stand-level-datasets">Stand level datasets</a><a id="Stand-level-datasets-1"></a><a class="docs-heading-anchor-permalink" href="#Stand-level-datasets" title="Permalink"></a></h2><h3 id="Canopy-height"><a class="docs-heading-anchor" href="#Canopy-height">Canopy height</a><a id="Canopy-height-1"></a><a class="docs-heading-anchor-permalink" href="#Canopy-height" title="Permalink"></a></h3><pre><code class="language-">CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+mask_LUT!(CHT_LUT, FT[0,Inf]);
+CHT_LUT = regrid_LUT(CHT_LUT, Int(size(CHT_LUT.data,2)/180));
+preview_data(CHT_LUT, 1)</code></pre><h3 id="Clumping-index"><a class="docs-heading-anchor" href="#Clumping-index">Clumping index</a><a id="Clumping-index-1"></a><a class="docs-heading-anchor-permalink" href="#Clumping-index" title="Permalink"></a></h3><pre><code class="language-"># global clumping index
+CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), &quot;12X&quot;, &quot;1Y&quot;);
+mask_LUT!(CLI_LUT, FT[0,1]);
+CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
+preview_data(CLI_LUT, 1, (0.4,1))</code></pre><pre><code class="language-"># global clumping index per PFT
+CLI_LUT = load_LUT(ClumpingIndexPFT{FT}());
+mask_LUT!(CLI_LUT, FT[0,1]);
+CLI_LUT = regrid_LUT(CLI_LUT, Int(size(CLI_LUT.data,2)/180));
+anim = @animate for i ∈ 1:size(CLI_LUT.data,3)
+    preview_data(CLI_LUT, i, (0.4,1));
+end
+gif(anim, fps=1)</code></pre><h3 id="Gross-primary-productivity"><a class="docs-heading-anchor" href="#Gross-primary-productivity">Gross primary productivity</a><a id="Gross-primary-productivity-1"></a><a class="docs-heading-anchor-permalink" href="#Gross-primary-productivity" title="Permalink"></a></h3><pre><code class="language-"># GPP MPI
+anim = @animate for year ∈ 2001:2019, i ∈ 1:46
+    GPP_LUT = load_LUT(GPPMPIv006{FT}(), year, &quot;1X&quot;, &quot;8D&quot;);
+    mask_LUT!(GPP_LUT, FT[-100,Inf]);
+    preview_data(GPP_LUT, i, (0,10));
+end
+gif(anim, fps=20)</code></pre><pre><code class="language-"># GPP VPM
+anim = @animate for year ∈ 2000:2019, i ∈ 1:46
+    @show year;
+    GPP_LUT = load_LUT(GPPVPMv20{FT}(), year, &quot;1X&quot;, &quot;8D&quot;);
+    mask_LUT!(GPP_LUT, FT[-100,Inf]);
+    preview_data(GPP_LUT, i, (0,10));
+end
+gif(anim, fps=20)</code></pre><h3 id="Leaf-area-index"><a class="docs-heading-anchor" href="#Leaf-area-index">Leaf area index</a><a id="Leaf-area-index-1"></a><a class="docs-heading-anchor-permalink" href="#Leaf-area-index" title="Permalink"></a></h3><pre><code class="language-">LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
+LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
+anim = @animate for i ∈ 1:size(LAI_LUT.data,3)
+    preview_data(LAI_LUT, i, (0,6));
+end
+gif(anim, fps=1)</code></pre><h3 id="Net-primary-productivity"><a class="docs-heading-anchor" href="#Net-primary-productivity">Net primary productivity</a><a id="Net-primary-productivity-1"></a><a class="docs-heading-anchor-permalink" href="#Net-primary-productivity" title="Permalink"></a></h3><pre><code class="language-">NPP_LUT = load_LUT(NPPModis{FT}());
+mask_LUT!(NPP_LUT, FT[-Inf,1e19]);
+NPP_LUT = regrid_LUT(NPP_LUT, Int(size(NPP_LUT.data,2)/180));
+NPP_LUT.data .*= 1e9;
+preview_data(NPP_LUT, 1)</code></pre><h3 id="Sun-induced-fluorescence"><a class="docs-heading-anchor" href="#Sun-induced-fluorescence">Sun induced fluorescence</a><a id="Sun-induced-fluorescence-1"></a><a class="docs-heading-anchor-permalink" href="#Sun-induced-fluorescence" title="Permalink"></a></h3><pre><code class="language-">SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, &quot;1X&quot;, &quot;1M&quot;);
+mask_LUT!(SIF_LUT, FT[-100,100]);
+anim = @animate for i ∈ 1:12
+    preview_data(SIF_LUT, i, (0,3.5));
+end
+gif(anim, fps=3)</code></pre><h3 id="Tree-density"><a class="docs-heading-anchor" href="#Tree-density">Tree density</a><a id="Tree-density-1"></a><a class="docs-heading-anchor-permalink" href="#Tree-density" title="Permalink"></a></h3><pre><code class="language-">TDT_LUT = load_LUT(TreeDensity{FT}(), &quot;12X&quot;, &quot;1Y&quot;);
+mask_LUT!(TDT_LUT, FT[0,Inf]);
+TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
+preview_data(TDT_LUT, 1, (0, 150000))</code></pre><h2 id="Land-surface"><a class="docs-heading-anchor" href="#Land-surface">Land surface</a><a id="Land-surface-1"></a><a class="docs-heading-anchor-permalink" href="#Land-surface" title="Permalink"></a></h2><h3 id="Land-elevation"><a class="docs-heading-anchor" href="#Land-elevation">Land elevation</a><a id="Land-elevation-1"></a><a class="docs-heading-anchor-permalink" href="#Land-elevation" title="Permalink"></a></h3><pre><code class="language-">ELE_LUT = load_LUT(LandElevation{FT}());
+mask_LUT!(ELE_LUT, FT[0,Inf]);
+ELE_LUT = regrid_LUT(ELE_LUT, Int(size(ELE_LUT.data,2)/180));
+preview_data(ELE_LUT, 1)</code></pre><h3 id="Land-mask"><a class="docs-heading-anchor" href="#Land-mask">Land mask</a><a id="Land-mask-1"></a><a class="docs-heading-anchor-permalink" href="#Land-mask" title="Permalink"></a></h3><pre><code class="language-">LMK_LUT = load_LUT(LandMaskERA5{FT}());
+LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
+preview_data(LMK_LUT, 1)</code></pre><h3 id="River-flood-plain-height"><a class="docs-heading-anchor" href="#River-flood-plain-height">River flood plain height</a><a id="River-flood-plain-height-1"></a><a class="docs-heading-anchor-permalink" href="#River-flood-plain-height" title="Permalink"></a></h3><pre><code class="language-">FLD_LUT = load_LUT(FloodPlainHeight{FT}());
+mask_LUT!(FLD_LUT, FT[0,Inf]);
+FLD_LUT = regrid_LUT(FLD_LUT, Int(size(FLD_LUT.data,2)/180));
+preview_data(FLD_LUT, 1)</code></pre><h3 id="River-height"><a class="docs-heading-anchor" href="#River-height">River height</a><a id="River-height-1"></a><a class="docs-heading-anchor-permalink" href="#River-height" title="Permalink"></a></h3><pre><code class="language-">RVH_LUT = load_LUT(RiverHeight{FT}());
+mask_LUT!(RVH_LUT, FT[0,Inf]);
+RVH_LUT = regrid_LUT(RVH_LUT, Int(size(RVH_LUT.data,2)/180));
+preview_data(RVH_LUT, 1)</code></pre><h3 id="River-width"><a class="docs-heading-anchor" href="#River-width">River width</a><a id="River-width-1"></a><a class="docs-heading-anchor-permalink" href="#River-width" title="Permalink"></a></h3><pre><code class="language-">RVW_LUT = load_LUT(RiverWidth{FT}());
+mask_LUT!(RVW_LUT, FT[0,Inf]);
+RVW_LUT = regrid_LUT(RVW_LUT, Int(size(RVW_LUT.data,2)/180));
+preview_data(RVW_LUT, 1)</code></pre><h3 id="River-length"><a class="docs-heading-anchor" href="#River-length">River length</a><a id="River-length-1"></a><a class="docs-heading-anchor-permalink" href="#River-length" title="Permalink"></a></h3><pre><code class="language-">RVL_LUT = load_LUT(RiverLength{FT}());
+mask_LUT!(RVL_LUT, FT[0,Inf]);
+RVL_LUT = regrid_LUT(RVL_LUT, Int(size(RVL_LUT.data,2)/180));
+preview_data(RVL_LUT, 1)</code></pre><h3 id="River-manning-coefficient"><a class="docs-heading-anchor" href="#River-manning-coefficient">River manning coefficient</a><a id="River-manning-coefficient-1"></a><a class="docs-heading-anchor-permalink" href="#River-manning-coefficient" title="Permalink"></a></h3><pre><code class="language-">RVM_LUT = load_LUT(LandMaskERA5{FT}());
+RVM_LUT = regrid_LUT(RVM_LUT, Int(size(RVM_LUT.data,2)/180));
+preview_data(RVM_LUT, 1)</code></pre><h3 id="River-unit-catchment-area"><a class="docs-heading-anchor" href="#River-unit-catchment-area">River unit catchment area</a><a id="River-unit-catchment-area-1"></a><a class="docs-heading-anchor-permalink" href="#River-unit-catchment-area" title="Permalink"></a></h3><pre><code class="language-">UCA_LUT = load_LUT(UnitCatchmentArea{FT}());
+UCA_LUT = regrid_LUT(UCA_LUT, Int(size(UCA_LUT.data,2)/180));
+preview_data(UCA_LUT, 1)</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../API/">« API</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 12 January 2021 19:24">Tuesday 12 January 2021</span>. Using Julia version 1.5.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
