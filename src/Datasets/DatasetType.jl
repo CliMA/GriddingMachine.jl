@@ -28,7 +28,7 @@ abstract type AbstractDataset{FT} end
     abstract type AbstractLeafDataset{FT}
 
 Hierachy of AbstractLeafDataset
-- [`LeafChlorophyll`]9@ref
+- [`LeafChlorophyll`](@ref)
 - [`LeafNitrogen`](@ref)
 - [`LeafPhosphorus`](@ref)
 - [`LeafSLA`](@ref)
@@ -42,7 +42,24 @@ abstract type AbstractLeafDataset{FT} <: AbstractDataset{FT} end
 """
     struct LeafChlorophyll{FT}
 
+<details>
+<summary>
 Struct for leaf chlorophyll content
+[Link to Dataset Source](https://doi.org/10.1016/j.rse.2019.111479)
+</summary>
+
+```
+@article{croft2020global,
+    author = {Croft, H and Chen, JM and Wang, R and Mo, G and Luo, S and Luo, X
+        and He, L and Gonsamo, A and Arabian, J and Zhang, Y and others},
+    year = {2020},
+    title = {The global distribution of leaf chlorophyll content},
+    journal = {Remote Sensing of Environment},
+    volume = {236},
+    pages = {111479},
+}
+```
+</details>
 """
 struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
 
@@ -52,7 +69,28 @@ struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
 """
     struct LeafNitrogen{FT}
 
+<details>
+<summary>
 Struct for leaf nitrogen content
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
+
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
 
@@ -61,8 +99,28 @@ struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
 
 """
     struct LeafPhosphorus{FT}
+<details>
+<summary>
+Struct for leaf phosphorus content
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
 
-Struct for leaf specific leaf area (inverse of leaf mass per area)
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
 
@@ -72,7 +130,28 @@ struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
 """
     struct LeafSLA{FT}
 
+<details>
+<summary>
 Struct for leaf specific leaf area (inverse of leaf mass per area)
+[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
+</summary>
+
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
+        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
+        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
+        others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait
+        distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
 """
 struct LeafSLA{FT}  <: AbstractLeafDataset{FT} end
 
@@ -117,9 +196,26 @@ abstract type AbstractStandDataset{FT} <: AbstractDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct CanopyHeightGLAS{FT}
 
+<details>
+<summary>
 Struct for canopy height from GLAS ICESat
+[Link to Dataset Source](https://doi.org/10.1029/2011JG001708)
+</summary>
+
+```
+@article{simard2011mapping,
+    author = {Simard, Marc and Pinto, Naiara and Fisher, Joshua B and Baccini,
+        Alessandro},
+    year = {2011},
+    title = {Mapping forest canopy height globally with spaceborne lidar},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {116},
+    number = {G4021}
+}
+```
+</details>
 """
 struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
 
@@ -127,7 +223,7 @@ struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct ClumpingIndexMODIS{FT}
 
 Struct for canopy height from GLAS ICESat
 """
@@ -137,7 +233,7 @@ struct ClumpingIndexMODIS{FT} <: AbstractStandDataset{FT} end
 
 
 """
-    struct GPPMPIv006{FT}
+    struct ClumpingIndexPFT{FT}
 
 Struct for canopy height from GLAS ICESat, for different plant functional
     types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses,
@@ -171,7 +267,21 @@ struct GPPVPMv20{FT}  <: AbstractStandDataset{FT} end
 """
     struct LAIMonthlyMean{FT}
 
+<details>
+<summary>
 Struct for monthly mean MODIS LAI
+[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1653)
+</summary>
+
+```
+@article{mao2019global,
+    author = {Mao, J and Yan, B},
+    year = {2019},
+    title = {Global monthly mean leaf area index climatology, 1981-2015},
+    journal = {ORNL DAAC}
+}
+```
+</details>
 """
 struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
@@ -184,6 +294,16 @@ struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 Struct for Modis NPP
 """
 struct NPPModis{FT} <: AbstractStandDataset{FT} end
+
+
+
+
+"""
+    struct SIFTropomi740{FT}
+
+Struct for TROPOMI SIF @ 740 nm
+"""
+struct SIFTropomi740{FT} <: AbstractStandDataset{FT} end
 
 
 

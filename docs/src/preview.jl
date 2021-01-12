@@ -5,19 +5,25 @@
 
 # First, initialize by adding tools and declare floating type
 using GriddingMachine
+using PkgUtility
 using Plots
 using Plots.PlotMeasures
 
 ENV["GKSwstype"]="100";
 FT = Float32;
+## use this to fix the problem in generated preview.jl file
+F1 = joinpath(@__DIR__, "../../Artifacts.toml");
+F2 = joinpath(@__DIR__, "../../../Artifacts.toml");
+GRIDDINGMACHINE_ARTIFACTS = (isfile(F1) ? F1 : F2);
 
 predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
                        "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
                        "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
                        "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
                        "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
-                       "river_maps_4X_1Y", "surface_data_2X_1Y",
-                       "tree_density_12X_1Y"]);
+                       "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
+                       "surface_data_2X_1Y", "tree_density_12X_1Y"],
+                      GRIDDINGMACHINE_ARTIFACTS);
 #------------------------------------------------------------------------------
 
 
@@ -156,6 +162,15 @@ mask_LUT!(NPP_LUT, FT[-Inf,1e19]);
 NPP_LUT = regrid_LUT(NPP_LUT, Int(size(NPP_LUT.data,2)/180));
 NPP_LUT.data .*= 1e9;
 preview_data(NPP_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### Sun induced fluorescence
+SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M");
+mask_LUT!(SIF_LUT, FT[-100,100]);
+anim = @animate for i ∈ 1:12
+    preview_data(SIF_LUT, i, (0,3.5));
+end
+gif(anim, fps=3)
 #------------------------------------------------------------------------------
 
 # ### Tree density

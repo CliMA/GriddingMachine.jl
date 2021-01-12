@@ -271,6 +271,27 @@ end
 
 
 
+function query_LUT(dt::SIFTropomi740, year::Int, res_g::String, res_t::String)
+    if (res_g == "1X") && (res_t=="1M")
+        _name = "SIF_TROPOMI_740_1X_1M_" * string(year) * ".nc";
+        _arti = artifact"SIF_TROPOMI_740_1X_1M";
+        _revl = false;
+    elseif (res_g == "12X") && (res_t=="8D")
+        _name = "SIF_TROPOMI_740_12X_8D_" * string(year) * ".nc";
+        _arti = artifact"SIF_TROPOMI_740_12X_8D";
+        _revl = false;
+    end
+    _file = joinpath(_arti, _name);
+    _varn = "SIF";
+    _vara = Dict("longname" => "Sun induced fluoresence",
+                 "units" => "mW m⁻² sr⁻¹ nm⁻¹");
+
+    return _file, FormatNC(), "sif", res_t, _revl, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::TreeDensity, res_g::String, res_t::String)
     if (res_g=="120X") && (res_t=="1Y")
         _file = artifact"tree_density_120X_1Y" *

@@ -1,7 +1,9 @@
 using GriddingMachine
+using PkgUtility
 using Test
 
 FT = Float32;
+GRIDDINGMACHINE_ARTIFACTS = joinpath(@__DIR__, "../Artifacts.toml");
 
 
 
@@ -28,8 +30,9 @@ end
                            "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
                            "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
                            "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
-                           "river_maps_4X_1Y", "surface_data_2X_1Y",
-                           "tree_density_12X_1Y"]);
+                           "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
+                           "surface_data_2X_1Y", "tree_density_12X_1Y"],
+                          GRIDDINGMACHINE_ARTIFACTS);
 
     println("");
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
@@ -38,6 +41,7 @@ end
     CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
     MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "1X", "8D");    @test true;
     VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "1X", "8D");    @test true;
+    SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;
     LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
@@ -57,10 +61,12 @@ end
     if Sys.islinux()
         println("Downloading the artifacts, please wait...");
         predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
-                               "GPP_VPM_v20_5X_8D"]);
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M"); @test true;
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D"); @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D"); @test true;
+                               "GPP_VPM_v20_5X_8D", "SIF_TROPOMI_740_12X_8D"],
+                              GRIDDINGMACHINE_ARTIFACTS);
+        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");     @test true;
+        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D");     @test true;
+        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");     @test true;
+        SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "12X", "8D"); @test true;
     end
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
@@ -77,7 +83,8 @@ end
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
         println("Downloading the artifacts, please wait...");
         predownload_artifact.(["clumping_index_240X_1Y", "GPP_VPM_v20_12X_8D",
-                               "tree_density_120X_1Y"]);
+                               "tree_density_120X_1Y"],
+                              GRIDDINGMACHINE_ARTIFACTS);
         CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
         VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "12X", "8D");    @test true;
         TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
