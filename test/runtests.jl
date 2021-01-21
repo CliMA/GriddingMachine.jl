@@ -60,7 +60,8 @@ end
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
     WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
 
-    if Sys.islinux()
+    # limit the test only to latest stable julia
+    if Sys.islinux() && VERSION>v"1.5"
         println("Downloading the artifacts, please wait...");
         predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
                                "GPP_VPM_v20_5X_8D", "SIF_TROPOMI_740_12X_8D"],
