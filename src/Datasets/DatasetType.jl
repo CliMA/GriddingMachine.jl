@@ -282,7 +282,7 @@ Struct for canopy height from GLAS ICESat, for different plant functional
 
 ```
 @article{braghiere2019underestimation,
-    author = {Braghiere, R{\'e}nato Kerches and Quaife, T and Black, E and He,
+    author = {Braghiere, R{\\'e}nato Kerches and Quaife, T and Black, E and He,
         L and Chen, JM},
     year = {2019},
     title = {Underestimation of global photosynthesis in Earth System Models
@@ -404,8 +404,8 @@ Struct for TROPOMI SIF @ 740 nm
 
 ```
 @article{kohler2018global,
-    author = {K{\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy S
-        and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
+    author = {K{\\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy
+        S and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
     year = {2018},
     title = {Global retrievals of solar-induced chlorophyll fluorescence with
         {TROPOMI}: {F}irst results and intersensor comparison to {OCO-2}},
@@ -463,10 +463,10 @@ Struct for wood density (g cm⁻³)
 
 ```
 @article{boonman2020assessing,
-    author = {Boonman, Coline CF and Ben{\\'\\i}tez-L{\\'o}pez, Ana and
-        Schipper, Aafke M and Thuiller, Wilfried and Anand, Madhur and
-        Cerabolini, Bruno EL and Cornelissen, Johannes HC and Gonzalez-Melo,
-        Andres and Hattingh, Wesley N and Higuchi, Pedro and others},
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
+        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
+        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
+        Wesley N and Higuchi, Pedro and others},
     year = {2020},
     title = {Assessing the reliability of predicted plant trait distributions
         at the global scale},

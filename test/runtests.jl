@@ -31,7 +31,8 @@ end
                            "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
                            "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
                            "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
-                           "surface_data_2X_1Y", "tree_density_12X_1Y"],
+                           "surface_data_2X_1Y", "tree_density_12X_1Y",
+                           "wood_density_2X_1Y"],
                           GRIDDINGMACHINE_ARTIFACTS);
 
     println("");

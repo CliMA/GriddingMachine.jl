@@ -85,7 +85,7 @@ lazy = true
 
     [[SIF_TROPOMI_740_12X_8D.download]]
     sha256 = "052fab51590f587147511570bcecf007aaa13bbf3ed41355683e06dd621092e1"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF_TROPOMI_740_12X_8D.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_12X_8D.tar.gz"
 
 [SIF_TROPOMI_740_1X_1M]
 git-tree-sha1 = "9d939badac4761cc5d56a2841d6fe3e1592a283c"
@@ -93,7 +93,7 @@ lazy = true
 
     [[SIF_TROPOMI_740_1X_1M.download]]
     sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF_TROPOMI_740_1X_1M.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_1X_1M.tar.gz"
     [[SIF_TROPOMI_740_1X_1M.download]]
     sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/SIF_TROPOMI_740_1X_1M.tar.gz"
