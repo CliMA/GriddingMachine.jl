@@ -61,6 +61,7 @@ LAIMonthlyMean
 NPPModis
 SIFTropomi740
 TreeDensity
+WoodDensity
 ```
 
 ### Surface datasets

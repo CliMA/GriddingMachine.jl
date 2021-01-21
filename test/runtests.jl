@@ -57,6 +57,7 @@ end
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
     SLA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
+    WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
 
     if Sys.islinux()
         println("Downloading the artifacts, please wait...");

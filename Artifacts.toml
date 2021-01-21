@@ -85,7 +85,7 @@ lazy = true
 
     [[SIF_TROPOMI_740_12X_8D.download]]
     sha256 = "052fab51590f587147511570bcecf007aaa13bbf3ed41355683e06dd621092e1"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_12X_8D.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF_TROPOMI_740_12X_8D.tar.gz"
 
 [SIF_TROPOMI_740_1X_1M]
 git-tree-sha1 = "9d939badac4761cc5d56a2841d6fe3e1592a283c"
@@ -93,7 +93,7 @@ lazy = true
 
     [[SIF_TROPOMI_740_1X_1M.download]]
     sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF/SIF_TROPOMI_740_1X_1M.tar.gz"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SIF_TROPOMI_740_1X_1M.tar.gz"
     [[SIF_TROPOMI_740_1X_1M.download]]
     sha256 = "3fcda38cc0e6be015ea701337ee6137c52e5b8394c3a07a3294e50077bdca560"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/SIF_TROPOMI_740_1X_1M.tar.gz"
@@ -234,3 +234,14 @@ lazy = true
     [[tree_density_12X_1Y.download]]
     sha256 = "dd9a48f884afb99b42490b3bd0e7a1e333f6d6b822055f0083cb7e67418b7964"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/tree_density_12X_1Y.tar.gz"
+
+[wood_density_2X_1Y]
+git-tree-sha1 = "1e6e9c6f127dc32f97d19560133a42decc224c0e"
+lazy = true
+
+    [[wood_density_2X_1Y.download]]
+    sha256 = "415ae78cbc9f7e7ba91b105d97b4beb1abcecd5e3e2c9fa8dcf9c4ef784ab5f8"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/WD/wood_density_2X_1Y.tar.gz"
+    [[wood_density_2X_1Y.download]]
+    sha256 = "415ae78cbc9f7e7ba91b105d97b4beb1abcecd5e3e2c9fa8dcf9c4ef784ab5f8"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/wood_density_2X_1Y.tar.gz"

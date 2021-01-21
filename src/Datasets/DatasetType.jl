@@ -437,17 +437,48 @@ Struct for tree density (number of trees per km⁻²)
         Bettigole, Charlie and Maynard, Daniel S and Thomas, Stephen M and
         Smith, Jeffrey R and Hintler, Gregor and Duguid, Marlyse C and
         Amatulli, Giuseppe and others},
-	year = {2015},
-	title = {Mapping tree density at a global scale},
-	journal = {Nature},
-	volume = {525},
-	number = {7568},
-	pages = {201--205}
+    year = {2015},
+    title = {Mapping tree density at a global scale},
+    journal = {Nature},
+    volume = {525},
+    number = {7568},
+    pages = {201--205}
 }
 ```
 </details>
 """
 struct TreeDensity{FT} <: AbstractStandDataset{FT} end
+
+
+
+
+"""
+    struct WoodDensity{FT}
+
+<details>
+<summary>
+Struct for wood density (g cm⁻³)
+[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'\\i}tez-L{\\'o}pez, Ana and
+        Schipper, Aafke M and Thuiller, Wilfried and Anand, Madhur and
+        Cerabolini, Bruno EL and Cornelissen, Johannes HC and Gonzalez-Melo,
+        Andres and Hattingh, Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions
+        at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+struct WoodDensity{FT} <: AbstractStandDataset{FT} end
 
 
 

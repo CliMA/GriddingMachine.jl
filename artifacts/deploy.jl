@@ -209,6 +209,14 @@ deploy_artifact(artifact_toml,
                 "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/TD",
                 [ftp_url*"/TD", git_url]);
 
+# Stand --- wood density
+deploy_artifact(artifact_toml,
+                "wood_density_2X_1Y",
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/WD",
+                ["wood_density_2X_1Y.tif"],
+                "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/WD",
+                [ftp_url*"/WD", git_url]);
+
 # Tools --- MODIS grid information
 deploy_artifact(artifact_toml,
                 "MODIS_1km_grid",

@@ -180,6 +180,13 @@ TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
 preview_data(TDT_LUT, 1, (0, 150000))
 #------------------------------------------------------------------------------
 
+# ### Wood density
+TDT_LUT = load_LUT(WoodDensity{FT}());
+mask_LUT!(TDT_LUT, FT[0,Inf]);
+TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
+preview_data(TDT_LUT, 1)
+#------------------------------------------------------------------------------
+
 
 
 
