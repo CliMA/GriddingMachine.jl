@@ -48,7 +48,7 @@ function compile_RAW(param::Array)
 
         # save file to nc file
         matv ./= matn;
-        save_LUT(matv, cache);
+        save_LUT!(matv, cache);
     end
 
     return nothing
@@ -98,7 +98,7 @@ function compile_RAW(
         for i in 1:46
             view(_data,:,:,i) .= ncread(new_params[i][5], "Var");
         end
-        save_LUT(_data, _file, "LAI", _attr);
+        save_LUT!(_data, _file, "LAI", _attr);
     end
 
     return nothing

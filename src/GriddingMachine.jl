@@ -25,9 +25,6 @@ MODIS_GRID_LON = 0
 
 # export public types for GriddedDataset
 export AbstractDataset,
-       AbstractLeafDataset,
-       AbstractStandDataset,
-       AbstractSurfaceDataset,
        CanopyHeightGLAS,
        ClumpingIndexMODIS,
        ClumpingIndexPFT,
@@ -75,7 +72,7 @@ export lat_ind,
        query_LUT,
        read_LUT,
        regrid_LUT,
-       save_LUT,
+       save_LUT!,
        view_LUT
 
 

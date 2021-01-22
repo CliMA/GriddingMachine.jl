@@ -5,10 +5,6 @@
 ###############################################################################
 """
     abstract type AbstractDataset{FT}
-
-Hierachy of AbstractDataset
-- [`AbstractLeafDataset`](@ref)
-- [`AbstractStandDataset`](@ref)
 """
 abstract type AbstractDataset{FT} end
 
@@ -24,21 +20,6 @@ abstract type AbstractDataset{FT} end
 # Leaf Level Datasets
 #
 ###############################################################################
-"""
-    abstract type AbstractLeafDataset{FT}
-
-Hierachy of AbstractLeafDataset
-- [`LeafChlorophyll`](@ref)
-- [`LeafNitrogen`](@ref)
-- [`LeafPhosphorus`](@ref)
-- [`LeafSLA`](@ref)
-- [`VcmaxOptimalCiCa`](@ref)
-"""
-abstract type AbstractLeafDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
 """
     struct LeafChlorophyll{FT}
 
@@ -61,7 +42,7 @@ Struct for leaf chlorophyll content
 ```
 </details>
 """
-struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
+struct LeafChlorophyll{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -92,7 +73,7 @@ Struct for leaf nitrogen content
 ```
 </details>
 """
-struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
+struct LeafNitrogen{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -122,7 +103,7 @@ Struct for leaf phosphorus content
 ```
 </details>
 """
-struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
+struct LeafPhosphorus{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -153,7 +134,7 @@ Struct for leaf specific leaf area (inverse of leaf mass per area)
 ```
 </details>
 """
-struct LeafSLA{FT}  <: AbstractLeafDataset{FT} end
+struct LeafSLA{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -183,7 +164,7 @@ Struct for Vcmax estimated from optimal Ci:Ca ratio
 ```
 </details>
 """
-struct VcmaxOptimalCiCa{FT} <: AbstractLeafDataset{FT} end
+struct VcmaxOptimalCiCa{FT} <: AbstractDataset{FT} end
 
 
 
@@ -197,24 +178,6 @@ struct VcmaxOptimalCiCa{FT} <: AbstractLeafDataset{FT} end
 # Stand Level Datasets
 #
 ###############################################################################
-"""
-    abstract type AbstractStandDataset{FT}
-
-Hierachy of AbstractStandDataset
-- [`CanopyHeightGLAS`](@ref)
-- [`ClumpingIndexMODIS`](@ref)
-- [`ClumpingIndexPFT`](@ref)
-- [`GPPMPIv006`](@ref)
-- [`GPPVPMv20`](@ref)
-- [`LAIMonthlyMean`](@ref)
-- [`NPPModis`](@ref)
-- [`TreeDensity`](@ref)
-"""
-abstract type AbstractStandDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
 """
     struct CanopyHeightGLAS{FT}
 
@@ -237,7 +200,7 @@ Struct for canopy height from GLAS ICESat
 ```
 </details>
 """
-struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
+struct CanopyHeightGLAS{FT} <: AbstractDataset{FT} end
 
 
 
@@ -264,7 +227,7 @@ Global clumping index data from MODIS BRDF 2006
 ```
 </details>
 """
-struct ClumpingIndexMODIS{FT} <: AbstractStandDataset{FT} end
+struct ClumpingIndexMODIS{FT} <: AbstractDataset{FT} end
 
 
 
@@ -295,7 +258,7 @@ Struct for canopy height from GLAS ICESat, for different plant functional
 ```
 </details>
 """
-struct ClumpingIndexPFT{FT} <: AbstractStandDataset{FT} end
+struct ClumpingIndexPFT{FT} <: AbstractDataset{FT} end
 
 
 
@@ -326,7 +289,7 @@ Struct for MPI GPP v006
 ```
 </details>
 """
-struct GPPMPIv006{FT} <: AbstractStandDataset{FT} end
+struct GPPMPIv006{FT} <: AbstractDataset{FT} end
 
 
 
@@ -354,7 +317,7 @@ Struct for VPM GPP v20
 ```
 </details>
 """
-struct GPPVPMv20{FT}  <: AbstractStandDataset{FT} end
+struct GPPVPMv20{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -378,7 +341,7 @@ Struct for monthly mean MODIS LAI
 ```
 </details>
 """
-struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
+struct LAIMonthlyMean{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -388,7 +351,7 @@ struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
 Struct for Modis NPP
 """
-struct NPPModis{FT} <: AbstractStandDataset{FT} end
+struct NPPModis{FT} <: AbstractDataset{FT} end
 
 
 
@@ -417,7 +380,7 @@ Struct for TROPOMI SIF @ 740 nm
 ```
 </details>
 """
-struct SIFTropomi740{FT} <: AbstractStandDataset{FT} end
+struct SIFTropomi740{FT} <: AbstractDataset{FT} end
 
 
 
@@ -447,7 +410,7 @@ Struct for tree density (number of trees per km⁻²)
 ```
 </details>
 """
-struct TreeDensity{FT} <: AbstractStandDataset{FT} end
+struct TreeDensity{FT} <: AbstractDataset{FT} end
 
 
 
@@ -478,7 +441,7 @@ Struct for wood density (g cm⁻³)
 ```
 </details>
 """
-struct WoodDensity{FT} <: AbstractStandDataset{FT} end
+struct WoodDensity{FT} <: AbstractDataset{FT} end
 
 
 
@@ -493,22 +456,11 @@ struct WoodDensity{FT} <: AbstractStandDataset{FT} end
 #
 ###############################################################################
 """
-    abstract type AbstractSurfaceDataset{FT}
-
-Hierachy of AbstractSurfaceDataset
-- [`LandMaskERA5`](@ref)
-"""
-abstract type AbstractSurfaceDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct FloodPlainHeight{FT}
 
 Flood plain height
 """
-struct FloodPlainHeight{FT}  <: AbstractSurfaceDataset{FT} end
+struct FloodPlainHeight{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -518,7 +470,7 @@ struct FloodPlainHeight{FT}  <: AbstractSurfaceDataset{FT} end
 
 Land elevation (height above mean sea level)
 """
-struct LandElevation{FT}  <: AbstractSurfaceDataset{FT} end
+struct LandElevation{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -528,7 +480,7 @@ struct LandElevation{FT}  <: AbstractSurfaceDataset{FT} end
 
 Struct for land mask from ERA5
 """
-struct LandMaskERA5{FT}  <: AbstractSurfaceDataset{FT} end
+struct LandMaskERA5{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -538,7 +490,7 @@ struct LandMaskERA5{FT}  <: AbstractSurfaceDataset{FT} end
 
 River height
 """
-struct RiverHeight{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverHeight{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -548,7 +500,7 @@ struct RiverHeight{FT}  <: AbstractSurfaceDataset{FT} end
 
 River length
 """
-struct RiverLength{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverLength{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -558,7 +510,7 @@ struct RiverLength{FT}  <: AbstractSurfaceDataset{FT} end
 
 River manning coefficient
 """
-struct RiverManning{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverManning{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -568,7 +520,7 @@ struct RiverManning{FT}  <: AbstractSurfaceDataset{FT} end
 
 River width
 """
-struct RiverWidth{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverWidth{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -578,7 +530,7 @@ struct RiverWidth{FT}  <: AbstractSurfaceDataset{FT} end
 
 Unit catchment area
 """
-struct UnitCatchmentArea{FT}  <: AbstractSurfaceDataset{FT} end
+struct UnitCatchmentArea{FT}  <: AbstractDataset{FT} end
 
 
 

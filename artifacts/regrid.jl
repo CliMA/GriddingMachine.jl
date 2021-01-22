@@ -17,7 +17,7 @@ for year in 2001:2019
     reg_lut = regrid_LUT(mpi_lut, 2; nan_weight=true);
     _file   = reg_loc * "GPP_MPI_v006_1X_8D_" * string(year) * ".nc";
     rm(_file, force=true);
-    save_LUT(reg_lut, _file);
+    save_LUT!(reg_lut, _file);
 end
 
 for year in 2000:2019
@@ -26,6 +26,6 @@ for year in 2000:2019
     reg_lut = regrid_LUT(vpm_lut, 5; nan_weight=true);
     _file   = reg_loc * "GPP_VPM_v20_1X_8D_" * string(year) * ".nc";
     rm(_file, force=true);
-    save_LUT(reg_lut, _file);
+    save_LUT!(reg_lut, _file);
 end
 =#

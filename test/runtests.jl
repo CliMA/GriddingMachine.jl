@@ -118,6 +118,6 @@ end
     mask_LUT!(CHT_LUT, [0,10]);
     REG_LUT = regrid_LUT(CHT_LUT, 2; nan_weight=true ); @test true;
     REG_LUT = regrid_LUT(CHT_LUT, 2; nan_weight=false); @test true;
-    save_LUT(REG_LUT, "test.nc"); @test true;
+    save_LUT!(REG_LUT, "test.nc"); @test true;
     rm("test.nc");
 end

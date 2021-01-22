@@ -4,14 +4,14 @@
 #
 ###############################################################################
 """
-    save_LUT(ds::GriddedDataset{FT},
-             filename::String) where {FT<:AbstractFloat}
-    save_LUT(data::Array{FT,2},
-             filename::String) where {FT<:AbstractFloat}
-    save_LUT(data::Array{FT,3},
-             filename::String,
-             var_name::String,
-             var_attr::Dict{String,String}) where {FT<:AbstractFloat}
+    save_LUT!(ds::GriddedDataset{FT},
+              filename::String) where {FT<:AbstractFloat}
+    save_LUT!(data::Array{FT,2},
+              filename::String) where {FT<:AbstractFloat}
+    save_LUT!(data::Array{FT,3},
+              filename::String,
+              var_name::String,
+              var_attr::Dict{String,String}) where {FT<:AbstractFloat}
 
 Save the dataset, given
 - `ds` [`GriddedDataset`](@ref) type struct
@@ -20,10 +20,10 @@ Save the dataset, given
 - `var_name` Variable name in nc file
 - `var_attr` Variable attributes in nc file
 
-Note that `save_LUT(data, filename)` is designed to use with temporaty data
+Note that `save_LUT!(data, filename)` is designed to use with temporaty data
     only, be cautious when using this function.
 """
-function save_LUT(
+function save_LUT!(
             ds::GriddedDataset{FT},
             filename::String
 ) where {FT<:AbstractFloat}
@@ -54,7 +54,7 @@ end
 
 
 
-function save_LUT(
+function save_LUT!(
             data::Array{FT,2},
             filename::String
 ) where {FT<:AbstractFloat}
@@ -84,7 +84,7 @@ end
 
 
 
-function save_LUT(
+function save_LUT!(
             data::Array{FT,3},
             filename::String,
             var_name::String,

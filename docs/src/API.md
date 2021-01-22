@@ -40,7 +40,6 @@ AbstractDataset
 ### Leaf level dataset
 
 ```@docs
-AbstractLeafDataset
 LeafChlorophyll
 LeafNitrogen
 LeafPhosphorus
@@ -51,7 +50,6 @@ VcmaxOptimalCiCa
 ### Stand level datasets
 
 ```@docs
-AbstractStandDataset
 CanopyHeightGLAS
 ClumpingIndexMODIS
 ClumpingIndexPFT
@@ -67,7 +65,6 @@ WoodDensity
 ### Surface datasets
 
 ```@docs
-AbstractSurfaceDataset
 FloodPlainHeight
 LandMaskERA5
 LandElevation
@@ -159,7 +156,7 @@ To avoid unnecessary reading or regridding the dataset, a function is provided
     to save the dataset to `.nc` file
 
 ```@docs
-save_LUT
+save_LUT!
 ```
 
 
