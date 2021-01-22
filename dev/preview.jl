@@ -22,7 +22,8 @@ predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
                        "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
                        "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
                        "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
-                       "surface_data_2X_1Y", "tree_density_12X_1Y"],
+                       "surface_data_2X_1Y", "tree_density_12X_1Y",
+                       "wood_density_2X_1Y"],
                       GRIDDINGMACHINE_ARTIFACTS);
 #------------------------------------------------------------------------------
 
@@ -178,6 +179,13 @@ TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");
 mask_LUT!(TDT_LUT, FT[0,Inf]);
 TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
 preview_data(TDT_LUT, 1, (0, 150000))
+#------------------------------------------------------------------------------
+
+# ### Wood density
+TDT_LUT = load_LUT(WoodDensity{FT}());
+mask_LUT!(TDT_LUT, FT[0,Inf]);
+TDT_LUT = regrid_LUT(TDT_LUT, Int(size(TDT_LUT.data,2)/180));
+preview_data(TDT_LUT, 1)
 #------------------------------------------------------------------------------
 
 
