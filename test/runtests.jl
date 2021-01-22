@@ -31,7 +31,8 @@ end
                            "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
                            "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
                            "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
-                           "surface_data_2X_1Y", "tree_density_12X_1Y"],
+                           "surface_data_2X_1Y", "tree_density_12X_1Y",
+                           "wood_density_2X_1Y"],
                           GRIDDINGMACHINE_ARTIFACTS);
 
     println("");
@@ -57,8 +58,10 @@ end
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
     SLA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
+    WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
 
-    if Sys.islinux()
+    # limit the test only to latest stable julia
+    if Sys.islinux() && VERSION>v"1.5"
         println("Downloading the artifacts, please wait...");
         predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
                                "GPP_VPM_v20_5X_8D", "SIF_TROPOMI_740_12X_8D"],

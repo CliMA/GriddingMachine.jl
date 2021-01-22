@@ -317,3 +317,14 @@ function query_LUT(dt::UnitCatchmentArea)
 
     return _file, FormatNC(), "ctmare", "1Y", true, _varn, _vara
 end
+
+
+
+
+function query_LUT(dt::WoodDensity)
+    _file = artifact"wood_density_2X_1Y" * "/wood_density_2X_1Y.tif";
+    _varn = "WD";
+    _vara = Dict("longname" => "Wood density" , "units" => "g cm⁻³");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end

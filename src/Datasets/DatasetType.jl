@@ -282,7 +282,7 @@ Struct for canopy height from GLAS ICESat, for different plant functional
 
 ```
 @article{braghiere2019underestimation,
-    author = {Braghiere, R{\'e}nato Kerches and Quaife, T and Black, E and He,
+    author = {Braghiere, R{\\'e}nato Kerches and Quaife, T and Black, E and He,
         L and Chen, JM},
     year = {2019},
     title = {Underestimation of global photosynthesis in Earth System Models
@@ -404,8 +404,8 @@ Struct for TROPOMI SIF @ 740 nm
 
 ```
 @article{kohler2018global,
-    author = {K{\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy S
-        and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
+    author = {K{\\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy
+        S and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
     year = {2018},
     title = {Global retrievals of solar-induced chlorophyll fluorescence with
         {TROPOMI}: {F}irst results and intersensor comparison to {OCO-2}},
@@ -437,17 +437,48 @@ Struct for tree density (number of trees per km⁻²)
         Bettigole, Charlie and Maynard, Daniel S and Thomas, Stephen M and
         Smith, Jeffrey R and Hintler, Gregor and Duguid, Marlyse C and
         Amatulli, Giuseppe and others},
-	year = {2015},
-	title = {Mapping tree density at a global scale},
-	journal = {Nature},
-	volume = {525},
-	number = {7568},
-	pages = {201--205}
+    year = {2015},
+    title = {Mapping tree density at a global scale},
+    journal = {Nature},
+    volume = {525},
+    number = {7568},
+    pages = {201--205}
 }
 ```
 </details>
 """
 struct TreeDensity{FT} <: AbstractStandDataset{FT} end
+
+
+
+
+"""
+    struct WoodDensity{FT}
+
+<details>
+<summary>
+Struct for wood density (g cm⁻³)
+[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
+        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
+        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
+        Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions
+        at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+struct WoodDensity{FT} <: AbstractStandDataset{FT} end
 
 
 

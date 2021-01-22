@@ -52,7 +52,8 @@ export AbstractDataset,
        SIFTropomi740,
        TreeDensity,
        UnitCatchmentArea,
-       VcmaxOptimalCiCa
+       VcmaxOptimalCiCa,
+       WoodDensity
 
 
 
