@@ -45,7 +45,7 @@ function save_LUT!(
              "lon"  , _lon, lonatts,
              "lat"  , _lat, latatts,
              "cycle", _cyc, cycatts,
-             atts = var_attr);
+             atts = var_attr, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, var_name);
 
     return nothing
@@ -74,8 +74,8 @@ function save_LUT!(
     # create nc file
     nccreate(filename, "Var",
              "lon"  , _lon, lonatts,
-             "lat"  , _lat, latatts,
-             atts = varatts);
+             "lat"  , _lat, latatts;
+             atts = varatts, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, "Var");
 
     return nothing
@@ -109,7 +109,7 @@ function save_LUT!(
              "lon"  , _lon, lonatts,
              "lat"  , _lat, latatts,
              "cycle", _cyc, cycatts,
-             atts = var_attr);
+             atts = var_attr, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, var_name);
 
     return nothing

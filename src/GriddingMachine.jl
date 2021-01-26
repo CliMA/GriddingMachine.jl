@@ -7,6 +7,7 @@ using Dates
 using Distributed
 using DocStringExtensions
 using Glob
+using LazyArtifacts
 using NetCDF
 using Parameters
 using Pkg.Artifacts
@@ -19,6 +20,8 @@ using Statistics
 # global MODIS grid information to avoid repeated memory copy
 MODIS_GRID_LAT = 0
 MODIS_GRID_LON = 0
+USER_NAME = "";
+USER_PASS = "";
 
 
 
@@ -79,10 +82,10 @@ export lat_ind,
 
 
 #export public functions for GriddedDataset
-export compile_RAW,
-       dynamic_workers,
-       fetch_RAW,
-       grid_RAW,
+export compile_RAW!,
+       dynamic_workers!,
+       fetch_RAW!,
+       grid_RAW!,
        load_MODIS!,
        parse_HV,
        query_RAW
@@ -112,6 +115,7 @@ include("Gridding/query.jl"   )
 include("Gridding/workers.jl" )
 
 # The Util functions
+include("Utils/date.jl"         )
 include("Utils/lat_lon_index.jl")
 
 

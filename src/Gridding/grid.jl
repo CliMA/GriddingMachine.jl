@@ -4,8 +4,8 @@
 #
 ###############################################################################
 """
-    grid_RAW(param::Array)
-    grid_RAW(dt::MOD15A2Hv006LAI{FT},
+    grid_RAW!(param::Array)
+    grid_RAW!(dt::MOD15A2Hv006LAI{FT},
              params::Array{Array,1},
              nthread::Int) where {FT<:AbstractFloat}
 
@@ -15,7 +15,7 @@ Grid the data and save it to a csv file, given
 - `params` Array of `param`
 - `nthread` Number of threads to run the code in parallel
 """
-function grid_RAW(param::Array{Any,1})
+function grid_RAW!(param::Array{Any,1})
     global MODIS_GRID_LAT, MODIS_GRID_LON;
     # unpack data;
     _layer  = param[1];
@@ -67,19 +67,19 @@ end
 
 
 
-function grid_RAW(
+function grid_RAW!(
             dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
             nthread::Int=8
 ) where {FT<:AbstractFloat}
     # create threads
-    dynamic_workers(nthread);
+    dynamic_workers!(nthread);
 
     # load MODIS grid infomation
     @everywhere load_MODIS!($dt);
 
     # run the gridding process
-    @showprogress pmap(grid_RAW, params);
+    @showprogress pmap(grid_RAW!, params);
 
     return nothing
 end

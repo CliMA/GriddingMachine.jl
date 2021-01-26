@@ -4,8 +4,8 @@
 #
 ###############################################################################
 """
-    compile_RAW(param::Array)
-    compile_RAW(dt::MOD15A2Hv006LAI{FT},
+    compile_RAW!(param::Array)
+    compile_RAW!(dt::MOD15A2Hv006LAI{FT},
                 params::Array{Any,1},
                 zooms::Int) where {FT<:AbstractFloat}
 
@@ -13,10 +13,10 @@ Compile RAW data to nc files, given
 - `param` Array of parameters that pass into threads
 - `dt` [`AbstractUngriddedData`](@ref) type ungridded data type
 - `params` Array of parameters from [`query_RAW`](@ref), not that this `param`
-    is different from the `param` used in [`compile_RAW`](@ref)
+    is different from the `param` used in [`compile_RAW!`](@ref)
 - `zooms` Geometrical resolution zoom factor, `zooms=x` means `1/x` degree
 """
-function compile_RAW(param::Array)
+function compile_RAW!(param::Array)
     # unpack value from param
     layer = param[1];
     files = param[2];
@@ -57,7 +57,7 @@ end
 
 
 
-function compile_RAW(
+function compile_RAW!(
             dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
             zooms::Int
@@ -82,7 +82,7 @@ function compile_RAW(
     end
 
     # compile the data into cache files multi-threading manner
-    @showprogress pmap(compile_RAW, new_params);
+    @showprogress pmap(compile_RAW!, new_params);
 
     # compile the cache nc files into 1 file
     _fold = params[1][5][1:end-10] * "reprocessed/";
