@@ -61,11 +61,11 @@ end
 
 
 function query_RAW(dt::MOD15A2Hv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
-    _folder = joinpath("/net/fluo/data2/data/MODIS/MOD15A2H.006/original",
+    _folder = joinpath("$(MODIS_HOME)/MOD15A2H.006/original",
                        string(year));
     _naming = "MOD15A2H.AYYYYDOY.*.hdf";
     _prefix = "MOD15A2H.A";
-    _cache  = joinpath("/net/fluo/data2/data/MODIS/MOD15A2H.006/cache",
+    _cache  = joinpath("$(MODIS_HOME)/MOD15A2H.006/cache",
                        string(year));
     _band   = "Lai_500m";
 

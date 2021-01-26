@@ -17,11 +17,13 @@ using Statistics
 
 
 
-# global MODIS grid information to avoid repeated memory copy
-MODIS_GRID_LAT = 0
-MODIS_GRID_LON = 0
-USER_NAME = "";
-USER_PASS = "";
+# global constants
+MODIS_GRID_LAT = 0;
+MODIS_GRID_LON = 0;
+MODIS_HOME     = "/net/fluo/data2/data/MODIS";
+MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
+USER_NAME      = "";
+USER_PASS      = "";
 
 
 
@@ -117,6 +119,7 @@ include("Gridding/workers.jl" )
 # The Util functions
 include("Utils/date.jl"         )
 include("Utils/lat_lon_index.jl")
+include("Utils/password.jl"     )
 
 
 

@@ -5,9 +5,11 @@
 ###############################################################################
 """
     compile_RAW!(param::Array)
-    compile_RAW!(dt::MOD15A2Hv006LAI{FT},
+    compile_RAW!(
+                dt::MOD15A2Hv006LAI{FT},
                 params::Array{Any,1},
-                zooms::Int) where {FT<:AbstractFloat}
+                zooms::Int
+    ) where {FT<:AbstractFloat}
 
 Compile RAW data to nc files, given
 - `param` Array of parameters that pass into threads
