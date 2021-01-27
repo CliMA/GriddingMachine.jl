@@ -20,7 +20,7 @@ using Statistics
 # global constants
 MODIS_GRID_LAT = 0;
 MODIS_GRID_LON = 0;
-MODIS_HOME     = "/net/fluo/data2/data/MODIS";
+MODIS_HOME     = "/net/fluo/data1/data/MODIS";
 MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
 USER_NAME      = "";
 USER_PASS      = "";

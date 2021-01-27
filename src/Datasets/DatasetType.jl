@@ -458,7 +458,26 @@ struct WoodDensity{FT} <: AbstractDataset{FT} end
 """
     struct FloodPlainHeight{FT}
 
+<details>
+<summary>
 Flood plain height
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct FloodPlainHeight{FT}  <: AbstractDataset{FT} end
 
@@ -468,7 +487,26 @@ struct FloodPlainHeight{FT}  <: AbstractDataset{FT} end
 """
     struct LandElevation{FT}
 
+<details>
+<summary>
 Land elevation (height above mean sea level)
+[Link to Dataset Source](https://doi.org/10.1002/2017GL072874)
+</summary>
+
+```
+@article{yamazaki2017high,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Tawatari, Ryunosuke and
+        Yamaguchi, Tomohiro and O'Loughlin, Fiachra and Neal, Jeffery C and
+        Sampson, Christopher C and Kanae, Shinjiro and Bates, Paul D},
+    year = {2017},
+    title = {A high-accuracy map of global terrain elevations},
+    journal = {Geophysical Research Letters},
+    volume = {44},
+    number = {11},
+    pages = {5844--5853}
+}
+```
+</details>
 """
 struct LandElevation{FT}  <: AbstractDataset{FT} end
 
@@ -488,7 +526,26 @@ struct LandMaskERA5{FT}  <: AbstractDataset{FT} end
 """
     struct RiverHeight{FT}
 
+<details>
+<summary>
 River height
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct RiverHeight{FT}  <: AbstractDataset{FT} end
 
@@ -498,7 +555,26 @@ struct RiverHeight{FT}  <: AbstractDataset{FT} end
 """
     struct RiverLength{FT}
 
+<details>
+<summary>
 River length
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct RiverLength{FT}  <: AbstractDataset{FT} end
 
@@ -508,7 +584,26 @@ struct RiverLength{FT}  <: AbstractDataset{FT} end
 """
     struct RiverManning{FT}
 
+<details>
+<summary>
 River manning coefficient
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct RiverManning{FT}  <: AbstractDataset{FT} end
 
@@ -518,7 +613,26 @@ struct RiverManning{FT}  <: AbstractDataset{FT} end
 """
     struct RiverWidth{FT}
 
+<details>
+<summary>
 River width
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct RiverWidth{FT}  <: AbstractDataset{FT} end
 
@@ -528,7 +642,26 @@ struct RiverWidth{FT}  <: AbstractDataset{FT} end
 """
     struct UnitCatchmentArea{FT}
 
+<details>
+<summary>
 Unit catchment area
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
 struct UnitCatchmentArea{FT}  <: AbstractDataset{FT} end
 
