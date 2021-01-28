@@ -62,11 +62,19 @@ end
 function compile_RAW!(
             dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
+            year::Int,
+            days::Int,
             zooms::Int
 ) where {FT<:AbstractFloat}
+    # set time information for the gridding process
+    date_start = DateTime("$(year)-01-01");
+    date_stop  = DateTime("$(year)-12-31");
+    date_dday  = Day(days);
+    date_list  = date_start:date_dday:date_stop;
+
     # compile data per layer
     new_params = [];
-    for layer in 1:46
+    for layer in eachindex(date_list)
         _files = [];
         for param in params
             if param[1] == layer
@@ -90,14 +98,14 @@ function compile_RAW!(
     _fold = params[1][5][1:end-10] * "reprocessed/";
     _year = params[1][5][end-3:end];
     _file = _fold * "LAI_MODIS_v006_" * _year * "_" *
-            string(zooms) * "X_8D.nc";
+            string(zooms) * "X_" * string(days) * "D.nc";
     _attr = Dict("longname" => "LAI", "units" => "-");
     @show _file;
 
     # if file exists, skip it
     if !isfile(_file)
-        _data = zeros(FT, (360*zooms,180*zooms,46));
-        for i in 1:46
+        _data = zeros(FT, (360*zooms,180*zooms,length(date_list)));
+        for i in eachindex(date_list)
             view(_data,:,:,i) .= ncread(new_params[i][5], "Var");
         end
         save_LUT!(_data, _file, "LAI", _attr);

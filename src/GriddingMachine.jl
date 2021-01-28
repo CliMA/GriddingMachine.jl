@@ -90,6 +90,7 @@ export compile_RAW!,
        grid_RAW!,
        load_MODIS!,
        parse_HV,
+       process_RAW!,
        query_RAW
 
 
@@ -107,14 +108,15 @@ include("Datasets/save.jl"       )
 include("Datasets/view.jl"       )
 
 # include functions to grid datasets
-include("Gridding/DataType.jl")
-include("Gridding/compile.jl" )
-include("Gridding/fetch.jl"   )
-include("Gridding/grid.jl"    )
-include("Gridding/load.jl"    )
-include("Gridding/parse.jl"   )
-include("Gridding/query.jl"   )
-include("Gridding/workers.jl" )
+include("Gridding/DataType.jl" )
+include("Gridding/compile.jl"  )
+include("Gridding/fetch.jl"    )
+include("Gridding/grid.jl"     )
+include("Gridding/load.jl"     )
+include("Gridding/parse.jl"    )
+include("Gridding/query.jl"    )
+include("Gridding/shortcuts.jl")
+include("Gridding/workers.jl"  )
 
 # The Util functions
 include("Utils/date.jl"         )

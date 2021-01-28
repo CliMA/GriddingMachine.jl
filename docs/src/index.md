@@ -27,30 +27,33 @@ lai_val = read_LUT(LAI_LUT, FT(30), FT(-100), 8);
 
 ## Collected Datasets
 
-| Structure Name     | Artifact                   | Description                                               |
-|:-------------------|:---------------------------|:----------------------------------------------------------|
-| CanopyHeightGLAS   | `canopy_height_20X_1Y`     | 1/20  degree resolution, year 2005                        |
-| ClumpingIndexMODIS | `clumping_index_12X_1Y`    | 1/240 degree resolution, year 2006                        |
-|                    | `clumping_index_240X_1Y`   | 1/240 degree resolution, year 2006                        |
-| ClumpingIndexPFT   | `clumping_index_2X_1Y_PFT` | 1/2   degree resolution per PFT, year 2006                |
-| FloodPlainHeight   | `river_maps_4X_1Y`         | 1/4   degree resolution                                   |
-| GPPMPIv006         | `GPP_MPI_v006_2X_8D`       | 1/2   degree resolution per 8 days, year 2001-2019        |
-|                    | `GPP_MPI_v006_2X_1M`       | 1/2   degree resolution per month, year 2001-2019         |
-| GPPVPMv20          | `GPP_VPM_v20_5X_8D`        | 1/5   degree resolution per 8 days, year 2000-2019        |
-|                    | `GPP_VPM_v20_12X_8D`       | 1/12  degree resolution per 8 days, year 2000-2019        |
-| LAIMonthlyMean     | `leaf_area_index_4X_1M`    | 1/4   degree resolution per month, mean of year 1981-2015 |
-| LandElevation      | `river_maps_4X_1Y`         | 1/4   degree resolution                                   |
-| LandMaskERA5       | `land_mask_ERA5_4X_1Y`     | 1/4   degree resolution                                   |
-| LeafChlorophyll    | `leaf_chlorophyll_2X_7D`   | 1/2   degree resolution per week, mean of year 2003-2011  |
-| LeafNitrogen       | `leaf_traits_2X_1Y`        | 1/2   degree resolution, mean from report literature      |
-| LeafPhosphorus     |                            |                                                           |
-| LeafSLA            |                            |                                                           |
-| NPPModis           | `NPP_MODIS_1X_1Y`          | 1/1   degree resolution, year 2000                        |
-| RiverHeight        | `river_maps_4X_1Y`         | 1/4   degree resolution                                   |
-| RiverLength        |                            |                                                           |
-| RiverManning       |                            |                                                           |
-| RiverWidth         |                            |                                                           |
-| TreeDensity        | `tree_density_12X_1Y`      | 1/12  degree resolution, derived from ML                  |
-|                    | `tree_density_120X_1Y`     | 1/120 degree resolution, derived from ML                  |
-| UnitCatchmentArea  | `river_maps_4X_1Y`         | 1/4   degree resolution                                   |
-| VcmaxOptimalCiCa   | `leaf_traits_2X_1Y`        | 1/2   degree resolution, derived from optimal Ci/Ca       |
+| Structure Name     | Description                        | Resolutions | Year      | Source                  | Format | Credit (CliMA)   |
+|:-------------------|:-----------------------------------|:------------|:----------|:------------------------|:-------|:-----------------|
+| CanopyHeightGLAS   | Mean canopy height                 | 20X-1Y      | NS        | Simard et al. (2011)    | NetCDF |                  |
+| ClumpingIndexMODIS | Clumping index (year 2006)         | 240X-1Y     | NS        | He et al. (2012)        | TIFF   |                  |
+|                    |                                    | 12X-1Y      | NS        | regridded               | TIFF   | Yujie Wang       |
+| ClumpingIndexPFT   | Clumping index (yaer 2006) per PFT | 2X-1Y       | NS        | Braghiere et al. (2019) | NetCDF | Renato Braghiere |
+| FloodPlainHeight   | Flood plain height                 | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| GPPMPIv006         | Gross primary productivity         | 2X-8D       | 2001-2019 | Jung et al. (2020)      | NetCDF |                  |
+|                    |                                    | 2X-1M       | 2001-2019 | Jung et al. (2020)      | NetCDF |                  |
+|                    |                                    | 1X-8D       | 2001-2019 | regridded               | NetCDF | Yujie Wang       |
+| GPPVPMv20          |                                    | 12X-8D      | 2000-2019 | Zhang et al. (2017)     | NetCDF | Russell Doughty  |
+|                    |                                    | 5X-8D       | 2000-2019 | Zhang et al. (2017)     | NetCDF | Russell Doughty  |
+|                    |                                    | 1X-8D       | 2000-2019 | regridded               | NetCDF | Yujie Wang       |
+| LAIMonthlyMean     | Leaf area index (1981-2015 mean)   | 4X-1M       | NS        | Mao and Yan (2019)      | NetCDF | Yujie Wang       |
+| LandElevation      | Land elevation                     | 4X-1Y       | NS        | Yamazaki et al. (2017)  | NetCDF | Jake Bolewski    |
+| LandMaskERA5       | Land mask                          | 4X-1Y       | NS        | regridded from ERA5     | NetCDF |                  |
+| LeafChlorophyll    | Leaf chlorophyll content (mean)    | 2X-7D       | NS        | Croft et al. (2020)     | NetCDF | Russell Doughty  |
+| LeafNitrogen       | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     |
+| LeafPhosphorus     | Leaf phosphorus content            | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     |
+| LeafSLA            | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     |
+| NPPModis           | Net primary productivity           |             |           |                         |        |                  |
+| RiverHeight        | River height                       | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| RiverLength        | River length                       | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| RiverManning       | River manning coefficient          | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| RiverWidth         | River width                        | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| TreeDensity        | Tree number per area               | 120X-1Y     | NS        | Crowther et al. (2015)  | NetCDF | Renato Braghiere |
+|                    | Tree number per area               | 12X-1Y      | NS        | regridded               | TIFF   | Yujie Wang       |
+| UnitCatchmentArea  | Unit catchment area                | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| VcmaxOptimalCiCa   | Vcmax from optimal Ci/Ca ratio     | 4X-1Y       | NS        | Yamazaki et al. (2019)  | NetCDF | Jake Bolewski    |
+| WoodDensity        | Wood density                       | 2X-1Y       | NS        | Boonman et al. (2020)   | TIFF   | Marcos Longo     |
