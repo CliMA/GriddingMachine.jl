@@ -64,6 +64,7 @@ export AbstractDataset,
 export AbstractUngriddedData,
        AbstractMODIS500m,
        AbstractMODIS1km,
+       MOD09A1v006NIRv,
        MOD15A2Hv006LAI
 
 

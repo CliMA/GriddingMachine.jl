@@ -27,6 +27,20 @@ end
 
 
 
+function fetch_RAW!(dt::MOD09A1v006NIRv, year::Int)
+    update_password();
+
+    data_url = "$(MODIS_PORTAL)/MOLT/MOD09A1.006/";
+    data_loc = "$(MODIS_HOME)/MOD09A1.006/original/";
+
+    fetch_RAW!(data_url, data_loc, year);
+
+    return nothing
+end
+
+
+
+
 function fetch_RAW!(data_url::String, data_loc::String, year::Int)
     # number of days per year
     TDAY = isleapyear(year) ? 366 : 365;

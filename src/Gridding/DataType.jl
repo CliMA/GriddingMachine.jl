@@ -35,12 +35,18 @@ abstract type AbstractMODIS500m{FT} <: AbstractUngriddedData{FT} end
 
 
 
+"""
+    struct MOD09A1v006LAI
+
+Terra Surface Reflectance
+"""
+struct MOD09A1v006NIRv{FT} <: AbstractMODIS500m{FT} end
 
 
 
 
 """
-    struct MODISLeafAreaIndex
+    struct MOD15A2Hv006LAI
 
 Leaf area index
 """

@@ -19,7 +19,7 @@ Grid the data and save it to a csv file, given
 - `nthread` Number of threads to run the code in parallel
 """
 function process_RAW!(
-            dt::MOD15A2Hv006LAI{FT},
+            dt::AbstractMODIS500m{FT},
             year::Int;
             days::Int = 8,
             zooms::Int = 12,
