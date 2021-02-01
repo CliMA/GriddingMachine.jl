@@ -16,7 +16,7 @@ function update_password()
         @info "Please indicate your user name for LP DAAC data portal:";
         USER_NAME = readline();
         @info "Please indicate your password for LP DAAC Data portal:";
-        USER_PASS = readline();
+        USER_PASS = read(Base.getpass("Password (invisble)"), String);
     end
 
     return nothing

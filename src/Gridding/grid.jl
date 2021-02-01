@@ -6,6 +6,8 @@
 """
     grid_RAW!(param::Array)
     grid_RAW!(dt::MOD15A2Hv006LAI{FT},
+              params::Array{Any,1}) where {FT<:AbstractFloat}
+    grid_RAW!(dt::MOD15A2Hv006LAI{FT},
              params::Array{Array,1},
              nthread::Int) where {FT<:AbstractFloat}
 
@@ -99,7 +101,7 @@ end
 function grid_RAW!(
             dt::MOD15A2Hv006LAI{FT},
             params::Array{Any,1},
-            nthread::Int=8
+            nthread::Int
 ) where {FT<:AbstractFloat}
     # create threads
     dynamic_workers!(nthread);
