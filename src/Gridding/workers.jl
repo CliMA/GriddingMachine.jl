@@ -4,12 +4,12 @@
 #
 ###############################################################################
 """
-    dynamic_workers(nthread::Int)
+    dynamic_workers!(nthread::Int)
 
 Change the number of workers according to CPU_THREADS, given
 - `nthread` Number of thread required
 """
-function dynamic_workers(nthread::Int)
+function dynamic_workers!(nthread::Int)
     MaxThreads = Sys.CPU_THREADS;
 
     # if        no worker yet, and nthread <= MaxThreads, hire nthread

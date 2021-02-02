@@ -40,7 +40,6 @@ AbstractDataset
 ### Leaf level dataset
 
 ```@docs
-AbstractLeafDataset
 LeafChlorophyll
 LeafNitrogen
 LeafPhosphorus
@@ -51,7 +50,6 @@ VcmaxOptimalCiCa
 ### Stand level datasets
 
 ```@docs
-AbstractStandDataset
 CanopyHeightGLAS
 ClumpingIndexMODIS
 ClumpingIndexPFT
@@ -67,7 +65,6 @@ WoodDensity
 ### Surface datasets
 
 ```@docs
-AbstractSurfaceDataset
 FloodPlainHeight
 LandMaskERA5
 LandElevation
@@ -159,7 +156,7 @@ To avoid unnecessary reading or regridding the dataset, a function is provided
     to save the dataset to `.nc` file
 
 ```@docs
-save_LUT
+save_LUT!
 ```
 
 
@@ -195,7 +192,7 @@ AbstractMODIS1km
     regulate the number of threadings:
 
 ```@docs
-dynamic_workers
+dynamic_workers!
 ```
 
 However, because the MODIS tile information file is very large (e.g., 500 m
@@ -218,27 +215,27 @@ Note that, if you want to load the matricies in every thread, you will need
 
 Once the tile information is loaded, you may query the files you want to work
     on using `query_RAW`, which returns an array of paramters to pass to
-    different threads. Note, you may need to use `fetch_RAW` to download the
+    different threads. Note, you may need to use `fetch_RAW!` to download the
     datasets first.
 
 ```@docs
-fetch_RAW
+fetch_RAW!
 query_RAW
 ```
 
-Next, you should be able to grid the RAW files using [`grid_RAW`](@ref), which
+Next, you should be able to grid the RAW files using [`grid_RAW!`](@ref), which
     extract tile information from file name using `parse_HV`
 
 ```@docs
 parse_HV
 ```
 
-Then, [`grid_RAW`](@ref) will match the data information with tile latitude and
+Then, [`grid_RAW!`](@ref) will match the data information with tile latitude and
     longitude, and save the data to cache CSV files, which will stay on your
     hard drive until you remove them manually.
 
 ```@docs
-grid_RAW
+grid_RAW!
 ```
 
 The last step you need is to read the cache CSV files and compile them to nc
@@ -247,7 +244,7 @@ The last step you need is to read the cache CSV files and compile them to nc
     be compile into one nc file.
 
 ```@docs
-compile_RAW
+compile_RAW!
 ```
 
 The disadvantage is that you need a huge space to store the cache file, whereas

@@ -49,7 +49,7 @@ function query_RAW(
                          "DOY"  => lpad(Dates.dayofyear(_date), 3, "0")];
             file_temp = reduce(replace, file_dict, init=_naming);
             for _path in glob(file_temp, _folder)
-                push!(params, [layer, _path, _pref, _band, _cache, _kb, _mm]);
+                push!(params, [dt, layer, _path, _pref, _band, _cache, _kb, _mm]);
             end
         end
     end
@@ -60,12 +60,27 @@ end
 
 
 
+function query_RAW(dt::MOD09A1v006NIRv{FT}, year::Int) where {FT<:AbstractFloat}
+    _folder = joinpath("$(MODIS_HOME)/MOD09A1.006/original",
+                       string(year));
+    _naming = "MOD09A1.AYYYYDOY.*.hdf";
+    _prefix = "MOD09A1.A";
+    _cache  = joinpath("$(MODIS_HOME)/MOD09A1.006/cache",
+                       string(year));
+    _band   = ["sur_refl_b01", "sur_refl_b02"];
+
+    return _folder, _naming, _prefix, _band, _cache, FT[0.0001,0.0], FT[-0.01,1.7]
+end
+
+
+
+
 function query_RAW(dt::MOD15A2Hv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
-    _folder = joinpath("/net/fluo/data2/data/MODIS/MOD15A2H.006/original",
+    _folder = joinpath("$(MODIS_HOME)/MOD15A2H.006/original",
                        string(year));
     _naming = "MOD15A2H.AYYYYDOY.*.hdf";
     _prefix = "MOD15A2H.A";
-    _cache  = joinpath("/net/fluo/data2/data/MODIS/MOD15A2H.006/cache",
+    _cache  = joinpath("$(MODIS_HOME)/MOD15A2H.006/cache",
                        string(year));
     _band   = "Lai_500m";
 

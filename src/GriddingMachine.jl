@@ -7,6 +7,7 @@ using Dates
 using Distributed
 using DocStringExtensions
 using Glob
+using LazyArtifacts
 using NetCDF
 using Parameters
 using Pkg.Artifacts
@@ -16,18 +17,19 @@ using Statistics
 
 
 
-# global MODIS grid information to avoid repeated memory copy
-MODIS_GRID_LAT = 0
-MODIS_GRID_LON = 0
+# global constants
+MODIS_GRID_LAT = 0;
+MODIS_GRID_LON = 0;
+MODIS_HOME     = "/net/fluo/data1/data/MODIS";
+MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
+USER_NAME      = "";
+USER_PASS      = "";
 
 
 
 
 # export public types for GriddedDataset
 export AbstractDataset,
-       AbstractLeafDataset,
-       AbstractStandDataset,
-       AbstractSurfaceDataset,
        CanopyHeightGLAS,
        ClumpingIndexMODIS,
        ClumpingIndexPFT,
@@ -62,6 +64,7 @@ export AbstractDataset,
 export AbstractUngriddedData,
        AbstractMODIS500m,
        AbstractMODIS1km,
+       MOD09A1v006NIRv,
        MOD15A2Hv006LAI
 
 
@@ -75,19 +78,20 @@ export lat_ind,
        query_LUT,
        read_LUT,
        regrid_LUT,
-       save_LUT,
+       save_LUT!,
        view_LUT
 
 
 
 
 #export public functions for GriddedDataset
-export compile_RAW,
-       dynamic_workers,
-       fetch_RAW,
-       grid_RAW,
+export compile_RAW!,
+       dynamic_workers!,
+       fetch_RAW!,
+       grid_RAW!,
        load_MODIS!,
        parse_HV,
+       process_RAW!,
        query_RAW
 
 
@@ -105,17 +109,20 @@ include("Datasets/save.jl"       )
 include("Datasets/view.jl"       )
 
 # include functions to grid datasets
-include("Gridding/DataType.jl")
-include("Gridding/compile.jl" )
-include("Gridding/fetch.jl"   )
-include("Gridding/grid.jl"    )
-include("Gridding/load.jl"    )
-include("Gridding/parse.jl"   )
-include("Gridding/query.jl"   )
-include("Gridding/workers.jl" )
+include("Gridding/DataType.jl" )
+include("Gridding/compile.jl"  )
+include("Gridding/fetch.jl"    )
+include("Gridding/grid.jl"     )
+include("Gridding/load.jl"     )
+include("Gridding/parse.jl"    )
+include("Gridding/query.jl"    )
+include("Gridding/shortcuts.jl")
+include("Gridding/workers.jl"  )
 
 # The Util functions
+include("Utils/date.jl"         )
 include("Utils/lat_lon_index.jl")
+include("Utils/password.jl"     )
 
 
 

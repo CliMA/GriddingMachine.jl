@@ -5,10 +5,6 @@
 ###############################################################################
 """
     abstract type AbstractDataset{FT}
-
-Hierachy of AbstractDataset
-- [`AbstractLeafDataset`](@ref)
-- [`AbstractStandDataset`](@ref)
 """
 abstract type AbstractDataset{FT} end
 
@@ -24,21 +20,6 @@ abstract type AbstractDataset{FT} end
 # Leaf Level Datasets
 #
 ###############################################################################
-"""
-    abstract type AbstractLeafDataset{FT}
-
-Hierachy of AbstractLeafDataset
-- [`LeafChlorophyll`](@ref)
-- [`LeafNitrogen`](@ref)
-- [`LeafPhosphorus`](@ref)
-- [`LeafSLA`](@ref)
-- [`VcmaxOptimalCiCa`](@ref)
-"""
-abstract type AbstractLeafDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
 """
     struct LeafChlorophyll{FT}
 
@@ -61,7 +42,7 @@ Struct for leaf chlorophyll content
 ```
 </details>
 """
-struct LeafChlorophyll{FT}  <: AbstractLeafDataset{FT} end
+struct LeafChlorophyll{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -92,7 +73,7 @@ Struct for leaf nitrogen content
 ```
 </details>
 """
-struct LeafNitrogen{FT}  <: AbstractLeafDataset{FT} end
+struct LeafNitrogen{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -122,7 +103,7 @@ Struct for leaf phosphorus content
 ```
 </details>
 """
-struct LeafPhosphorus{FT}  <: AbstractLeafDataset{FT} end
+struct LeafPhosphorus{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -153,7 +134,7 @@ Struct for leaf specific leaf area (inverse of leaf mass per area)
 ```
 </details>
 """
-struct LeafSLA{FT}  <: AbstractLeafDataset{FT} end
+struct LeafSLA{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -183,7 +164,7 @@ Struct for Vcmax estimated from optimal Ci:Ca ratio
 ```
 </details>
 """
-struct VcmaxOptimalCiCa{FT} <: AbstractLeafDataset{FT} end
+struct VcmaxOptimalCiCa{FT} <: AbstractDataset{FT} end
 
 
 
@@ -197,24 +178,6 @@ struct VcmaxOptimalCiCa{FT} <: AbstractLeafDataset{FT} end
 # Stand Level Datasets
 #
 ###############################################################################
-"""
-    abstract type AbstractStandDataset{FT}
-
-Hierachy of AbstractStandDataset
-- [`CanopyHeightGLAS`](@ref)
-- [`ClumpingIndexMODIS`](@ref)
-- [`ClumpingIndexPFT`](@ref)
-- [`GPPMPIv006`](@ref)
-- [`GPPVPMv20`](@ref)
-- [`LAIMonthlyMean`](@ref)
-- [`NPPModis`](@ref)
-- [`TreeDensity`](@ref)
-"""
-abstract type AbstractStandDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
 """
     struct CanopyHeightGLAS{FT}
 
@@ -237,7 +200,7 @@ Struct for canopy height from GLAS ICESat
 ```
 </details>
 """
-struct CanopyHeightGLAS{FT} <: AbstractStandDataset{FT} end
+struct CanopyHeightGLAS{FT} <: AbstractDataset{FT} end
 
 
 
@@ -264,7 +227,7 @@ Global clumping index data from MODIS BRDF 2006
 ```
 </details>
 """
-struct ClumpingIndexMODIS{FT} <: AbstractStandDataset{FT} end
+struct ClumpingIndexMODIS{FT} <: AbstractDataset{FT} end
 
 
 
@@ -295,7 +258,7 @@ Struct for canopy height from GLAS ICESat, for different plant functional
 ```
 </details>
 """
-struct ClumpingIndexPFT{FT} <: AbstractStandDataset{FT} end
+struct ClumpingIndexPFT{FT} <: AbstractDataset{FT} end
 
 
 
@@ -326,7 +289,7 @@ Struct for MPI GPP v006
 ```
 </details>
 """
-struct GPPMPIv006{FT} <: AbstractStandDataset{FT} end
+struct GPPMPIv006{FT} <: AbstractDataset{FT} end
 
 
 
@@ -354,7 +317,7 @@ Struct for VPM GPP v20
 ```
 </details>
 """
-struct GPPVPMv20{FT}  <: AbstractStandDataset{FT} end
+struct GPPVPMv20{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -378,7 +341,7 @@ Struct for monthly mean MODIS LAI
 ```
 </details>
 """
-struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
+struct LAIMonthlyMean{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -388,7 +351,7 @@ struct LAIMonthlyMean{FT}  <: AbstractStandDataset{FT} end
 
 Struct for Modis NPP
 """
-struct NPPModis{FT} <: AbstractStandDataset{FT} end
+struct NPPModis{FT} <: AbstractDataset{FT} end
 
 
 
@@ -417,7 +380,7 @@ Struct for TROPOMI SIF @ 740 nm
 ```
 </details>
 """
-struct SIFTropomi740{FT} <: AbstractStandDataset{FT} end
+struct SIFTropomi740{FT} <: AbstractDataset{FT} end
 
 
 
@@ -447,7 +410,7 @@ Struct for tree density (number of trees per km⁻²)
 ```
 </details>
 """
-struct TreeDensity{FT} <: AbstractStandDataset{FT} end
+struct TreeDensity{FT} <: AbstractDataset{FT} end
 
 
 
@@ -478,7 +441,7 @@ Struct for wood density (g cm⁻³)
 ```
 </details>
 """
-struct WoodDensity{FT} <: AbstractStandDataset{FT} end
+struct WoodDensity{FT} <: AbstractDataset{FT} end
 
 
 
@@ -493,22 +456,30 @@ struct WoodDensity{FT} <: AbstractStandDataset{FT} end
 #
 ###############################################################################
 """
-    abstract type AbstractSurfaceDataset{FT}
-
-Hierachy of AbstractSurfaceDataset
-- [`LandMaskERA5`](@ref)
-"""
-abstract type AbstractSurfaceDataset{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct FloodPlainHeight{FT}
 
+<details>
+<summary>
 Flood plain height
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct FloodPlainHeight{FT}  <: AbstractSurfaceDataset{FT} end
+struct FloodPlainHeight{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -516,9 +487,28 @@ struct FloodPlainHeight{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct LandElevation{FT}
 
+<details>
+<summary>
 Land elevation (height above mean sea level)
+[Link to Dataset Source](https://doi.org/10.1002/2017GL072874)
+</summary>
+
+```
+@article{yamazaki2017high,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Tawatari, Ryunosuke and
+        Yamaguchi, Tomohiro and O'Loughlin, Fiachra and Neal, Jeffery C and
+        Sampson, Christopher C and Kanae, Shinjiro and Bates, Paul D},
+    year = {2017},
+    title = {A high-accuracy map of global terrain elevations},
+    journal = {Geophysical Research Letters},
+    volume = {44},
+    number = {11},
+    pages = {5844--5853}
+}
+```
+</details>
 """
-struct LandElevation{FT}  <: AbstractSurfaceDataset{FT} end
+struct LandElevation{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -528,7 +518,7 @@ struct LandElevation{FT}  <: AbstractSurfaceDataset{FT} end
 
 Struct for land mask from ERA5
 """
-struct LandMaskERA5{FT}  <: AbstractSurfaceDataset{FT} end
+struct LandMaskERA5{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -536,9 +526,28 @@ struct LandMaskERA5{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct RiverHeight{FT}
 
+<details>
+<summary>
 River height
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct RiverHeight{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverHeight{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -546,9 +555,28 @@ struct RiverHeight{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct RiverLength{FT}
 
+<details>
+<summary>
 River length
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct RiverLength{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverLength{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -556,9 +584,28 @@ struct RiverLength{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct RiverManning{FT}
 
+<details>
+<summary>
 River manning coefficient
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct RiverManning{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverManning{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -566,9 +613,28 @@ struct RiverManning{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct RiverWidth{FT}
 
+<details>
+<summary>
 River width
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct RiverWidth{FT}  <: AbstractSurfaceDataset{FT} end
+struct RiverWidth{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -576,9 +642,28 @@ struct RiverWidth{FT}  <: AbstractSurfaceDataset{FT} end
 """
     struct UnitCatchmentArea{FT}
 
+<details>
+<summary>
 Unit catchment area
+[Link to Dataset Source](https://doi.org/10.1029/2019WR024873)
+</summary>
+
+```
+@article{yamazaki2019merit,
+    author = {Yamazaki, Dai and Ikeshima, Daiki and Sosa, Jeison and Bates,
+        Paul D and Allen, George H and Pavelsky, Tamlin M},
+    year = {2019},
+    title = {{MERIT} {H}ydro: {A} high-resolution global hydrography map based
+        on latest topography dataset},
+    journal = {Water Resources Research},
+    volume = {55},
+    number = {6},
+    pages = {5053--5073}
+}
+```
+</details>
 """
-struct UnitCatchmentArea{FT}  <: AbstractSurfaceDataset{FT} end
+struct UnitCatchmentArea{FT}  <: AbstractDataset{FT} end
 
 
 

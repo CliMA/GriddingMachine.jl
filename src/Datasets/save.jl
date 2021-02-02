@@ -4,14 +4,14 @@
 #
 ###############################################################################
 """
-    save_LUT(ds::GriddedDataset{FT},
-             filename::String) where {FT<:AbstractFloat}
-    save_LUT(data::Array{FT,2},
-             filename::String) where {FT<:AbstractFloat}
-    save_LUT(data::Array{FT,3},
-             filename::String,
-             var_name::String,
-             var_attr::Dict{String,String}) where {FT<:AbstractFloat}
+    save_LUT!(ds::GriddedDataset{FT},
+              filename::String) where {FT<:AbstractFloat}
+    save_LUT!(data::Array{FT,2},
+              filename::String) where {FT<:AbstractFloat}
+    save_LUT!(data::Array{FT,3},
+              filename::String,
+              var_name::String,
+              var_attr::Dict{String,String}) where {FT<:AbstractFloat}
 
 Save the dataset, given
 - `ds` [`GriddedDataset`](@ref) type struct
@@ -20,10 +20,10 @@ Save the dataset, given
 - `var_name` Variable name in nc file
 - `var_attr` Variable attributes in nc file
 
-Note that `save_LUT(data, filename)` is designed to use with temporaty data
+Note that `save_LUT!(data, filename)` is designed to use with temporaty data
     only, be cautious when using this function.
 """
-function save_LUT(
+function save_LUT!(
             ds::GriddedDataset{FT},
             filename::String
 ) where {FT<:AbstractFloat}
@@ -45,7 +45,7 @@ function save_LUT(
              "lon"  , _lon, lonatts,
              "lat"  , _lat, latatts,
              "cycle", _cyc, cycatts,
-             atts = var_attr);
+             atts = var_attr, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, var_name);
 
     return nothing
@@ -54,7 +54,7 @@ end
 
 
 
-function save_LUT(
+function save_LUT!(
             data::Array{FT,2},
             filename::String
 ) where {FT<:AbstractFloat}
@@ -74,8 +74,8 @@ function save_LUT(
     # create nc file
     nccreate(filename, "Var",
              "lon"  , _lon, lonatts,
-             "lat"  , _lat, latatts,
-             atts = varatts);
+             "lat"  , _lat, latatts;
+             atts = varatts, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, "Var");
 
     return nothing
@@ -84,7 +84,7 @@ end
 
 
 
-function save_LUT(
+function save_LUT!(
             data::Array{FT,3},
             filename::String,
             var_name::String,
@@ -109,7 +109,7 @@ function save_LUT(
              "lon"  , _lon, lonatts,
              "lat"  , _lat, latatts,
              "cycle", _cyc, cycatts,
-             atts = var_attr);
+             atts = var_attr, compress = 1, t = NC_FLOAT);
     ncwrite(data, filename, var_name);
 
     return nothing
