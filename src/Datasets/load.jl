@@ -255,8 +255,8 @@ end
 
 
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
-    _Vcmax = FT.(ncread(joinpath(artifact"leaf_traits_2X_1Y",
-                                 "vcmax_optimal_cica_2X_1Y.nc"),
+    _Vcmax = FT.(ncread(joinpath(artifact"VMAX_CICA_2X_1Y_V1",
+                                 "VMAX_CICA_2X_1Y_V1.nc"),
                         "vcmax"));
 
     # note that lat of dataset does not start from -90 and end from 90
