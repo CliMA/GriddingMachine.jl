@@ -240,7 +240,7 @@ struct ClumpingIndexMODIS{FT} <: AbstractDataset{FT} end
 Struct for canopy height from GLAS ICESat, for different plant functional
     types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and
     shrubland. Data from Global clumping index data from MODIS BRDF 2006.
-[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1531)
+[Link to Dataset Source](https://doi.org/10.1029/2018GB006135)
 </summary>
 
 ```

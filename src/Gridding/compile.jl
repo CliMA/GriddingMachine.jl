@@ -137,7 +137,7 @@ function compile_RAW!(
             end
         end
         _save = params[1][6] * "/" * string(layer)*"_"*string(zooms)*"X.nc";
-        push!(new_params, [dt, layer, _files, (360*zooms,180*zooms), _save]);
+        push!(new_params, [dt, layer, _files, [360*zooms,180*zooms], _save]);
     end
 
     # compile the data into cache files multi-threading manner
@@ -195,7 +195,7 @@ function compile_RAW!(
             end
         end
         _save = params[1][6] * "/" * string(layer)*"_"*string(zooms)*"X.nc";
-        push!(new_params, [dt, layer, _files, (360*zooms,180*zooms), _save]);
+        push!(new_params, [dt, layer, _files, [360*zooms,180*zooms], _save]);
     end
 
     # compile the data into cache files multi-threading manner
