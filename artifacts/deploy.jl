@@ -23,10 +23,6 @@ git_url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT"
 
 
 
-
-
-
-
 # Model --- land model spectrums
 deploy_artifact(artifact_toml,
                 "land_model_spectrum",
@@ -38,13 +34,6 @@ deploy_artifact(artifact_toml,
 
 
 
-
-
-# Stand --- gross primary productivity
-
-
-
-
 # Stand --- net primary productivity
 deploy_artifact(artifact_toml,
                 "NPP_MODIS_1X_1Y",
@@ -52,11 +41,6 @@ deploy_artifact(artifact_toml,
                 ["npp_modis_1X_1Y_2000.nc"],
                 "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/NPP",
                 [ftp_url*"/NPP", git_url]);
-
-
-
-
-
 
 
 
@@ -74,8 +58,6 @@ deploy_artifact(artifact_toml,
                 ["MODIS_500m_grid.nc"],
                 "/net/fluo/data1/ftp/XYZT_CLIMA_LUT/MODIS",
                 [ftp_url*"/MODIS"]);
-
-
 
 
 

@@ -21,7 +21,7 @@ function mask_LUT!(ds::GriddedDataset, default::Number=-9999)
         _mask = isnan.(data);
         data[_mask] .= default;
     else
-        println("Replacing NaN with unrealistic values...");
+        @info "Replacing NaN with unrealistic values...";
         @showprogress for i in 1:size(data,2)
             _mask = isnan.(view(data,:,i,:));
             view(data,:,i,:)[_mask] .= default;
@@ -44,7 +44,7 @@ function mask_LUT!(ds::GriddedDataset, lims::Array)
         _mask = (_lower .<= data .<= _upper);
         data[.!_mask] .= NaN;
     else
-        println("Replacing unrealistic values with NaN...");
+        @info "Replacing unrealistic values with NaN...";
         @showprogress for i in 1:size(data,2)
             _mask = (_lower .<= view(data,:,i,:) .<= _upper);
             view(data,:,i,:)[.!_mask] .= NaN;

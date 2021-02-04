@@ -37,10 +37,10 @@ function compile_RAW!(
     # if file exist, skip it
     if !isfile(cache)
         # create matrices
-        res_lat = 180 / dims[2];
         res_lon = 360 / dims[1];
-        matv::Array{FT ,2} = zeros(FT , dims);
-        matn::Array{Int,2} = zeros(Int, dims);
+        res_lat = 180 / dims[2];
+        matv::Array{FT ,2} = zeros(FT , dims[1], dims[2]);
+        matn::Array{Int,2} = zeros(Int, dims[1], dims[2]);
 
         # iterate through files
         for _file in files
@@ -78,10 +78,10 @@ function compile_RAW!(
     # if file exist, skip it
     if !isfile(cache)
         # create matrices
-        res_lat = 180 / dims[2];
         res_lon = 360 / dims[1];
-        matv::Array{FT ,2} = zeros(FT , dims);
-        matn::Array{Int,2} = zeros(Int, dims);
+        res_lat = 180 / dims[2];
+        matv::Array{FT ,2} = zeros(FT , dims[1], dims[2]);
+        matn::Array{Int,2} = zeros(Int, dims[1], dims[2]);
 
         # iterate through files
         for _file in files
@@ -124,7 +124,7 @@ function compile_RAW!(
     # compile data per layer
     new_params = [];
     for layer in eachindex(date_list)
-        _files = [];
+        _files = String[];
         for param in params
             if param[2] == layer
                 _path     = param[3];
@@ -182,7 +182,7 @@ function compile_RAW!(
     # compile data per layer
     new_params = [];
     for layer in eachindex(date_list)
-        _files = [];
+        _files = String[];
         for param in params
             if param[2] == layer
                 _path     = param[3];

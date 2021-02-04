@@ -10,7 +10,6 @@ GRIDDINGMACHINE_ARTIFACTS = joinpath(@__DIR__, "../Artifacts.toml");
 
 # test utility functions
 @testset "GriddingMachine --- Lat/Lon indicies" begin
-    println("");
     # test the lat_ind and lon_ind
     @test typeof(lat_ind(  0.0)) == Int           ;
     @test typeof(lat_ind( 91.0)) == ErrorException;
@@ -24,7 +23,7 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
-    println("Downloading the artifacts, please wait...");
+    @info "Downloading the artifacts, please wait...";
     predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
                            "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
                            "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
@@ -62,7 +61,7 @@ end
 
     # limit the test only to latest stable julia
     if Sys.islinux() && VERSION>v"1.5"
-        println("Downloading the artifacts, please wait...");
+        @info "Downloading the artifacts, please wait...";
         predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
                                "GPP_VPM_v20_5X_8D", "SIF_TROPOMI_740_12X_8D"],
                               GRIDDINGMACHINE_ARTIFACTS);
@@ -84,7 +83,7 @@ end
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
-        println("Downloading the artifacts, please wait...");
+        @info "Downloading the artifacts, please wait...";
         predownload_artifact.(["clumping_index_240X_1Y", "GPP_VPM_v20_12X_8D",
                                "tree_density_120X_1Y"],
                               GRIDDINGMACHINE_ARTIFACTS);
