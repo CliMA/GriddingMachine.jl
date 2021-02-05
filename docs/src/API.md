@@ -175,6 +175,7 @@ AbstractUngriddedData
 The 500 m resolution datasets include
 ```@docs
 AbstractMODIS500m
+MOD09A1v006NIRv
 MOD15A2Hv006LAI
 ```
 
@@ -216,11 +217,14 @@ Note that, if you want to load the matricies in every thread, you will need
 Once the tile information is loaded, you may query the files you want to work
     on using `query_RAW`, which returns an array of paramters to pass to
     different threads. Note, you may need to use `fetch_RAW!` to download the
-    datasets first.
+    datasets first. Function `fetch_RAW!` uses `parse_date` and
+    `update_password` to download data from the website.
 
 ```@docs
 fetch_RAW!
+parse_date
 query_RAW
+update_password
 ```
 
 Next, you should be able to grid the RAW files using [`grid_RAW!`](@ref), which
@@ -245,6 +249,12 @@ The last step you need is to read the cache CSV files and compile them to nc
 
 ```@docs
 compile_RAW!
+```
+
+A shortcut to run the gridding process is `process_RAW!`
+
+```@docs
+process_RAW!
 ```
 
 The disadvantage is that you need a huge space to store the cache file, whereas

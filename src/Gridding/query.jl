@@ -39,8 +39,8 @@ function query_RAW(
     date_list  = date_start:date_dday:date_stop;
 
     # generate file list to process
-    println("Processing data for year ", year);
-    println("Please wait while fetching file names...");
+    @info "Processing data for year $(year)";
+    @info "Please wait while fetching file names...";
     params = [];
     for layer in eachindex(date_list)
         date_temp = date_list[layer];

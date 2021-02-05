@@ -10,7 +10,6 @@ GRIDDINGMACHINE_ARTIFACTS = joinpath(@__DIR__, "../Artifacts.toml");
 
 # test utility functions
 @testset "GriddingMachine --- Lat/Lon indicies" begin
-    println("");
     # test the lat_ind and lon_ind
     @test typeof(lat_ind(  0.0)) == Int           ;
     @test typeof(lat_ind( 91.0)) == ErrorException;
@@ -24,25 +23,20 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
-    println("Downloading the artifacts, please wait...");
-    predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
-                           "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
-                           "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
-                           "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
-                           "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
-                           "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
-                           "surface_data_2X_1Y", "tree_density_12X_1Y",
-                           "wood_density_2X_1Y"],
+    @info "Downloading the artifacts, please wait...";
+    predownload_artifact.(["CH_20X_1Y_V1", "CHL_2X_7D_V1", "CI_12X_1Y_V1",
+                           "CI_PFT_2X_1Y_V1", "LAI_4X_1M_V1",
+                           "LM_ERA5_4X_1Y_V1", "LNC_2X_1Y_V1", "LPC_2X_1Y_V1",
+                           "RIVER_4X_1Y_V1", "SLA_2X_1Y_V1", "TD_12X_1Y_V1",
+                           "VMAX_CICA_2X_1Y_V1", "WD_2X_1Y_V1"],
                           GRIDDINGMACHINE_ARTIFACTS);
-
-    println("");
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
+    @show "haha";
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
+    @show "haha";
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    @show "haha";
     CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
-    MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "1X", "8D");    @test true;
-    VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "1X", "8D");    @test true;
-    SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;
     LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
@@ -50,26 +44,26 @@ end
     LNC_LUT = load_LUT(LeafNitrogen{FT}());                    @test true;
     LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
     SLA_LUT = load_LUT(LeafSLA{FT}());                         @test true;
-    NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
-    SLA_LUT = load_LUT(RiverHeight{FT}());                     @test true;
-    SLA_LUT = load_LUT(RiverLength{FT}());                     @test true;
-    SLA_LUT = load_LUT(RiverManning{FT}());                    @test true;
-    SLA_LUT = load_LUT(RiverWidth{FT}());                      @test true;
+    RHT_LUT = load_LUT(RiverHeight{FT}());                     @test true;
+    RLT_LUT = load_LUT(RiverLength{FT}());                     @test true;
+    RMC_LUT = load_LUT(RiverManning{FT}());                    @test true;
+    RWD_LUT = load_LUT(RiverWidth{FT}());                      @test true;
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
-    SLA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
+    UCA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
     WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
 
     # limit the test only to latest stable julia
     if Sys.islinux() && VERSION>v"1.5"
-        println("Downloading the artifacts, please wait...");
-        predownload_artifact.(["GPP_MPI_v006_2X_1M", "GPP_MPI_v006_2X_8D",
-                               "GPP_VPM_v20_5X_8D", "SIF_TROPOMI_740_12X_8D"],
+        @info "Downloading the artifacts, please wait...";
+        predownload_artifact.(["GPP_MPI_2X_1M_2005_V1", "NPP_MODIS_1X_1Y",
+                               "GPP_VPM_5X_8D_2005_V1",
+                               "SIF740_TROPOMI_1X_1M_2018_V1"],
                               GRIDDINGMACHINE_ARTIFACTS);
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");     @test true;
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D");     @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");     @test true;
-        SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "12X", "8D"); @test true;
+        NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
+        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
+        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
+        SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
     end
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
@@ -84,12 +78,10 @@ end
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
-        println("Downloading the artifacts, please wait...");
-        predownload_artifact.(["clumping_index_240X_1Y", "GPP_VPM_v20_12X_8D",
-                               "tree_density_120X_1Y"],
+        @info "Downloading the artifacts, please wait...";
+        predownload_artifact.(["CI_240X_1Y_V1", "TD_120X_1Y_V1"],
                               GRIDDINGMACHINE_ARTIFACTS);
         CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "12X", "8D");    @test true;
         TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
     end
 end
