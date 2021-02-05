@@ -56,6 +56,9 @@ ClumpingIndexPFT
 GPPMPIv006
 GPPVPMv20
 LAIMonthlyMean
+NDVIAvhrr
+NIRoAvhrr
+NIRvAvhrr
 NPPModis
 SIFTropomi740
 TreeDensity
