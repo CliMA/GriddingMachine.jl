@@ -16,14 +16,13 @@ F1 = joinpath(@__DIR__, "../../Artifacts.toml");
 F2 = joinpath(@__DIR__, "../../../Artifacts.toml");
 GRIDDINGMACHINE_ARTIFACTS = (isfile(F1) ? F1 : F2);
 
-predownload_artifact.(["GPP_MPI_v006_1X_8D", "GPP_VPM_v20_1X_8D",
-                       "NPP_MODIS_1X_1Y", "canopy_height_20X_1Y",
-                       "clumping_index_12X_1Y", "clumping_index_2X_1Y_PFT",
-                       "land_mask_ERA5_4X_1Y", "leaf_area_index_4X_1M",
-                       "leaf_chlorophyll_2X_7D", "leaf_traits_2X_1Y",
-                       "river_maps_4X_1Y", "SIF_TROPOMI_740_1X_1M",
-                       "surface_data_2X_1Y", "tree_density_12X_1Y",
-                       "wood_density_2X_1Y"],
+predownload_artifact.(["CH_20X_1Y_V1", "CHL_2X_7D_V1", "CI_12X_1Y_V1",
+                       "CI_PFT_2X_1Y_V1", "GPP_MPI_2X_1M_2005_V1",
+                       "GPP_VPM_5X_8D_2005_V1", "LAI_4X_1M_V1",
+                       "LM_ERA5_4X_1Y_V1", "LNC_2X_1Y_V1", "LPC_2X_1Y_V1",
+                       "RIVER_4X_1Y_V1", "SIF740_TROPOMI_1X_1M_2018_V1",
+                       "SLA_2X_1Y_V1", "TD_12X_1Y_V1", "VMAX_CICA_2X_1Y_V1",
+                       "WD_2X_1Y_V1", "NPP_MODIS_1X_1Y"],
                       GRIDDINGMACHINE_ARTIFACTS);
 #------------------------------------------------------------------------------
 
@@ -130,22 +129,23 @@ gif(anim, fps=1)
 
 # ### Gross primary productivity
 ## GPP MPI
-anim = @animate for year ∈ 2001:2019, i ∈ 1:46
-    GPP_LUT = load_LUT(GPPMPIv006{FT}(), year, "1X", "8D");
-    mask_LUT!(GPP_LUT, FT[-100,Inf]);
+GPP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "8D");
+GPP_LUT = regrid_LUT(GPP_LUT, Int(size(GPP_LUT.data,2)/180));
+mask_LUT!(GPP_LUT, FT[-100,Inf]);
+anim = @animate for i ∈ 1:46
     preview_data(GPP_LUT, i, (0,10));
 end
-gif(anim, fps=20)
+gif(anim, fps=5)
 #------------------------------------------------------------------------------
 
 ## GPP VPM
-anim = @animate for year ∈ 2000:2019, i ∈ 1:46
-    @show year;
-    GPP_LUT = load_LUT(GPPVPMv20{FT}(), year, "1X", "8D");
-    mask_LUT!(GPP_LUT, FT[-100,Inf]);
+GPP_LUT = load_LUT(GPPVPMv20{FT}(), 2005, "5X", "8D");
+GPP_LUT = regrid_LUT(GPP_LUT, Int(size(GPP_LUT.data,2)/180));
+mask_LUT!(GPP_LUT, FT[-100,Inf]);
+anim = @animate for i ∈ 1:46
     preview_data(GPP_LUT, i, (0,10));
 end
-gif(anim, fps=20)
+gif(anim, fps=5)
 #------------------------------------------------------------------------------
 
 # ### Leaf area index
