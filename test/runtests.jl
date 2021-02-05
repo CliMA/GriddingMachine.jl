@@ -31,8 +31,11 @@ end
                            "VMAX_CICA_2X_1Y_V1", "WD_2X_1Y_V1"],
                           GRIDDINGMACHINE_ARTIFACTS);
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
+    @show "haha";
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
+    @show "haha";
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    @show "haha";
     CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;

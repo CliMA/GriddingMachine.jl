@@ -13,15 +13,15 @@
 [st-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/JuliaStable/badge.svg?branch=main
 [st-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"JuliaStable"
 
-[min-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/Julia-1.3/badge.svg?branch=main
-[min-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.3"
+[min-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/Julia-1.5/badge.svg?branch=main
+[min-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.5"
 
 [cov-img]: https://codecov.io/gh/CliMA/GriddingMachine.jl/branch/main/graph/badge.svg
 [cov-url]: https://codecov.io/gh/CliMA/GriddingMachine.jl
 
 ## About
 
-[`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. Due to the use of `Base.@kwdef`, [`GriddingMachine.jl`][gm-url] only supports julia 1.3 and above.
+[`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts`, [`GriddingMachine.jl`][gm-url] only supports julia 1.5.0 and above.
 
 | Documentation                                   | CI Status             | Compatibility           | Code Coverage           |
 |:------------------------------------------------|:----------------------|:------------------------|:------------------------|
