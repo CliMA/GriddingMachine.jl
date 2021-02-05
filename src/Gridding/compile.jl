@@ -141,6 +141,7 @@ function compile_RAW!(
     end
 
     # compile the data into cache files multi-threading manner
+    @info "Compile gridded local data to global data..."
     @showprogress pmap(compile_RAW!, new_params);
 
     # compile the cache nc files into 1 file
@@ -199,6 +200,7 @@ function compile_RAW!(
     end
 
     # compile the data into cache files multi-threading manner
+    @info "Compile gridded local data to global data..."
     @showprogress pmap(compile_RAW!, new_params);
 
     # compile the cache nc files into 1 file

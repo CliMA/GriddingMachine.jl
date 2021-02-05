@@ -31,11 +31,8 @@ end
                            "VMAX_CICA_2X_1Y_V1", "WD_2X_1Y_V1"],
                           GRIDDINGMACHINE_ARTIFACTS);
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
-    @show "haha";
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
-    @show "haha";
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
-    @show "haha";
     CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;
@@ -57,13 +54,17 @@ end
     if Sys.islinux() && VERSION>v"1.5"
         @info "Downloading the artifacts, please wait...";
         predownload_artifact.(["GPP_MPI_2X_1M_2005_V1", "NPP_MODIS_1X_1Y",
-                               "GPP_VPM_5X_8D_2005_V1",
+                               "GPP_VPM_5X_8D_2005_V1", "NDVI_AVHRR_20X_1M_2018_V1",
+                               "NIRO_AVHRR_20X_1M_2018_V1", "NIRV_AVHRR_20X_1M_2018_V1",
                                "SIF740_TROPOMI_1X_1M_2018_V1"],
                               GRIDDINGMACHINE_ARTIFACTS);
         NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
         MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
         VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
         SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
+        NDV_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+        NIO_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+        NIV_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     end
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
