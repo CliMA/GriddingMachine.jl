@@ -166,6 +166,7 @@ function grid_RAW!(
     load_MODIS!(dt);
 
     # run the gridding process
+    @info "Gridding RAW data..."
     @showprogress for param in params
         grid_RAW!(param);
     end
@@ -188,6 +189,7 @@ function grid_RAW!(
     @everywhere load_MODIS!($dt);
 
     # run the gridding process
+    @info "Gridding RAW data..."
     @showprogress pmap(grid_RAW!, params);
 
     return nothing

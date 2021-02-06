@@ -347,6 +347,36 @@ struct LAIMonthlyMean{FT}  <: AbstractDataset{FT} end
 
 
 """
+    struct NDVIAvhrr{FT}
+
+Struct for AVHRR NDVI
+"""
+struct NDVIAvhrr{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct NDVIAvhrr{FT}
+
+Struct for AVHRR NIRv
+"""
+struct NIRvAvhrr{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct NDVIAvhrr{FT}
+
+Struct for AVHRR NIRv with offset
+"""
+struct NIRoAvhrr{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct NPPModis{FT}
 
 Struct for Modis NPP

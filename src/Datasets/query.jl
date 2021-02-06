@@ -190,6 +190,45 @@ end
 
 
 
+function query_LUT(dt::NDVIAvhrr, year::Int, res_g::String, res_t::String)
+    _artn = "NDVI_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "NDVI";
+    _vara = Dict("longname" => "Normalized difference vegetation index",
+                 "units" => "-");
+
+    return _file, FormatNC(), "NDVI", res_t, true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::NIRoAvhrr, year::Int, res_g::String, res_t::String)
+    _artn = "NIRO_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "NIRo";
+    _vara = Dict("longname" => "NIRv with offset",
+                 "units" => "-");
+
+    return _file, FormatNC(), "NIRo", res_t, true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::NIRvAvhrr, year::Int, res_g::String, res_t::String)
+    _artn = "NIRV_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "NIRv";
+    _vara = Dict("longname" => "Near infrared reflection of vegetation",
+                 "units" => "-");
+
+    return _file, FormatNC(), "NIRv", res_t, true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::NPPModis)
     _file = artifact"NPP_MODIS_1X_1Y" * "/npp_modis_1X_1Y_2000.nc";
     _varn = "NPP";
