@@ -46,7 +46,38 @@ struct LeafChlorophyll{FT}  <: AbstractDataset{FT} end
 
 
 """
-    struct LeafNitrogen{FT}
+    struct LeafNitrogenBoonman{FT}
+
+<details>
+<summary>
+Struct for leaf nitrogen content
+[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
+        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
+        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
+        Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions
+        at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+struct LeafNitrogenBoonman{FT}  <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct LeafNitrogenButler{FT}
 
 <details>
 <summary>
@@ -71,7 +102,7 @@ Struct for leaf nitrogen content
 ```
 </details>
 """
-struct LeafNitrogen{FT}  <: AbstractDataset{FT} end
+struct LeafNitrogenButler{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -107,7 +138,38 @@ struct LeafPhosphorus{FT}  <: AbstractDataset{FT} end
 
 
 """
-    struct LeafSLA{FT}
+    struct LeafSLABoonman{FT}
+
+<details>
+<summary>
+Struct for leaf specific leaf area (inverse of leaf mass per area)
+[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
+        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
+        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
+        Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions
+        at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+struct LeafSLABoonman{FT}  <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct LeafSLAButler{FT}
 
 <details>
 <summary>
@@ -132,7 +194,7 @@ Struct for leaf specific leaf area (inverse of leaf mass per area)
 ```
 </details>
 """
-struct LeafSLA{FT}  <: AbstractDataset{FT} end
+struct LeafSLAButler{FT}  <: AbstractDataset{FT} end
 
 
 
@@ -176,6 +238,37 @@ struct VcmaxOptimalCiCa{FT} <: AbstractDataset{FT} end
 # Stand Level Datasets
 #
 ###############################################################################
+"""
+    struct CanopyHeightBoonman{FT}
+
+<details>
+<summary>
+Struct for canopy height from GLAS ICESat
+[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
+        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
+        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
+        Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions
+        at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+struct CanopyHeightBoonman{FT} <: AbstractDataset{FT} end
+
+
+
+
 """
     struct CanopyHeightGLAS{FT}
 

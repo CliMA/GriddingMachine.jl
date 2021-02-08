@@ -23,6 +23,18 @@ Return the following:
 - Variable name of gridded data
 - Variable attribute of gridded data
 """
+function query_LUT(dt::CanopyHeightBoonman)
+    _artn = "CH_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "CH";
+    _vara = Dict("longname" => "Canopy height" , "units" => "m");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::CanopyHeightGLAS)
     _artn = "CH_20X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
@@ -151,7 +163,20 @@ end
 
 
 
-function query_LUT(dt::LeafNitrogen)
+function query_LUT(dt::LeafNitrogenBoonman)
+    _artn = "LNC_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "LN";
+    _vara = Dict("longname" => "Leaf nitrogen content",
+                 "units" => "kg kg⁻¹");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafNitrogenButler)
     _artn = "LNC_2X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LN";
@@ -179,7 +204,7 @@ end
 
 
 
-function query_LUT(dt::LeafSLA)
+function query_LUT(dt::LeafSLAButler)
     _artn = "SLA_2X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SLA";
@@ -188,6 +213,19 @@ function query_LUT(dt::LeafSLA)
 
     return _file, FormatNC(), "specific_leaf_area_mean", "1Y", false,
            _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafSLABoonman)
+    _artn = "SLA_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "SLA";
+    _vara = Dict("longname" => "Specific leaf area",
+                 "units" => "m² kg⁻¹");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
 end
 
 

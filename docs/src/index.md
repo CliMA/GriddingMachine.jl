@@ -48,9 +48,9 @@ to reach the original data owner on their own.
 |                    |                                    | 5X-8D       | 2000-2019 | Zhang et al. (2017)     | NetCDF | Russell Doughty  | Yes            |
 | LAIMonthlyMean     | Leaf area index (1981-2015 mean)   | 4X-1M       | NS        | Mao and Yan (2019)      | NetCDF | Yujie Wang       | NASA DATA      |
 | LandMaskERA5       | Land mask                          | 4X-1Y       | NS        | regridded from ERA5     | NetCDF | Yujie Wang       | ERA5 DATA      |
-| LeafNitrogen       | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
+| LeafNitrogenButler       | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
 | LeafPhosphorus     | Leaf phosphorus content            | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
-| LeafSLA            | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
+| LeafSLAButler            | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
 | NDVIAvhrr          | NDVI from AVHRR                    | 20X-1M      | 1981-2020 | regridded               | NetCDF | Yujie Wang       | Yes            |
 | NIRoAvhrr          | NIRv with offset from AVHRR        | 20X-1M      | 1981-2020 | regridded               | NetCDF | Yujie Wang       | Yes            |
 | NIRvAvhrr          | NIRv from AVHRR                    | 20X-1M      | 1981-2020 | regridded               | NetCDF | Yujie Wang       | Yes            |

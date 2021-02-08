@@ -40,15 +40,18 @@ AbstractDataset
 ### Leaf level dataset
 
 ```@docs
-LeafNitrogen
+LeafNitrogenBoonman
+LeafNitrogenButler
 LeafPhosphorus
-LeafSLA
+LeafSLABoonman
+LeafSLAButler
 VcmaxOptimalCiCa
 ```
 
 ### Stand level datasets
 
 ```@docs
+CanopyHeightBoonman
 CanopyHeightGLAS
 ClumpingIndexMODIS
 ClumpingIndexPFT

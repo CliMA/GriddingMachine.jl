@@ -25,25 +25,31 @@ end
 @testset "GriddingMachine --- Load and Read datasets" begin
     @info "Downloading the artifacts, please wait...";
     predownload_artifact.(["CH_20X_1Y_V1",
+                           "CH_2X_1Y_V2",
                            "CI_12X_1Y_V1",
                            "CI_PFT_2X_1Y_V1",
                            "LAI_4X_1M_V1",
                            "LM_ERA5_4X_1Y_V1",
                            "LNC_2X_1Y_V1",
+                           "LNC_2X_1Y_V2",
                            "LPC_2X_1Y_V1",
                            "SLA_2X_1Y_V1",
+                           "SLA_2X_1Y_V2",
                            "TD_12X_1Y_V1",
                            "VMAX_CICA_2X_1Y_V1",
                            "WD_2X_1Y_V1"],
                           GRIDDINGMACHINE_ARTIFACTS);
+    CHT_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
-    LNC_LUT = load_LUT(LeafNitrogen{FT}());                    @test true;
+    LNC_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;
+    LNC_LUT = load_LUT(LeafNitrogenButler{FT}());              @test true;
     LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
-    SLA_LUT = load_LUT(LeafSLA{FT}());                         @test true;
+    SLA_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
+    SLA_LUT = load_LUT(LeafSLAButler{FT}());                   @test true;
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
     WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
@@ -96,7 +102,7 @@ end
 @testset "GriddingMachine --- Mask dataset" begin
     println("");
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
-    SLA_LUT = load_LUT(LeafSLA{FT}());
+    SLA_LUT = load_LUT(LeafSLAButler{FT}());
     mask_LUT!(CHT_LUT, [0,Inf]); @test true;
     mask_LUT!(CHT_LUT, -9999  ); @test true;
     mask_LUT!(SLA_LUT, [0,Inf]); @test true;

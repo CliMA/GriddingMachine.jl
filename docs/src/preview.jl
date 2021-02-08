@@ -24,12 +24,14 @@ predownload_artifact.(["CH_20X_1Y_V1",
                        "LAI_4X_1M_V1",
                        "LM_ERA5_4X_1Y_V1",
                        "LNC_2X_1Y_V1",
+                       "LNC_2X_1Y_V2",
                        "LPC_2X_1Y_V1",
                        "NDVI_AVHRR_20X_1M_2018_V1",
                        "NIRO_AVHRR_20X_1M_2018_V1",
                        "NIRV_AVHRR_20X_1M_2018_V1",
                        "SIF740_TROPOMI_1X_1M_2018_V1",
                        "SLA_2X_1Y_V1",
+                       "SLA_2X_1Y_V2",
                        "TD_12X_1Y_V1",
                        "VMAX_CICA_2X_1Y_V1",
                        "WD_2X_1Y_V1",
@@ -72,7 +74,13 @@ end
 
 # ## Leaf level datasets
 # ### Leaf nitrogen content
-LNC_LUT = load_LUT(LeafNitrogen{FT}());
+LNC_LUT = load_LUT(LeafNitrogenButler{FT}());
+mask_LUT!(LNC_LUT, FT[0,Inf]);
+LNC_LUT = regrid_LUT(LNC_LUT, Int(size(LNC_LUT.data,2)/180));
+preview_data(LNC_LUT, 1)
+#------------------------------------------------------------------------------
+
+LNC_LUT = load_LUT(LeafNitrogenBoonman{FT}());
 mask_LUT!(LNC_LUT, FT[0,Inf]);
 LNC_LUT = regrid_LUT(LNC_LUT, Int(size(LNC_LUT.data,2)/180));
 preview_data(LNC_LUT, 1)
@@ -86,7 +94,13 @@ preview_data(LPC_LUT, 1)
 #------------------------------------------------------------------------------
 
 # ### Specific leaf area
-SLA_LUT = load_LUT(LeafSLA{FT}());
+SLA_LUT = load_LUT(LeafSLAButler{FT}());
+mask_LUT!(SLA_LUT, FT[0,Inf]);
+SLA_LUT = regrid_LUT(SLA_LUT, Int(size(SLA_LUT.data,2)/180));
+preview_data(SLA_LUT, 1)
+#------------------------------------------------------------------------------
+
+SLA_LUT = load_LUT(LeafSLABoonman{FT}());
 mask_LUT!(SLA_LUT, FT[0,Inf]);
 SLA_LUT = regrid_LUT(SLA_LUT, Int(size(SLA_LUT.data,2)/180));
 preview_data(SLA_LUT, 1)
@@ -105,6 +119,12 @@ preview_data(VCM_LUT, 1)
 # ## Stand level datasets
 # ### Canopy height
 CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+mask_LUT!(CHT_LUT, FT[0,Inf]);
+CHT_LUT = regrid_LUT(CHT_LUT, Int(size(CHT_LUT.data,2)/180));
+preview_data(CHT_LUT, 1)
+#------------------------------------------------------------------------------
+
+CHT_LUT = load_LUT(CanopyHeightBoonman{FT}());
 mask_LUT!(CHT_LUT, FT[0,Inf]);
 CHT_LUT = regrid_LUT(CHT_LUT, Int(size(CHT_LUT.data,2)/180));
 preview_data(CHT_LUT, 1)

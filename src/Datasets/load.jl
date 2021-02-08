@@ -254,6 +254,39 @@ end
 
 
 
+function load_LUT(
+            dt::LeafNitrogenBoonman{FT},
+            file::String,
+            format::FormatTIFF,
+            label::Int,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String}
+) where {FT<:AbstractFloat}
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+
+    # reverse latitude
+    if rev_lat
+        _data = _data[:,end:-1:1,:];
+    end
+
+    # filter data
+    data   = cat(_data; dims=3);
+    data ./= 1000;
+
+    return GriddedDataset{FT}(data     = data    ,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     _Vcmax = FT.(ncread(joinpath(artifact"VMAX_CICA_2X_1Y_V1",
                                  "VMAX_CICA_2X_1Y_V1.nc"),
