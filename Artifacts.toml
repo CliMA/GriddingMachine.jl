@@ -25,17 +25,6 @@ lazy = true
     sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/NPP_MODIS_1X_1Y.tar.gz"
 
-[CHL_2X_7D_V1]
-git-tree-sha1 = "83da850b432cf4b6ad50fac26c13f2a63ac8f4ed"
-lazy = true
-
-    [[CHL_2X_7D_V1.download]]
-    sha256 = "0f54bfa76b45b784e5b5730e92042a9e1d714395df6f851b2d322d4b40ab83da"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CHL_2X_7D_V1.tar.gz"
-    [[CHL_2X_7D_V1.download]]
-    sha256 = "0f54bfa76b45b784e5b5730e92042a9e1d714395df6f851b2d322d4b40ab83da"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CHL_2X_7D_V1.tar.gz"
-
 [CH_20X_1Y_V1]
 git-tree-sha1 = "7b8f5c16cb50eb02a93b874badab9c3416c6b374"
 lazy = true

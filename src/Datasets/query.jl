@@ -135,19 +135,6 @@ end
 
 
 
-function query_LUT(dt::LeafChlorophyll)
-    _artn = "CHL_2X_7D_V1";
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "LC";
-    _vara = Dict("longname" => "Leaf chlorophyll content",
-                 "units" => "μg cm⁻²");
-
-    return _file, FormatNC(), "chl", "7D", true, _varn, _vara
-end
-
-
-
-
 function query_LUT(dt::LeafNitrogen)
     _artn = "LNC_2X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";

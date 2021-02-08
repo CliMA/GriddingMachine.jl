@@ -50,7 +50,6 @@ to reach the original data owner on their own.
 | LAIMonthlyMean     | Leaf area index (1981-2015 mean)   | 4X-1M       | NS        | Mao and Yan (2019)      | NetCDF | Yujie Wang       | NASA DATA      |
 | LandElevation      | Land elevation                     | 4X-1Y       | NS        | Yamazaki et al. (2017)  | NetCDF | Jake Bolewski    | Email error    |
 | LandMaskERA5       | Land mask                          | 4X-1Y       | NS        | regridded from ERA5     | NetCDF | Yujie Wang       | ERA5 DATA      |
-| LeafChlorophyll    | Leaf chlorophyll content (mean)    | 2X-7D       | NS        | Croft et al. (2020)     | NetCDF | Russell Doughty  | Asked+Waiting  |
 | LeafNitrogen       | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
 | LeafPhosphorus     | Leaf phosphorus content            | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
 | LeafSLA            | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
