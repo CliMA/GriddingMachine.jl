@@ -5,7 +5,7 @@
 ###############################################################################
 """
     fetch_RAW!(dt::MOD15A2Hv006LAI, year::Int)
-    fetch_RAW!(data_url::String, data_loc::String, year::Int)
+    fetch_RAW!(data_url::String, data_loc::String, year::Int, label::String)
 
 Download RAW product data, given
 - `dt` [`AbstractUngriddedData`](@ref) type ungridded data type
@@ -19,7 +19,7 @@ function fetch_RAW!(dt::MOD15A2Hv006LAI, year::Int)
     data_url = "$(MODIS_PORTAL)/MOLT/MOD15A2H.006/";
     data_loc = "$(MODIS_HOME)/MOD15A2H.006/original/";
 
-    fetch_RAW!(data_url, data_loc, year);
+    fetch_RAW!(data_url, data_loc, year, "MOD15A2H");
 
     return nothing
 end
@@ -33,7 +33,7 @@ function fetch_RAW!(dt::MOD09A1v006NIRv, year::Int)
     data_url = "$(MODIS_PORTAL)/MOLT/MOD09A1.006/";
     data_loc = "$(MODIS_HOME)/MOD09A1.006/original/";
 
-    fetch_RAW!(data_url, data_loc, year);
+    fetch_RAW!(data_url, data_loc, year, "MOD09A1");
 
     return nothing
 end
@@ -41,7 +41,12 @@ end
 
 
 
-function fetch_RAW!(data_url::String, data_loc::String, year::Int)
+function fetch_RAW!(
+            data_url::String,
+            data_loc::String,
+            year::Int,
+            label::String
+)
     # number of days per year
     TDAY = isleapyear(year) ? 366 : 365;
 
@@ -56,7 +61,7 @@ function fetch_RAW!(data_url::String, data_loc::String, year::Int)
             download(data_url * folder, "temp.html");
             for _line in readlines("temp.html")
                 if contains(_line, ".hdf\">")
-                    _ini = findfirst("MOD15A2H", _line);
+                    _ini = findfirst(label, _line);
                     _end = findfirst(".hdf", _line);
                     _nam = _line[_ini[1]:_end[1]+3];
                     push!(list_urls, data_url * folder * _nam);
