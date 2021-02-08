@@ -21,33 +21,6 @@ abstract type AbstractDataset{FT} end
 #
 ###############################################################################
 """
-    struct LeafChlorophyll{FT}
-
-<details>
-<summary>
-Struct for leaf chlorophyll content
-[Link to Dataset Source](https://doi.org/10.1016/j.rse.2019.111479)
-</summary>
-
-```
-@article{croft2020global,
-    author = {Croft, H and Chen, JM and Wang, R and Mo, G and Luo, S and Luo, X
-        and He, L and Gonsamo, A and Arabian, J and Zhang, Y and others},
-    year = {2020},
-    title = {The global distribution of leaf chlorophyll content},
-    journal = {Remote Sensing of Environment},
-    volume = {236},
-    pages = {111479},
-}
-```
-</details>
-"""
-struct LeafChlorophyll{FT}  <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct LeafNitrogen{FT}
 
 <details>

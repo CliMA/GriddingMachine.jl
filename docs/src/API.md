@@ -40,7 +40,6 @@ AbstractDataset
 ### Leaf level dataset
 
 ```@docs
-LeafChlorophyll
 LeafNitrogen
 LeafPhosphorus
 LeafSLA
