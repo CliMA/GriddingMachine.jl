@@ -67,14 +67,7 @@ WoodDensity
 ### Surface datasets
 
 ```@docs
-FloodPlainHeight
 LandMaskERA5
-LandElevation
-RiverHeight
-RiverLength
-RiverManning
-RiverWidth
-UnitCatchmentArea
 ```
 
 

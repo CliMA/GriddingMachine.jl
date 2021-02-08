@@ -36,6 +36,17 @@ lazy = true
     sha256 = "43866b56681c183794ecde9e154446065acea6d842fe8b494a758750129faada"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CH_20X_1Y_V1.tar.gz"
 
+[CHL_2X_7D_V1]
+git-tree-sha1 = "83da850b432cf4b6ad50fac26c13f2a63ac8f4ed"
+lazy = true
+
+    [[CHL_2X_7D_V1.download]]
+    sha256 = "0f54bfa76b45b784e5b5730e92042a9e1d714395df6f851b2d322d4b40ab83da"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CHL_2X_7D_V1.tar.gz"
+    [[CHL_2X_7D_V1.download]]
+    sha256 = "0f54bfa76b45b784e5b5730e92042a9e1d714395df6f851b2d322d4b40ab83da"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CHL_2X_7D_V1.tar.gz"
+
 [CI_12X_1Y_V1]
 git-tree-sha1 = "1fd62e34f3c09a5ce78517b0253f15d06c187f52"
 lazy = true

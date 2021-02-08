@@ -60,6 +60,7 @@ end
 
 
 function query_LUT(dt::FloodPlainHeight)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "FloodPlainHeight";
@@ -111,6 +112,7 @@ end
 
 
 function query_LUT(dt::LandElevation)
+    @warn "Note that this elevation dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "Elevation";
@@ -130,6 +132,20 @@ function query_LUT(dt::LandMaskERA5)
     _vara = Dict("longname" => "Land mask", "units" => "-");
 
     return _file, FormatNC(), "lsm", "1M", false, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafChlorophyll)
+    @warn "Note that this chloropgyll dataset is not meant for public use...";
+    _artn = "CHL_2X_7D_V1";
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "LC";
+    _vara = Dict("longname" => "Leaf chlorophyll content",
+                 "units" => "μg cm⁻²");
+
+    return _file, FormatNC(), "chl", "7D", true, _varn, _vara
 end
 
 
@@ -229,6 +245,7 @@ end
 
 
 function query_LUT(dt::RiverHeight)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverHeight";
@@ -242,6 +259,7 @@ end
 
 
 function query_LUT(dt::RiverLength)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverLength";
@@ -255,6 +273,7 @@ end
 
 
 function query_LUT(dt::RiverManning)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverManning";
@@ -268,6 +287,7 @@ end
 
 
 function query_LUT(dt::RiverWidth)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverWidth";
@@ -306,6 +326,7 @@ end
 
 
 function query_LUT(dt::UnitCatchmentArea)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "UnitCatchmentArea";

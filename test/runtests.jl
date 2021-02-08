@@ -31,7 +31,6 @@ end
                            "LM_ERA5_4X_1Y_V1",
                            "LNC_2X_1Y_V1",
                            "LPC_2X_1Y_V1",
-                           "RIVER_4X_1Y_V1",
                            "SLA_2X_1Y_V1",
                            "TD_12X_1Y_V1",
                            "VMAX_CICA_2X_1Y_V1",
@@ -40,19 +39,12 @@ end
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
-    CHT_LUT = load_LUT(FloodPlainHeight{FT}());                @test true;
     LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
-    CHT_LUT = load_LUT(LandElevation{FT}());                   @test true;
     LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
     LNC_LUT = load_LUT(LeafNitrogen{FT}());                    @test true;
     LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
     SLA_LUT = load_LUT(LeafSLA{FT}());                         @test true;
-    RHT_LUT = load_LUT(RiverHeight{FT}());                     @test true;
-    RLT_LUT = load_LUT(RiverLength{FT}());                     @test true;
-    RMC_LUT = load_LUT(RiverManning{FT}());                    @test true;
-    RWD_LUT = load_LUT(RiverWidth{FT}());                      @test true;
     TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
-    UCA_LUT = load_LUT(UnitCatchmentArea{FT}());               @test true;
     VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
     WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
 

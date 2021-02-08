@@ -70,7 +70,7 @@ function fetch_RAW!(
             end
             rm("temp.html");
         catch err
-            @info "Invalid folder $(folder), skip it...";
+            @info "Unable to fetch files from $(folder), skip it...";
         end
     end
 
