@@ -17,7 +17,6 @@ F2 = joinpath(@__DIR__, "../../../Artifacts.toml");
 GRIDDINGMACHINE_ARTIFACTS = (isfile(F1) ? F1 : F2);
 
 predownload_artifact.(["CH_20X_1Y_V1",
-                       "CHL_2X_7D_V1",
                        "CI_12X_1Y_V1",
                        "CI_PFT_2X_1Y_V1",
                        "GPP_MPI_2X_1M_2005_V1",
@@ -73,16 +72,6 @@ end
 
 
 # ## Leaf level datasets
-# ### Leaf chlorophyll content
-LCH_LUT = load_LUT(LeafChlorophyll{FT}());
-mask_LUT!(LCH_LUT, FT[0,Inf]);
-LCH_LUT = regrid_LUT(LCH_LUT, Int(size(LCH_LUT.data,2)/180));
-anim = @animate for i ∈ 1:size(LCH_LUT.data,3)
-    preview_data(LCH_LUT, i, (0,80));
-end
-gif(anim, fps=5)
-#------------------------------------------------------------------------------
-
 # ### Leaf nitrogen content
 LNC_LUT = load_LUT(LeafNitrogen{FT}());
 mask_LUT!(LNC_LUT, FT[0,Inf]);
