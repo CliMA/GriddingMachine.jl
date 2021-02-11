@@ -40,15 +40,18 @@ AbstractDataset
 ### Leaf level dataset
 
 ```@docs
-LeafNitrogen
+LeafNitrogenBoonman
+LeafNitrogenButler
 LeafPhosphorus
-LeafSLA
+LeafSLABoonman
+LeafSLAButler
 VcmaxOptimalCiCa
 ```
 
 ### Stand level datasets
 
 ```@docs
+CanopyHeightBoonman
 CanopyHeightGLAS
 ClumpingIndexMODIS
 ClumpingIndexPFT
@@ -67,14 +70,7 @@ WoodDensity
 ### Surface datasets
 
 ```@docs
-FloodPlainHeight
 LandMaskERA5
-LandElevation
-RiverHeight
-RiverLength
-RiverManning
-RiverWidth
-UnitCatchmentArea
 ```
 
 

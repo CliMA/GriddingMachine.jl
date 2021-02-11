@@ -24,13 +24,14 @@ predownload_artifact.(["CH_20X_1Y_V1",
                        "LAI_4X_1M_V1",
                        "LM_ERA5_4X_1Y_V1",
                        "LNC_2X_1Y_V1",
+                       "LNC_2X_1Y_V2",
                        "LPC_2X_1Y_V1",
                        "NDVI_AVHRR_20X_1M_2018_V1",
                        "NIRO_AVHRR_20X_1M_2018_V1",
                        "NIRV_AVHRR_20X_1M_2018_V1",
-                       "RIVER_4X_1Y_V1",
                        "SIF740_TROPOMI_1X_1M_2018_V1",
                        "SLA_2X_1Y_V1",
+                       "SLA_2X_1Y_V2",
                        "TD_12X_1Y_V1",
                        "VMAX_CICA_2X_1Y_V1",
                        "WD_2X_1Y_V1",
@@ -73,7 +74,13 @@ end
 
 # ## Leaf level datasets
 # ### Leaf nitrogen content
-LNC_LUT = load_LUT(LeafNitrogen{FT}());
+LNC_LUT = load_LUT(LeafNitrogenButler{FT}());
+mask_LUT!(LNC_LUT, FT[0,Inf]);
+LNC_LUT = regrid_LUT(LNC_LUT, Int(size(LNC_LUT.data,2)/180));
+preview_data(LNC_LUT, 1)
+#------------------------------------------------------------------------------
+
+LNC_LUT = load_LUT(LeafNitrogenBoonman{FT}());
 mask_LUT!(LNC_LUT, FT[0,Inf]);
 LNC_LUT = regrid_LUT(LNC_LUT, Int(size(LNC_LUT.data,2)/180));
 preview_data(LNC_LUT, 1)
@@ -87,7 +94,13 @@ preview_data(LPC_LUT, 1)
 #------------------------------------------------------------------------------
 
 # ### Specific leaf area
-SLA_LUT = load_LUT(LeafSLA{FT}());
+SLA_LUT = load_LUT(LeafSLAButler{FT}());
+mask_LUT!(SLA_LUT, FT[0,Inf]);
+SLA_LUT = regrid_LUT(SLA_LUT, Int(size(SLA_LUT.data,2)/180));
+preview_data(SLA_LUT, 1)
+#------------------------------------------------------------------------------
+
+SLA_LUT = load_LUT(LeafSLABoonman{FT}());
 mask_LUT!(SLA_LUT, FT[0,Inf]);
 SLA_LUT = regrid_LUT(SLA_LUT, Int(size(SLA_LUT.data,2)/180));
 preview_data(SLA_LUT, 1)
@@ -106,6 +119,12 @@ preview_data(VCM_LUT, 1)
 # ## Stand level datasets
 # ### Canopy height
 CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
+mask_LUT!(CHT_LUT, FT[0,Inf]);
+CHT_LUT = regrid_LUT(CHT_LUT, Int(size(CHT_LUT.data,2)/180));
+preview_data(CHT_LUT, 1)
+#------------------------------------------------------------------------------
+
+CHT_LUT = load_LUT(CanopyHeightBoonman{FT}());
 mask_LUT!(CHT_LUT, FT[0,Inf]);
 CHT_LUT = regrid_LUT(CHT_LUT, Int(size(CHT_LUT.data,2)/180));
 preview_data(CHT_LUT, 1)
@@ -221,55 +240,8 @@ preview_data(TDT_LUT, 1)
 
 
 # ## Land surface
-# ### Land elevation
-ELE_LUT = load_LUT(LandElevation{FT}());
-mask_LUT!(ELE_LUT, FT[0,Inf]);
-ELE_LUT = regrid_LUT(ELE_LUT, Int(size(ELE_LUT.data,2)/180));
-preview_data(ELE_LUT, 1)
-#------------------------------------------------------------------------------
-
 # ### Land mask
 LMK_LUT = load_LUT(LandMaskERA5{FT}());
 LMK_LUT = regrid_LUT(LMK_LUT, Int(size(LMK_LUT.data,2)/180));
 preview_data(LMK_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River flood plain height
-FLD_LUT = load_LUT(FloodPlainHeight{FT}());
-mask_LUT!(FLD_LUT, FT[0,Inf]);
-FLD_LUT = regrid_LUT(FLD_LUT, Int(size(FLD_LUT.data,2)/180));
-preview_data(FLD_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River height
-RVH_LUT = load_LUT(RiverHeight{FT}());
-mask_LUT!(RVH_LUT, FT[0,Inf]);
-RVH_LUT = regrid_LUT(RVH_LUT, Int(size(RVH_LUT.data,2)/180));
-preview_data(RVH_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River width
-RVW_LUT = load_LUT(RiverWidth{FT}());
-mask_LUT!(RVW_LUT, FT[0,Inf]);
-RVW_LUT = regrid_LUT(RVW_LUT, Int(size(RVW_LUT.data,2)/180));
-preview_data(RVW_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River length
-RVL_LUT = load_LUT(RiverLength{FT}());
-mask_LUT!(RVL_LUT, FT[0,Inf]);
-RVL_LUT = regrid_LUT(RVL_LUT, Int(size(RVL_LUT.data,2)/180));
-preview_data(RVL_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River manning coefficient
-RVM_LUT = load_LUT(LandMaskERA5{FT}());
-RVM_LUT = regrid_LUT(RVM_LUT, Int(size(RVM_LUT.data,2)/180));
-preview_data(RVM_LUT, 1)
-#------------------------------------------------------------------------------
-
-# ### River unit catchment area
-UCA_LUT = load_LUT(UnitCatchmentArea{FT}());
-UCA_LUT = regrid_LUT(UCA_LUT, Int(size(UCA_LUT.data,2)/180));
-preview_data(UCA_LUT, 1)
 #------------------------------------------------------------------------------

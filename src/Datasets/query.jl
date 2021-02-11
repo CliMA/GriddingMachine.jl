@@ -23,6 +23,18 @@ Return the following:
 - Variable name of gridded data
 - Variable attribute of gridded data
 """
+function query_LUT(dt::CanopyHeightBoonman)
+    _artn = "CH_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "CH";
+    _vara = Dict("longname" => "Canopy height" , "units" => "m");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::CanopyHeightGLAS)
     _artn = "CH_20X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
@@ -60,6 +72,7 @@ end
 
 
 function query_LUT(dt::FloodPlainHeight)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "FloodPlainHeight";
@@ -111,6 +124,7 @@ end
 
 
 function query_LUT(dt::LandElevation)
+    @warn "Note that this elevation dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "Elevation";
@@ -135,7 +149,34 @@ end
 
 
 
-function query_LUT(dt::LeafNitrogen)
+function query_LUT(dt::LeafChlorophyll)
+    @warn "Note that this chloropgyll dataset is not meant for public use...";
+    _artn = "CHL_2X_7D_V1";
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "LC";
+    _vara = Dict("longname" => "Leaf chlorophyll content",
+                 "units" => "μg cm⁻²");
+
+    return _file, FormatNC(), "chl", "7D", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafNitrogenBoonman)
+    _artn = "LNC_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "LN";
+    _vara = Dict("longname" => "Leaf nitrogen content",
+                 "units" => "kg kg⁻¹");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafNitrogenButler)
     _artn = "LNC_2X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LN";
@@ -163,7 +204,7 @@ end
 
 
 
-function query_LUT(dt::LeafSLA)
+function query_LUT(dt::LeafSLAButler)
     _artn = "SLA_2X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SLA";
@@ -172,6 +213,19 @@ function query_LUT(dt::LeafSLA)
 
     return _file, FormatNC(), "specific_leaf_area_mean", "1Y", false,
            _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::LeafSLABoonman)
+    _artn = "SLA_2X_1Y_V2";
+    _file = @artifact_str(_artn) * "/$(_artn).tif";
+    _varn = "SLA";
+    _vara = Dict("longname" => "Specific leaf area",
+                 "units" => "m² kg⁻¹");
+
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara
 end
 
 
@@ -229,6 +283,7 @@ end
 
 
 function query_LUT(dt::RiverHeight)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverHeight";
@@ -242,6 +297,7 @@ end
 
 
 function query_LUT(dt::RiverLength)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverLength";
@@ -255,6 +311,7 @@ end
 
 
 function query_LUT(dt::RiverManning)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverManning";
@@ -268,6 +325,7 @@ end
 
 
 function query_LUT(dt::RiverWidth)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverWidth";
@@ -306,6 +364,7 @@ end
 
 
 function query_LUT(dt::UnitCatchmentArea)
+    @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "UnitCatchmentArea";

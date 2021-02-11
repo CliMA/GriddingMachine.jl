@@ -33,7 +33,7 @@
 ## Installation
 ```julia
 julia> using Pkg;
-julia> Pkg.add(PackageSpec(url="https://github.com/CliMA/GriddingMachine.jl.git", rev="main"));
+julia> Pkg.add("GriddingMachine");
 ```
 
 

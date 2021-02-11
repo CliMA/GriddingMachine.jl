@@ -1,29 +1,10 @@
-[MODIS_1km_grid]
-git-tree-sha1 = "d70ac2e6c4c74b48d426d1a14af46a405c1ff4ee"
+[CHL_2X_7D_V1]
+git-tree-sha1 = "83da850b432cf4b6ad50fac26c13f2a63ac8f4ed"
 lazy = true
 
-    [[MODIS_1km_grid.download]]
-    sha256 = "081b705764e2d0163128cac780322b21b8a8cdad39f74647cf9552fb81066978"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_1km_grid.tar.gz"
-
-[MODIS_500m_grid]
-git-tree-sha1 = "50638e48fab53e6f708f388674d7f44e4aa7982a"
-lazy = true
-
-    [[MODIS_500m_grid.download]]
-    sha256 = "6efeffe26de19e9c2c8919d790c2356682ecea83e3c81527baf2a6a691f5d42d"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_500m_grid.tar.gz"
-
-[NPP_MODIS_1X_1Y]
-git-tree-sha1 = "322972ce0a6c3250a4cd4563f05b6214668ea86a"
-lazy = true
-
-    [[NPP_MODIS_1X_1Y.download]]
-    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/NPP/NPP_MODIS_1X_1Y.tar.gz"
-    [[NPP_MODIS_1X_1Y.download]]
-    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
-    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/NPP_MODIS_1X_1Y.tar.gz"
+    [[CHL_2X_7D_V1.download]]
+    sha256 = "0f54bfa76b45b784e5b5730e92042a9e1d714395df6f851b2d322d4b40ab83da"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CHL_2X_7D_V1.tar.gz"
 
 [CH_20X_1Y_V1]
 git-tree-sha1 = "7b8f5c16cb50eb02a93b874badab9c3416c6b374"
@@ -35,6 +16,17 @@ lazy = true
     [[CH_20X_1Y_V1.download]]
     sha256 = "43866b56681c183794ecde9e154446065acea6d842fe8b494a758750129faada"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CH_20X_1Y_V1.tar.gz"
+
+[CH_2X_1Y_V2]
+git-tree-sha1 = "6a18b9a0b5a503c24167a5b61dc286555f085e57"
+lazy = true
+
+    [[CH_2X_1Y_V2.download]]
+    sha256 = "b13457da08db2e5968595e61a07d1eda7418d2114fb3d6590170a9a9802e1622"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH_2X_1Y_V2.tar.gz"
+    [[CH_2X_1Y_V2.download]]
+    sha256 = "b13457da08db2e5968595e61a07d1eda7418d2114fb3d6590170a9a9802e1622"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CH_2X_1Y_V2.tar.gz"
 
 [CI_12X_1Y_V1]
 git-tree-sha1 = "1fd62e34f3c09a5ce78517b0253f15d06c187f52"
@@ -723,6 +715,17 @@ lazy = true
     sha256 = "1135990def0741cec5217f95c2f920236cfb32c6dc09a9406e1c7331bab43836"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/LNC_2X_1Y_V1.tar.gz"
 
+[LNC_2X_1Y_V2]
+git-tree-sha1 = "f1745da49df1c92e52be8b7f1135f17a80ca5869"
+lazy = true
+
+    [[LNC_2X_1Y_V2.download]]
+    sha256 = "048e8a9e739bce18f470f461d86cb4244c51d4a21cd899510abffb2d2c43347f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LNC_2X_1Y_V2.tar.gz"
+    [[LNC_2X_1Y_V2.download]]
+    sha256 = "048e8a9e739bce18f470f461d86cb4244c51d4a21cd899510abffb2d2c43347f"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/LNC_2X_1Y_V2.tar.gz"
+
 [LPC_2X_1Y_V1]
 git-tree-sha1 = "b7af0583e7c6cd7753187115260dd795e3f1f3ca"
 lazy = true
@@ -733,6 +736,22 @@ lazy = true
     [[LPC_2X_1Y_V1.download]]
     sha256 = "bbbd5584b909a0fa61147227f2806cb6dab58ad2b14da66f9a395cd18fd0ec03"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/LPC_2X_1Y_V1.tar.gz"
+
+[MODIS_1km_grid]
+git-tree-sha1 = "d70ac2e6c4c74b48d426d1a14af46a405c1ff4ee"
+lazy = true
+
+    [[MODIS_1km_grid.download]]
+    sha256 = "081b705764e2d0163128cac780322b21b8a8cdad39f74647cf9552fb81066978"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_1km_grid.tar.gz"
+
+[MODIS_500m_grid]
+git-tree-sha1 = "50638e48fab53e6f708f388674d7f44e4aa7982a"
+lazy = true
+
+    [[MODIS_500m_grid.download]]
+    sha256 = "6efeffe26de19e9c2c8919d790c2356682ecea83e3c81527baf2a6a691f5d42d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_500m_grid.tar.gz"
 
 [NDVI_AVHRR_20X_1M_1981_V1]
 git-tree-sha1 = "7aabad4a09cff9181f514ee3a7962dd0523d26b8"
@@ -1694,6 +1713,17 @@ lazy = true
     sha256 = "20d364ad11825d9293b04b61630b56e97b10d8439782d44b3000eb20fc4ab19d"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/NIRV_AVHRR_20X_1M_2020_V1.tar.gz"
 
+[NPP_MODIS_1X_1Y]
+git-tree-sha1 = "322972ce0a6c3250a4cd4563f05b6214668ea86a"
+lazy = true
+
+    [[NPP_MODIS_1X_1Y.download]]
+    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/NPP/NPP_MODIS_1X_1Y.tar.gz"
+    [[NPP_MODIS_1X_1Y.download]]
+    sha256 = "f586fc3cbff2c5625e9ac2e8c9aa631922af945ac34428cebde0137ee38daa5b"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/CliMA_LUT/NPP_MODIS_1X_1Y.tar.gz"
+
 [RIVER_4X_1Y_V1]
 git-tree-sha1 = "0fe37d167368b93c99188c10e683523385817738"
 lazy = true
@@ -1747,6 +1777,17 @@ lazy = true
     [[SLA_2X_1Y_V1.download]]
     sha256 = "b8a2d7bf6a2c5f6ba5c27190003c506f94e6483ffbe7b60dc63f0ae06b14500f"
     url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/SLA_2X_1Y_V1.tar.gz"
+
+[SLA_2X_1Y_V2]
+git-tree-sha1 = "fb2a0540bfcf6c8e6b5ce7c93a6fdd0eb1eac997"
+lazy = true
+
+    [[SLA_2X_1Y_V2.download]]
+    sha256 = "8be2980b5204bc6a55ba1a2275337fffa590210b1d914b276d013429a7043567"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SLA_2X_1Y_V2.tar.gz"
+    [[SLA_2X_1Y_V2.download]]
+    sha256 = "8be2980b5204bc6a55ba1a2275337fffa590210b1d914b276d013429a7043567"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/SLA_2X_1Y_V2.tar.gz"
 
 [TD_120X_1Y_V1]
 git-tree-sha1 = "ead4e460cf4ad2bc0d6db202c309f158133f4dd5"
