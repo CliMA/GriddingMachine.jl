@@ -24,6 +24,9 @@ lazy = true
     [[CH_2X_1Y_V2.download]]
     sha256 = "b13457da08db2e5968595e61a07d1eda7418d2114fb3d6590170a9a9802e1622"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CH_2X_1Y_V2.tar.gz"
+    [[CH_2X_1Y_V2.download]]
+    sha256 = "b13457da08db2e5968595e61a07d1eda7418d2114fb3d6590170a9a9802e1622"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/CH_2X_1Y_V2.tar.gz"
 
 [CI_12X_1Y_V1]
 git-tree-sha1 = "1fd62e34f3c09a5ce78517b0253f15d06c187f52"
@@ -719,6 +722,9 @@ lazy = true
     [[LNC_2X_1Y_V2.download]]
     sha256 = "048e8a9e739bce18f470f461d86cb4244c51d4a21cd899510abffb2d2c43347f"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LNC_2X_1Y_V2.tar.gz"
+    [[LNC_2X_1Y_V2.download]]
+    sha256 = "048e8a9e739bce18f470f461d86cb4244c51d4a21cd899510abffb2d2c43347f"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/LNC_2X_1Y_V2.tar.gz"
 
 [LPC_2X_1Y_V1]
 git-tree-sha1 = "b7af0583e7c6cd7753187115260dd795e3f1f3ca"
@@ -1779,6 +1785,9 @@ lazy = true
     [[SLA_2X_1Y_V2.download]]
     sha256 = "8be2980b5204bc6a55ba1a2275337fffa590210b1d914b276d013429a7043567"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SLA_2X_1Y_V2.tar.gz"
+    [[SLA_2X_1Y_V2.download]]
+    sha256 = "8be2980b5204bc6a55ba1a2275337fffa590210b1d914b276d013429a7043567"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/Test_LUT/SLA_2X_1Y_V2.tar.gz"
 
 [TD_120X_1Y_V1]
 git-tree-sha1 = "ead4e460cf4ad2bc0d6db202c309f158133f4dd5"
