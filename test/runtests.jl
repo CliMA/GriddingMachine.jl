@@ -3,7 +3,6 @@ using PkgUtility
 using Test
 
 FT = Float32;
-GRIDDINGMACHINE_ARTIFACTS = joinpath(@__DIR__, "../Artifacts.toml");
 
 
 
@@ -23,56 +22,27 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
-    @info "Downloading the artifacts, please wait...";
-    predownload_artifact.(["CH_20X_1Y_V1",
-                           "CH_2X_1Y_V2",
-                           "CI_12X_1Y_V1",
-                           "CI_PFT_2X_1Y_V1",
-                           "LAI_4X_1M_V1",
-                           "LM_ERA5_4X_1Y_V1",
-                           "LNC_2X_1Y_V1",
-                           "LNC_2X_1Y_V2",
-                           "LPC_2X_1Y_V1",
-                           "SLA_2X_1Y_V1",
-                           "SLA_2X_1Y_V2",
-                           "TD_12X_1Y_V1",
-                           "VMAX_CICA_2X_1Y_V1",
-                           "WD_2X_1Y_V1"],
-                          GRIDDINGMACHINE_ARTIFACTS);
-    CHT_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
-    CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
+    TMP_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
+    TMP_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
-    CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
-    LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
-    LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
-    LNC_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;
-    LNC_LUT = load_LUT(LeafNitrogenButler{FT}());              @test true;
-    LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
-    SLA_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
+    TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    TMP_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
+    TMP_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
+    TMP_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;
+    TMP_LUT = load_LUT(LeafNitrogenButler{FT}());              @test true;
+    TMP_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
+    TMP_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
     SLA_LUT = load_LUT(LeafSLAButler{FT}());                   @test true;
-    TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
-    VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
-    WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
-
-    # limit the test only to latest stable julia
-    if Sys.islinux() && VERSION>v"1.5"
-        @info "Downloading the artifacts, please wait...";
-        predownload_artifact.(["GPP_MPI_2X_1M_2005_V1",
-                               "NPP_MODIS_1X_1Y",
-                               "GPP_VPM_5X_8D_2005_V1",
-                               "NDVI_AVHRR_20X_1M_2018_V1",
-                               "NIRO_AVHRR_20X_1M_2018_V1",
-                               "NIRV_AVHRR_20X_1M_2018_V1",
-                               "SIF740_TROPOMI_1X_1M_2018_V1"],
-                              GRIDDINGMACHINE_ARTIFACTS);
-        NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
-        MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
-        VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
-        SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
-        NDV_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-        NIO_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-        NIV_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    end
+    TMP_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
+    TMP_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
+    TMP_LUT = load_LUT(WoodDensity{FT}());                     @test true;
+    TMP_LUT = load_LUT(NPPModis{FT}());                        @test true;
+    TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
+    TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
+    TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
+    TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
@@ -86,13 +56,12 @@ end
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
-        @info "Downloading the artifacts, please wait...";
-        predownload_artifact.(["CI_240X_1Y_V1",
-                               "TD_120X_1Y_V1"],
-                              GRIDDINGMACHINE_ARTIFACTS);
-        CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
-        TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
+        TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
+        TMP_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
     end
+    TMP_LUT = nothing;
+    CLI_PFT = nothing;
+    SLA_LUT = nothing;
 end
 
 
@@ -107,6 +76,8 @@ end
     mask_LUT!(CHT_LUT, -9999  ); @test true;
     mask_LUT!(SLA_LUT, [0,Inf]); @test true;
     mask_LUT!(SLA_LUT, -9999  ); @test true;
+    CHT_LUT = nothing;
+    SLA_LUT = nothing;
 end
 
 
@@ -121,4 +92,6 @@ end
     REG_LUT = regrid_LUT(CHT_LUT, 2; nan_weight=false); @test true;
     save_LUT!(REG_LUT, "test.nc"); @test true;
     rm("test.nc");
+    CHT_LUT = nothing;
+    REG_LUT = nothing;
 end

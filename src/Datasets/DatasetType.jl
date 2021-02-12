@@ -808,20 +808,18 @@ $(DocStringExtensions.FIELDS)
 """
 Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Gridded dataset"
-    data::Array{FT,3} = FT.(ncread(joinpath(artifact"NPP_MODIS_1X_1Y",
-                                           "npp_modis_1X_1Y_2000.nc"),
-                                   "npp"));
+    data::Array{FT,3} = zeros(360,180,1);
     "Latitude resolution `[°]`"
     res_lat::FT = 180 / size(data,2)
     "Longitude resolution `[°]`"
     res_lon::FT = 360 / size(data,1)
     "Time resolution: D-M-Y-C: day-month-year-century"
-    res_time::String = "8D"
+    res_time::String = "1Y"
     "Variable name"
-    var_name::String = "NPP"
+    var_name::String = "ZEROS"
     "Variable attribute"
-    var_attr::Dict{String,String} = Dict("longname" => "NPP",
-                                         "units"    => "kg C m⁻² s⁻¹")
+    var_attr::Dict{String,String} = Dict("longname" => "ZEROS",
+                                         "units"    => "-")
     "Type label"
     dt::AbstractDataset = NPPModis{FT}()
 end

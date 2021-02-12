@@ -11,32 +11,6 @@ using Plots.PlotMeasures
 
 ENV["GKSwstype"]="100";
 FT = Float32;
-## use this to fix the problem in generated preview.jl file
-F1 = joinpath(@__DIR__, "../../Artifacts.toml");
-F2 = joinpath(@__DIR__, "../../../Artifacts.toml");
-GRIDDINGMACHINE_ARTIFACTS = (isfile(F1) ? F1 : F2);
-
-predownload_artifact.(["CH_20X_1Y_V1",
-                       "CI_12X_1Y_V1",
-                       "CI_PFT_2X_1Y_V1",
-                       "GPP_MPI_2X_1M_2005_V1",
-                       "GPP_VPM_5X_8D_2005_V1",
-                       "LAI_4X_1M_V1",
-                       "LM_ERA5_4X_1Y_V1",
-                       "LNC_2X_1Y_V1",
-                       "LNC_2X_1Y_V2",
-                       "LPC_2X_1Y_V1",
-                       "NDVI_AVHRR_20X_1M_2018_V1",
-                       "NIRO_AVHRR_20X_1M_2018_V1",
-                       "NIRV_AVHRR_20X_1M_2018_V1",
-                       "SIF740_TROPOMI_1X_1M_2018_V1",
-                       "SLA_2X_1Y_V1",
-                       "SLA_2X_1Y_V2",
-                       "TD_12X_1Y_V1",
-                       "VMAX_CICA_2X_1Y_V1",
-                       "WD_2X_1Y_V1",
-                       "NPP_MODIS_1X_1Y"],
-                      GRIDDINGMACHINE_ARTIFACTS);
 #------------------------------------------------------------------------------
 
 
