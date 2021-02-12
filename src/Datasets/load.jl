@@ -355,6 +355,7 @@ end
 
 
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
+    predownload_artifact("VMAX_CICA_2X_1Y_V1", ARTIFACTs_TOML);
     _Vcmax = FT.(ncread(joinpath(artifact"VMAX_CICA_2X_1Y_V1",
                                  "VMAX_CICA_2X_1Y_V1.nc"),
                         "vcmax"));

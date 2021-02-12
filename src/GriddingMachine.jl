@@ -11,6 +11,7 @@ using LazyArtifacts
 using NetCDF
 using Parameters
 using Pkg.Artifacts
+using PkgUtility
 using ProgressMeter
 using Statistics
 
@@ -24,6 +25,7 @@ MODIS_HOME     = "/net/fluo/data1/data/MODIS";
 MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
 USER_NAME      = "";
 USER_PASS      = "";
+ARTIFACTs_TOML = joinpath(@__DIR__, "../Artifacts.toml");
 
 
 
