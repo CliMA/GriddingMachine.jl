@@ -22,27 +22,27 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
-    CHT_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
-    CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
+    TMP_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
+    TMP_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
-    CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
-    LAI_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
-    LMK_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
-    LNC_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;
-    LNC_LUT = load_LUT(LeafNitrogenButler{FT}());              @test true;
-    LPC_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
-    SLA_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
+    TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    TMP_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
+    TMP_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
+    TMP_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;
+    TMP_LUT = load_LUT(LeafNitrogenButler{FT}());              @test true;
+    TMP_LUT = load_LUT(LeafPhosphorus{FT}());                  @test true;
+    TMP_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
     SLA_LUT = load_LUT(LeafSLAButler{FT}());                   @test true;
-    TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
-    VCM_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
-    WDT_LUT = load_LUT(WoodDensity{FT}());                     @test true;
-    NPP_LUT = load_LUT(NPPModis{FT}());                        @test true;
-    MPI_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
-    VPM_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
-    SIF_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
-    NDV_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    NIO_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    NIV_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    TMP_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
+    TMP_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
+    TMP_LUT = load_LUT(WoodDensity{FT}());                     @test true;
+    TMP_LUT = load_LUT(NPPModis{FT}());                        @test true;
+    TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
+    TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
+    TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
+    TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
@@ -56,9 +56,12 @@ end
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
-        CLI_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
-        TDT_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
+        TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
+        TMP_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
     end
+    TMP_LUT = nothing;
+    CLI_PFT = nothing;
+    SLA_LUT = nothing;
 end
 
 
@@ -73,6 +76,8 @@ end
     mask_LUT!(CHT_LUT, -9999  ); @test true;
     mask_LUT!(SLA_LUT, [0,Inf]); @test true;
     mask_LUT!(SLA_LUT, -9999  ); @test true;
+    CHT_LUT = nothing;
+    SLA_LUT = nothing;
 end
 
 
@@ -87,4 +92,6 @@ end
     REG_LUT = regrid_LUT(CHT_LUT, 2; nan_weight=false); @test true;
     save_LUT!(REG_LUT, "test.nc"); @test true;
     rm("test.nc");
+    CHT_LUT = nothing;
+    REG_LUT = nothing;
 end
