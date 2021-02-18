@@ -1766,6 +1766,54 @@ lazy = true
     sha256 = "9c5806b56802c85677c9fcbb4811fdaac99fb3b521c72e4d7d8aa172ff7c92c6"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/TD_12X_1Y_V1.tar.gz"
 
+[VGM_ALPHA_120X_1Y_V1]
+git-tree-sha1 = "e5a5f6c5678fe10378ef319782a490b02d181edc"
+lazy = true
+
+    [[VGM_ALPHA_120X_1Y_V1.download]]
+    sha256 = "2b0310ff2c4c7cb49672a470baaa7140487810eb17981e5d375187b6ce9154df"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_ALPHA_120X_1Y_V1.tar.gz"
+
+[VGM_ALPHA_12X_1Y_V1]
+git-tree-sha1 = "5d40f0ed0da01430a136f30e2223e76fd7e60f48"
+lazy = true
+
+    [[VGM_ALPHA_12X_1Y_V1.download]]
+    sha256 = "09eb540a00d63192011086dff8d71e3d95b8d9d1eedb07485a0cf3b246a51003"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_ALPHA_12X_1Y_V1.tar.gz"
+
+[VGM_LOGN_120X_1Y_V1]
+git-tree-sha1 = "a55fbbc6c169f0c136f2640c6bf79fbf980b4f75"
+lazy = true
+
+    [[VGM_LOGN_120X_1Y_V1.download]]
+    sha256 = "a88afe6e3c098eccab074ca07fa4ea2e4e609340cb1cc105e3580325f23a164a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_LOGN_120X_1Y_V1.tar.gz"
+
+[VGM_LOGN_12X_1Y_V1]
+git-tree-sha1 = "514c4804d6bde6a13903010b2d99511c19991483"
+lazy = true
+
+    [[VGM_LOGN_12X_1Y_V1.download]]
+    sha256 = "b709d65e85ad618e03513c3e6eb04d741389f7176958210f764abb068e4abfca"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_LOGN_12X_1Y_V1.tar.gz"
+
+[VGM_SWCR_120X_1Y_V1]
+git-tree-sha1 = "381c3054eecffeaed4888b698bc838002a4e6340"
+lazy = true
+
+    [[VGM_SWCR_120X_1Y_V1.download]]
+    sha256 = "f9539f698bd7d61a9cde054d07aeb1414d22a260f4fcb0e906c15fe2fc51b675"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCR_120X_1Y_V1.tar.gz"
+
+[VGM_SWCR_12X_1Y_V1]
+git-tree-sha1 = "fa166c31f78c48950df82ba64e69f8c1e05afdab"
+lazy = true
+
+    [[VGM_SWCR_12X_1Y_V1.download]]
+    sha256 = "aaf48e4bf2c2b929322329283aa5de27cc00de6352bb27f5a6b88f5f8e7e6943"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCR_12X_1Y_V1.tar.gz"
+
 [VMAX_CICA_2X_1Y_V1]
 git-tree-sha1 = "67d7c2fe75676bab01fe0762e55707cc29e2a97d"
 lazy = true
