@@ -40,7 +40,7 @@ Struct for leaf chlorophyll content
 ```
 </details>
 """
-struct LeafChlorophyll{FT}  <: AbstractDataset{FT} end
+struct LeafChlorophyll{FT} <: AbstractDataset{FT} end
 
 
 
@@ -71,7 +71,7 @@ Struct for leaf nitrogen content
 ```
 </details>
 """
-struct LeafNitrogenBoonman{FT}  <: AbstractDataset{FT} end
+struct LeafNitrogenBoonman{FT} <: AbstractDataset{FT} end
 
 
 
@@ -102,7 +102,7 @@ Struct for leaf nitrogen content
 ```
 </details>
 """
-struct LeafNitrogenButler{FT}  <: AbstractDataset{FT} end
+struct LeafNitrogenButler{FT} <: AbstractDataset{FT} end
 
 
 
@@ -132,7 +132,7 @@ Struct for leaf phosphorus content
 ```
 </details>
 """
-struct LeafPhosphorus{FT}  <: AbstractDataset{FT} end
+struct LeafPhosphorus{FT} <: AbstractDataset{FT} end
 
 
 
@@ -163,7 +163,7 @@ Struct for leaf specific leaf area (inverse of leaf mass per area)
 ```
 </details>
 """
-struct LeafSLABoonman{FT}  <: AbstractDataset{FT} end
+struct LeafSLABoonman{FT} <: AbstractDataset{FT} end
 
 
 
@@ -194,7 +194,7 @@ Struct for leaf specific leaf area (inverse of leaf mass per area)
 ```
 </details>
 """
-struct LeafSLAButler{FT}  <: AbstractDataset{FT} end
+struct LeafSLAButler{FT} <: AbstractDataset{FT} end
 
 
 
@@ -408,7 +408,7 @@ Struct for VPM GPP v20
 ```
 </details>
 """
-struct GPPVPMv20{FT}  <: AbstractDataset{FT} end
+struct GPPVPMv20{FT} <: AbstractDataset{FT} end
 
 
 
@@ -432,7 +432,7 @@ Struct for monthly mean MODIS LAI
 ```
 </details>
 """
-struct LAIMonthlyMean{FT}  <: AbstractDataset{FT} end
+struct LAIMonthlyMean{FT} <: AbstractDataset{FT} end
 
 
 
@@ -537,6 +537,102 @@ struct TreeDensity{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct VGMAlphaJules{FT}
+
+<details>
+<summary>
+Struct for van Genuchten model α
+[Link to Dataset Source](https://doi.org/10.1029/2019MS001784)
+</summary>
+
+```
+@article{dai2019global,
+    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen
+        and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng
+        and Lu, Xingjie},
+	year = {2019},
+    title = {A global high-resolution data set of soil hydraulic and thermal
+        properties for land surface modeling},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {11},
+	number = {9},
+	pages = {2996--3023}
+}
+
+
+```
+</details>
+"""
+struct VGMAlphaJules{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct VGMAlphaJules{FT}
+
+<details>
+<summary>
+Struct for van Genuchten model log(n)
+[Link to Dataset Source](https://doi.org/10.1029/2019MS001784)
+</summary>
+
+```
+@article{dai2019global,
+    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen
+        and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng
+        and Lu, Xingjie},
+	year = {2019},
+    title = {A global high-resolution data set of soil hydraulic and thermal
+        properties for land surface modeling},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {11},
+	number = {9},
+	pages = {2996--3023}
+}
+
+
+```
+</details>
+"""
+struct VGMLogNJules{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
+    struct VGMAlphaJules{FT}
+
+<details>
+<summary>
+Struct for van Genuchten model Θr
+[Link to Dataset Source](https://doi.org/10.1029/2019MS001784)
+</summary>
+
+```
+@article{dai2019global,
+    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen
+        and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng
+        and Lu, Xingjie},
+	year = {2019},
+    title = {A global high-resolution data set of soil hydraulic and thermal
+        properties for land surface modeling},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {11},
+	number = {9},
+	pages = {2996--3023}
+}
+
+
+```
+</details>
+"""
+struct VGMThetaRJules{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct WoodDensity{FT}
 
 <details>
@@ -600,7 +696,7 @@ Flood plain height
 ```
 </details>
 """
-struct FloodPlainHeight{FT}  <: AbstractDataset{FT} end
+struct FloodPlainHeight{FT} <: AbstractDataset{FT} end
 
 
 
@@ -629,7 +725,7 @@ Land elevation (height above mean sea level)
 ```
 </details>
 """
-struct LandElevation{FT}  <: AbstractDataset{FT} end
+struct LandElevation{FT} <: AbstractDataset{FT} end
 
 
 
@@ -639,7 +735,7 @@ struct LandElevation{FT}  <: AbstractDataset{FT} end
 
 Struct for land mask from ERA5
 """
-struct LandMaskERA5{FT}  <: AbstractDataset{FT} end
+struct LandMaskERA5{FT} <: AbstractDataset{FT} end
 
 
 
@@ -668,7 +764,7 @@ River height
 ```
 </details>
 """
-struct RiverHeight{FT}  <: AbstractDataset{FT} end
+struct RiverHeight{FT} <: AbstractDataset{FT} end
 
 
 
@@ -697,7 +793,7 @@ River length
 ```
 </details>
 """
-struct RiverLength{FT}  <: AbstractDataset{FT} end
+struct RiverLength{FT} <: AbstractDataset{FT} end
 
 
 
@@ -726,7 +822,7 @@ River manning coefficient
 ```
 </details>
 """
-struct RiverManning{FT}  <: AbstractDataset{FT} end
+struct RiverManning{FT} <: AbstractDataset{FT} end
 
 
 
@@ -755,7 +851,7 @@ River width
 ```
 </details>
 """
-struct RiverWidth{FT}  <: AbstractDataset{FT} end
+struct RiverWidth{FT} <: AbstractDataset{FT} end
 
 
 
@@ -784,7 +880,7 @@ Unit catchment area
 ```
 </details>
 """
-struct UnitCatchmentArea{FT}  <: AbstractDataset{FT} end
+struct UnitCatchmentArea{FT} <: AbstractDataset{FT} end
 
 
 

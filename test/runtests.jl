@@ -22,6 +22,7 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Load and Read datasets" begin
+    println();
     TMP_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
     TMP_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
@@ -43,6 +44,9 @@ end
     TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
+    #TMP_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");     @test true;
+    #TMP_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");      @test true;
+    #TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");    @test true;
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
@@ -69,7 +73,7 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Mask dataset" begin
-    println("");
+    println();
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
     SLA_LUT = load_LUT(LeafSLAButler{FT}());
     mask_LUT!(CHT_LUT, [0,Inf]); @test true;
@@ -85,7 +89,7 @@ end
 
 # test clumping factor artifacts
 @testset "GriddingMachine --- Regrid and Save dataset" begin
-    println("");
+    println();
     CHT_LUT = load_LUT(CanopyHeightGLAS{FT}());
     mask_LUT!(CHT_LUT, [0,10]);
     REG_LUT = regrid_LUT(CHT_LUT, 2; nan_weight=true ); @test true;
