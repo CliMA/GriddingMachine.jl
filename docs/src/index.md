@@ -61,4 +61,14 @@ to reach the original data owner on their own.
 | TreeDensity         | Tree number per area               | 120X-1Y     | NS        | Crowther et al. (2015)  | TIFF   | Renato Braghiere | Yes            |
 |                     | Tree number per area               | 12X-1Y      | NS        | regridded               | TIFF   | Yujie Wang       | Yes            |
 | VcmaxOptimalCiCa    | Vcmax from optimal Ci/Ca ratio     | 4X-1Y       | NS        | Smith et al. (2019)     | NetCDF | Renato Braghiere | Yes            |
+| VGMAlphaJules       | van Genuchten alpha of JULES       | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
+|                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
+|                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
+| VGMLogNJules        | van Genuchten log(n) of JULES      | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
+|                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
+|                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
+| VGMLogNJules        | Residual SWC of JULES              | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
+|                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
+|                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
 | WoodDensity         | Wood density                       | 2X-1Y       | NS        | Boonman et al. (2020)   | TIFF   | Marcos Longo     | Yes            |
+|||||||||

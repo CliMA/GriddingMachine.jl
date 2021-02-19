@@ -55,6 +55,9 @@ export AbstractDataset,
        SIFTropomi740,
        TreeDensity,
        VcmaxOptimalCiCa,
+       VGMAlphaJules,
+       VGMLogNJules,
+       VGMThetaRJules,
        WoodDensity
 
 

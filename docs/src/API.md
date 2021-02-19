@@ -64,6 +64,9 @@ NIRvAvhrr
 NPPModis
 SIFTropomi740
 TreeDensity
+VGMAlphaJules
+VGMLogNJules
+VGMThetaRJules
 WoodDensity
 ```
 

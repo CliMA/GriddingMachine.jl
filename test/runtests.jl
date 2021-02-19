@@ -44,9 +44,9 @@ end
     TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    #TMP_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");     @test true;
-    #TMP_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");      @test true;
-    #TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");    @test true;
+    TMP_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");      @test true;
+    TMP_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");       @test true;
+    TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");     @test true;
 
     read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
     read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;

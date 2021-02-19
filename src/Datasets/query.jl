@@ -406,7 +406,6 @@ end
 
 
 function query_LUT(dt::VGMAlphaJules, res_g::String, res_t::String)
-    @warn "Note that this soil dataset is not meant for public use...";
     _artn = "VGM_ALPHA_$(res_g)_$(res_t)_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
@@ -421,7 +420,6 @@ end
 
 
 function query_LUT(dt::VGMLogNJules, res_g::String, res_t::String)
-    @warn "Note that this soil dataset is not meant for public use...";
     _artn = "VGM_LOGN_$(res_g)_$(res_t)_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
@@ -436,7 +434,6 @@ end
 
 
 function query_LUT(dt::VGMThetaRJules, res_g::String, res_t::String)
-    @warn "Note that this soil dataset is not meant for public use...";
     _artn = "VGM_SWCR_$(res_g)_$(res_t)_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
