@@ -670,6 +670,1014 @@ lazy = true
     sha256 = "cee8aac73a6180353106b512ed4f755e5f28679f516f413df9a8640e1effc4b7"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/GPP_VPM_5X_8D_2019_V1.tar.gz"
 
+[LAI_10X_1M_2000_V1]
+git-tree-sha1 = "d988c00a8fc79639b2399023e9c50ce39a347658"
+lazy = true
+
+    [[LAI_10X_1M_2000_V1.download]]
+    sha256 = "2c331d9584de7dc080c9f6a6576daf21f4f28ad30cfb43f9b6db4746ff15f0a3"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2000_V1.tar.gz"
+
+[LAI_10X_1M_2001_V1]
+git-tree-sha1 = "2cd22220590834da9e0fd40ac82915702243807c"
+lazy = true
+
+    [[LAI_10X_1M_2001_V1.download]]
+    sha256 = "d7aaa4aff121ea7041fab82504e48ace11edbc83e8d45da491fbfed73ed42fc8"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2001_V1.tar.gz"
+
+[LAI_10X_1M_2002_V1]
+git-tree-sha1 = "6a25084b4c652ab9c2f2e4dc8c41e699f1927bcc"
+lazy = true
+
+    [[LAI_10X_1M_2002_V1.download]]
+    sha256 = "dfd50461ea1953373335d9b3a6b08133afcdc05f1d568182b60e7fc80c9a0730"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2002_V1.tar.gz"
+
+[LAI_10X_1M_2003_V1]
+git-tree-sha1 = "604e6688579c0aa08cf874ff01d07c5ca18b418d"
+lazy = true
+
+    [[LAI_10X_1M_2003_V1.download]]
+    sha256 = "961e90854b08740b3b2dacb50c3f671b11d45b222bad1314c0168f89f0d5f188"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2003_V1.tar.gz"
+
+[LAI_10X_1M_2004_V1]
+git-tree-sha1 = "a2e69a5d88e24070d0a3d920462d87fb0d7c8b55"
+lazy = true
+
+    [[LAI_10X_1M_2004_V1.download]]
+    sha256 = "1d1b31bbe9f539983faa20894940e95afed0b856f1c1e0cfe54f5af693b1a882"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2004_V1.tar.gz"
+
+[LAI_10X_1M_2005_V1]
+git-tree-sha1 = "1d22924062f18af8f297867b3033759872579970"
+lazy = true
+
+    [[LAI_10X_1M_2005_V1.download]]
+    sha256 = "45b4bf7240499a6a9eafd06e715862aedbec61a61a1fd1077793f27e358f7fa9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2005_V1.tar.gz"
+
+[LAI_10X_1M_2006_V1]
+git-tree-sha1 = "619fdd373bac864d562a732a03a031196e2f57ee"
+lazy = true
+
+    [[LAI_10X_1M_2006_V1.download]]
+    sha256 = "4c7eb65d3e03ea1e41363db5b37b07450ce7ae4e3dabb73ef5a835b0c84095d0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2006_V1.tar.gz"
+
+[LAI_10X_1M_2007_V1]
+git-tree-sha1 = "0742995e15a812eb71d8804d9d21d092d1e76e8c"
+lazy = true
+
+    [[LAI_10X_1M_2007_V1.download]]
+    sha256 = "be443b4982a54fe2be9309124133024f7e58884170d87ec2b703b8a0d6d8715d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2007_V1.tar.gz"
+
+[LAI_10X_1M_2008_V1]
+git-tree-sha1 = "daaf6064fc9d466e3a04f144fc1142480396d4f5"
+lazy = true
+
+    [[LAI_10X_1M_2008_V1.download]]
+    sha256 = "8c6edd9bb780b1dff1c3c6b0ae28c345cade5f69b07104a48497b6615b6b4245"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2008_V1.tar.gz"
+
+[LAI_10X_1M_2009_V1]
+git-tree-sha1 = "c238a561580ba177f326a547d6648d8c398b067b"
+lazy = true
+
+    [[LAI_10X_1M_2009_V1.download]]
+    sha256 = "ec227f71e0e359b2a466080ccac19e08137311e97baffede1d61cba2293260de"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2009_V1.tar.gz"
+
+[LAI_10X_1M_2010_V1]
+git-tree-sha1 = "4d3d092c1a42fff7199aa6f941a5e09ce07b06d3"
+lazy = true
+
+    [[LAI_10X_1M_2010_V1.download]]
+    sha256 = "ab3856178a70ceb6c7c4709e5f1ff95280d31c65b6e6d199c7815ab8b506f943"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2010_V1.tar.gz"
+
+[LAI_10X_1M_2011_V1]
+git-tree-sha1 = "6d9125e6006e28a2affd6569c5549c24fd9836d1"
+lazy = true
+
+    [[LAI_10X_1M_2011_V1.download]]
+    sha256 = "aadecfc7e18cb71e05f9c5a1cf68d842dfc86f8385db3cd79a389ddf976c9d4d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2011_V1.tar.gz"
+
+[LAI_10X_1M_2012_V1]
+git-tree-sha1 = "9d26edf8ab7334aefacc25a76c2a8aa4b4eda82e"
+lazy = true
+
+    [[LAI_10X_1M_2012_V1.download]]
+    sha256 = "bf2cc9cfd62d4db361b0ab5979f03607f521ec18d3c3425849aed4256c159f12"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2012_V1.tar.gz"
+
+[LAI_10X_1M_2013_V1]
+git-tree-sha1 = "ecb1e4ece7934411de1cc7343dbd66b1164b7653"
+lazy = true
+
+    [[LAI_10X_1M_2013_V1.download]]
+    sha256 = "ccf1bd41886ab6625cb1442bd8482114432db0d4925f25a26d12b14d2a2043e9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2013_V1.tar.gz"
+
+[LAI_10X_1M_2014_V1]
+git-tree-sha1 = "dc75b86587dba393a8791d95c9af886407f4b1ea"
+lazy = true
+
+    [[LAI_10X_1M_2014_V1.download]]
+    sha256 = "0182d036d9a8a0d63508535d37eacfd9988d07348922f46e30cce0ce0b3dc4a2"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2014_V1.tar.gz"
+
+[LAI_10X_1M_2015_V1]
+git-tree-sha1 = "7051fccd5186266f69773840754ac2a6953bf589"
+lazy = true
+
+    [[LAI_10X_1M_2015_V1.download]]
+    sha256 = "91ff532a0db2d2d71daa3b1111047e473a056d3d654da6246435eb6f2f6bec4d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2015_V1.tar.gz"
+
+[LAI_10X_1M_2016_V1]
+git-tree-sha1 = "5e971bd6beaabab7cbdef3ea3a438d2486ccfd52"
+lazy = true
+
+    [[LAI_10X_1M_2016_V1.download]]
+    sha256 = "57d35ec1a1c65553e8b66592e0a194f2469e22ef34265727676eace0341e98e4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2016_V1.tar.gz"
+
+[LAI_10X_1M_2017_V1]
+git-tree-sha1 = "a6701ff8f8b16cd64e15e27beb461bbe1af25fc1"
+lazy = true
+
+    [[LAI_10X_1M_2017_V1.download]]
+    sha256 = "2be9211c60eec32aaf5ee252401da00ead5b0c45276e0f3bee79c7533ead0f8c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2017_V1.tar.gz"
+
+[LAI_10X_1M_2018_V1]
+git-tree-sha1 = "09d9cccf7004bcc3f19a220aaa015b103e5030e3"
+lazy = true
+
+    [[LAI_10X_1M_2018_V1.download]]
+    sha256 = "75ac340829a67c4b35032f83c0a6ea265a040f107bf477e7ac3fd142b48fcbc1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2018_V1.tar.gz"
+
+[LAI_10X_1M_2019_V1]
+git-tree-sha1 = "4e60d2f23ac2eeb2e9a789f55e0bc15cab09233c"
+lazy = true
+
+    [[LAI_10X_1M_2019_V1.download]]
+    sha256 = "6ab7e47a087d78029e20de1541b81df1a62cf11b121d258f0902ac2a400b0876"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2019_V1.tar.gz"
+
+[LAI_10X_1M_2020_V1]
+git-tree-sha1 = "40b9524c911124b8ab05b6df9c50961f721e5f2e"
+lazy = true
+
+    [[LAI_10X_1M_2020_V1.download]]
+    sha256 = "a2a7b8a6b7de9a40b53eae476c51a5aad40b461c7d3e3f8304e1fb7053a55a80"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_1M_2020_V1.tar.gz"
+
+[LAI_10X_8D_2000_V1]
+git-tree-sha1 = "666ee58f91c47170b23eee6444b749f78142a167"
+lazy = true
+
+    [[LAI_10X_8D_2000_V1.download]]
+    sha256 = "4397450740f8eb3a880a55e701040e5a10d3bfcd308610377802480ded313d48"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2000_V1.tar.gz"
+
+[LAI_10X_8D_2001_V1]
+git-tree-sha1 = "59e68f623e48d537c0f12c0dbf1901a69081a134"
+lazy = true
+
+    [[LAI_10X_8D_2001_V1.download]]
+    sha256 = "69bf3a9811fe311a895b445a12f84b3a945fcc4e69aee25852fcf710a0590e8f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2001_V1.tar.gz"
+
+[LAI_10X_8D_2002_V1]
+git-tree-sha1 = "371320491af000b73894e6a1a56e0f654d782de2"
+lazy = true
+
+    [[LAI_10X_8D_2002_V1.download]]
+    sha256 = "24f7e3c50c8b1205e72bda7ffd1ca07743e2f2c8f068b273533834d41e529fe1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2002_V1.tar.gz"
+
+[LAI_10X_8D_2003_V1]
+git-tree-sha1 = "f97d61507845ce66d7b01d884aa4048e3adf68b9"
+lazy = true
+
+    [[LAI_10X_8D_2003_V1.download]]
+    sha256 = "3ce328ea76d8cfebed1c64a7f19212060af05e0de6e7c4ffa9139d9b05ebb50e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2003_V1.tar.gz"
+
+[LAI_10X_8D_2004_V1]
+git-tree-sha1 = "6d53493fadcf9e68119f23683176f493e254fb2a"
+lazy = true
+
+    [[LAI_10X_8D_2004_V1.download]]
+    sha256 = "33564ff8cfa558a2fabcc929fcea9d5afbac1adf28e5bc55e52f1128bde80601"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2004_V1.tar.gz"
+
+[LAI_10X_8D_2005_V1]
+git-tree-sha1 = "7413e400ef9dd3dd4e83d4acca626337cfa5f233"
+lazy = true
+
+    [[LAI_10X_8D_2005_V1.download]]
+    sha256 = "9b8099dc098d5c93f84367d0a4adc6a9a62fc67f7b8b8b9cfc94c0ec8335c33a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2005_V1.tar.gz"
+
+[LAI_10X_8D_2006_V1]
+git-tree-sha1 = "421a34fef7a4c1625120d884f1474da084837e47"
+lazy = true
+
+    [[LAI_10X_8D_2006_V1.download]]
+    sha256 = "7f577c0586a12015361fd946092da6e8bed647cabcca5483126639f383103e45"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2006_V1.tar.gz"
+
+[LAI_10X_8D_2007_V1]
+git-tree-sha1 = "6a1bb4b4f9b58eb435b5ff52fcad31cc6c5d40fa"
+lazy = true
+
+    [[LAI_10X_8D_2007_V1.download]]
+    sha256 = "69dba66d367c4dba37af8f3179afca728fd8b0b5e71a8b6554194e2227cccb7a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2007_V1.tar.gz"
+
+[LAI_10X_8D_2008_V1]
+git-tree-sha1 = "b3b6262cb11369113a04622dde95d2549b7ccf18"
+lazy = true
+
+    [[LAI_10X_8D_2008_V1.download]]
+    sha256 = "6fbeac8717472c8fb42d5ef35fe518cd1fa08c214d59927c0f28f48caf40097b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2008_V1.tar.gz"
+
+[LAI_10X_8D_2009_V1]
+git-tree-sha1 = "da571a8e3af666600a96497301d654ffcb33b325"
+lazy = true
+
+    [[LAI_10X_8D_2009_V1.download]]
+    sha256 = "4f4ed6e5452e2c2c1bc4539bd536b6609ffabd53c3de7565e184bddbb44b3760"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2009_V1.tar.gz"
+
+[LAI_10X_8D_2010_V1]
+git-tree-sha1 = "107944083401ec12e06c9e0daff1d79a89616aca"
+lazy = true
+
+    [[LAI_10X_8D_2010_V1.download]]
+    sha256 = "bc71ba979707ed794f0ff2696526bb4f1b8e723a3267ea8d12b4f3e46d517821"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2010_V1.tar.gz"
+
+[LAI_10X_8D_2011_V1]
+git-tree-sha1 = "b72630055be8b6bca8aee41e741f7c9aa46d43cf"
+lazy = true
+
+    [[LAI_10X_8D_2011_V1.download]]
+    sha256 = "1d520c533153f54fa5349839a71e31b285ab9fa1faa28a5002b4824dcf3b2d14"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2011_V1.tar.gz"
+
+[LAI_10X_8D_2012_V1]
+git-tree-sha1 = "437c80471f37a726ee291ee9e0573704ead30c92"
+lazy = true
+
+    [[LAI_10X_8D_2012_V1.download]]
+    sha256 = "e67ccd718e4160608111a052933c77d6386b4731fc9ae1134d0004567b9d960d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2012_V1.tar.gz"
+
+[LAI_10X_8D_2013_V1]
+git-tree-sha1 = "37860506150f599e6f6b4ae3fb09eca757a3fb1a"
+lazy = true
+
+    [[LAI_10X_8D_2013_V1.download]]
+    sha256 = "95aff7ed0e0a5f3dc4cf6e978c7235964186058a13c4b1cae11abf8367ed14ea"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2013_V1.tar.gz"
+
+[LAI_10X_8D_2014_V1]
+git-tree-sha1 = "2147e14a77f110dec5cdd79224bc958f5906cd41"
+lazy = true
+
+    [[LAI_10X_8D_2014_V1.download]]
+    sha256 = "737eb9af3a69e291806bd47ea24444ae3ce6d8d6aa2721ed656b5d17ac81ff22"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2014_V1.tar.gz"
+
+[LAI_10X_8D_2015_V1]
+git-tree-sha1 = "851e6387658e71f69f9ff2c9bb1c0f14be5a23a8"
+lazy = true
+
+    [[LAI_10X_8D_2015_V1.download]]
+    sha256 = "d7409d785fc6d1cf7fd9ac834afe57d618a609c2aeb366a379bbfd6c8702ef17"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2015_V1.tar.gz"
+
+[LAI_10X_8D_2016_V1]
+git-tree-sha1 = "de2e6d46eefefe1f70182193c8dd600fa004861e"
+lazy = true
+
+    [[LAI_10X_8D_2016_V1.download]]
+    sha256 = "812ed2374b97e9bac6538447dbdfdff124421fe971b57f0fa0aaeb8c274e9b35"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2016_V1.tar.gz"
+
+[LAI_10X_8D_2017_V1]
+git-tree-sha1 = "173ba8a32ad619243ede7a678acea909f4183927"
+lazy = true
+
+    [[LAI_10X_8D_2017_V1.download]]
+    sha256 = "e3c9e9c46dbb6b5b92f48673ade7d226bf784f0d7fd8dd05ad6c354a5ce18a33"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2017_V1.tar.gz"
+
+[LAI_10X_8D_2018_V1]
+git-tree-sha1 = "bbbbf71bfd2d4f3496ab50572b6f21c6147b1460"
+lazy = true
+
+    [[LAI_10X_8D_2018_V1.download]]
+    sha256 = "9c9efb2d5003a1a6019de72fcb5c71eed7e29a0b0e026d765231b0caf8c91791"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2018_V1.tar.gz"
+
+[LAI_10X_8D_2019_V1]
+git-tree-sha1 = "79859a8d09caf0d817a8244465844002bfbd2ffd"
+lazy = true
+
+    [[LAI_10X_8D_2019_V1.download]]
+    sha256 = "a624dff4e21c2ec5885e5e40fc11f941cee4a3c49f33838bb8a19337c9b18178"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2019_V1.tar.gz"
+
+[LAI_10X_8D_2020_V1]
+git-tree-sha1 = "c93bea2da73bf7f34e31a57664a25ff11d3aab15"
+lazy = true
+
+    [[LAI_10X_8D_2020_V1.download]]
+    sha256 = "3e801cbf5df170a7543db52c99d2b3eb7c641074e5754d114b63d26db55caad7"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_10X_8D_2020_V1.tar.gz"
+
+[LAI_20X_1M_2000_V1]
+git-tree-sha1 = "e34189272550652a3b3ad77b9d982d157663a4b1"
+lazy = true
+
+    [[LAI_20X_1M_2000_V1.download]]
+    sha256 = "7d740f4d939845e663d1aed181f93b6532dc85a0fed78a0747fcdfc9232c8f10"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2000_V1.tar.gz"
+
+[LAI_20X_1M_2001_V1]
+git-tree-sha1 = "c6a77ce6cc02b91b3f0e4096411dafe5daa41033"
+lazy = true
+
+    [[LAI_20X_1M_2001_V1.download]]
+    sha256 = "168078d014266b23b3858817198b2884f50061eec50f5b4df7a8a7229e84bd86"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2001_V1.tar.gz"
+
+[LAI_20X_1M_2002_V1]
+git-tree-sha1 = "2beeddc9006451e149f92d1a953b0719209aa9e3"
+lazy = true
+
+    [[LAI_20X_1M_2002_V1.download]]
+    sha256 = "c7efdae7d534f6e99977db46ea83c90349fedc5994f67952f642a22a6c1d5c8d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2002_V1.tar.gz"
+
+[LAI_20X_1M_2003_V1]
+git-tree-sha1 = "4810789eaa1c4234ec8f56b38d9b6925276719d8"
+lazy = true
+
+    [[LAI_20X_1M_2003_V1.download]]
+    sha256 = "7a486447fbbc632fdacca7cedbb84ce9713838d368747cd2f0c842433a7a0964"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2003_V1.tar.gz"
+
+[LAI_20X_1M_2004_V1]
+git-tree-sha1 = "74f50cdec7b30b3850308424858a146a864ad186"
+lazy = true
+
+    [[LAI_20X_1M_2004_V1.download]]
+    sha256 = "347d1a97abf0952df13bbb004bba7112f176493a28f7896dcc9fc960166bfbd4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2004_V1.tar.gz"
+
+[LAI_20X_1M_2005_V1]
+git-tree-sha1 = "0f62d95166ac0067e1beba6ae64e3e8a31b1a302"
+lazy = true
+
+    [[LAI_20X_1M_2005_V1.download]]
+    sha256 = "bb3afd282679d65dc59b59c9df6f8f0880f7b056895bf9b64417e4448452f7f4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2005_V1.tar.gz"
+
+[LAI_20X_1M_2006_V1]
+git-tree-sha1 = "a1f6a349fe4ac41e5eff852873078ee843a61922"
+lazy = true
+
+    [[LAI_20X_1M_2006_V1.download]]
+    sha256 = "1c93271a042e83518390019e8fc5999b6a4b7aada65d5a1dffe1558b830c1a8e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2006_V1.tar.gz"
+
+[LAI_20X_1M_2007_V1]
+git-tree-sha1 = "0616518ab64b7d831f97f97dce9ab8eea1b8cf4a"
+lazy = true
+
+    [[LAI_20X_1M_2007_V1.download]]
+    sha256 = "c3c3becdbd2378ff13b7de51ebffc1fd5c0e4a7c9cb4ffe609633294ae89d41a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2007_V1.tar.gz"
+
+[LAI_20X_1M_2008_V1]
+git-tree-sha1 = "5304999ac89376980e2d8802e5de09e2cac3159c"
+lazy = true
+
+    [[LAI_20X_1M_2008_V1.download]]
+    sha256 = "a640f05fcb2e6b59d5e31fd6daa037b3ea0b1ecdbb4a065e8e6a55ae7a0c933c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2008_V1.tar.gz"
+
+[LAI_20X_1M_2009_V1]
+git-tree-sha1 = "f5cfc031640a273cd35bc45d0fc79e4844c7a523"
+lazy = true
+
+    [[LAI_20X_1M_2009_V1.download]]
+    sha256 = "2b915711dd821f010e0d766304f19828da8547b3d83736a35ea9a44d7c24002c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2009_V1.tar.gz"
+
+[LAI_20X_1M_2010_V1]
+git-tree-sha1 = "2d588f2a82b94ea188da7bf651ce1299aa939eb5"
+lazy = true
+
+    [[LAI_20X_1M_2010_V1.download]]
+    sha256 = "93aaabc80037e8c35de051289ce534cf7d7185ace87d64dcfe0602b92912bc77"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2010_V1.tar.gz"
+
+[LAI_20X_1M_2011_V1]
+git-tree-sha1 = "4c95b71d5d7f4d1936e21907b529704c56273030"
+lazy = true
+
+    [[LAI_20X_1M_2011_V1.download]]
+    sha256 = "ec39e024d433c6db6e01537f57b849ac48ba226ed41d1184bbe56402118a25f7"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2011_V1.tar.gz"
+
+[LAI_20X_1M_2012_V1]
+git-tree-sha1 = "ed5e338e8ab32fcde69ce0f160b4fe55e5c74537"
+lazy = true
+
+    [[LAI_20X_1M_2012_V1.download]]
+    sha256 = "89b7b87235c87b3f0c8801cfb3bffa386cde8e3a8ce6ccd0897e01656041c44c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2012_V1.tar.gz"
+
+[LAI_20X_1M_2013_V1]
+git-tree-sha1 = "43b27b18d72cf406dc2ce772dec82bc3d8f0dd62"
+lazy = true
+
+    [[LAI_20X_1M_2013_V1.download]]
+    sha256 = "6b56611a725698b7539b59d43fe671e000a7a0e3b6f54920e66527a96414fd22"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2013_V1.tar.gz"
+
+[LAI_20X_1M_2014_V1]
+git-tree-sha1 = "dfe6744d52b13cd5c2229830c7ca8d85d1567d5f"
+lazy = true
+
+    [[LAI_20X_1M_2014_V1.download]]
+    sha256 = "42df80d99069e863fa568be0ec274f8a506d28aac1b7927735ccc1b0b50bb6ee"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2014_V1.tar.gz"
+
+[LAI_20X_1M_2015_V1]
+git-tree-sha1 = "eb4fa714176c301ce84892a9247c6aae86572759"
+lazy = true
+
+    [[LAI_20X_1M_2015_V1.download]]
+    sha256 = "754e56e48da3fde2a0abf4577003ac6a8a5b007ce16676f4ce430b8dfbd1b20f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2015_V1.tar.gz"
+
+[LAI_20X_1M_2016_V1]
+git-tree-sha1 = "b2d2fd1797c703d2c5d5a214c217eb1ac6dbfdcb"
+lazy = true
+
+    [[LAI_20X_1M_2016_V1.download]]
+    sha256 = "6e8bae04d56b3db28aca470cb56c68c062316c599dd0f9126fe681dc3a3faf49"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2016_V1.tar.gz"
+
+[LAI_20X_1M_2017_V1]
+git-tree-sha1 = "be6199288dbe1a6659d90f9ca09a3ba3a4c51d31"
+lazy = true
+
+    [[LAI_20X_1M_2017_V1.download]]
+    sha256 = "2e229bc4c5a708d6a06fa695eb5fac328f7e73116bd7ec7faae622775c9f9cbd"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2017_V1.tar.gz"
+
+[LAI_20X_1M_2018_V1]
+git-tree-sha1 = "fb9c3958c799c01f6e0e0e4090ebefcf14ecee1f"
+lazy = true
+
+    [[LAI_20X_1M_2018_V1.download]]
+    sha256 = "31b74bc6f671d830d67b90ae68ab8145322b65b499117ef21da4dd3823bb53fc"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2018_V1.tar.gz"
+
+[LAI_20X_1M_2019_V1]
+git-tree-sha1 = "5d10ceec79708d12748b73dfeced4291287f1da7"
+lazy = true
+
+    [[LAI_20X_1M_2019_V1.download]]
+    sha256 = "8fcf2ff8d8bf62a7b9c907a1cd65d0350feeacfab942e321f12d4a7a74a1c56b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2019_V1.tar.gz"
+
+[LAI_20X_1M_2020_V1]
+git-tree-sha1 = "c3fcb455a53fc8aa4db499945514a30883582a0e"
+lazy = true
+
+    [[LAI_20X_1M_2020_V1.download]]
+    sha256 = "633c79f8491728df0403c5aab46a7f244a05bd4436bb86970886b02e77d9d274"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_1M_2020_V1.tar.gz"
+
+[LAI_20X_8D_2000_V1]
+git-tree-sha1 = "ef3d0696cd060758b9325306e4cfeb2e005b2476"
+lazy = true
+
+    [[LAI_20X_8D_2000_V1.download]]
+    sha256 = "71772419646eff5dd545c933461203e4328491c1b761ebbfdca8bcbf9885332c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2000_V1.tar.gz"
+
+[LAI_20X_8D_2001_V1]
+git-tree-sha1 = "f1f45395dc73e6e812a74b4c6c443aa13cb0bfc7"
+lazy = true
+
+    [[LAI_20X_8D_2001_V1.download]]
+    sha256 = "6729fe834acf138377e3a532d31a15d04235220a51dc7eb78bee2de154a4d1df"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2001_V1.tar.gz"
+
+[LAI_20X_8D_2002_V1]
+git-tree-sha1 = "7cb5a342a2733556874f77c95291d6f5c61e707e"
+lazy = true
+
+    [[LAI_20X_8D_2002_V1.download]]
+    sha256 = "3d31004f84d59652637e38f958e455ba10518dfcd1d58bc318d7dd0b965cb443"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2002_V1.tar.gz"
+
+[LAI_20X_8D_2003_V1]
+git-tree-sha1 = "85b9fa474adaa01df3fe6d667f643db7b867703d"
+lazy = true
+
+    [[LAI_20X_8D_2003_V1.download]]
+    sha256 = "23e75e528275b18d368a0f6a9d71740a20cd7f9a8e5d118bc20e119c466442f9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2003_V1.tar.gz"
+
+[LAI_20X_8D_2004_V1]
+git-tree-sha1 = "7f05b545ce9ffabc5907222759ae365a07690b8c"
+lazy = true
+
+    [[LAI_20X_8D_2004_V1.download]]
+    sha256 = "a69a20db8dbafcaae7e667371c7cf813f61b3466f35e06c9af6aa7a099215c32"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2004_V1.tar.gz"
+
+[LAI_20X_8D_2005_V1]
+git-tree-sha1 = "ba74d3ef02edeaa9051d92c31121fad98c80f125"
+lazy = true
+
+    [[LAI_20X_8D_2005_V1.download]]
+    sha256 = "3b7fcccf84c4ce8dc07e212ad19ae28cf31bbacdefbeec573610257790229b66"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2005_V1.tar.gz"
+
+[LAI_20X_8D_2006_V1]
+git-tree-sha1 = "ccef4a116f240a7e58168d2748b7995cb46ad1df"
+lazy = true
+
+    [[LAI_20X_8D_2006_V1.download]]
+    sha256 = "bb0f1a5da136141a9bced7a3935f6d691f40f28c0c7b23117cb4b2b5e7526e96"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2006_V1.tar.gz"
+
+[LAI_20X_8D_2007_V1]
+git-tree-sha1 = "14f058a9adfd777a42ad4aeed0eb6717862c6643"
+lazy = true
+
+    [[LAI_20X_8D_2007_V1.download]]
+    sha256 = "8ba9cd84d79e9063f13ae72a9b46f2e77053ffe263e0a735b1ab62531a372d96"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2007_V1.tar.gz"
+
+[LAI_20X_8D_2008_V1]
+git-tree-sha1 = "ca498e102ccd8d37a61443129b81de09304ead87"
+lazy = true
+
+    [[LAI_20X_8D_2008_V1.download]]
+    sha256 = "4e8736eb6cddfc97b86133a36a4e4c9994c76d20e293fb2965f978ffb4fd5160"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2008_V1.tar.gz"
+
+[LAI_20X_8D_2009_V1]
+git-tree-sha1 = "c00f60d2528286e15e7f31cf7f20ae0b8936e6ed"
+lazy = true
+
+    [[LAI_20X_8D_2009_V1.download]]
+    sha256 = "34d05b9a5fb453fae2180549bbd17d3c84b1522e81c574fcdf37cc78dae0af78"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2009_V1.tar.gz"
+
+[LAI_20X_8D_2010_V1]
+git-tree-sha1 = "bc3d603e34ca8ca783e462e99d0f0afd8738da95"
+lazy = true
+
+    [[LAI_20X_8D_2010_V1.download]]
+    sha256 = "0a945ed88dd52695f6602b13045993443685e01f30e687009ca7ddc468148443"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2010_V1.tar.gz"
+
+[LAI_20X_8D_2011_V1]
+git-tree-sha1 = "459413fbdd7905d9aacbd9fb2541ab97f633d1df"
+lazy = true
+
+    [[LAI_20X_8D_2011_V1.download]]
+    sha256 = "2b5de8f042236fb5b86276dba8a75468cf2e7130b4f0c4a74b949edf21fe4e25"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2011_V1.tar.gz"
+
+[LAI_20X_8D_2012_V1]
+git-tree-sha1 = "ae20c8132ff04c494f67c3c71177c53315ed1d0e"
+lazy = true
+
+    [[LAI_20X_8D_2012_V1.download]]
+    sha256 = "2a29787c78f66430192c4e2840c2c058e31cba5ef900f9ead766acbf3b939a93"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2012_V1.tar.gz"
+
+[LAI_20X_8D_2013_V1]
+git-tree-sha1 = "73a0ef9822e6364f0b7281c1e367fbb4ae398b53"
+lazy = true
+
+    [[LAI_20X_8D_2013_V1.download]]
+    sha256 = "988e69a7c48acde2802651a5e11fa292c662ef68db3d81e5820364e6f65d9b13"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2013_V1.tar.gz"
+
+[LAI_20X_8D_2014_V1]
+git-tree-sha1 = "50d0c3392843e3cc2678bfd15146130fa6bd44a4"
+lazy = true
+
+    [[LAI_20X_8D_2014_V1.download]]
+    sha256 = "e49aeeb5ee881e805afee4fce9d0677c919e5beee1b8b52c6028572949f0f140"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2014_V1.tar.gz"
+
+[LAI_20X_8D_2015_V1]
+git-tree-sha1 = "65993193d4a78f09e82b62430396279c5e38b6c2"
+lazy = true
+
+    [[LAI_20X_8D_2015_V1.download]]
+    sha256 = "7e96c343ce1af70c6c39e783c9423f521dd6cc00b278c7c4c0fb4b1597946b1a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2015_V1.tar.gz"
+
+[LAI_20X_8D_2016_V1]
+git-tree-sha1 = "900720894001d1ef885931824db85e3739260aba"
+lazy = true
+
+    [[LAI_20X_8D_2016_V1.download]]
+    sha256 = "d16cfb8d4832b39aa5eaa4e57fd15c3b2fba0ff7644b979844df76aa8cd3ed68"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2016_V1.tar.gz"
+
+[LAI_20X_8D_2017_V1]
+git-tree-sha1 = "bbcb0c247ec4f896d0bff7478147f501d81f7296"
+lazy = true
+
+    [[LAI_20X_8D_2017_V1.download]]
+    sha256 = "17c95c695e6f4ca673086dbc5ae2b4b4281d44a04292f4d8c4383bbb72149743"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2017_V1.tar.gz"
+
+[LAI_20X_8D_2018_V1]
+git-tree-sha1 = "2907d4e7f0ebe597c97acd825aca4d21664a86d0"
+lazy = true
+
+    [[LAI_20X_8D_2018_V1.download]]
+    sha256 = "efcb2850afd97c13f5740a2566fd27cd6b2ac456a3ad756b2a12da541335578f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2018_V1.tar.gz"
+
+[LAI_20X_8D_2019_V1]
+git-tree-sha1 = "1a9ef8a3255998a81bf1e217d04bc6a328da5987"
+lazy = true
+
+    [[LAI_20X_8D_2019_V1.download]]
+    sha256 = "2b75f532504c35396e754da92849c03aac716d3e37c4e8d14685004df7d6d495"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2019_V1.tar.gz"
+
+[LAI_20X_8D_2020_V1]
+git-tree-sha1 = "5cc96697b84dcdb050ff23f44450cfc193fcbfe5"
+lazy = true
+
+    [[LAI_20X_8D_2020_V1.download]]
+    sha256 = "444baa35241a41bba000d1958cb1e0703c7400ff96c2eee8d26e3b087aeade39"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_20X_8D_2020_V1.tar.gz"
+
+[LAI_2X_1M_2000_V1]
+git-tree-sha1 = "ed4b7f8f73c6dbefe571fd7d9e8af03abd8685f3"
+lazy = true
+
+    [[LAI_2X_1M_2000_V1.download]]
+    sha256 = "dd041f05e45dd9f31fa8fe53c0d9f84a57481ce7cfd889955ad4f54d1de4671a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2000_V1.tar.gz"
+
+[LAI_2X_1M_2001_V1]
+git-tree-sha1 = "46b39d6509d73c5b572b775af2a8729a6033eed9"
+lazy = true
+
+    [[LAI_2X_1M_2001_V1.download]]
+    sha256 = "f63ce83fe526dd3e75ce424ed72323d64f815ab32b13cd1c322dc13c2dc82632"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2001_V1.tar.gz"
+
+[LAI_2X_1M_2002_V1]
+git-tree-sha1 = "140b31edbe5c846de4d4a13a2dd5af15645e5719"
+lazy = true
+
+    [[LAI_2X_1M_2002_V1.download]]
+    sha256 = "780a5f44e11dee2ddddc7465a54c15315c2479d664fdaf1e8bbd6e4a118bf070"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2002_V1.tar.gz"
+
+[LAI_2X_1M_2003_V1]
+git-tree-sha1 = "78927f0118e6a98bb02a55382178162599181278"
+lazy = true
+
+    [[LAI_2X_1M_2003_V1.download]]
+    sha256 = "0a72a32b17bd15f55bca19e75c8cbb3e4a9061dfb01924f4f229ca2ac1dd3bbe"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2003_V1.tar.gz"
+
+[LAI_2X_1M_2004_V1]
+git-tree-sha1 = "575cd871deb2acf34cf9c6d13e0be0a217831da7"
+lazy = true
+
+    [[LAI_2X_1M_2004_V1.download]]
+    sha256 = "0b572a778abe5c40cd459e8ae84045ae1c31c0b01036004d1b2a51e546368006"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2004_V1.tar.gz"
+
+[LAI_2X_1M_2005_V1]
+git-tree-sha1 = "4cf8104c61532ab6ab8743faa94028abe928e9e0"
+lazy = true
+
+    [[LAI_2X_1M_2005_V1.download]]
+    sha256 = "ee5ab9ef9fd98f98fa9b5485cc9765de15de9c43e1738a61f14927c9a8a8e1d6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2005_V1.tar.gz"
+
+[LAI_2X_1M_2006_V1]
+git-tree-sha1 = "b58a693c5d665a01554b88739ae7c8e8508d8015"
+lazy = true
+
+    [[LAI_2X_1M_2006_V1.download]]
+    sha256 = "61383de82dbaadca872761e8f371fe35df62f138dab7f7be7ccfb89e7564bcf1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2006_V1.tar.gz"
+
+[LAI_2X_1M_2007_V1]
+git-tree-sha1 = "32a491c9dfacb386acc623de369b42e10a3f8ecc"
+lazy = true
+
+    [[LAI_2X_1M_2007_V1.download]]
+    sha256 = "8dc5d3ff6f213aa7470331d988b5e69fda9b92cf1435063670873600f089a4d9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2007_V1.tar.gz"
+
+[LAI_2X_1M_2008_V1]
+git-tree-sha1 = "4e2525b2f68706edd291f01b0a449aa209010fda"
+lazy = true
+
+    [[LAI_2X_1M_2008_V1.download]]
+    sha256 = "0db4b9f370dc60e2b8674703b2a3f53d0c96a927a0aaabca81897e57cf9b3283"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2008_V1.tar.gz"
+
+[LAI_2X_1M_2009_V1]
+git-tree-sha1 = "e663a5244a4e126f1ae9a761dbff98ba2309ac7d"
+lazy = true
+
+    [[LAI_2X_1M_2009_V1.download]]
+    sha256 = "622ecee35f08325edaa051fec7bf4e46b47b63169b54a226802d8f8b5209130d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2009_V1.tar.gz"
+
+[LAI_2X_1M_2010_V1]
+git-tree-sha1 = "8707776c770a1cce7885f266799c31bd5ff6db24"
+lazy = true
+
+    [[LAI_2X_1M_2010_V1.download]]
+    sha256 = "b0bc016741a4bf32bc0b93078cfc883c622de996772eff857b2c28d5981127a1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2010_V1.tar.gz"
+
+[LAI_2X_1M_2011_V1]
+git-tree-sha1 = "2769e0e353ae69eb94cd6aa6e888bf0189ac4dac"
+lazy = true
+
+    [[LAI_2X_1M_2011_V1.download]]
+    sha256 = "908a5403c5111839d69d48e4ee3ff18671f6a14a4499e9a0cec5e290098a6c1f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2011_V1.tar.gz"
+
+[LAI_2X_1M_2012_V1]
+git-tree-sha1 = "fe0790f926b4acac7002c55d015eb4add4ddc7f0"
+lazy = true
+
+    [[LAI_2X_1M_2012_V1.download]]
+    sha256 = "0608b9060a34d7846ebb8e796851a4abfa71c48027d919981f1cd7bcf56ad2b4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2012_V1.tar.gz"
+
+[LAI_2X_1M_2013_V1]
+git-tree-sha1 = "183df5ea82dab3bb33a93ac25c698f149d555ec9"
+lazy = true
+
+    [[LAI_2X_1M_2013_V1.download]]
+    sha256 = "6dfded73cb01f9f630b997ecd3732c6d98b0f69e8f06b81fa3dce42bcbb233da"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2013_V1.tar.gz"
+
+[LAI_2X_1M_2014_V1]
+git-tree-sha1 = "824ecc4f432ff5981b12f642c196e9fa53284929"
+lazy = true
+
+    [[LAI_2X_1M_2014_V1.download]]
+    sha256 = "bb92be8cd9d873e85ac4488a5ea02e6c4484eaa49345c40d0e9b26919de6c88f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2014_V1.tar.gz"
+
+[LAI_2X_1M_2015_V1]
+git-tree-sha1 = "b9540090aa89353878032f0dcc5f498575fa12c0"
+lazy = true
+
+    [[LAI_2X_1M_2015_V1.download]]
+    sha256 = "6646212445a8fe2a6389f621ba6cb47be503472d13dcb923160d87c9884c66c4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2015_V1.tar.gz"
+
+[LAI_2X_1M_2016_V1]
+git-tree-sha1 = "d7aa70afd2f11e35921e3919be04d52bb8199751"
+lazy = true
+
+    [[LAI_2X_1M_2016_V1.download]]
+    sha256 = "18250aa18e25a2a20bea41203878d441bcccbd25046aa4c9560d27ba6a286077"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2016_V1.tar.gz"
+
+[LAI_2X_1M_2017_V1]
+git-tree-sha1 = "2f0a94faadd1d7f719aca844f7d3b5e3b5f955be"
+lazy = true
+
+    [[LAI_2X_1M_2017_V1.download]]
+    sha256 = "f8f41e9335d06d30c969f3a61fea48d75cb9f81307ec8d1e02151cbbb7ca1302"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2017_V1.tar.gz"
+
+[LAI_2X_1M_2018_V1]
+git-tree-sha1 = "3ff1367502d88bf9bd0f75493dafc9c40755e21a"
+lazy = true
+
+    [[LAI_2X_1M_2018_V1.download]]
+    sha256 = "d64c71a795630b4505188dcfc40b184e26de52150975dea81c1620176ed4f12c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2018_V1.tar.gz"
+
+[LAI_2X_1M_2019_V1]
+git-tree-sha1 = "0b4f0ddb5a87076593a095d5956eff93124e25bb"
+lazy = true
+
+    [[LAI_2X_1M_2019_V1.download]]
+    sha256 = "7a5f78ba87ecad67d0f809c56c89173889a018054a004df6be795aaf597403fa"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2019_V1.tar.gz"
+
+[LAI_2X_1M_2020_V1]
+git-tree-sha1 = "0d788d8021b4b6da5cb8273fba541be1f75a9bb4"
+lazy = true
+
+    [[LAI_2X_1M_2020_V1.download]]
+    sha256 = "a912436197972ddddd85d0acbc8309bac7b7fe8b3dfe80e688c16e601de1b80f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_1M_2020_V1.tar.gz"
+
+[LAI_2X_8D_2000_V1]
+git-tree-sha1 = "5a69372524aeda9728324007a11969fadc85170c"
+lazy = true
+
+    [[LAI_2X_8D_2000_V1.download]]
+    sha256 = "7b1850abba2dc843af9d6ebbf8c081ae8eb821850494facd5c663f7f7c003c36"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2000_V1.tar.gz"
+
+[LAI_2X_8D_2001_V1]
+git-tree-sha1 = "d8ad84d5a937d93f922c7fc4b2824ce37e723ff6"
+lazy = true
+
+    [[LAI_2X_8D_2001_V1.download]]
+    sha256 = "d65a647ff3bc3bca378d50bf1d60e85c67cdceede0f556606a617bbe6e65df59"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2001_V1.tar.gz"
+
+[LAI_2X_8D_2002_V1]
+git-tree-sha1 = "ba8bede3f96e90c8188ddd1c6e0f02887fde1638"
+lazy = true
+
+    [[LAI_2X_8D_2002_V1.download]]
+    sha256 = "5900d51e6739f5e168dfeaf37d7a5c005f5a67006e9cb00441250bd96bb766e1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2002_V1.tar.gz"
+
+[LAI_2X_8D_2003_V1]
+git-tree-sha1 = "7dbb0868c0392b02921ed578a8453f83ee0b3816"
+lazy = true
+
+    [[LAI_2X_8D_2003_V1.download]]
+    sha256 = "b971e34a04e2b37af10d6c44cc97e4c168c98bce902540bb0928054ffa753a68"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2003_V1.tar.gz"
+
+[LAI_2X_8D_2004_V1]
+git-tree-sha1 = "f06274fb9e102c4f19064c48d88454d576ba6c70"
+lazy = true
+
+    [[LAI_2X_8D_2004_V1.download]]
+    sha256 = "5da968c193a60a586cff27f031c6339aad3b8a9a4e1a453906c7dc914d6631d2"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2004_V1.tar.gz"
+
+[LAI_2X_8D_2005_V1]
+git-tree-sha1 = "5d6da2338f9c2c6643a9697f4659a72ec8612185"
+lazy = true
+
+    [[LAI_2X_8D_2005_V1.download]]
+    sha256 = "2a6609eb506a3700559fbf9678712efa11f83c2154409e4d0ab9ca306a352bf2"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2005_V1.tar.gz"
+
+[LAI_2X_8D_2006_V1]
+git-tree-sha1 = "5be5877f53fbf1551dfd65ce84f2563c25313cee"
+lazy = true
+
+    [[LAI_2X_8D_2006_V1.download]]
+    sha256 = "3dfcabdf4e4e0deef78e7a02d738cb7875edf348a16439911400cf8f417f2a2a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2006_V1.tar.gz"
+
+[LAI_2X_8D_2007_V1]
+git-tree-sha1 = "b047d4dcec3f14aa4423bb92de937fc0c0c3d76a"
+lazy = true
+
+    [[LAI_2X_8D_2007_V1.download]]
+    sha256 = "07e273a15015074a82bfd3be07705f5fdb5f26c939ae20140924b98927b8e93e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2007_V1.tar.gz"
+
+[LAI_2X_8D_2008_V1]
+git-tree-sha1 = "153b31dcfce34d8c0d68febb86dfe935c6f5417b"
+lazy = true
+
+    [[LAI_2X_8D_2008_V1.download]]
+    sha256 = "3494f0847a708d5a4c065126168fc62dec9cb975c10e43ddf493343ec2d32d98"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2008_V1.tar.gz"
+
+[LAI_2X_8D_2009_V1]
+git-tree-sha1 = "98ff78c1b04f06a28338ab54dd7846b998480447"
+lazy = true
+
+    [[LAI_2X_8D_2009_V1.download]]
+    sha256 = "25e0038ff1fce2c493c31e2140f11e0273cfc22ffb966b607b701c980176e4ea"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2009_V1.tar.gz"
+
+[LAI_2X_8D_2010_V1]
+git-tree-sha1 = "b307c3bc03eca041c80fd1c762f09151828abcbe"
+lazy = true
+
+    [[LAI_2X_8D_2010_V1.download]]
+    sha256 = "4e07ae72a3eced19a08f595d1b700d87a4a66a9e8fe979438af86a996ab4754d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2010_V1.tar.gz"
+
+[LAI_2X_8D_2011_V1]
+git-tree-sha1 = "cea98f401437ae300ea734f67b5906c47bb8aa23"
+lazy = true
+
+    [[LAI_2X_8D_2011_V1.download]]
+    sha256 = "ec1a7ffe4047940c9898f01f5fed57cdefa73ee722992b18cf8cec78a8de5f6f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2011_V1.tar.gz"
+
+[LAI_2X_8D_2012_V1]
+git-tree-sha1 = "ccd6a9935ac4caeefd9232c8064ce347e74ebe0f"
+lazy = true
+
+    [[LAI_2X_8D_2012_V1.download]]
+    sha256 = "9c0bc98d8dc3e6ec84bcf41c66d6ae11f0633e76701cb1e893c2448cf19d7201"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2012_V1.tar.gz"
+
+[LAI_2X_8D_2013_V1]
+git-tree-sha1 = "834a9cba62c1bd99244185b154b5b159b6952672"
+lazy = true
+
+    [[LAI_2X_8D_2013_V1.download]]
+    sha256 = "059ec1120a0a56a998941f49d94542b754cf0464e6a1886dff73f8eef240619a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2013_V1.tar.gz"
+
+[LAI_2X_8D_2014_V1]
+git-tree-sha1 = "dea88d53e3e292ef7f14ed6b99d176dbbd38ad44"
+lazy = true
+
+    [[LAI_2X_8D_2014_V1.download]]
+    sha256 = "9c5ccbe4c1841a2410abf720be321166ac483cff56415048fc8d9da4433d5083"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2014_V1.tar.gz"
+
+[LAI_2X_8D_2015_V1]
+git-tree-sha1 = "708c032e3b7ebba69bfcd42855528d17cfaf5fcd"
+lazy = true
+
+    [[LAI_2X_8D_2015_V1.download]]
+    sha256 = "839b01f95143ad8ad27f36059dcdd96e49796f5d3cbe851b59ad4f42e0ff9fbd"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2015_V1.tar.gz"
+
+[LAI_2X_8D_2016_V1]
+git-tree-sha1 = "2ce44445dc0c0f1a842946a35e2d5d5a890bf0e4"
+lazy = true
+
+    [[LAI_2X_8D_2016_V1.download]]
+    sha256 = "1fed483b14cbabc80846db3ec70b50216392b1b1c5fdd968700833288d70d6b9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2016_V1.tar.gz"
+
+[LAI_2X_8D_2017_V1]
+git-tree-sha1 = "a5ddd87b691978a416328e510df1c8314dec8cfb"
+lazy = true
+
+    [[LAI_2X_8D_2017_V1.download]]
+    sha256 = "1f80a3ea6653135b96055cfb31d380f9efa754e9337a7e761b7d2ab6df1e53f0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2017_V1.tar.gz"
+
+[LAI_2X_8D_2018_V1]
+git-tree-sha1 = "dfc6bd0becdb8ff407f435104aea93bb902e6110"
+lazy = true
+
+    [[LAI_2X_8D_2018_V1.download]]
+    sha256 = "92c0ba26eb046e8589ef7b44089274470b4fbef909df2ac9524a44baf5d0feab"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2018_V1.tar.gz"
+
+[LAI_2X_8D_2019_V1]
+git-tree-sha1 = "c487b29e709431947cf2b565b7cdf3603c0fec8d"
+lazy = true
+
+    [[LAI_2X_8D_2019_V1.download]]
+    sha256 = "932b590df5e2cf42737b70b97b5737fc8b8d5f0c25ebcf71b8d989b62cb2289d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2019_V1.tar.gz"
+
+[LAI_2X_8D_2020_V1]
+git-tree-sha1 = "36ac62768d79dd68a59a3155ef1353e27c34ec1d"
+lazy = true
+
+    [[LAI_2X_8D_2020_V1.download]]
+    sha256 = "80e57054f5b65f5c28b2e2990b23b0e77d87a90131a6af083f4841b29815f33d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/LAI_2X_8D_2020_V1.tar.gz"
+
 [LAI_4X_1M_V1]
 git-tree-sha1 = "84cc4c9fae047a91cb1d265e55a19795e9de1091"
 lazy = true
@@ -1821,6 +2829,14 @@ lazy = true
     [[VGM_SWCS_120X_1Y_V1.download]]
     sha256 = "6268ee76793597497847470971dc36b9e4c1f563f647d2fa33bc81d6947a7c34"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCS_120X_1Y_V1.tar.gz"
+
+[VGM_SWCS_12X_1Y_V1]
+git-tree-sha1 = "915e0628357d032cebff1ecb674ba60cb82bddf3"
+lazy = true
+
+    [[VGM_SWCS_12X_1Y_V1.download]]
+    sha256 = "1cb6280246439fa1c25a938eb6d36803a3bb72af15505aad8f7603d0ab694af3"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCS_12X_1Y_V1.tar.gz"
 
 [VMAX_CICA_2X_1Y_V1]
 git-tree-sha1 = "67d7c2fe75676bab01fe0762e55707cc29e2a97d"

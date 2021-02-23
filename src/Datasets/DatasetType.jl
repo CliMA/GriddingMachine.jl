@@ -414,6 +414,35 @@ struct GPPVPMv20{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct LAIMODISv006{FT}
+
+<details>
+<summary>
+Struct for MODIS LAI v006
+[Link to Dataset Source](https://doi.org/10.1016/j.rse.2011.01.001)
+</summary>
+
+```
+@article{yuan2011reprocessing,
+	author = {Yuan, Hua and Dai, Yongjiu and Xiao, Zhiqiang and Ji, Duoying and
+        Shangguan, Wei},
+	year = {2011},
+	title = {Reprocessing the MODIS Leaf Area Index products for land surface
+        and climate modelling},
+	journal = {Remote Sensing of Environment},
+	volume = {115},
+	number = {5},
+	pages = {1171--1187}
+}
+```
+</details>
+"""
+struct LAIMODISv006{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct LAIMonthlyMean{FT}
 
 <details>

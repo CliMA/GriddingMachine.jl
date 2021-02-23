@@ -27,6 +27,7 @@ end
     TMP_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
+    TMP_LUT = load_LUT(LAIMODISv006{FT}(), 2001, "2X", "1M");  @test true;
     TMP_LUT = load_LUT(LAIMonthlyMean{FT}());                  @test true;
     TMP_LUT = load_LUT(LandMaskERA5{FT}());                    @test true;
     TMP_LUT = load_LUT(LeafNitrogenBoonman{FT}());             @test true;

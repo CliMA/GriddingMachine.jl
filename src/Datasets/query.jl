@@ -118,6 +118,20 @@ end
 
 
 
+function query_LUT(dt::LAIMODISv006, year::Int, res_g::String, res_t::String)
+    _artn = "LAI_$(res_g)_$(res_t)_$(year)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "LAI";
+    _vara = Dict("longname" => "Gross primary productivity",
+                 "units" => "μmol m⁻² s⁻¹");
+
+    return _file, FormatNC(), "lai", res_t, true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::LAIMonthlyMean)
     _artn = "LAI_4X_1M_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);

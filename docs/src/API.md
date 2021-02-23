@@ -57,6 +57,7 @@ ClumpingIndexMODIS
 ClumpingIndexPFT
 GPPMPIv006
 GPPVPMv20
+LAIMODISv006
 LAIMonthlyMean
 NDVIAvhrr
 NIRoAvhrr
@@ -67,6 +68,7 @@ TreeDensity
 VGMAlphaJules
 VGMLogNJules
 VGMThetaRJules
+VGMThetaSJules
 WoodDensity
 ```
 

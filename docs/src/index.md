@@ -47,12 +47,18 @@ to reach the original data owner on their own.
 |                     |                                    | 2X-1M       | 2001-2019 | Jung et al. (2020)      | NetCDF | Yujie Wang       | Yes            |
 | GPPVPMv20           |                                    | 12X-8D      | 2000-2019 | Zhang et al. (2017)     | NetCDF | Russell Doughty  | Yes            |
 |                     |                                    | 5X-8D       | 2000-2019 | Zhang et al. (2017)     | NetCDF | Russell Doughty  | Yes            |
+| LAIMODISv006        | Leaf area index                    | 2X-1M       | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
+|                     |                                    | 10X-1M      | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
+|                     |                                    | 20X-1M      | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
+|                     |                                    | 2X-8D       | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
+|                     |                                    | 10X-8D      | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
+|                     |                                    | 20X-8D      | 2000-2020 | Yuan et al. (2011)      | NetCDF | Yujie Wang       | Yes            |
 | LAIMonthlyMean      | Leaf area index (1981-2015 mean)   | 4X-1M       | NS        | Mao and Yan (2019)      | NetCDF | Yujie Wang       | NASA DATA      |
 | LandMaskERA5        | Land mask                          | 4X-1Y       | NS        | regridded from ERA5     | NetCDF | Yujie Wang       | ERA5 DATA      |
-| LeafNitrogenButler  | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
+| LeafNitrogenButler  | Leaf nitrogen content              | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Yes            |
 | LeafNitrogenBoonman | Leaf nitrogen content              | 2X-1Y       | NS        | Boonman et al. (2020)   | TIFF   | Marcos Longo     | Yes            |
-| LeafPhosphorus      | Leaf phosphorus content            | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
-| LeafSLAButler       | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Asked+Waiting  |
+| LeafPhosphorus      | Leaf phosphorus content            | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Yes            |
+| LeafSLAButler       | Leaf area per mass                 | 2X-1Y       | NS        | Butler et al. (2017)    | NetCDF | Marcos Longo     | Yes            |
 | LeafSLABoonman      | Leaf area per mass                 | 2X-1Y       | NS        | Boonman et al. (2020)   | TIFF   | Marcos Longo     | Yes            |
 | NDVIAvhrr           | NDVI from AVHRR                    | 20X-1M      | 1981-2020 | regridded               | NetCDF | Yujie Wang       | Yes            |
 | NIRoAvhrr           | NIRv with offset from AVHRR        | 20X-1M      | 1981-2020 | regridded               | NetCDF | Yujie Wang       | Yes            |
@@ -67,7 +73,10 @@ to reach the original data owner on their own.
 | VGMLogNJules        | van Genuchten log(n) of JULES      | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
 |                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
 |                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
-| VGMLogNJules        | Residual SWC of JULES              | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
+| VGMRWCRJules        | Residual SWC of JULES              | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
+|                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
+|                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
+| VGMRWCSJules        | Saturated SWC of JULES             | 120X-1Y     | NS        | Dai et al. (2019)       | NetCDF | Renato Braghiere | Yes            |
 |                     |                                    |             |           |                         |        | Yujie Wang       | Yes            |
 |                     |                                    | 12X-1Y      |           | regridded               |        | Yujie Wang       | Yes            |
 | WoodDensity         | Wood density                       | 2X-1Y       | NS        | Boonman et al. (2020)   | TIFF   | Marcos Longo     | Yes            |
