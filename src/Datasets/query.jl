@@ -82,7 +82,7 @@ function query_LUT(dt::FloodPlainHeight)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "FloodPlainHeight";
     _vara = Dict("longname" => "Flood plain height",
-                 "units"    => "m")
+                 "units"    => "m");
 
     return _file, FormatNC(), "fldhgt", "1Y", true, _varn, _vara
 end
@@ -118,6 +118,20 @@ end
 
 
 
+function query_LUT(dt::LAIMODISv006, year::Int, res_g::String, res_t::String)
+    _artn = "LAI_$(res_g)_$(res_t)_$(year)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "LAI";
+    _vara = Dict("longname" => "Gross primary productivity",
+                 "units" => "μmol m⁻² s⁻¹");
+
+    return _file, FormatNC(), "lai", res_t, true, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::LAIMonthlyMean)
     _artn = "LAI_4X_1M_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);
@@ -138,7 +152,7 @@ function query_LUT(dt::LandElevation)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "Elevation";
     _vara = Dict("longname" => "Elevation",
-                 "units"    => "m")
+                 "units"    => "m");
 
     return _file, FormatNC(), "elevtn", "1Y", true, _varn, _vara
 end
@@ -295,7 +309,7 @@ function query_LUT(dt::NPPModis)
     _file = @artifact_str(_artn) * "/npp_modis_1X_1Y_2000.nc";
     _varn = "NPP";
     _vara = Dict("longname" => "Net primary productivity",
-                 "units"    => "kg C m⁻² s⁻¹")
+                 "units"    => "kg C m⁻² s⁻¹");
 
     return _file, FormatNC(), "npp", "1Y", false, _varn, _vara
 end
@@ -310,7 +324,7 @@ function query_LUT(dt::RiverHeight)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverHeight";
     _vara = Dict("longname" => "River height",
-                 "units"    => "m")
+                 "units"    => "m");
 
     return _file, FormatNC(), "rivhgt", "1Y", true, _varn, _vara
 end
@@ -325,7 +339,7 @@ function query_LUT(dt::RiverLength)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverLength";
     _vara = Dict("longname" => "River length",
-                 "units"    => "m")
+                 "units"    => "m");
 
     return _file, FormatNC(), "rivlen", "1Y", true, _varn, _vara
 end
@@ -340,7 +354,7 @@ function query_LUT(dt::RiverManning)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverManning";
     _vara = Dict("longname" => "River manning coefficient",
-                 "units"    => "-")
+                 "units"    => "-");
 
     return _file, FormatNC(), "rivman", "1Y", true, _varn, _vara
 end
@@ -355,7 +369,7 @@ function query_LUT(dt::RiverWidth)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverWidth";
     _vara = Dict("longname" => "River width",
-                 "units"    => "m")
+                 "units"    => "m");
 
     return _file, FormatNC(), "rivwth", "1Y", true, _varn, _vara
 end
@@ -397,9 +411,65 @@ function query_LUT(dt::UnitCatchmentArea)
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "UnitCatchmentArea";
     _vara = Dict("longname" => "Unit catchment area",
-                 "units"    => "m²")
+                 "units"    => "m²");
 
     return _file, FormatNC(), "ctmare", "1Y", true, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::VGMAlphaJules, res_g::String, res_t::String)
+    _artn = "VGM_ALPHA_$(res_g)_$(res_t)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "Alpha";
+    _vara = Dict("longname" => "van Genuchten α",
+                 "units"    => "MPa⁻¹");
+
+    return _file, FormatNC(), "Alpha", "1Y", false, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::VGMLogNJules, res_g::String, res_t::String)
+    _artn = "VGM_LOGN_$(res_g)_$(res_t)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "logN";
+    _vara = Dict("longname" => "van Genuchten log(n)",
+                 "units"    => "-");
+
+    return _file, FormatNC(), "logN", "1Y", false, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::VGMThetaRJules, res_g::String, res_t::String)
+    _artn = "VGM_SWCR_$(res_g)_$(res_t)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "SWCR";
+    _vara = Dict("longname" => "van Genuchten Θr",
+                 "units"    => "-");
+
+    return _file, FormatNC(), "SWCR", "1Y", false, _varn, _vara
+end
+
+
+
+
+function query_LUT(dt::VGMThetaSJules, res_g::String, res_t::String)
+    _artn = "VGM_SWCS_$(res_g)_$(res_t)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "SWCS";
+    _vara = Dict("longname" => "van Genuchten Θr",
+                 "units"    => "-");
+
+    return _file, FormatNC(), "SWCS", "1Y", false, _varn, _vara
 end
 
 

@@ -41,6 +41,7 @@ export AbstractDataset,
        GPPMPIv006,
        GPPVPMv20,
        GriddedDataset,
+       LAIMODISv006,
        LAIMonthlyMean,
        LandMaskERA5,
        LeafNitrogenBoonman,
@@ -55,6 +56,10 @@ export AbstractDataset,
        SIFTropomi740,
        TreeDensity,
        VcmaxOptimalCiCa,
+       VGMAlphaJules,
+       VGMLogNJules,
+       VGMThetaRJules,
+       VGMThetaSJules,
        WoodDensity
 
 

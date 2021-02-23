@@ -159,7 +159,7 @@ end
 
 
 function grid_RAW!(
-            dt::MOD15A2Hv006LAI{FT},
+            dt::AbstractUngriddedData{FT},
             params::Array{Any,1}
 ) where {FT<:AbstractFloat}
     # load MODIS grid infomation
@@ -178,7 +178,7 @@ end
 
 
 function grid_RAW!(
-            dt::MOD15A2Hv006LAI{FT},
+            dt::AbstractUngriddedData{FT},
             params::Array{Any,1},
             nthread::Int
 ) where {FT<:AbstractFloat}

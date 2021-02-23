@@ -144,6 +144,17 @@ gif(anim, fps=5)
 #------------------------------------------------------------------------------
 
 # ### Leaf area index
+## Annual data
+LAI_LUT = load_LUT(LAIMODISv006{FT}(), 2005, "2X", "8D");
+LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
+mask_LUT!(LAI_LUT, FT[0,Inf]);
+anim = @animate for i ∈ 1:46
+    preview_data(LAI_LUT, i, (0,6));
+end
+gif(anim, fps=5)
+#------------------------------------------------------------------------------
+
+## monthly mean of multiple years
 LAI_LUT = load_LUT(LAIMonthlyMean{FT}());
 LAI_LUT = regrid_LUT(LAI_LUT, Int(size(LAI_LUT.data,2)/180));
 anim = @animate for i ∈ 1:size(LAI_LUT.data,3)
@@ -185,6 +196,46 @@ mask_LUT!(NPP_LUT, FT[-Inf,1e19]);
 NPP_LUT = regrid_LUT(NPP_LUT, Int(size(NPP_LUT.data,2)/180));
 NPP_LUT.data .*= 1e9;
 preview_data(NPP_LUT, 1)
+#------------------------------------------------------------------------------
+
+# ### Soil van Genuchten alpha
+VGA_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");
+mask_LUT!(VGA_LUT, FT[0,Inf]);
+VGA_LUT = regrid_LUT(VGA_LUT, Int(size(VGA_LUT.data,2)/180));
+anim = @animate for i ∈ 1:4
+    preview_data(VGA_LUT, i);
+end
+gif(anim, fps=1)
+#------------------------------------------------------------------------------
+
+# ### Soil van Genuchten log(n)
+VGN_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");
+mask_LUT!(VGN_LUT, FT[0,Inf]);
+VGN_LUT = regrid_LUT(VGN_LUT, Int(size(VGN_LUT.data,2)/180));
+anim = @animate for i ∈ 1:4
+    preview_data(VGN_LUT, i);
+end
+gif(anim, fps=1)
+#------------------------------------------------------------------------------
+
+# ### Soil van Genuchten residual SWC
+VGT_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");
+mask_LUT!(VGT_LUT, FT[0,Inf]);
+VGT_LUT = regrid_LUT(VGT_LUT, Int(size(VGT_LUT.data,2)/180));
+anim = @animate for i ∈ 1:4
+    preview_data(VGT_LUT, i);
+end
+gif(anim, fps=1)
+#------------------------------------------------------------------------------
+
+# ### Soil van Genuchten saturated SWC
+VGT_LUT = load_LUT(VGMThetaSJules{FT}(), "12X", "1Y");
+mask_LUT!(VGT_LUT, FT[0,Inf]);
+VGT_LUT = regrid_LUT(VGT_LUT, Int(size(VGT_LUT.data,2)/180));
+anim = @animate for i ∈ 1:4
+    preview_data(VGT_LUT, i);
+end
+gif(anim, fps=1)
 #------------------------------------------------------------------------------
 
 # ### Sun induced fluorescence
