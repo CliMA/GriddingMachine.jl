@@ -447,6 +447,20 @@ end
 
 
 
+function query_LUT(dt::VGMThetaSJules, res_g::String, res_t::String)
+    _artn = "VGM_SWCS_$(res_g)_$(res_t)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "SWCS";
+    _vara = Dict("longname" => "van Genuchten Θr",
+                 "units"    => "-");
+
+    return _file, FormatNC(), "SWCS", "1Y", false, _varn, _vara
+end
+
+
+
+
 function query_LUT(dt::WoodDensity)
     _artn = "WD_2X_1Y_V1";
     predownload_artifact(_artn, ARTIFACTs_TOML);

@@ -58,6 +58,7 @@ export AbstractDataset,
        VGMAlphaJules,
        VGMLogNJules,
        VGMThetaRJules,
+       VGMThetaSJules,
        WoodDensity
 
 

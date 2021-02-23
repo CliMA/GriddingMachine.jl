@@ -1814,6 +1814,14 @@ lazy = true
     sha256 = "aaf48e4bf2c2b929322329283aa5de27cc00de6352bb27f5a6b88f5f8e7e6943"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCR_12X_1Y_V1.tar.gz"
 
+[VGM_SWCS_120X_1Y_V1]
+git-tree-sha1 = "d14daeab8c98b88b8256f0d37756fc5b0f9095a9"
+lazy = true
+
+    [[VGM_SWCS_120X_1Y_V1.download]]
+    sha256 = "6268ee76793597497847470971dc36b9e4c1f563f647d2fa33bc81d6947a7c34"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/VGM_SWCS_120X_1Y_V1.tar.gz"
+
 [VMAX_CICA_2X_1Y_V1]
 git-tree-sha1 = "67d7c2fe75676bab01fe0762e55707cc29e2a97d"
 lazy = true
