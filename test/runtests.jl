@@ -24,6 +24,7 @@ end
 @testset "GriddingMachine --- Load and Read datasets" begin
     println();
     TMP_LUT = load_LUT(CanopyHeightBoonman{FT}());             @test true;
+    TMP_LUT = load_LUT(CanopyHeightBoonman{FT}(), 1);          @test true;
     TMP_LUT = load_LUT(CanopyHeightGLAS{FT}());                @test true;
     CLI_PFT = load_LUT(ClumpingIndexPFT{FT}());                @test true;
     TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "12X", "1Y"); @test true;
@@ -36,10 +37,12 @@ end
     TMP_LUT = load_LUT(LeafSLABoonman{FT}());                  @test true;
     SLA_LUT = load_LUT(LeafSLAButler{FT}());                   @test true;
     TMP_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y");        @test true;
+    TMP_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y", 1);     @test true;
     TMP_LUT = load_LUT(VcmaxOptimalCiCa{FT}());                @test true;
     TMP_LUT = load_LUT(WoodDensity{FT}());                     @test true;
     TMP_LUT = load_LUT(NPPModis{FT}());                        @test true;
     TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");    @test true;
+    TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M", 1); @test true;
     TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
     TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
     TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;

@@ -4,6 +4,23 @@
 #
 ###############################################################################
 """
+    load_LUT(dt::AbstractDataset{FT},
+             g_zoom::Int;
+             nan_weight::Bool = false
+    ) where {FT<:AbstractFloat}
+    load_LUT(dt::AbstractDataset{FT},
+             res_g::String,
+             res_t::String,
+             g_zoom::Int;
+             nan_weight::Bool = false
+    ) where {FT<:AbstractFloat}
+    load_LUT(dt::AbstractDataset{FT},
+             year,
+             res_g::String,
+             res_t::String,
+             g_zoom::Int;
+             nan_weight::Bool = false
+    ) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              res_g::String,
@@ -27,9 +44,10 @@
 
 Load look up table and return the struct, given
 - `dt` Dataset type, subtype of [`AbstractDataset`](@ref)
-- `year` Which year
+- `g_zoom` The spatial resolution factor, e.g., 2 means a 1/2 ° resolution
 - `res_g` Resolution in degree
 - `res_t` Resolution in time
+- `year` Which year
 - `file` File name to read, useful to read local files
 - `format` Dataset format from [`AbstractFormat`](@ref)
 - `label` Variable label in dataset, e.g., var name in .nc files, band numer in
@@ -39,11 +57,60 @@ Load look up table and return the struct, given
 - `var_name` Variable name of [`GriddedDataset`](@ref)
 - `var_attr` Variable attributes of [`GriddedDataset`](@ref)
 - `var_lims` Realistic variable ranges
-
-Note that the artifact for GPP is about
-- `500` MB for 0.2 degree resolution (5^2 * 360*180*46)
-- `2600` MB for 0.083 degree resolution (12^2 * 360*180*46)
 """
+function load_LUT(
+            dt::AbstractDataset{FT},
+            g_zoom::Int;
+            nan_weight::Bool = false
+) where {FT<:AbstractFloat}
+    ds  = load_LUT(dt);
+    mask_LUT!(ds);
+    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
+                     nan_weight=nan_weight);
+
+    return rds
+end
+
+
+
+
+function load_LUT(
+            dt::AbstractDataset{FT},
+            res_g::String,
+            res_t::String,
+            g_zoom::Int;
+            nan_weight::Bool = false
+) where {FT<:AbstractFloat}
+    ds  = load_LUT(dt, res_g, res_t);
+    mask_LUT!(ds);
+    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
+                     nan_weight=nan_weight);
+
+    return rds
+end
+
+
+
+
+function load_LUT(
+            dt::AbstractDataset{FT},
+            year,
+            res_g::String,
+            res_t::String,
+            g_zoom::Int;
+            nan_weight::Bool = false
+) where {FT<:AbstractFloat}
+    ds  = load_LUT(dt, year, res_g, res_t);
+    mask_LUT!(ds);
+    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
+                     nan_weight=nan_weight);
+
+    return rds
+end
+
+
+
+
 function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt);
     return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
@@ -399,8 +466,6 @@ function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
 
     return GriddedDataset{FT}(data     = _NewVM ,
                               lims     = _varl  ,
-                              res_lat  = FT(0.5),
-                              res_lon  = FT(0.5),
                               res_time = "1Y"   ,
                               dt       = dt     ,
                               var_name = _varn  ,
