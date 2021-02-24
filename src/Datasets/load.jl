@@ -7,11 +7,13 @@
     load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              res_g::String,
-             res_t::String) where {FT<:AbstractFloat}
+             res_t::String
+    ) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              year::Int,
              res_g::String,
-             res_t::String) where {FT<:AbstractFloat}
+             res_t::String
+    ) where {FT<:AbstractFloat}
     load_LUT(dt::AbstractDataset{FT},
              file::String,
              format::AbstractFormat,
@@ -19,7 +21,9 @@
              res_t::String,
              rev_lat::Bool,
              var_name::String,
-             var_attr::Dict{String,String}) where {FT<:AbstractFloat}
+             var_attr::Dict{String,String},
+             var_lims::Array{FT,1}
+    ) where {FT<:AbstractFloat}
 
 Load look up table and return the struct, given
 - `dt` Dataset type, subtype of [`AbstractDataset`](@ref)
@@ -34,14 +38,15 @@ Load look up table and return the struct, given
     -90. If true, mirror the dataset on latitudinal direction
 - `var_name` Variable name of [`GriddedDataset`](@ref)
 - `var_attr` Variable attributes of [`GriddedDataset`](@ref)
+- `var_lims` Realistic variable ranges
 
 Note that the artifact for GPP is about
 - `500` MB for 0.2 degree resolution (5^2 * 360*180*46)
 - `2600` MB for 0.083 degree resolution (12^2 * 360*180*46)
 """
 function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt);
-    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
+    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 
 
@@ -52,8 +57,8 @@ function load_LUT(
             res_g::String,
             res_t::String
 ) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt, res_g, res_t);
-    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
+    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt, res_g, res_t);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 
 
@@ -65,8 +70,9 @@ function load_LUT(
             res_g::String,
             res_t::String
 ) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va = query_LUT(dt, year, res_g, res_t);
-    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va)
+    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt, year, res_g,
+                                                            res_t);
+    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 
 
@@ -80,7 +86,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _data = FT.(ncread(file, label));
 
@@ -97,6 +104,7 @@ function load_LUT(
     end
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -114,7 +122,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _data = FT.(ncread(file, label));
     data  = similar(_data);
@@ -127,6 +136,7 @@ function load_LUT(
     end
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -144,7 +154,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     # land mask used is specified, cannot be used directly
     _data   = FT.(ncread(file, label));
@@ -152,6 +163,7 @@ function load_LUT(
     _data ./= 65533;
 
     return GriddedDataset{FT}(data     = _data   ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -169,7 +181,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     # SIF data is stored differently
     _dat  = FT.(ncread(file, label));
@@ -180,6 +193,7 @@ function load_LUT(
     end
 
     return GriddedDataset{FT}(data     = _data   ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -197,7 +211,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -212,6 +227,7 @@ function load_LUT(
     data = cat(_data; dims=3);
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -229,7 +245,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -245,6 +262,7 @@ function load_LUT(
     data = 10 .^ tata;
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -262,7 +280,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -278,6 +297,7 @@ function load_LUT(
     data = cat(_data; dims=3);
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -295,7 +315,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -312,6 +333,7 @@ function load_LUT(
     data ./= 1000;
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -329,7 +351,8 @@ function load_LUT(
             res_t::String,
             rev_lat::Bool,
             var_name::String,
-            var_attr::Dict{String,String}
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     _tiff = ArchGDAL.read(file);
     _band = ArchGDAL.getband(_tiff, label);
@@ -345,6 +368,7 @@ function load_LUT(
     data = 10 .^ tata;
 
     return GriddedDataset{FT}(data     = data    ,
+                              lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
                               var_name = var_name,
@@ -371,8 +395,10 @@ function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     _varn = "Vcmax";
     _vara = Dict("longname" => "Maximal carboxylation rate at 25 °C",
                  "units"    => "μmol m⁻² s⁻¹")
+    _varl = FT[0,200];
 
     return GriddedDataset{FT}(data     = _NewVM ,
+                              lims     = _varl  ,
                               res_lat  = FT(0.5),
                               res_lon  = FT(0.5),
                               res_time = "1Y"   ,
