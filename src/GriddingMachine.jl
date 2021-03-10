@@ -1,6 +1,7 @@
 module GriddingMachine
 
 using ArchGDAL
+using Conda
 using CSV
 using DataFrames
 using Dates
@@ -13,19 +14,23 @@ using Parameters
 using Pkg.Artifacts
 using PkgUtility
 using ProgressMeter
+using PyCall
 using Statistics
 
 
 
 
 # global constants
-MODIS_GRID_LAT = 0;
-MODIS_GRID_LON = 0;
+ARTIFACTs_TOML = joinpath(@__DIR__, "../Artifacts.toml");
+CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
+CDSAPI_KEY     = "";
+CDSAPI_CLIENT  = nothing;
+MODIS_GRID_LAT = nothing;
+MODIS_GRID_LON = nothing;
 MODIS_HOME     = "/net/fluo/data1/data/MODIS";
 MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
-USER_NAME      = "";
-USER_PASS      = "";
-ARTIFACTs_TOML = joinpath(@__DIR__, "../Artifacts.toml");
+MODIS_USER_ID  = "";
+MODIS_USER_PWD = "";
 
 
 
@@ -113,6 +118,8 @@ include("Datasets/regrid.jl"     )
 include("Datasets/save.jl"       )
 include("Datasets/view.jl"       )
 
+# include function for ERA5 datasets
+
 # include functions to grid datasets
 include("Gridding/DataType.jl" )
 include("Gridding/compile.jl"  )
@@ -125,6 +132,7 @@ include("Gridding/shortcuts.jl")
 include("Gridding/workers.jl"  )
 
 # The Util functions
+include("Utils/cdsapi.jl"       )
 include("Utils/date.jl"         )
 include("Utils/lat_lon_index.jl")
 include("Utils/password.jl"     )

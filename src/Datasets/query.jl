@@ -38,7 +38,7 @@ function query_LUT(dt::CanopyHeightBoonman{FT}) where {FT<:AbstractFloat}
     _varn = "CH";
     _vara = Dict("longname" => "Canopy height", "units" => "m");
 
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[0,200]
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),200]
 end
 
 
@@ -51,7 +51,8 @@ function query_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
     _varn = "CH";
     _vara = Dict("longname" => "Canopy height", "units" => "m");
 
-    return _file, FormatNC(), "Band1", "1Y", false, _varn, _vara, FT[0,200]
+    return _file, FormatNC(), "Band1", "1Y", false, _varn, _vara,
+           FT[eps(FT),200]
 end
 
 
@@ -68,7 +69,7 @@ function query_LUT(
     _varn = "CI";
     _vara = Dict("longname" => "Clumping index", "units" => "-");
 
-    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[0,1]
+    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -81,7 +82,7 @@ function query_LUT(dt::ClumpingIndexPFT{FT}) where {FT<:AbstractFloat}
     _varn = "CI";
     _vara = Dict("longname" => "Clumping index", "units" => "-");
 
-    return _file, FormatNC(), "clump", "1Y", false, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "clump", "1Y", false, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -152,7 +153,7 @@ function query_LUT(
     _varn = "LAI";
     _vara = Dict("longname" => "Leaf area index", "units" => "-");
 
-    return _file, FormatNC(), "lai", res_t, true, _varn, _vara, FT[0,20]
+    return _file, FormatNC(), "lai", res_t, true, _varn, _vara, FT[eps(FT),20]
 end
 
 
@@ -165,7 +166,7 @@ function query_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
     _varn = "LAI";
     _vara = Dict("longname" => "Leaf area index", "units" => "-");
 
-    return _file, FormatNC(), "LAI", "1M", false, _varn, _vara, FT[0,20]
+    return _file, FormatNC(), "LAI", "1M", false, _varn, _vara, FT[eps(FT),20]
 end
 
 
@@ -194,7 +195,7 @@ function query_LUT(dt::LandMaskERA5{FT}) where {FT<:AbstractFloat}
     _varn = "LM";
     _vara = Dict("longname" => "Land mask", "units" => "-");
 
-    return _file, FormatNC(), "lsm", "1Y", false, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "lsm", "1Y", false, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -209,7 +210,7 @@ function query_LUT(dt::LeafChlorophyll{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "Leaf chlorophyll content",
                  "units" => "μg cm⁻²");
 
-    return _file, FormatNC(), "chl", "7D", true, _varn, _vara, FT[0,200]
+    return _file, FormatNC(), "chl", "7D", true, _varn, _vara, FT[eps(FT),200]
 end
 
 
@@ -223,7 +224,7 @@ function query_LUT(dt::LeafNitrogenBoonman{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "Leaf nitrogen content",
                  "units" => "kg kg⁻¹");
 
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[0,1]
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -238,7 +239,7 @@ function query_LUT(dt::LeafNitrogenButler{FT}) where {FT<:AbstractFloat}
                  "units" => "kg kg⁻¹");
 
     return _file, FormatNC(), "leaf_nitrogen_content_mean", "1Y", false,
-           _varn, _vara, FT[0,1]
+           _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -253,7 +254,7 @@ function query_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
                  "units" => "kg kg⁻¹");
 
     return _file, FormatNC(), "leaf_phosphorus_content_mean", "1Y", false,
-           _varn, _vara, FT[0,1]
+           _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -268,7 +269,7 @@ function query_LUT(dt::LeafSLAButler{FT}) where {FT<:AbstractFloat}
                  "units" => "m² kg⁻¹");
 
     return _file, FormatNC(), "specific_leaf_area_mean", "1Y", false,
-           _varn, _vara, FT[0,100]
+           _varn, _vara, FT[eps(FT),100]
 end
 
 
@@ -282,7 +283,7 @@ function query_LUT(dt::LeafSLABoonman{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "Specific leaf area",
                  "units" => "m² kg⁻¹");
 
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[0,100]
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),100]
 end
 
 
@@ -301,7 +302,7 @@ function query_LUT(
     _vara = Dict("longname" => "Normalized difference vegetation index",
                  "units" => "-");
 
-    return _file, FormatNC(), "NDVI", res_t, true, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "NDVI", res_t, true, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -339,7 +340,7 @@ function query_LUT(
     _vara = Dict("longname" => "Near infrared reflection of vegetation",
                  "units" => "-");
 
-    return _file, FormatNC(), "NIRv", res_t, true, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "NIRv", res_t, true, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -384,7 +385,8 @@ function query_LUT(dt::RiverLength{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "River length",
                  "units"    => "m");
 
-    return _file, FormatNC(), "rivlen", "1Y", true, _varn, _vara, FT[0,Inf]
+    return _file, FormatNC(), "rivlen", "1Y", true, _varn, _vara,
+           FT[eps(FT),Inf]
 end
 
 
@@ -399,7 +401,7 @@ function query_LUT(dt::RiverManning{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "River manning coefficient",
                  "units"    => "-");
 
-    return _file, FormatNC(), "rivman", "1Y", true, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "rivman", "1Y", true, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -414,7 +416,8 @@ function query_LUT(dt::RiverWidth{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "River width",
                  "units"    => "m");
 
-    return _file, FormatNC(), "rivwth", "1Y", true, _varn, _vara, FT[0,10000]
+    return _file, FormatNC(), "rivwth", "1Y", true, _varn, _vara,
+           FT[eps(FT),10000]
 end
 
 
@@ -450,7 +453,7 @@ function query_LUT(
     _varn = "TD";
     _vara = Dict("longname" => "Tree density", "units" => "km⁻²");
 
-    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[0,Inf]
+    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[eps(FT),Inf]
 end
 
 
@@ -465,7 +468,8 @@ function query_LUT(dt::UnitCatchmentArea{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "Unit catchment area",
                  "units"    => "m²");
 
-    return _file, FormatNC(), "ctmare", "1Y", true, _varn, _vara, FT[0,Inf]
+    return _file, FormatNC(), "ctmare", "1Y", true, _varn, _vara,
+           FT[eps(FT),Inf]
 end
 
 
@@ -483,7 +487,8 @@ function query_LUT(
     _vara = Dict("longname" => "van Genuchten α",
                  "units"    => "MPa⁻¹");
 
-    return _file, FormatNC(), "Alpha", res_t, false, _varn, _vara, FT[0,Inf]
+    return _file, FormatNC(), "Alpha", res_t, false, _varn, _vara,
+           FT[eps(FT),Inf]
 end
 
 
@@ -501,7 +506,8 @@ function query_LUT(
     _vara = Dict("longname" => "van Genuchten log(n)",
                  "units"    => "-");
 
-    return _file, FormatNC(), "logN", res_t, false, _varn, _vara, FT[0,10]
+    return _file, FormatNC(), "logN", res_t, false, _varn, _vara,
+           FT[eps(FT),10]
 end
 
 
@@ -519,7 +525,7 @@ function query_LUT(
     _vara = Dict("longname" => "van Genuchten Θr",
                  "units"    => "-");
 
-    return _file, FormatNC(), "SWCR", res_t, false, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "SWCR", res_t, false, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -537,7 +543,7 @@ function query_LUT(
     _vara = Dict("longname" => "van Genuchten Θr",
                  "units"    => "-");
 
-    return _file, FormatNC(), "SWCS", res_t, false, _varn, _vara, FT[0,1]
+    return _file, FormatNC(), "SWCS", res_t, false, _varn, _vara, FT[eps(FT),1]
 end
 
 
@@ -550,5 +556,5 @@ function query_LUT(dt::WoodDensity{FT}) where {FT<:AbstractFloat}
     _varn = "WD";
     _vara = Dict("longname" => "Wood density", "units" => "g cm⁻³");
 
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[0,2]
+    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),2]
 end

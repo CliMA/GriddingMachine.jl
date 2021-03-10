@@ -221,13 +221,13 @@ Once the tile information is loaded, you may query the files you want to work
     on using `query_RAW`, which returns an array of paramters to pass to
     different threads. Note, you may need to use `fetch_RAW!` to download the
     datasets first. Function `fetch_RAW!` uses `parse_date` and
-    `update_password` to download data from the website.
+    `update_MODIS_password!` to download data from the website.
 
 ```@docs
 fetch_RAW!
 parse_date
 query_RAW
-update_password
+update_MODIS_password!
 ```
 
 Next, you should be able to grid the RAW files using [`grid_RAW!`](@ref), which

@@ -14,7 +14,7 @@ Download RAW product data, given
 - `data_loc` Local folder to store the data
 """
 function fetch_RAW!(dt::MOD15A2Hv006LAI, year::Int)
-    update_password();
+    update_MODIS_password!();
 
     data_url = "$(MODIS_PORTAL)/MOLT/MOD15A2H.006/";
     data_loc = "$(MODIS_HOME)/MOD15A2H.006/original/";
@@ -28,7 +28,7 @@ end
 
 
 function fetch_RAW!(dt::MOD09A1v006NIRv, year::Int)
-    update_password();
+    update_MODIS_password!();
 
     data_url = "$(MODIS_PORTAL)/MOLT/MOD09A1.006/";
     data_loc = "$(MODIS_HOME)/MOD09A1.006/original/";
@@ -82,7 +82,7 @@ function fetch_RAW!(
         if Sys.which("wget") !== nothing
             if !isfile(_loc)
                 _lst = `-q $(_url) -O $(_loc)`;
-                _psd = `--user $(USER_NAME) --password $(USER_PASS)`;
+                _psd = `--user $(MODIS_USER_ID) --password $(MODIS_USER_PWD)`;
                 run(`wget $(_psd) $(_lst)`);
             end
         else
