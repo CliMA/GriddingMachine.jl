@@ -67,9 +67,6 @@ export AbstractDataset,
        VGMThetaSJules,
        WoodDensity
 
-
-
-
 # export public types for UngriddedDataset
 export AbstractUngriddedData,
        AbstractMODIS500m,
@@ -77,8 +74,9 @@ export AbstractUngriddedData,
        MOD09A1v006NIRv,
        MOD15A2Hv006LAI
 
-
-
+# export public types for ERA5Dataset
+export AbstractERA5Data,
+       ERA5LandHourly
 
 #export public functions for GriddedDataset
 export lat_ind,
@@ -91,10 +89,7 @@ export lat_ind,
        save_LUT!,
        view_LUT
 
-
-
-
-#export public functions for GriddedDataset
+#export public functions for UngriddedDataset
 export compile_RAW!,
        dynamic_workers!,
        fetch_RAW!,
@@ -103,6 +98,9 @@ export compile_RAW!,
        parse_HV,
        process_RAW!,
        query_RAW
+
+# export public functions for ERA5Dataset
+export fetch_ERA5!
 
 
 
@@ -119,6 +117,8 @@ include("Datasets/save.jl"       )
 include("Datasets/view.jl"       )
 
 # include function for ERA5 datasets
+include("ERA5/DataType.jl")
+include("ERA5/fetch.jl"   )
 
 # include functions to grid datasets
 include("Gridding/DataType.jl" )
@@ -133,7 +133,6 @@ include("Gridding/workers.jl"  )
 
 # The Util functions
 include("Utils/cdsapi.jl"       )
-include("Utils/date.jl"         )
 include("Utils/lat_lon_index.jl")
 include("Utils/password.jl"     )
 
