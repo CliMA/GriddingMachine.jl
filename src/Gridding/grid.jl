@@ -50,8 +50,8 @@ function grid_RAW!(
         lon_mat = view(MODIS_GRID_LON,h,v,:,:);
         dat_out = DataFrame();
         try
-            red_mat = FT.(ncread(path, band[1]));
-            nir_mat = FT.(ncread(path, band[2]));
+            red_mat = FT.(NetCDF.ncread(path, band[1]));
+            nir_mat = FT.(NetCDF.ncread(path, band[2]));
             dim_lon = size(red_mat,1);
             dim_lat = size(red_mat,2);
             red_mat .*= kb[1];
@@ -120,7 +120,7 @@ function grid_RAW!(
         lon_mat = view(MODIS_GRID_LON,h,v,:,:);
         dat_out = DataFrame();
         try
-            lai_mat = FT.(ncread(path, band));
+            lai_mat = FT.(NetCDF.ncread(path, band));
             dim_lon = size(lai_mat,1);
             dim_lat = size(lai_mat,2);
             lai_mat .*= kb[1];

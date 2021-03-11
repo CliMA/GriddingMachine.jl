@@ -55,7 +55,7 @@ function fetch_RAW!(
     list_urls = [];
     list_locs = [];
     for doy in 1:8:TDAY
-        folder = parse_date(year, doy);
+        folder = parse_date(year, doy, ".") * "/";
         try
             @info "Fetching file list from $(data_url * folder)";
             download(data_url * folder, "temp.html");

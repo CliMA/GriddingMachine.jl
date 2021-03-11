@@ -28,7 +28,8 @@ end
 """
     update_CDSAPI_password!()
 
-Update global user name and password for CDSAPI
+Update global user name and password for CDSAPI, note that the `uid:api-key`
+    should not contain `{}`.
 """
 function update_CDSAPI_password!()
     global CDSAPI_CLIENT, CDSAPI_KEY, CDSAPI_PORTAL;
@@ -51,7 +52,7 @@ function update_CDSAPI_password!()
             @warn "Do not share your user name and password with others.";
             @info "Please indicate the cdsapi data portal (url):";
             CDSAPI_PORTAL = readline();
-            @info "Please indicate the cdsapi key combo ({uid}:{api-key}):";
+            @info "Please indicate the cdsapi key combo (uid:api-key):";
             CDSAPI_KEY    = read(Base.getpass("Password (invisble)"), String);
             cdsapi        = pyimport("cdsapi");
             CDSAPI_CLIENT = cdsapi.Client(url=CDSAPI_PORTAL, key=CDSAPI_KEY);

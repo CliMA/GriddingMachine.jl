@@ -156,7 +156,7 @@ function compile_RAW!(
     if !isfile(_file)
         _data = zeros(FT, (360*zooms,180*zooms,length(date_list)));
         for i in eachindex(date_list)
-            view(_data,:,:,i) .= ncread(new_params[i][5], "Var");
+            view(_data,:,:,i) .= NetCDF.ncread(new_params[i][5], "Var");
         end
         save_LUT!(_data, _file, "NIRv", _attr);
     end
@@ -215,7 +215,7 @@ function compile_RAW!(
     if !isfile(_file)
         _data = zeros(FT, (360*zooms,180*zooms,length(date_list)));
         for i in eachindex(date_list)
-            view(_data,:,:,i) .= ncread(new_params[i][5], "Var");
+            view(_data,:,:,i) .= NetCDF.ncread(new_params[i][5], "Var");
         end
         save_LUT!(_data, _file, "LAI", _attr);
     end
