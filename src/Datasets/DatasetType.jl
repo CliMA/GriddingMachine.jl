@@ -961,11 +961,13 @@ struct UnitCatchmentArea{FT} <: AbstractDataset{FT} end
 A general struct to store data
 
 # Fields
-$(DocStringExtensions.FIELDS)
+$(FIELDS)
 """
 Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Gridded dataset"
     data::Array{FT,3} = zeros(360,180,1);
+    "Realistic range"
+    lims::Array{FT,1} = FT[-100,100]
     "Latitude resolution `[°]`"
     res_lat::FT = 180 / size(data,2)
     "Longitude resolution `[°]`"

@@ -30,7 +30,7 @@ function query_RAW(
             days::Int
 ) where {FT<:AbstractFloat}
     # Querry the file information using data type
-    _folder, _naming, _pref, _band, _cache, _kb, _mm = query_RAW(dt, year);
+    _folder, _naming, _pref, _band, _cache, _mm = query_RAW(dt, year);
 
     # set time information for the gridding process
     date_start = DateTime("$(year)-01-01");
@@ -49,7 +49,7 @@ function query_RAW(
                          "DOY"  => lpad(Dates.dayofyear(_date), 3, "0")];
             file_temp = reduce(replace, file_dict, init=_naming);
             for _path in glob(file_temp, _folder)
-                push!(params, [dt, layer, _path, _pref, _band, _cache, _kb, _mm]);
+                push!(params, [dt, layer, _path, _pref, _band, _cache, _mm]);
             end
         end
     end
@@ -69,7 +69,7 @@ function query_RAW(dt::MOD09A1v006NIRv{FT}, year::Int) where {FT<:AbstractFloat}
                        string(year));
     _band   = ["sur_refl_b01", "sur_refl_b02"];
 
-    return _folder, _naming, _prefix, _band, _cache, FT[0.0001,0.0], FT[-0.01,1.7]
+    return _folder, _naming, _prefix, _band, _cache, FT[-0.01,1.7]
 end
 
 
@@ -84,5 +84,5 @@ function query_RAW(dt::MOD15A2Hv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
                        string(year));
     _band   = "Lai_500m";
 
-    return _folder, _naming, _prefix, _band, _cache, FT[0.1,0.0], FT[0,15]
+    return _folder, _naming, _prefix, _band, _cache, FT[0,15]
 end

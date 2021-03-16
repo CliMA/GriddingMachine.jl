@@ -12,7 +12,7 @@ Filter out the unrealistic values from the dataset, given
 - `default` Optional. Default value to replace NaNs
 - `lims` Lower and upper limits for the dataset
 """
-function mask_LUT!(ds::GriddedDataset, default::Number=-9999)
+function mask_LUT!(ds::GriddedDataset, default::Number)
     @unpack data = ds;
 
     # to avoid memory overflow, filter the data per line
@@ -27,6 +27,15 @@ function mask_LUT!(ds::GriddedDataset, default::Number=-9999)
             view(data,:,i,:)[_mask] .= default;
         end
     end
+
+    return nothing
+end
+
+
+
+
+function mask_LUT!(ds::GriddedDataset)
+    mask_LUT!(ds, ds.lims);
 
     return nothing
 end
