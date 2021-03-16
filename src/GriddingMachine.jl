@@ -1,10 +1,10 @@
 module GriddingMachine
 
+using ArchGDAL
 using Conda
 using Dates
 using LazyArtifacts
 
-using ArchGDAL: getband, read
 using CSV: File, write
 using DataFrames: DataFrame
 using Distributed: @everywhere, addprocs, pmap, rmprocs, workers
@@ -13,7 +13,7 @@ using Glob: glob
 using NetCDF: NC_FLOAT, nccreate, ncwrite
 using Parameters: @unpack
 using Pkg.Artifacts: @artifact_str
-using PkgUtility: ncread, predownload_artifact
+using PkgUtility: month_days, ncread, predownload_artifact
 using ProgressMeter: @showprogress
 using PyCall: pyimport
 using Statistics: mean
@@ -48,7 +48,7 @@ export CanopyHeightBoonman, CanopyHeightGLAS, ClumpingIndexMODIS,
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
 
 # export public types for ERA5Dataset
-export ERA5LandHourly
+export ERA5LandHourly, ERA5SingleLevelsHourly
 
 #export public functions for GriddedDataset
 export load_LUT, mask_LUT!, read_LUT, regrid_LUT, save_LUT!, view_LUT

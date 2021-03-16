@@ -254,9 +254,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = read(file);
-    _band = getband(_tiff, label);
-    _data = convert(Matrix{FT}, read(_band));
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
@@ -288,9 +288,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = read(file);
-    _band = getband(_tiff, label);
-    _data = convert(Matrix{FT}, read(_band));
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
@@ -323,9 +323,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = read(file);
-    _band = getband(_tiff, label);
-    _data = convert(Matrix{FT}, read(_band));
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
@@ -358,9 +358,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = read(file);
-    _band = getband(_tiff, label);
-    _data = convert(Matrix{FT}, read(_band));
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
@@ -394,9 +394,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = read(file);
-    _band = getband(_tiff, label);
-    _data = convert(Matrix{FT}, read(_band));
+    _tiff = ArchGDAL.read(file);
+    _band = ArchGDAL.getband(_tiff, label);
+    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
 
     # reverse latitude
     if rev_lat
