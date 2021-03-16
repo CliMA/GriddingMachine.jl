@@ -961,7 +961,7 @@ struct UnitCatchmentArea{FT} <: AbstractDataset{FT} end
 A general struct to store data
 
 # Fields
-$(DocStringExtensions.FIELDS)
+$(FIELDS)
 """
 Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Gridded dataset"

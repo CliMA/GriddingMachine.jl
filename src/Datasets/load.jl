@@ -156,7 +156,7 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _data = FT.(NetCDF.ncread(file, label));
+    _data = ncread(FT, file, label);
 
     # reverse latitude
     if rev_lat
@@ -192,7 +192,7 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _data = FT.(NetCDF.ncread(file, label));
+    _data = ncread(FT, file, label);
     data  = similar(_data);
 
     for _mon in 1:7
@@ -203,33 +203,6 @@ function load_LUT(
     end
 
     return GriddedDataset{FT}(data     = data    ,
-                              lims     = var_lims,
-                              res_time = res_t   ,
-                              dt       = dt      ,
-                              var_name = var_name,
-                              var_attr = var_attr)
-end
-
-
-
-
-function load_LUT(
-            dt::LandMaskERA5{FT},
-            file::String,
-            format::FormatNC,
-            label::String,
-            res_t::String,
-            rev_lat::Bool,
-            var_name::String,
-            var_attr::Dict{String,String},
-            var_lims::Array{FT,1}
-) where {FT<:AbstractFloat}
-    # land mask used is specified, cannot be used directly
-    _data   = FT.(NetCDF.ncread(file, label));
-    _data .+= 32766;
-    _data ./= 65533;
-
-    return GriddedDataset{FT}(data     = _data   ,
                               lims     = var_lims,
                               res_time = res_t   ,
                               dt       = dt      ,
@@ -252,7 +225,7 @@ function load_LUT(
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     # SIF data is stored differently
-    _dat  = FT.(NetCDF.ncread(file, label));
+    _dat  = ncread(FT, file, label);
     _size = size(_dat);
     _data = zeros(FT, (_size[2], _size[3], _size[1]));
     for i in 1:_size[1]
@@ -281,9 +254,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+    _tiff = read(file);
+    _band = getband(_tiff, label);
+    _data = convert(Matrix{FT}, read(_band));
 
     # reverse latitude
     if rev_lat
@@ -315,9 +288,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+    _tiff = read(file);
+    _band = getband(_tiff, label);
+    _data = convert(Matrix{FT}, read(_band));
 
     # reverse latitude
     if rev_lat
@@ -350,9 +323,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+    _tiff = read(file);
+    _band = getband(_tiff, label);
+    _data = convert(Matrix{FT}, read(_band));
 
     # reverse latitude
     if rev_lat
@@ -385,9 +358,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+    _tiff = read(file);
+    _band = getband(_tiff, label);
+    _data = convert(Matrix{FT}, read(_band));
 
     # reverse latitude
     if rev_lat
@@ -421,9 +394,9 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
+    _tiff = read(file);
+    _band = getband(_tiff, label);
+    _data = convert(Matrix{FT}, read(_band));
 
     # reverse latitude
     if rev_lat
@@ -447,9 +420,8 @@ end
 
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
     predownload_artifact("VMAX_CICA_2X_1Y_V1", ARTIFACTs_TOML);
-    _Vcmax = FT.(NetCDF.ncread(joinpath(artifact"VMAX_CICA_2X_1Y_V1",
-                                        "VMAX_CICA_2X_1Y_V1.nc"),
-                               "vcmax"));
+    _file  = joinpath(artifact"VMAX_CICA_2X_1Y_V1", "VMAX_CICA_2X_1Y_V1.nc");
+    _Vcmax = ncread(FT, _file, "vcmax");
 
     # note that lat of dataset does not start from -90 and end from 90
     # store the data into a new data array

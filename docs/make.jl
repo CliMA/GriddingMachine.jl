@@ -1,12 +1,13 @@
 using Documenter
 using GriddingMachine
 using Literate
+using PkgUtility
 
 
 
 
 # define default docs pages
-pages = Any[
+pages = Pair{Any,Any}[
     "Home" => "index.md",
     "API"  => "API.md"  ,
 ]
@@ -29,7 +30,8 @@ if gen_preview
     push!(pages, "Data Preview" => "generated/preview.md");
 end
 
-@show pages;
+@info "Pages to generate:"
+pretty_display(pages);
 
 
 

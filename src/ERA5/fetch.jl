@@ -64,12 +64,19 @@ ERA5_LAND_TIMES = [
 
 
 """
-    download_dataset!(
-                dt::ERA5LandHourly,
+    fetch_ERA5!(dt::ERA5LandHourly,
                 lat_ind::Int,
                 lon_ind::Int,
                 year::Int = 2020,
                 month::Int = 6;
+                vars::Array{String,1} = ERA5_LAND_SELECTIONS,
+                times::Array{String,1} = ERA5_LAND_TIMES,
+                folder::String = ""
+    )
+    fetch_ERA5!(dt::ERA5LandHourly,
+                lat_ind::Int,
+                lon_ind::Int,
+                year::Int;
                 vars::Array{String,1} = ERA5_LAND_SELECTIONS,
                 times::Array{String,1} = ERA5_LAND_TIMES,
                 folder::String = ""

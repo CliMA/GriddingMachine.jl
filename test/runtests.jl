@@ -10,11 +10,11 @@ FT = Float32;
 # test utility functions
 @testset "GriddingMachine --- Lat/Lon indicies" begin
     # test the lat_ind and lon_ind
-    @test typeof(lat_ind(  0.0)) == Int           ;
-    @test typeof(lat_ind( 91.0)) == ErrorException;
-    @test typeof(lon_ind(  0.0)) == Int           ;
-    @test typeof(lon_ind(350.0)) == Int           ;
-    @test typeof(lon_ind(361.0)) == ErrorException;
+    @test typeof(GriddingMachine.lat_ind(  0.0)) == Int           ;
+    @test typeof(GriddingMachine.lat_ind( 91.0)) == ErrorException;
+    @test typeof(GriddingMachine.lon_ind(  0.0)) == Int           ;
+    @test typeof(GriddingMachine.lon_ind(350.0)) == Int           ;
+    @test typeof(GriddingMachine.lon_ind(361.0)) == ErrorException;
 end
 
 

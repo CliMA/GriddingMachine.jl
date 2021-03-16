@@ -8,8 +8,8 @@
     grid_RAW!(dt::MOD15A2Hv006LAI{FT},
               params::Array{Any,1}) where {FT<:AbstractFloat}
     grid_RAW!(dt::MOD15A2Hv006LAI{FT},
-             params::Array{Array,1},
-             nthread::Int) where {FT<:AbstractFloat}
+              params::Array{Array,1},
+              nthread::Int) where {FT<:AbstractFloat}
 
 Grid the data and save it to a csv file, given
 - `param` Parameter sets to pass to different threads
@@ -33,7 +33,6 @@ function grid_RAW!(
             prefix::String,
             band::Array{String,1},
             cache::String,
-            kb::Array{FT,1},
             mm::Array{FT,1}
 ) where {FT<:AbstractFloat}
     global MODIS_GRID_LAT, MODIS_GRID_LON;
@@ -50,14 +49,10 @@ function grid_RAW!(
         lon_mat = view(MODIS_GRID_LON,h,v,:,:);
         dat_out = DataFrame();
         try
-            red_mat = FT.(NetCDF.ncread(path, band[1]));
-            nir_mat = FT.(NetCDF.ncread(path, band[2]));
+            red_mat = ncread(FT, path, band[1]);
+            nir_mat = ncread(FT, path, band[2]);
             dim_lon = size(red_mat,1);
             dim_lat = size(red_mat,2);
-            red_mat .*= kb[1];
-            red_mat .+= kb[2];
-            nir_mat .*= kb[1];
-            nir_mat .+= kb[2];
             (dat_out).lay = ones(Int, dim_lon * dim_lat) * nlayer;
             (dat_out).lat = ones(dim_lon * dim_lat) .* -9999;
             (dat_out).lon = ones(dim_lon * dim_lat) .* -9999;
@@ -87,7 +82,7 @@ function grid_RAW!(
 
         # save data
         mask = ((dat_out).red .> -1) .* ((dat_out).nir .> -1);
-        CSV.write(outp_file, dat_out[mask,:]);
+        write(outp_file, dat_out[mask,:]);
     end
 
     return nothing
@@ -103,7 +98,6 @@ function grid_RAW!(
             prefix::String,
             band::String,
             cache::String,
-            kb::Array{FT,1},
             mm::Array{FT,1}
 ) where {FT<:AbstractFloat}
     global MODIS_GRID_LAT, MODIS_GRID_LON;
@@ -120,11 +114,9 @@ function grid_RAW!(
         lon_mat = view(MODIS_GRID_LON,h,v,:,:);
         dat_out = DataFrame();
         try
-            lai_mat = FT.(NetCDF.ncread(path, band));
+            lai_mat = ncread(FT, path, band);
             dim_lon = size(lai_mat,1);
             dim_lat = size(lai_mat,2);
-            lai_mat .*= kb[1];
-            lai_mat .+= kb[2];
             (dat_out).lay = ones(Int, dim_lon * dim_lat) * nlayer;
             (dat_out).lat = ones(dim_lon * dim_lat) .* -9999;
             (dat_out).lon = ones(dim_lon * dim_lat) .* -9999;
@@ -149,7 +141,7 @@ function grid_RAW!(
 
         # save data
         mask = ((dat_out).lai .> -1);
-        CSV.write(outp_file, dat_out[mask,:]);
+        write(outp_file, dat_out[mask,:]);
     end
 
     return nothing
