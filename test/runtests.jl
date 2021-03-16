@@ -45,9 +45,6 @@ end
     TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M", 1); @test true;
     TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");    @test true;
     TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M"); @test true;
-    TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");    @test true;
-    TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");    @test true;
     TMP_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");      @test true;
     TMP_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");       @test true;
     TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");     @test true;
@@ -66,6 +63,9 @@ end
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
         TMP_LUT = load_LUT(ClumpingIndexMODIS{FT}(), "240X", "1Y"); @test true;
+        TMP_LUT = load_LUT(NDVIAvhrr{FT}(), 2018, "20X", "1M");     @test true;
+        TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");     @test true;
+        TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");     @test true;
         TMP_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
     end
     TMP_LUT = nothing;
