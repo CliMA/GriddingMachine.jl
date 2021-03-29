@@ -443,6 +443,25 @@ end
 
 
 function query_LUT(
+            dt::SIFTropomi740DC{FT},
+            year::Int,
+            res_g::String,
+            res_t::String
+) where {FT<:AbstractFloat}
+    _artn = "SIF740_TROPOMI_$(res_g)_$(res_t)_$(year)_V1";
+    predownload_artifact(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "SIFDC";
+    _vara = Dict("longname" => "Day length corrected sun induced fluoresence",
+                 "units" => "mW m⁻² sr⁻¹ nm⁻¹");
+
+    return _file, FormatNC(), "sif_dc", res_t, false, _varn, _vara, FT[-20,90]
+end
+
+
+
+
+function query_LUT(
             dt::TreeDensity{FT},
             res_g::String,
             res_t::String

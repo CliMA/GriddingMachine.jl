@@ -536,6 +536,35 @@ struct SIFTropomi740{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct SIFTropomi740DC{FT}
+
+<details>
+<summary>
+Struct for TROPOMI SIF @ 740 nm
+[Link to Dataset Source](https://doi.org/10.1029/2018GL079031)
+</summary>
+
+```
+@article{kohler2018global,
+    author = {K{\\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy
+        S and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
+    year = {2018},
+    title = {Global retrievals of solar-induced chlorophyll fluorescence with
+        {TROPOMI}: {F}irst results and intersensor comparison to {OCO-2}},
+    journal = {Geophysical Research Letters},
+    volume = {45},
+    number = {19},
+    pages = {10,456--10,463}
+}
+```
+</details>
+"""
+struct SIFTropomi740DC{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct TreeDensity{FT}
 
 <details>

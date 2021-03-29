@@ -341,7 +341,6 @@ const ERA5_SINGLE_LEVELS_SELECTION =[
             "soil_temperature_level_2",
             "soil_temperature_level_3",
             "soil_temperature_level_4",
-            "soil_type",
             "surface_pressure",
             "volumetric_soil_water_layer_1",
             "volumetric_soil_water_layer_2",
