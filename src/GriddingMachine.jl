@@ -5,18 +5,15 @@ using Conda
 using Dates
 using LazyArtifacts
 
-using CSV: File, write
 using DataFrames: DataFrame
 using Distributed: @everywhere, addprocs, pmap, rmprocs, workers
 using DocStringExtensions: FIELDS
 using Glob: glob
-using NetCDF: NC_FLOAT, nccreate, ncwrite
-using Parameters: @unpack
-using Pkg.Artifacts: @artifact_str
-using PkgUtility: month_days, ncread, predownload_artifact
+using PkgUtility: month_days, nanmean, predownload_artifact!, read_csv,
+            read_nc, save_csv!, save_nc!
 using ProgressMeter: @showprogress
 using PyCall: pyimport
-using Statistics: mean
+using UnPack: @unpack
 
 
 
@@ -26,8 +23,6 @@ ARTIFACTs_TOML = joinpath(@__DIR__, "../Artifacts.toml");
 CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
 CDSAPI_KEY     = "";
 CDSAPI_CLIENT  = nothing;
-MODIS_GRID_LAT = nothing;
-MODIS_GRID_LON = nothing;
 MODIS_HOME     = "/net/fluo/data1/data/MODIS";
 MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
 MODIS_USER_ID  = "";

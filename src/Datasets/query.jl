@@ -33,7 +33,7 @@ Return the following:
 """
 function query_LUT(dt::CanopyHeightBoonman{FT}) where {FT<:AbstractFloat}
     _artn = "CH_2X_1Y_V2";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "CH";
     _vara = Dict("longname" => "Canopy height", "units" => "m");
@@ -46,7 +46,7 @@ end
 
 function query_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
     _artn = "CH_20X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "CH";
     _vara = Dict("longname" => "Canopy height", "units" => "m");
@@ -64,7 +64,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "CI_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "CI";
     _vara = Dict("longname" => "Clumping index", "units" => "-");
@@ -77,7 +77,7 @@ end
 
 function query_LUT(dt::ClumpingIndexPFT{FT}) where {FT<:AbstractFloat}
     _artn = "CI_PFT_2X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "CI";
     _vara = Dict("longname" => "Clumping index", "units" => "-");
@@ -91,7 +91,7 @@ end
 function query_LUT(dt::FloodPlainHeight{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "FloodPlainHeight";
     _vara = Dict("longname" => "Flood plain height",
@@ -110,7 +110,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "GPP_MPI_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "GPP";
     _vara = Dict("longname" => "Gross primary productivity",
@@ -129,7 +129,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "GPP_VPM_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "GPP";
     _vara = Dict("longname" => "Gross primary productivity",
@@ -148,7 +148,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "LAI_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LAI";
     _vara = Dict("longname" => "Leaf area index", "units" => "-");
@@ -161,7 +161,7 @@ end
 
 function query_LUT(dt::LAIMonthlyMean{FT}) where {FT<:AbstractFloat}
     _artn = "LAI_4X_1M_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LAI";
     _vara = Dict("longname" => "Leaf area index", "units" => "-");
@@ -175,7 +175,7 @@ end
 function query_LUT(dt::LandElevation{FT}) where {FT<:AbstractFloat}
     @warn "Note that this elevation dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "Elevation";
     _vara = Dict("longname" => "Elevation",
@@ -190,7 +190,7 @@ end
 
 function query_LUT(dt::LandMaskERA5{FT}) where {FT<:AbstractFloat}
     _artn = "LM_ERA5_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LM";
     _vara = Dict("longname" => "Land mask", "units" => "-");
@@ -204,7 +204,7 @@ end
 function query_LUT(dt::LeafChlorophyll{FT}) where {FT<:AbstractFloat}
     @warn "Note that this chloropgyll dataset is not meant for public use...";
     _artn = "CHL_2X_7D_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LC";
     _vara = Dict("longname" => "Leaf chlorophyll content",
@@ -218,7 +218,7 @@ end
 
 function query_LUT(dt::LeafNitrogenBoonman{FT}) where {FT<:AbstractFloat}
     _artn = "LNC_2X_1Y_V2";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "LN";
     _vara = Dict("longname" => "Leaf nitrogen content",
@@ -232,7 +232,7 @@ end
 
 function query_LUT(dt::LeafNitrogenButler{FT}) where {FT<:AbstractFloat}
     _artn = "LNC_2X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LN";
     _vara = Dict("longname" => "Leaf nitrogen content",
@@ -247,7 +247,7 @@ end
 
 function query_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
     _artn = "LPC_2X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "LP";
     _vara = Dict("longname" => "Leaf phosphorus content",
@@ -262,7 +262,7 @@ end
 
 function query_LUT(dt::LeafSLAButler{FT}) where {FT<:AbstractFloat}
     _artn = "SLA_2X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SLA";
     _vara = Dict("longname" => "Specific leaf area",
@@ -277,7 +277,7 @@ end
 
 function query_LUT(dt::LeafSLABoonman{FT}) where {FT<:AbstractFloat}
     _artn = "SLA_2X_1Y_V2";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "SLA";
     _vara = Dict("longname" => "Specific leaf area",
@@ -296,7 +296,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "NDVI_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "NDVI";
     _vara = Dict("longname" => "Normalized difference vegetation index",
@@ -315,7 +315,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "NIRO_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "NIRo";
     _vara = Dict("longname" => "NIRv with offset",
@@ -334,7 +334,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "NIRV_AVHRR_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "NIRv";
     _vara = Dict("longname" => "Near infrared reflection of vegetation",
@@ -348,7 +348,7 @@ end
 
 function query_LUT(dt::NPPModis{FT}) where {FT<:AbstractFloat}
     _artn = "NPP_MODIS_1X_1Y";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/npp_modis_1X_1Y_2000.nc";
     _varn = "NPP";
     _vara = Dict("longname" => "Net primary productivity",
@@ -363,7 +363,7 @@ end
 function query_LUT(dt::RiverHeight{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverHeight";
     _vara = Dict("longname" => "River height",
@@ -379,7 +379,7 @@ end
 function query_LUT(dt::RiverLength{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverLength";
     _vara = Dict("longname" => "River length",
@@ -395,7 +395,7 @@ end
 function query_LUT(dt::RiverManning{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverManning";
     _vara = Dict("longname" => "River manning coefficient",
@@ -410,7 +410,7 @@ end
 function query_LUT(dt::RiverWidth{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "RiverWidth";
     _vara = Dict("longname" => "River width",
@@ -430,7 +430,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "SIF740_TROPOMI_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SIF";
     _vara = Dict("longname" => "Sun induced fluoresence",
@@ -449,7 +449,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "SIF740_TROPOMI_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SIFDC";
     _vara = Dict("longname" => "Day length corrected sun induced fluoresence",
@@ -467,7 +467,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "TD_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "TD";
     _vara = Dict("longname" => "Tree density", "units" => "km⁻²");
@@ -481,7 +481,7 @@ end
 function query_LUT(dt::UnitCatchmentArea{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "UnitCatchmentArea";
     _vara = Dict("longname" => "Unit catchment area",
@@ -500,7 +500,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "VGM_ALPHA_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "Alpha";
     _vara = Dict("longname" => "van Genuchten α",
@@ -519,7 +519,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "VGM_LOGN_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "logN";
     _vara = Dict("longname" => "van Genuchten log(n)",
@@ -538,7 +538,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "VGM_SWCR_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SWCR";
     _vara = Dict("longname" => "van Genuchten Θr",
@@ -556,7 +556,7 @@ function query_LUT(
             res_t::String
 ) where {FT<:AbstractFloat}
     _artn = "VGM_SWCS_$(res_g)_$(res_t)_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).nc";
     _varn = "SWCS";
     _vara = Dict("longname" => "van Genuchten Θr",
@@ -570,7 +570,7 @@ end
 
 function query_LUT(dt::WoodDensity{FT}) where {FT<:AbstractFloat}
     _artn = "WD_2X_1Y_V1";
-    predownload_artifact(_artn, ARTIFACTs_TOML);
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
     _file = @artifact_str(_artn) * "/$(_artn).tif";
     _varn = "WD";
     _vara = Dict("longname" => "Wood density", "units" => "g cm⁻³");

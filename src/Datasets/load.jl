@@ -156,7 +156,7 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _data = ncread(FT, file, label);
+    _data = read_nc(FT, file, label);
 
     # reverse latitude
     if rev_lat
@@ -192,7 +192,7 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    _data = ncread(FT, file, label);
+    _data = read_nc(FT, file, label);
     data  = similar(_data);
 
     for _mon in 1:7
@@ -225,7 +225,7 @@ function load_LUT(
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
     # SIF data is stored differently
-    _dat  = ncread(FT, file, label);
+    _dat  = read_nc(FT, file, label);
     _size = size(_dat);
     _data = zeros(FT, (_size[2], _size[3], _size[1]));
     for i in 1:_size[1]
@@ -419,9 +419,9 @@ end
 
 
 function load_LUT(dt::VcmaxOptimalCiCa{FT}) where {FT<:AbstractFloat}
-    predownload_artifact("VMAX_CICA_2X_1Y_V1", ARTIFACTs_TOML);
+    predownload_artifact!("VMAX_CICA_2X_1Y_V1", ARTIFACTs_TOML);
     _file  = joinpath(artifact"VMAX_CICA_2X_1Y_V1", "VMAX_CICA_2X_1Y_V1.nc");
-    _Vcmax = ncread(FT, _file, "vcmax");
+    _Vcmax = read_nc(FT, _file, "vcmax");
 
     # note that lat of dataset does not start from -90 and end from 90
     # store the data into a new data array
