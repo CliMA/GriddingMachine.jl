@@ -35,8 +35,6 @@ function grid_RAW!(
             cache::String,
             mm::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    global MODIS_GRID_LAT, MODIS_GRID_LON;
-
     # transform the data to CSV file
     pos_start = findfirst(prefix, path);
     hv_string = path[pos_start[1]:end];
@@ -44,13 +42,12 @@ function grid_RAW!(
 
     # if file exists, skip
     if !isfile(outp_file)
-        h,v     = parse_HV(hv_string);
-        lat_mat = view(MODIS_GRID_LAT,h,v,:,:);
-        lon_mat = view(MODIS_GRID_LON,h,v,:,:);
+        h,v = parse_HV(hv_string);
+        lat_mat,lon_mat = load_MODIS(dt, h, v);
         dat_out = DataFrame();
         try
-            red_mat = ncread(FT, path, band[1]);
-            nir_mat = ncread(FT, path, band[2]);
+            red_mat = read_nc(FT, path, band[1]);
+            nir_mat = read_nc(FT, path, band[2]);
             dim_lon = size(red_mat,1);
             dim_lat = size(red_mat,2);
             (dat_out).lay = ones(Int, dim_lon * dim_lat) * nlayer;
@@ -66,8 +63,8 @@ function grid_RAW!(
                 if sum(_mask) > 0
                     (dat_out).lat[dim_lat*(i-1)+j] = lat_mat[i,j];
                     (dat_out).lon[dim_lat*(i-1)+j] = lon_mat[i,j];
-                    (dat_out).red[dim_lat*(i-1)+j] = mean(_data[_mask]);
-                    (dat_out).nir[dim_lat*(i-1)+j] = mean(_eata[_mask]);
+                    (dat_out).red[dim_lat*(i-1)+j] = nanmean(_data[_mask]);
+                    (dat_out).nir[dim_lat*(i-1)+j] = nanmean(_eata[_mask]);
                 end
             end
         catch e
@@ -82,7 +79,7 @@ function grid_RAW!(
 
         # save data
         mask = ((dat_out).red .> -1) .* ((dat_out).nir .> -1);
-        write(outp_file, dat_out[mask,:]);
+        save_csv!(outp_file, dat_out[mask,:]);
     end
 
     return nothing
@@ -100,8 +97,6 @@ function grid_RAW!(
             cache::String,
             mm::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    global MODIS_GRID_LAT, MODIS_GRID_LON;
-
     # transform the data to CSV file
     pos_start = findfirst(prefix, path);
     hv_string = path[pos_start[1]:end];
@@ -109,12 +104,11 @@ function grid_RAW!(
 
     # if file exists, skip
     if !isfile(outp_file)
-        h,v     = parse_HV(hv_string);
-        lat_mat = view(MODIS_GRID_LAT,h,v,:,:);
-        lon_mat = view(MODIS_GRID_LON,h,v,:,:);
+        h,v = parse_HV(hv_string);
+        lat_mat,lon_mat = load_MODIS(dt, h, v);
         dat_out = DataFrame();
         try
-            lai_mat = ncread(FT, path, band);
+            lai_mat = read_nc(FT, path, band);
             dim_lon = size(lai_mat,1);
             dim_lat = size(lai_mat,2);
             (dat_out).lay = ones(Int, dim_lon * dim_lat) * nlayer;
@@ -127,7 +121,7 @@ function grid_RAW!(
                 if sum(_mask) > 0
                     (dat_out).lat[dim_lat*(i-1)+j] = lat_mat[i,j];
                     (dat_out).lon[dim_lat*(i-1)+j] = lon_mat[i,j];
-                    (dat_out).lai[dim_lat*(i-1)+j] = mean(_data[_mask]);
+                    (dat_out).lai[dim_lat*(i-1)+j] = nanmean(_data[_mask]);
                 end
             end
         catch e
@@ -141,7 +135,7 @@ function grid_RAW!(
 
         # save data
         mask = ((dat_out).lai .> -1);
-        write(outp_file, dat_out[mask,:]);
+        save_csv!(outp_file, dat_out[mask,:]);
     end
 
     return nothing
@@ -154,9 +148,6 @@ function grid_RAW!(
             dt::AbstractUngriddedData{FT},
             params::Array{Any,1}
 ) where {FT<:AbstractFloat}
-    # load MODIS grid infomation
-    load_MODIS!(dt);
-
     # run the gridding process
     @info "Gridding RAW data..."
     @showprogress for param in params
@@ -176,9 +167,6 @@ function grid_RAW!(
 ) where {FT<:AbstractFloat}
     # create threads
     dynamic_workers!(nthread);
-
-    # load MODIS grid infomation
-    @everywhere load_MODIS!($dt);
 
     # run the gridding process
     @info "Gridding RAW data..."

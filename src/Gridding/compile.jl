@@ -45,7 +45,7 @@ function compile_RAW!(
         # iterate through files
         for _file in files
             if isfile(_file)
-                _data = DataFrame(File(_file));
+                _data = read_csv(_file);
                 for i in eachindex((_data).lat)
                     _lat = lat_ind(_data.lat[i]; res=res_lat);
                     _lon = lon_ind(_data.lon[i]; res=res_lon);
@@ -86,7 +86,7 @@ function compile_RAW!(
         # iterate through files
         for _file in files
             if isfile(_file)
-                _data = DataFrame(File(_file));
+                _data = read_csv(_file);
                 for i in eachindex((_data).lat)
                     _lat = lat_ind(_data.lat[i]; res=res_lat);
                     _lon = lon_ind(_data.lon[i]; res=res_lon);
@@ -156,7 +156,7 @@ function compile_RAW!(
     if !isfile(_file)
         _data = zeros(FT, (360*zooms,180*zooms,length(date_list)));
         for i in eachindex(date_list)
-            view(_data,:,:,i) .= ncread(FT, new_params[i][5], "Var");
+            view(_data,:,:,i) .= read_nc(FT, new_params[i][5], "Var");
         end
         save_LUT!(_data, _file, "NIRv", _attr);
     end
@@ -215,7 +215,7 @@ function compile_RAW!(
     if !isfile(_file)
         _data = zeros(FT, (360*zooms,180*zooms,length(date_list)));
         for i in eachindex(date_list)
-            view(_data,:,:,i) .= ncread(FT, new_params[i][5], "Var");
+            view(_data,:,:,i) .= read_nc(FT, new_params[i][5], "Var");
         end
         save_LUT!(_data, _file, "LAI", _attr);
     end

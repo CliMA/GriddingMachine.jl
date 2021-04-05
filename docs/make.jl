@@ -31,7 +31,7 @@ if gen_preview
 end
 
 @info "Pages to generate:"
-pretty_display(pages);
+pretty_display!(pages);
 
 
 
@@ -67,7 +67,7 @@ makedocs(
 
 
 # function to replace strings (copied from Yujie-W/PAGES)
-# move to PkgUtility.jl later
+# TODO move to PkgUtility.jl later
 function replace_html(file_name::String)
     list_str   = readlines(file_name);
     file_write = open(file_name, "w");
