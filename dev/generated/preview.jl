@@ -116,6 +116,9 @@ NPP_LUT = load_LUT(NPPModis{FT}(), 1);
 NPP_LUT.data .*= 1e9;
 preview_data(NPP_LUT, 1)
 
+SCC_LUT = load_LUT(SoilColor{FT}(), 1);
+preview_data(SCC_LUT, 1)
+
 VGA_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y", 1);
 anim = @animate for i ∈ 1:4
     preview_data(VGA_LUT, i);
