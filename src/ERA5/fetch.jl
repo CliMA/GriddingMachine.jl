@@ -332,8 +332,6 @@ const ERA5_SINGLE_LEVELS_SELECTION =[
             "10m_v_component_of_wind",
             "2m_dewpoint_temperature",
             "2m_temperature",
-            "leaf_area_index_high_vegetation",
-            "leaf_area_index_low_vegetation",
             "mean_surface_direct_short_wave_radiation_flux",
             "mean_surface_downward_short_wave_radiation_flux",
             "skin_temperature",

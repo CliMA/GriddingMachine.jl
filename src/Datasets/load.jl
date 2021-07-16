@@ -244,6 +244,48 @@ end
 
 
 function load_LUT(
+            dt::SoilColor{FT},
+            file::String,
+            format::FormatNC,
+            label::String,
+            res_t::String,
+            rev_lat::Bool,
+            var_name::String,
+            var_attr::Dict{String,String},
+            var_lims::Array{FT,1}
+) where {FT<:AbstractFloat}
+    # soil color data is stored differently
+    _data = read_nc(FT, file, label);
+
+    # reverse latitude
+    if rev_lat
+        _data = _data[:,end:-1:1,:];
+    end
+
+    # convert data to 3D array
+    if length(size(_data)) == 2
+        data = cat(_data; dims=3);
+    else
+        data = _data;
+    end
+
+    # flip the longitude by 180 degrees
+    eata = similar(data);
+    eata[1:360,:,:] .= data[361:720,:,1];
+    eata[361:720,:,:] .= data[1:360,:,1];
+
+    return GriddedDataset{FT}(data     = eata    ,
+                              lims     = var_lims,
+                              res_time = res_t   ,
+                              dt       = dt      ,
+                              var_name = var_name,
+                              var_attr = var_attr)
+end
+
+
+
+
+function load_LUT(
             dt::AbstractDataset{FT},
             file::String,
             format::FormatTIFF,

@@ -1,7 +1,7 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 authors = ["Climate Modeling Alliance"]
-version = "0.1.6"
+version = "0.1.7"
 
 [deps]
 ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
@@ -21,7 +21,7 @@ UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
 [compat]
 ArchGDAL = "0.5, 0.6"
 Conda = "1.5"
-DataFrames = "0.21, 0.22"
+DataFrames = "0.22,1"
 DocStringExtensions = "0.8"
 Glob = "1.3"
 PkgUtility = "0.1.9"

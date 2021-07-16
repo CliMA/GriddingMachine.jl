@@ -461,6 +461,19 @@ end
 
 
 
+function query_LUT(dt::SoilColor{FT}) where {FT<:AbstractFloat}
+    _artn = "SC_2X_1Y_V1";
+    predownload_artifact!(_artn, ARTIFACTs_TOML);
+    _file = @artifact_str(_artn) * "/$(_artn).nc";
+    _varn = "SC";
+    _vara = Dict("longname" => "Soil color class", "units" => "-");
+
+    return _file, FormatNC(), "soil_color", "1Y", false, _varn, _vara, FT[1,20]
+end
+
+
+
+
 function query_LUT(
             dt::TreeDensity{FT},
             res_g::String,

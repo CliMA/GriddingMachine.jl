@@ -2710,6 +2710,14 @@ lazy = true
     sha256 = "4f1eec019a1ace2cc3273fa7fbc70c43c13026d8a0c0280ecfa3020b5b001902"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/RIVER_4X_1Y_V1.tar.gz"
 
+[SC_2X_1Y_V1]
+git-tree-sha1 = "a4cf700e688b447debfab61226a5f49ea115c2ca"
+lazy = true
+
+    [[SC_2X_1Y_V1.download]]
+    sha256 = "d0ecb96807282b900c7b3ec7f57f797b465eddc2fe2a6578796426160bd1bb22"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/SC_2X_1Y_V1.tar.gz"
+
 [SIF740_TROPOMI_12X_8D_2018_V1]
 git-tree-sha1 = "f46c5208369ca0325befd4790e053a6d9a004eee"
 lazy = true

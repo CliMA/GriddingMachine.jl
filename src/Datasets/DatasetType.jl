@@ -565,6 +565,33 @@ struct SIFTropomi740DC{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct SoilColor{FT}
+
+<details>
+<summary>
+Struct for soi color
+[Link to Dataset Source](https://doi.org/10.1038/nature14967)
+</summary>
+
+```
+@article{lawrence2007representing,
+	author = {Lawrence, Peter J and Chase, Thomas N},
+	year = {2007},
+	title = {Representing a new MODIS consistent land surface in the Community
+        Land Model (CLM 3.0)},
+	journal = {Journal of Geophysical Research: Biogeosciences},
+	volume = {112},
+	pages = {G01023}
+}
+```
+</details>
+"""
+struct SoilColor{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct TreeDensity{FT}
 
 <details>

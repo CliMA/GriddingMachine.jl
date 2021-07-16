@@ -46,6 +46,7 @@ end
     TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");      @test true;
     TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M");   @test true;
     TMP_LUT = load_LUT(SIFTropomi740DC{FT}(), 2018, "1X", "1M"); @test true;
+    TMP_LUT = load_LUT(SoilColor{FT}());                         @test true;
     TMP_LUT = load_LUT(VGMAlphaJules{FT}(), "12X", "1Y");        @test true;
     TMP_LUT = load_LUT(VGMLogNJules{FT}(), "12X", "1Y");         @test true;
     TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");       @test true;

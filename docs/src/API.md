@@ -64,6 +64,7 @@ NIRoAvhrr
 NIRvAvhrr
 NPPModis
 SIFTropomi740
+SoilColor
 TreeDensity
 VGMAlphaJules
 VGMLogNJules
@@ -202,17 +203,17 @@ dynamic_workers!
 However, because the MODIS tile information file is very large (e.g., 500 m
     resolution tile infomation takes up to >40 GB memory to load), the tile
     matricies (for both latitude and longitude) will not be loaded a priori. To
-    load the tile matricies, you will need to call `load_MODIS!` function
+    load the tile matricies, you will need to call `load_MODIS` function
     manually,
 
 ```@docs
-load_MODIS!
+load_MODIS
 ```
 
 Note that, if you want to load the matricies in every thread, you will need
-    command like `@everywhere load_MODIS!(MOD15A2Hv006LAI{Float32}())`. What it
+    command like `@everywhere load_MODIS(MOD15A2Hv006LAI{Float32}())`. What it
     does is loading 500 m resolution tiles information to every thread
-    (worker). If you pass a 1 km data set type to `load_MODIS!`, it will load
+    (worker). If you pass a 1 km data set type to `load_MODIS`, it will load
     1 km resolution tiles information automatically, you don't need to worry
     about it. However, be cautious to use corresponding tile information for
     your project.
