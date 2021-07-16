@@ -4,7 +4,7 @@
 #
 ###############################################################################
 """
-    load_MODIS!(dt::AbstractUngriddedData) where {FT<:AbstractFloat}
+    load_MODIS(dt::AbstractUngriddedData) where {FT<:AbstractFloat}
 
 Prepare parameters (file name and etc) to work on, given
 - `dt` [`AbstractUngriddedData`](@ref) type ungridded data type
