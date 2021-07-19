@@ -63,6 +63,7 @@ NDVIAvhrr
 NIRoAvhrr
 NIRvAvhrr
 NPPModis
+PFTPercentCLM
 SIFTropomi740
 SoilColor
 TreeDensity

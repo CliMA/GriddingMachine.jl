@@ -507,6 +507,16 @@ struct NPPModis{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct PFTPercentCLM{FT}
+
+Struct for Plant Function Type Fractions from CLM
+"""
+struct PFTPercentCLM{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct SIFTropomi740{FT}
 
 <details>
@@ -569,7 +579,7 @@ struct SIFTropomi740DC{FT} <: AbstractDataset{FT} end
 
 <details>
 <summary>
-Struct for soi color
+Struct for soil color
 [Link to Dataset Source](https://doi.org/10.1038/nature14967)
 </summary>
 

@@ -244,7 +244,7 @@ end
 
 
 function load_LUT(
-            dt::SoilColor{FT},
+            dt::Union{PFTPercentCLM{FT},SoilColor{FT}},
             file::String,
             format::FormatNC,
             label::String,
@@ -254,7 +254,7 @@ function load_LUT(
             var_attr::Dict{String,String},
             var_lims::Array{FT,1}
 ) where {FT<:AbstractFloat}
-    # soil color data is stored differently
+    # CLM data is stored differently
     _data = read_nc(FT, file, label);
 
     # reverse latitude
@@ -271,8 +271,8 @@ function load_LUT(
 
     # flip the longitude by 180 degrees
     eata = similar(data);
-    eata[1:360,:,:] .= data[361:720,:,1];
-    eata[361:720,:,:] .= data[1:360,:,1];
+    eata[1:360,:,:] .= data[361:720,:,:];
+    eata[361:720,:,:] .= data[1:360,:,:];
 
     return GriddedDataset{FT}(data     = eata    ,
                               lims     = var_lims,

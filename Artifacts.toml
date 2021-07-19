@@ -46,6 +46,14 @@ lazy = true
     sha256 = "36205d4c73c015142dd28cb6767993ed281cf4941fb96c8784c3bc4d1f3d27d5"
     url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CI_PFT_2X_1Y_V1.tar.gz"
 
+[CLM_2X_1Y_V1]
+git-tree-sha1 = "5ced02d255c397d13df6866a69a91d4413f4577b"
+lazy = true
+
+    [[CLM_2X_1Y_V1.download]]
+    sha256 = "58d6b71134fbe40d342b18a9b49e5d39735029043b1008c5ae02b4e8638a8fa5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/CLM_2X_1Y_V1.tar.gz"
+
 [GPP_MPI_2X_1M_2001_V1]
 git-tree-sha1 = "9ab408e3e2bb93a6a554324af4c1dd3313841eb6"
 lazy = true

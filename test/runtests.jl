@@ -44,6 +44,7 @@ end
     TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M");      @test true;
     TMP_LUT = load_LUT(GPPMPIv006{FT}(), 2005, "2X", "1M", 1);   @test true;
     TMP_LUT = load_LUT(GPPVPMv20{FT}() , 2005, "5X", "8D");      @test true;
+    TMP_LUT = load_LUT(PFTPercentCLM{FT}());                     @test true;
     TMP_LUT = load_LUT(SIFTropomi740{FT}(), 2018, "1X", "1M");   @test true;
     TMP_LUT = load_LUT(SIFTropomi740DC{FT}(), 2018, "1X", "1M"); @test true;
     TMP_LUT = load_LUT(SoilColor{FT}());                         @test true;
