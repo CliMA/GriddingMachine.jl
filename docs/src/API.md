@@ -66,6 +66,7 @@ NPPModis
 PFTPercentCLM
 SIFTropomi740
 SoilColor
+SurfaceAreaCLM
 TreeDensity
 VGMAlphaJules
 VGMLogNJules

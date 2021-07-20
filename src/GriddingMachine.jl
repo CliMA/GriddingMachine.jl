@@ -37,8 +37,8 @@ export CanopyHeightBoonman, CanopyHeightGLAS, ClumpingIndexMODIS,
        LAIMonthlyMean, LandMaskERA5, LeafNitrogenBoonman, LeafNitrogenButler,
        LeafPhosphorus, LeafSLABoonman, LeafSLAButler, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
-       SoilColor, TreeDensity, VcmaxOptimalCiCa, VGMAlphaJules, VGMLogNJules,
-       VGMThetaRJules, VGMThetaSJules, WoodDensity
+       SoilColor, SurfaceAreaCLM, TreeDensity, VcmaxOptimalCiCa, VGMAlphaJules,
+       VGMLogNJules, VGMThetaRJules, VGMThetaSJules, WoodDensity
 
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI

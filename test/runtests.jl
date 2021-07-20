@@ -52,15 +52,15 @@ end
     TMP_LUT = load_LUT(VGMThetaRJules{FT}(), "12X", "1Y");       @test true;
     TMP_LUT = load_LUT(VGMThetaSJules{FT}(), "12X", "1Y");       @test true;
 
-    read_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
-    read_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
+    read_LUT(CLI_PFT, FT(30), FT(115), 2);                       @test true;
+    read_LUT(SLA_LUT, FT(30), FT(115));                          @test true;
     read_LUT(CLI_PFT, (FT(30),FT(40)), (FT(80),FT(115)), (1,5)); @test true;
-    read_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115))       ); @test true;
+    read_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115)));        @test true;
 
-    view_LUT(CLI_PFT, FT(30), FT(115), 2); @test true;
-    view_LUT(SLA_LUT, FT(30), FT(115)   ); @test true;
+    view_LUT(CLI_PFT, FT(30), FT(115), 2);                       @test true;
+    view_LUT(SLA_LUT, FT(30), FT(115));                          @test true;
     view_LUT(CLI_PFT, (FT(30),FT(40)), (FT(80),FT(115)), (1,5)); @test true;
-    view_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115))       ); @test true;
+    view_LUT(SLA_LUT, (FT(30),FT(40)), (FT(80),FT(115)));        @test true;
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.free_memory() / 2^30) > 100
@@ -69,7 +69,8 @@ end
         TMP_LUT = load_LUT(NIRoAvhrr{FT}(), 2018, "20X", "1M");     @test true;
         TMP_LUT = load_LUT(NIRvAvhrr{FT}(), 2018, "20X", "1M");     @test true;
         TMP_LUT = load_LUT(TreeDensity{FT}(), "120X", "1Y");        @test true;
-        TMP_LUT = load_LUT(PFTPercentCLM{FT}());                     @test true;
+        TMP_LUT = load_LUT(PFTPercentCLM{FT}());                    @test true;
+        TMP_LUT = load_LUT(SurfaceAreaCLM{FT}());                   @test true;
     end
     TMP_LUT = nothing;
     CLI_PFT = nothing;

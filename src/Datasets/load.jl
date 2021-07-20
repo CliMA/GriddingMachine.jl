@@ -75,6 +75,25 @@ end
 
 
 function load_LUT(
+            dt::SurfaceAreaCLM{FT},
+            g_zoom::Int;
+            nan_weight::Bool = false
+) where {FT<:AbstractFloat}
+    ds  = load_LUT(dt);
+    mask_LUT!(ds);
+    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
+                     nan_weight=nan_weight);
+
+    # surface area adds up
+    rds.data .*= (Int(size(ds.data,1)/360/g_zoom))^2;
+
+    return rds
+end
+
+
+
+
+function load_LUT(
             dt::AbstractDataset{FT},
             res_g::String,
             res_t::String,

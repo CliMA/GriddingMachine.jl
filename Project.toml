@@ -1,7 +1,7 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 authors = ["Climate Modeling Alliance"]
-version = "0.1.8"
+version = "0.1.9"
 
 [deps]
 ArchGDAL = "c9ce4bd3-c3d5-55b8-8973-c0e20141b8c3"
