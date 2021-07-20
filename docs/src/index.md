@@ -64,6 +64,8 @@ to reach the original data owner on their own.
 | NIRoAvhrr           | NIRv with offset from AVHRR        | 20X-1M      | 1981-2020 | regridded                 | NetCDF | Yujie Wang       | Yes            |
 | NIRvAvhrr           | NIRv from AVHRR                    | 20X-1M      | 1981-2020 | regridded                 | NetCDF | Yujie Wang       | Yes            |
 | NPPModis            | Net primary productivity           |             |           |                           |        |                  |                |
+| PFTPercentCLM       | PFT percentage in a pixel          | 2X-1Y       | NS        | Lawrence and Chase (2007) | NetCDF | Renato Braghiere | Yes            |
+|                     |                                    |             |           | regridded                 |        | Yujie Wang       | Yes            |
 | SoilColor           | Soil color classes                 | 2X-1Y       | NS        | Lawrence and Chase (2007) | NetCDF | Renato Braghiere | Yes            |
 |                     |                                    |             |           | regridded                 |        | Yujie Wang       | Yes            |
 | TreeDensity         | Tree number per area               | 120X-1Y     | NS        | Crowther et al. (2015)    | TIFF   | Renato Braghiere | Yes            |
