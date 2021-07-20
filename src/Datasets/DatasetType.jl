@@ -507,6 +507,33 @@ struct NPPModis{FT} <: AbstractDataset{FT} end
 
 
 """
+    struct PFTPercentCLM{FT}
+
+<details>
+<summary>
+Struct for Plant Function Type Fractions from CLM
+[Link to Dataset Source](https://doi.org/10.1038/nature14967)
+</summary>
+
+```
+@article{lawrence2007representing,
+	author = {Lawrence, Peter J and Chase, Thomas N},
+	year = {2007},
+	title = {Representing a new MODIS consistent land surface in the Community
+        Land Model (CLM 3.0)},
+	journal = {Journal of Geophysical Research: Biogeosciences},
+	volume = {112},
+	pages = {G01023}
+}
+```
+</details>
+"""
+struct PFTPercentCLM{FT} <: AbstractDataset{FT} end
+
+
+
+
+"""
     struct SIFTropomi740{FT}
 
 <details>
@@ -569,7 +596,7 @@ struct SIFTropomi740DC{FT} <: AbstractDataset{FT} end
 
 <details>
 <summary>
-Struct for soi color
+Struct for soil color
 [Link to Dataset Source](https://doi.org/10.1038/nature14967)
 </summary>
 
