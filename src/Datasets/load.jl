@@ -233,7 +233,7 @@ end
 
 
 function load_LUT(
-            dt::SIFTropomi740{FT},
+            dt::Union{SIFTropomi740{FT},SIFTropomi740DC{FT}},
             file::String,
             format::FormatNC,
             label::String,
