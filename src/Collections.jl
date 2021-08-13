@@ -54,13 +54,13 @@ function query_collection end
 
 
 """
-    query_collection(ds::VcmaxCollection, version::String = "2X_1Y_V1")
+    query_collection(ds::VcmaxCollection, version::String)
 
 This method queries the Vcmax dataset localtion from collection, given
 - `ds` [`VcmaxCollection`](@ref) type collection
 - `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
 """
-query_collection(ds::VcmaxCollection, version::String = "2X_1Y_V1") = (
+query_collection(ds::VcmaxCollection, version::String) = (
     # make sure requested version is in the
     @assert version in ds.SUPPORTED_COMBOS;
 

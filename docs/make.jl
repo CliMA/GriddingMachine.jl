@@ -16,7 +16,7 @@ pages = Pair{Any,Any}[
 
 
 # add preview pages
-gen_preview = true;
+gen_preview = false;
 gen_dir     = joinpath(@__DIR__, "src/generated");
 rm(gen_dir, force=true, recursive=true);
 mkpath(gen_dir);
