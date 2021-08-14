@@ -6,7 +6,7 @@ using LazyArtifacts
 
 
 # export public types
-export VcmaxCollection
+export GriddedCollection, VcmaxCollection
 
 
 # export public functions
@@ -17,59 +17,78 @@ export query_collection
 """
 $(TYPEDEF)
 
-Abstract type for gridded dataset collections.
-"""
-abstract type AbstractCollection end
-
-
-"""
-$(TYPEDEF)
-
-Structure for Vcmax collection
+Structure for general gridded dataset collection.
 
 # Fields
 $(TYPEDFIELDS)
 
 ---
 # Examples
-vcmax_collection = VcmaxCollection();
+vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
 """
-struct VcmaxCollection <: AbstractCollection
+struct GriddedCollection
     "Artifact label name"
     LABEL::String
     "Supported combinations"
     SUPPORTED_COMBOS::Vector{String}
-
-    # constructors
-    VcmaxCollection() = new("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
 end
 
 
+# constructors for GriddedCollection
 """
-Query the data from Julia Artifacts. Supported methods are
+    VcmaxCollection()
 
-$(METHODLIST)
+<details>
+<summary>
+Method to create a general dataset collection for Vcmax. Supported datasets are (click to view bibtex items)
+- 2X_1Y_V1 [(Smith et al., 2019)](https://doi.org/10.1111/ele.13210)
+- 2X_1Y_V2 [(Luo et al., 2019)](https://doi.org/10.1038/s41467-021-25163-9)
+</summary>
+
+```
+@article{smith2019global,
+    author = {Smith, Nicholas G. and Keenan, Trevor F. and Prentice, I. Colin and Wang, Han and Wright, Ian J. and Niinemets, Ülo and
+              Crous, Kristine Y. and Domingues, Tomas F. and Guerrieri, Rossella and {Yoko Ishida}, F. and Zhou, Shuangxi},
+    year = {2019},
+    title = {Global photosynthetic capacity is optimized to the environment},
+    journal = {Ecology Letters},
+    volume = {22},
+    number = {3},
+    pages = {506–517}
+}
+@article{luo2021global,
+	author = {Luo, Xiangzhong and Keenan, Trevor F. and Chen, Jing M. and Croft, Holly and {Colin Prentice}, I. and Smith, Nicholas G. and
+              Walker, Anthony P. and Wang, Han and Wang, Rong and Xu, Chonggang and Zhang, Yao},
+	year = {2021},
+	title = {Global variation in the fraction of leaf nitrogen allocated to photosynthesis},
+	journal = {Nature Communications},
+	volume = {12},
+	number = {1},
+	pages = {4866}
+}
+```
+</details>
 """
-function query_collection end
+VcmaxCollection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
 
 
+# query file from gridded collections
 """
-    query_collection(ds::VcmaxCollection, version::String)
+    query_collection(ds::GriddedCollection, version::String)
 
 This method queries the Vcmax dataset localtion from collection, given
-- `ds` [`VcmaxCollection`](@ref) type collection
+- `ds` [`GriddedCollection`](@ref) type collection
 - `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
 """
-query_collection(ds::VcmaxCollection, version::String) = (
+function query_collection(ds::GriddedCollection, version::String)
     # make sure requested version is in the
     @assert version in ds.SUPPORTED_COMBOS;
 
-    # query file via file name
-    _fn   = "$(ds.LABEL)_$(version)";
-    _file = @artifact_str(_fn) * "/$(_fn).nc";
+    # determine file name from label and supported version
+    _fn = "$(ds.LABEL)_$(version)";
 
-    return _file
-)
+    return @artifact_str(_fn) * "/$(_fn).nc";
+end
 
 
 end

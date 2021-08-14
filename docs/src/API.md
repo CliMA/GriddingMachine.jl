@@ -8,12 +8,11 @@ CurrentModule = GriddingMachine
 
 ### Gridded datasets
 ```@docs
-Collections.AbstractCollection
+Collections.GriddedCollection
 Collections.VcmaxCollection
 ```
 
 ### Query gridded datasets
 ```@docs
 Collections.query_collection
-Collections.query_collection(ds::Collections.VcmaxCollection, version::String)
 ```
