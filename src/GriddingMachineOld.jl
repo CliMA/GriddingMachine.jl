@@ -14,8 +14,7 @@ using DataFrames: DataFrame
 using Distributed: @everywhere, addprocs, pmap, rmprocs, workers
 using DocStringExtensions: FIELDS
 using Glob: glob
-using PkgUtility: month_days, nanmean, predownload_artifact!, read_csv,
-            read_nc, save_csv!, save_nc!
+using PkgUtility: month_days, nanmean, predownload_artifact!, read_csv, read_nc, save_csv!, save_nc!
 using ProgressMeter: @showprogress
 using PyCall: pyimport
 using UnPack: @unpack
@@ -40,9 +39,9 @@ MODIS_USER_PWD = "";
 export CanopyHeightBoonman, CanopyHeightGLAS, ClumpingIndexMODIS,
        ClumpingIndexPFT, GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
        LAIMonthlyMean, LandMaskERA5, LeafNitrogenBoonman, LeafNitrogenButler,
-       LeafPhosphorus, LeafSLABoonman, LeafSLAButler, NDVIAvhrr, NIRoAvhrr,
+       LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
-       SoilColor, SurfaceAreaCLM, TreeDensity, VcmaxOptimalCiCa, VGMAlphaJules,
+       SoilColor, SurfaceAreaCLM, TreeDensity, VGMAlphaJules,
        VGMLogNJules, VGMThetaRJules, VGMThetaSJules, WoodDensity
 
 # export public types for UngriddedDataset

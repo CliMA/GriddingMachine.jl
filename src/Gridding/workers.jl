@@ -31,7 +31,7 @@ function dynamic_workers!(nthread::Int)
     end
 
     # load the module into each worker
-    @everywhere Base.MainInclude.eval(using GriddingMachine);
+    @everywhere Base.MainInclude.eval(using GriddingMachineOld);
 
     return nothing
 end

@@ -9,6 +9,7 @@ CurrentModule = GriddingMachine
 ### Gridded datasets
 ```@docs
 Collections.GriddedCollection
+Collections.SLACollection
 Collections.VcmaxCollection
 ```
 

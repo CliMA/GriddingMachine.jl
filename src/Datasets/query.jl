@@ -260,35 +260,6 @@ end
 
 
 
-function query_LUT(dt::LeafSLAButler{FT}) where {FT<:AbstractFloat}
-    _artn = "SLA_2X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "SLA";
-    _vara = Dict("longname" => "Specific leaf area",
-                 "units" => "m² kg⁻¹");
-
-    return _file, FormatNC(), "specific_leaf_area_mean", "1Y", false,
-           _varn, _vara, FT[eps(FT),100]
-end
-
-
-
-
-function query_LUT(dt::LeafSLABoonman{FT}) where {FT<:AbstractFloat}
-    _artn = "SLA_2X_1Y_V2";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "SLA";
-    _vara = Dict("longname" => "Specific leaf area",
-                 "units" => "m² kg⁻¹");
-
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),100]
-end
-
-
-
-
 function query_LUT(
             dt::NDVIAvhrr{FT},
             year::Int,
