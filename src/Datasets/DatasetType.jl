@@ -147,64 +147,6 @@ struct LeafPhosphorus{FT} <: AbstractDataset{FT} end
 #
 ###############################################################################
 """
-    struct CanopyHeightBoonman{FT}
-
-<details>
-<summary>
-Struct for canopy height from GLAS ICESat
-[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
-</summary>
-
-```
-@article{boonman2020assessing,
-    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
-        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
-        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
-        Wesley N and Higuchi, Pedro and others},
-    year = {2020},
-    title = {Assessing the reliability of predicted plant trait distributions
-        at the global scale},
-    journal = {Global Ecology and Biogeography},
-    volume = {29},
-    number = {6},
-    pages = {1034--1051}
-}
-```
-</details>
-"""
-struct CanopyHeightBoonman{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
-    struct CanopyHeightGLAS{FT}
-
-<details>
-<summary>
-Struct for canopy height from GLAS ICESat
-[Link to Dataset Source](https://doi.org/10.1029/2011JG001708)
-</summary>
-
-```
-@article{simard2011mapping,
-    author = {Simard, Marc and Pinto, Naiara and Fisher, Joshua B and Baccini,
-        Alessandro},
-    year = {2011},
-    title = {Mapping forest canopy height globally with spaceborne lidar},
-    journal = {Journal of Geophysical Research: Biogeosciences},
-    volume = {116},
-    number = {G4021}
-}
-```
-</details>
-"""
-struct CanopyHeightGLAS{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct ClumpingIndexMODIS{FT}
 
 <details>

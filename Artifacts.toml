@@ -1,3 +1,19 @@
+[CH_20X_1Y_V1]
+git-tree-sha1 = "8e82b3b97603651740df68ff493cb497c6f7b486"
+lazy = true
+
+    [[CH_20X_1Y_V1.download]]
+    sha256 = "e77f694838765d86998bf1fcd8a0d4784924b7b4fa79dd608b9297b0872b0d6d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/CH_20X_1Y_V1.tar.gz"
+
+[CH_2X_1Y_V2]
+git-tree-sha1 = "031f34db3ce1921a723d8e4151ee6c6fe5566714"
+lazy = true
+
+    [[CH_2X_1Y_V2.download]]
+    sha256 = "850f732d9c7bf9ab462c61acf12ad0f261503db55f78e9debd52072c2f14df47"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/CH_2X_1Y_V2.tar.gz"
+
 [SLA_2X_1Y_V1]
 git-tree-sha1 = "3c4e1ac76e251a89d2459b7c6b03b9eee7ba15b2"
 lazy = true

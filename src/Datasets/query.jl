@@ -31,33 +31,6 @@ Return the following:
 - Variable attribute of gridded data
 - Variable range limits (beyond which NaN ought to apply)
 """
-function query_LUT(dt::CanopyHeightBoonman{FT}) where {FT<:AbstractFloat}
-    _artn = "CH_2X_1Y_V2";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "CH";
-    _vara = Dict("longname" => "Canopy height", "units" => "m");
-
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),200]
-end
-
-
-
-
-function query_LUT(dt::CanopyHeightGLAS{FT}) where {FT<:AbstractFloat}
-    _artn = "CH_20X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "CH";
-    _vara = Dict("longname" => "Canopy height", "units" => "m");
-
-    return _file, FormatNC(), "Band1", "1Y", false, _varn, _vara,
-           FT[eps(FT),200]
-end
-
-
-
-
 function query_LUT(
             dt::ClumpingIndexMODIS{FT},
             res_g::String,

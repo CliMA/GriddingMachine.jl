@@ -339,41 +339,6 @@ end
 
 
 function load_LUT(
-            dt::CanopyHeightBoonman{FT},
-            file::String,
-            format::FormatTIFF,
-            label::Int,
-            res_t::String,
-            rev_lat::Bool,
-            var_name::String,
-            var_attr::Dict{String,String},
-            var_lims::Array{FT,1}
-) where {FT<:AbstractFloat}
-    _tiff = ArchGDAL.read(file);
-    _band = ArchGDAL.getband(_tiff, label);
-    _data = convert(Matrix{FT}, ArchGDAL.read(_band));
-
-    # reverse latitude
-    if rev_lat
-        _data = _data[:,end:-1:1,:];
-    end
-
-    # filter data
-    tata = cat(_data; dims=3);
-    data = 10 .^ tata;
-
-    return GriddedDataset{FT}(data     = data    ,
-                              lims     = var_lims,
-                              res_time = res_t   ,
-                              dt       = dt      ,
-                              var_name = var_name,
-                              var_attr = var_attr)
-end
-
-
-
-
-function load_LUT(
             dt::ClumpingIndexMODIS{FT},
             file::String,
             format::FormatTIFF,

@@ -5,8 +5,9 @@ using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
 
 
-# export public types
-export GriddedCollection, SLACollection, VcmaxCollection
+# export public types and constructors
+export GriddedCollection
+export CanopyHeightCollection, SpecificLeafAreaCollection, VcmaxCollection
 
 
 # export public functions
@@ -24,7 +25,9 @@ $(TYPEDFIELDS)
 
 ---
 # Examples
+```julia
 vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
+```
 """
 struct GriddedCollection
     "Artifact label name"
@@ -36,7 +39,42 @@ end
 
 # constructors for GriddedCollection
 """
-    SLACollection()
+    CanopyHeightCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for canopy height. Supported datasets are (click to view bibtex items)
+- 20X_1Y_V1 [(Simard et al., 2017)](https://doi.org/10.1029/2011JG001708)
+- 2X_1Y_V2 [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{simard2011mapping,
+    author = {Simard, Marc and Pinto, Naiara and Fisher, Joshua B and Baccini, Alessandro},
+    year = {2011},
+    title = {Mapping forest canopy height globally with spaceborne lidar},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {116},
+    number = {G4021}
+}
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper, Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno EL and Cornelissen, Johannes HC and
+              Gonzalez-Melo, Andres and Hattingh, Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+CanopyHeightCollection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"]);
+
+
+"""
+    SpecificLeafAreaCollection()
 
 <details>
 <summary>
@@ -69,7 +107,7 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
 ```
 </details>
 """
-SLACollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"]);
+SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"]);
 
 
 """
