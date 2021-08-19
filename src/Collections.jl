@@ -34,6 +34,8 @@ struct GriddedCollection
     LABEL::String
     "Supported combinations"
     SUPPORTED_COMBOS::Vector{String}
+    "Default combination"
+    DEFAULT_COMBO::String
 end
 
 
@@ -44,7 +46,7 @@ end
 <details>
 <summary>
 Method to create a general dataset collection for canopy height. Supported datasets are (click to view bibtex items)
-- 20X_1Y_V1 [(Simard et al., 2017)](https://doi.org/10.1029/2011JG001708)
+- 20X_1Y_V1 [(Simard et al., 2011)](https://doi.org/10.1029/2011JG001708)
 - 2X_1Y_V2 [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
 </summary>
 
@@ -70,7 +72,7 @@ Method to create a general dataset collection for canopy height. Supported datas
 ```
 </details>
 """
-CanopyHeightCollection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"]);
+CanopyHeightCollection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"], "20X_1Y_V1");
 
 
 """
@@ -107,7 +109,7 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
 ```
 </details>
 """
-SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"]);
+SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
 
 
 """
@@ -144,18 +146,27 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
 ```
 </details>
 """
-VcmaxCollection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
+VcmaxCollection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
 
 
 # query file from gridded collections
 """
+This function queries data path for a dataset, supported methods are
+
+$(METHODLIST)
+
+"""
+function query_collection end
+
+
+"""
     query_collection(ds::GriddedCollection, version::String)
 
-This method queries the Vcmax dataset localtion from collection, given
+This method queries the local data path from collection, given
 - `ds` [`GriddedCollection`](@ref) type collection
 - `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
 """
-function query_collection(ds::GriddedCollection, version::String)
+query_collection(ds::GriddedCollection, version::String) = (
     # make sure requested version is in the
     @assert version in ds.SUPPORTED_COMBOS;
 
@@ -163,7 +174,16 @@ function query_collection(ds::GriddedCollection, version::String)
     _fn = "$(ds.LABEL)_$(version)";
 
     return @artifact_str(_fn) * "/$(_fn).nc";
-end
+)
+
+
+"""
+    query_collection(ds::GriddedCollection)
+
+This method queries the local data path from collection for the default data, given
+- `ds` [`GriddedCollection`](@ref) type collection
+"""
+query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)
 
 
 end
