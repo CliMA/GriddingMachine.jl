@@ -491,16 +491,3 @@ function query_LUT(
 
     return _file, FormatNC(), "SWCS", res_t, false, _varn, _vara, FT[eps(FT),1]
 end
-
-
-
-
-function query_LUT(dt::WoodDensity{FT}) where {FT<:AbstractFloat}
-    _artn = "WD_2X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "WD";
-    _vara = Dict("longname" => "Wood density", "units" => "g cm⁻³");
-
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),2]
-end

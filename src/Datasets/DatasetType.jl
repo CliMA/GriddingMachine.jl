@@ -506,37 +506,6 @@ struct VGMThetaSJules{FT} <: AbstractDataset{FT} end
 
 
 
-"""
-    struct WoodDensity{FT}
-
-<details>
-<summary>
-Struct for wood density (g cm⁻³)
-[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
-</summary>
-
-```
-@article{boonman2020assessing,
-    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
-        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
-        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
-        Wesley N and Higuchi, Pedro and others},
-    year = {2020},
-    title = {Assessing the reliability of predicted plant trait distributions
-        at the global scale},
-    journal = {Global Ecology and Biogeography},
-    volume = {29},
-    number = {6},
-    pages = {1034--1051}
-}
-```
-</details>
-"""
-struct WoodDensity{FT} <: AbstractDataset{FT} end
-
-
-
-
 
 
 

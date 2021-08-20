@@ -7,7 +7,7 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, SpecificLeafAreaCollection, VcmaxCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, SpecificLeafAreaCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -221,6 +221,32 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
 </details>
 """
 VcmaxCollection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
+
+
+"""
+    WoodDensityCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for wood density. Supported datasets are (click to view bibtex items)
+- `2X_1Y_V1` [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
+</summary>
+
+```
+@article{boonman2020assessing,
+    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper, Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno EL and Cornelissen, Johannes HC and
+              Gonzalez-Melo, Andres and Hattingh, Wesley N and Higuchi, Pedro and others},
+    year = {2020},
+    title = {Assessing the reliability of predicted plant trait distributions at the global scale},
+    journal = {Global Ecology and Biogeography},
+    volume = {29},
+    number = {6},
+    pages = {1034--1051}
+}
+```
+</details>
+"""
+WoodDensityCollection() = GriddedCollection("WD", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 # query file from gridded collections

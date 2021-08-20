@@ -19,5 +19,6 @@ using Test
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V2"); @test true;
         query_collection(VcmaxCollection(), "2X_1Y_V1"); @test true;
         query_collection(VcmaxCollection(), "2X_1Y_V2"); @test true;
+        query_collection(WoodDensityCollection(), "2X_1Y_V1"); @test true;
     end
 end

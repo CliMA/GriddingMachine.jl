@@ -14,6 +14,7 @@ Collections.ClumpingIndexCollection
 Collections.LeafNitrogenCollection
 Collections.SpecificLeafAreaCollection
 Collections.VcmaxCollection
+Collections.WoodDensityCollection
 ```
 
 ### Query gridded datasets

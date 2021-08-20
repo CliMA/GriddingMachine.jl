@@ -41,7 +41,7 @@ export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
        LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
        SoilColor, SurfaceAreaCLM, TreeDensity, VGMAlphaJules,
-       VGMLogNJules, VGMThetaRJules, VGMThetaSJules, WoodDensity
+       VGMLogNJules, VGMThetaRJules, VGMThetaSJules
 
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
@@ -50,7 +50,7 @@ export MOD09A1v006NIRv, MOD15A2Hv006LAI
 export ERA5LandHourly, ERA5SingleLevelsHourly
 
 #export public functions for GriddedDataset
-export load_LUT, read_LUT, regrid_LUT, save_LUT!, view_LUT
+export load_LUT, read_LUT, regrid_LUT, save_LUT!
 
 #export public functions for UngriddedDataset
 export process_RAW!
@@ -69,7 +69,6 @@ include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )
 include("Datasets/save.jl"       )
-include("Datasets/view.jl"       )
 
 # include function for ERA5 datasets
 include("ERA5/DataType.jl")

@@ -85,3 +85,11 @@ lazy = true
     [[VCMAX_2X_1Y_V2.download]]
     sha256 = "f2721677acb9f59c496d977fe791845a68f4fbd673a3e32b0394dc9b88f62af2"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCMAX_2X_1Y_V2.tar.gz"
+
+[WD_2X_1Y_V1]
+git-tree-sha1 = "72dc41b21595c6c5802c6867846d1258bc1c2e27"
+lazy = true
+
+    [[WD_2X_1Y_V1.download]]
+    sha256 = "097dc1d9c1165e90f2fe198e152a28b39c429769eff15329a07e15e8ad32f5f0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/WD_2X_1Y_V1.tar.gz"
