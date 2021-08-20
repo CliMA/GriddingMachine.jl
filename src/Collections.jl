@@ -7,7 +7,8 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, LeafPhosphorusCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection,
+       WoodDensityCollection
 
 
 # export public functions
@@ -110,6 +111,15 @@ V2 dataset are classified for different plant functional types. The indices are 
 </details>
 """
 ClumpingIndexCollection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+
+
+"""
+    LandMaskCollection()
+
+Method to create a general dataset collection for leaf nitrogen content. Supported datasets are (click to view bibtex items)
+- `4X_1Y_V1` [(ERA5)]
+"""
+LandMaskCollection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
 
 
 """
