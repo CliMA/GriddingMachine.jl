@@ -7,7 +7,7 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, SpecificLeafAreaCollection, VcmaxCollection, WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -184,6 +184,33 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
 </details>
 """
 SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+
+
+"""
+    TreeDensityCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for tree density (number of trees per area). Supported datasets are (click to view bibtex items)
+- `120X_1Y_V1` [(Crowther et al., 2017)](https://doi.org/10.1038/nature14967)
+- `2X_1Y_V1` [(regridded; Crowther et al., 2020)](https://doi.org/10.1038/nature14967)
+</summary>
+
+```
+@article{crowther2015mapping,
+    author = {Crowther, Thomas W and Glick, Henry B and Covey, Kristofer R and Bettigole, Charlie and Maynard, Daniel S and Thomas, Stephen M and Smith, Jeffrey R and Hintler, Gregor and
+              Duguid, Marlyse C and Amatulli, Giuseppe and others},
+    year = {2015},
+    title = {Mapping tree density at a global scale},
+    journal = {Nature},
+    volume = {525},
+    number = {7568},
+    pages = {201--205}
+}
+```
+</details>
+"""
+TreeDensityCollection() = GriddedCollection("TD", ["120X_1Y_V1", "2X_1Y_V1"], "2X_1Y_V1");
 
 
 """

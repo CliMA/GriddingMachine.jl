@@ -7,7 +7,6 @@
     abstract type AbstractFormat
 
 Hierachy of AbstractFormat
-- [`FormatTIFF`](@ref)
 - [`FormatNC`](@ref)
 """
 abstract type AbstractFormat end

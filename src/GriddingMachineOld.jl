@@ -5,7 +5,6 @@ module GriddingMachineOld
 include("Collections.jl")
 
 
-using ArchGDAL
 using Conda
 using Dates
 using LazyArtifacts
@@ -40,7 +39,7 @@ export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
        LAIMonthlyMean, LandMaskERA5,
        LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
-       SoilColor, SurfaceAreaCLM, TreeDensity, VGMAlphaJules,
+       SoilColor, SurfaceAreaCLM, VGMAlphaJules,
        VGMLogNJules, VGMThetaRJules, VGMThetaSJules
 
 # export public types for UngriddedDataset

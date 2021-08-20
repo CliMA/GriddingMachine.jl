@@ -13,6 +13,7 @@ Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
 Collections.LeafNitrogenCollection
 Collections.SpecificLeafAreaCollection
+Collections.TreeDensityCollection
 Collections.VcmaxCollection
 Collections.WoodDensityCollection
 ```

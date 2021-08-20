@@ -24,7 +24,7 @@ Query the file location from artifacts, given
 Return the following:
 - Path to artifact data file
 - Format of the data
-- Variable name of NC file or Band of Tiff file
+- Variable name of NC file
 - Time resolution
 - Whether latitude is reversed
 - Variable name of gridded data
@@ -383,23 +383,6 @@ function query_LUT(dt::SoilColor{FT}) where {FT<:AbstractFloat}
     _vara = Dict("longname" => "Soil color class", "units" => "-");
 
     return _file, FormatNC(), "soil_color", "1Y", false, _varn, _vara, FT[1,20]
-end
-
-
-
-
-function query_LUT(
-            dt::TreeDensity{FT},
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _artn = "TD_$(res_g)_$(res_t)_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "TD";
-    _vara = Dict("longname" => "Tree density", "units" => "km⁻²");
-
-    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[eps(FT),Inf]
 end
 
 

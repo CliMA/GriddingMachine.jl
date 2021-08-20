@@ -349,36 +349,6 @@ struct SoilColor{FT} <: AbstractDataset{FT} end
 
 
 """
-    struct TreeDensity{FT}
-
-<details>
-<summary>
-Struct for tree density (number of trees per km⁻²)
-[Link to Dataset Source](https://doi.org/10.1038/nature14967)
-</summary>
-
-```
-@article{crowther2015mapping,
-    author = {Crowther, Thomas W and Glick, Henry B and Covey, Kristofer R and
-        Bettigole, Charlie and Maynard, Daniel S and Thomas, Stephen M and
-        Smith, Jeffrey R and Hintler, Gregor and Duguid, Marlyse C and
-        Amatulli, Giuseppe and others},
-    year = {2015},
-    title = {Mapping tree density at a global scale},
-    journal = {Nature},
-    volume = {525},
-    number = {7568},
-    pages = {201--205}
-}
-```
-</details>
-"""
-struct TreeDensity{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct VGMAlphaJules{FT}
 
 <details>
