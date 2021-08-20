@@ -15,6 +15,7 @@ Collections.LandMaskCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
 Collections.PlantFunctionalTypeCollection
+Collections.SoilColorCollection
 Collections.SpecificLeafAreaCollection
 Collections.TreeDensityCollection
 Collections.VcmaxCollection

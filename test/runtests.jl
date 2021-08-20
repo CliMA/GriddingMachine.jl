@@ -24,6 +24,8 @@ using Test
 
         query_collection(PlantFunctionalTypeCollection(), "2X_1Y_V1"); @test true;
 
+        query_collection(SoilColorCollection(), "2X_1Y_V1"); @test true;
+
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V1"); @test true;
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V2"); @test true;
 
