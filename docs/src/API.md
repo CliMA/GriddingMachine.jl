@@ -10,6 +10,7 @@ CurrentModule = GriddingMachine
 ```@docs
 Collections.GriddedCollection
 Collections.CanopyHeightCollection
+Collections.ClumpingIndexCollection
 Collections.SpecificLeafAreaCollection
 Collections.VcmaxCollection
 ```

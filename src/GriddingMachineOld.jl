@@ -36,8 +36,7 @@ MODIS_USER_PWD = "";
 
 
 # export public types for GriddedDataset
-export ClumpingIndexMODIS,
-       ClumpingIndexPFT, GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
+export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
        LAIMonthlyMean, LandMaskERA5, LeafNitrogenBoonman, LeafNitrogenButler,
        LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,

@@ -7,7 +7,7 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, SpecificLeafAreaCollection, VcmaxCollection
+export CanopyHeightCollection, ClumpingIndexCollection, SpecificLeafAreaCollection, VcmaxCollection
 
 
 # export public functions
@@ -26,7 +26,7 @@ $(TYPEDFIELDS)
 ---
 # Examples
 ```julia
-vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"]);
+vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
 ```
 """
 struct GriddedCollection
@@ -46,8 +46,8 @@ end
 <details>
 <summary>
 Method to create a general dataset collection for canopy height. Supported datasets are (click to view bibtex items)
-- 20X_1Y_V1 [(Simard et al., 2011)](https://doi.org/10.1029/2011JG001708)
-- 2X_1Y_V2 [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
+- `20X_1Y_V1` [(Simard et al., 2011)](https://doi.org/10.1029/2011JG001708)
+- `2X_1Y_V2` [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
 </summary>
 
 ```
@@ -76,13 +76,50 @@ CanopyHeightCollection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"], "2
 
 
 """
+    ClumpingIndexCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for clumping index. Supported datasets are (click to view bibtex items)
+- `240X_1Y_V1` [(He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
+- `2X_1Y_V1` [(regridded; He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
+- `2X_1Y_V2` [(Braghiere et al., 2019)](https://doi.org/10.1029/2018GB006135)
+
+V2 dataset are classified for different plant functional types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and shrubland.
+</summary>
+
+```
+@article{he2012global,
+    author={He, Liming and Chen, Jing M and Pisek, Jan and Schaaf, Crystal B and Strahler, Alan H},
+    year={2012},
+    title={Global clumping index map derived from the MODIS BRDF product},
+    journal={Remote Sensing of Environment},
+    volume={119},
+    pages={118--130}
+}
+@article{braghiere2019underestimation,
+    author = {Braghiere, R{\\'e}nato Kerches and Quaife, T and Black, E and He, L and Chen, JM},
+    year = {2019},
+    title = {Underestimation of global photosynthesis in Earth System Models due to representation of vegetation structure},
+    journal = {Global Biogeochemical Cycles},
+    volume = {33},
+    number = {11},
+    pages = {1358--1369}
+}
+```
+</details>
+"""
+ClumpingIndexCollection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+
+
+"""
     SpecificLeafAreaCollection()
 
 <details>
 <summary>
 Method to create a general dataset collection for SLA (specific leaf area). Supported datasets are (click to view bibtex items)
-- 2X_1Y_V1 [(Butler et al., 2017)](https://doi.org/10.1073/pnas.1708984114)
-- 2X_1Y_V2 [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
+- `2X_1Y_V1` [(Butler et al., 2017)](https://doi.org/10.1073/pnas.1708984114)
+- `2X_1Y_V2` [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
 </summary>
 
 ```
@@ -118,8 +155,8 @@ SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"]
 <details>
 <summary>
 Method to create a general dataset collection for Vcmax. Supported datasets are (click to view bibtex items)
-- 2X_1Y_V1 [(Smith et al., 2019)](https://doi.org/10.1111/ele.13210)
-- 2X_1Y_V2 [(Luo et al., 2019)](https://doi.org/10.1038/s41467-021-25163-9)
+- `2X_1Y_V1` [(Smith et al., 2019)](https://doi.org/10.1111/ele.13210)
+- `2X_1Y_V2` [(Luo et al., 2019)](https://doi.org/10.1038/s41467-021-25163-9)
 </summary>
 
 ```
@@ -165,6 +202,12 @@ function query_collection end
 This method queries the local data path from collection, given
 - `ds` [`GriddedCollection`](@ref) type collection
 - `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
+
+---
+# Examples
+```julia
+dat_file = query_collection(CanopyHeightCollection(), "20X_1Y_V1");
+```
 """
 query_collection(ds::GriddedCollection, version::String) = (
     # make sure requested version is in the
@@ -182,6 +225,12 @@ query_collection(ds::GriddedCollection, version::String) = (
 
 This method queries the local data path from collection for the default data, given
 - `ds` [`GriddedCollection`](@ref) type collection
+
+---
+# Examples
+```julia
+dat_file = query_collection(CanopyHeightCollection());
+```
 """
 query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)
 

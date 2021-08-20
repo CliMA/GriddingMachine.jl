@@ -147,64 +147,6 @@ struct LeafPhosphorus{FT} <: AbstractDataset{FT} end
 #
 ###############################################################################
 """
-    struct ClumpingIndexMODIS{FT}
-
-<details>
-<summary>
-Global clumping index data from MODIS BRDF 2006
-[Link to Dataset Source](https://doi.org/10.3334/ORNLDAAC/1531)
-</summary>
-
-```
-@article{he2012global,
-    author={He, Liming and Chen, Jing M and Pisek, Jan and Schaaf, Crystal B
-        and Strahler, Alan H},
-    year={2012},
-    title={Global clumping index map derived from the MODIS BRDF product},
-    journal={Remote Sensing of Environment},
-    volume={119},
-    pages={118--130}
-}
-```
-</details>
-"""
-struct ClumpingIndexMODIS{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
-    struct ClumpingIndexPFT{FT}
-
-<details>
-<summary>
-Struct for canopy height from GLAS ICESat, for different plant functional
-    types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and
-    shrubland. Data from Global clumping index data from MODIS BRDF 2006.
-[Link to Dataset Source](https://doi.org/10.1029/2018GB006135)
-</summary>
-
-```
-@article{braghiere2019underestimation,
-    author = {Braghiere, R{\\'e}nato Kerches and Quaife, T and Black, E and He,
-        L and Chen, JM},
-    year = {2019},
-    title = {Underestimation of global photosynthesis in Earth System Models
-        due to representation of vegetation structure},
-    journal = {Global Biogeochemical Cycles},
-    volume = {33},
-    number = {11},
-    pages = {1358--1369}
-}
-```
-</details>
-"""
-struct ClumpingIndexPFT{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct GPPMPIv006{FT}
 
 <details>

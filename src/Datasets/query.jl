@@ -31,36 +31,6 @@ Return the following:
 - Variable attribute of gridded data
 - Variable range limits (beyond which NaN ought to apply)
 """
-function query_LUT(
-            dt::ClumpingIndexMODIS{FT},
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _artn = "CI_$(res_g)_$(res_t)_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "CI";
-    _vara = Dict("longname" => "Clumping index", "units" => "-");
-
-    return _file, FormatTIFF(), 1, res_t, true, _varn, _vara, FT[eps(FT),1]
-end
-
-
-
-
-function query_LUT(dt::ClumpingIndexPFT{FT}) where {FT<:AbstractFloat}
-    _artn = "CI_PFT_2X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "CI";
-    _vara = Dict("longname" => "Clumping index", "units" => "-");
-
-    return _file, FormatNC(), "clump", "1Y", false, _varn, _vara, FT[eps(FT),1]
-end
-
-
-
-
 function query_LUT(dt::FloodPlainHeight{FT}) where {FT<:AbstractFloat}
     @warn "Note that this river dataset is not meant for public use...";
     _artn = "RIVER_4X_1Y_V1";
