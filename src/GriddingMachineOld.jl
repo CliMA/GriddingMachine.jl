@@ -37,7 +37,7 @@ MODIS_USER_PWD = "";
 # export public types for GriddedDataset
 export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
        LAIMonthlyMean, LandMaskERA5,
-       LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
+       NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
        SoilColor, SurfaceAreaCLM, VGMAlphaJules,
        VGMLogNJules, VGMThetaRJules, VGMThetaSJules

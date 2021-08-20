@@ -54,6 +54,14 @@ lazy = true
     sha256 = "3aa15293cd194c0a310a128831c7d8f6172ec4378c2e795bbbbde936378d0142"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LNC_2X_1Y_V2.tar.gz"
 
+[LPC_2X_1Y_V1]
+git-tree-sha1 = "ff5461dce4450f142e04bff844cc34123434e937"
+lazy = true
+
+    [[LPC_2X_1Y_V1.download]]
+    sha256 = "1ac27687cac5addef00c2db5f6b9c13125d581403ae41e274c4f53e15d3bbdda"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LPC_2X_1Y_V1.tar.gz"
+
 [SLA_2X_1Y_V1]
 git-tree-sha1 = "3c4e1ac76e251a89d2459b7c6b03b9eee7ba15b2"
 lazy = true

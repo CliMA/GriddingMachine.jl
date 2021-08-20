@@ -7,7 +7,7 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LeafNitrogenCollection, LeafPhosphorusCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -147,6 +147,32 @@ Method to create a general dataset collection for leaf nitrogen content. Support
 </details>
 """
 LeafNitrogenCollection() = GriddedCollection("LNC", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+
+
+"""
+    LeafNitrogenCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for leaf phosphorus content. Supported datasets are (click to view bibtex items)
+- `2X_1Y_V1` [(Butler et al., 2017)](https://doi.org/10.1073/pnas.1708984114)
+</summary>
+
+```
+@article{butler2017mapping,
+    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee, Arindam and Atkin, Owen K and Kattge, Jens and
+              Amiaud, Bernard and others},
+    year = {2017},
+    title = {Mapping local and global variability in plant trait distributions},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume = {114},
+    number = {51},
+    pages = {E10937--E10946}
+}
+```
+</details>
+"""
+LeafPhosphorusCollection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """

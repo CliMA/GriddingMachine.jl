@@ -45,36 +45,6 @@ struct LeafChlorophyll{FT} <: AbstractDataset{FT} end
 
 
 
-"""
-    struct LeafPhosphorus{FT}
-<details>
-<summary>
-Struct for leaf phosphorus content
-[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
-</summary>
-
-```
-@article{butler2017mapping,
-    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
-        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
-        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
-        others},
-    year = {2017},
-    title = {Mapping local and global variability in plant trait
-        distributions},
-    journal = {Proceedings of the National Academy of Sciences},
-    volume = {114},
-    number = {51},
-    pages = {E10937--E10946}
-}
-```
-</details>
-"""
-struct LeafPhosphorus{FT} <: AbstractDataset{FT} end
-
-
-
-
 
 
 

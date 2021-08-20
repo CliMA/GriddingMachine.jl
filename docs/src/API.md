@@ -12,6 +12,7 @@ Collections.GriddedCollection
 Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
 Collections.LeafNitrogenCollection
+Collections.LeafPhosphorusCollection
 Collections.SpecificLeafAreaCollection
 Collections.TreeDensityCollection
 Collections.VcmaxCollection
