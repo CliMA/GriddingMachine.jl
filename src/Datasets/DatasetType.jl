@@ -46,68 +46,6 @@ struct LeafChlorophyll{FT} <: AbstractDataset{FT} end
 
 
 """
-    struct LeafNitrogenBoonman{FT}
-
-<details>
-<summary>
-Struct for leaf nitrogen content
-[Link to Dataset Source](https://doi.org/10.1111/geb.13086)
-</summary>
-
-```
-@article{boonman2020assessing,
-    author = {Boonman, Coline CF and Ben{\\'i}tez-L{\\'o}pez, Ana and Schipper,
-        Aafke M and Thuiller, Wilfried and Anand, Madhur and Cerabolini, Bruno
-        EL and Cornelissen, Johannes HC and Gonzalez-Melo, Andres and Hattingh,
-        Wesley N and Higuchi, Pedro and others},
-    year = {2020},
-    title = {Assessing the reliability of predicted plant trait distributions
-        at the global scale},
-    journal = {Global Ecology and Biogeography},
-    volume = {29},
-    number = {6},
-    pages = {1034--1051}
-}
-```
-</details>
-"""
-struct LeafNitrogenBoonman{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
-    struct LeafNitrogenButler{FT}
-
-<details>
-<summary>
-Struct for leaf nitrogen content
-[Link to Dataset Source](https://doi.org/10.1073/pnas.1708984114)
-</summary>
-
-```
-@article{butler2017mapping,
-    author = {Butler, Ethan E and Datta, Abhirup and Flores-Moreno, Habacuc and
-        Chen, Ming and Wythers, Kirk R and Fazayeli, Farideh and Banerjee,
-        Arindam and Atkin, Owen K and Kattge, Jens and Amiaud, Bernard and
-        others},
-    year = {2017},
-    title = {Mapping local and global variability in plant trait
-        distributions},
-    journal = {Proceedings of the National Academy of Sciences},
-    volume = {114},
-    number = {51},
-    pages = {E10937--E10946}
-}
-```
-</details>
-"""
-struct LeafNitrogenButler{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct LeafPhosphorus{FT}
 <details>
 <summary>

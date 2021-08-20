@@ -11,6 +11,7 @@ CurrentModule = GriddingMachine
 Collections.GriddedCollection
 Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
+Collections.LeafNitrogenCollection
 Collections.SpecificLeafAreaCollection
 Collections.VcmaxCollection
 ```

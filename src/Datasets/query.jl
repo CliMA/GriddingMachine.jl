@@ -159,35 +159,6 @@ end
 
 
 
-function query_LUT(dt::LeafNitrogenBoonman{FT}) where {FT<:AbstractFloat}
-    _artn = "LNC_2X_1Y_V2";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).tif";
-    _varn = "LN";
-    _vara = Dict("longname" => "Leaf nitrogen content",
-                 "units" => "kg kg⁻¹");
-
-    return _file, FormatTIFF(), 1, "1Y", true, _varn, _vara, FT[eps(FT),1]
-end
-
-
-
-
-function query_LUT(dt::LeafNitrogenButler{FT}) where {FT<:AbstractFloat}
-    _artn = "LNC_2X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "LN";
-    _vara = Dict("longname" => "Leaf nitrogen content",
-                 "units" => "kg kg⁻¹");
-
-    return _file, FormatNC(), "leaf_nitrogen_content_mean", "1Y", false,
-           _varn, _vara, FT[eps(FT),1]
-end
-
-
-
-
 function query_LUT(dt::LeafPhosphorus{FT}) where {FT<:AbstractFloat}
     _artn = "LPC_2X_1Y_V1";
     predownload_artifact!(_artn, ARTIFACTs_TOML);

@@ -37,7 +37,7 @@ MODIS_USER_PWD = "";
 
 # export public types for GriddedDataset
 export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006,
-       LAIMonthlyMean, LandMaskERA5, LeafNitrogenBoonman, LeafNitrogenButler,
+       LAIMonthlyMean, LandMaskERA5,
        LeafPhosphorus, NDVIAvhrr, NIRoAvhrr,
        NIRvAvhrr, NPPModis, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC,
        SoilColor, SurfaceAreaCLM, TreeDensity, VGMAlphaJules,
@@ -50,7 +50,7 @@ export MOD09A1v006NIRv, MOD15A2Hv006LAI
 export ERA5LandHourly, ERA5SingleLevelsHourly
 
 #export public functions for GriddedDataset
-export load_LUT, mask_LUT!, read_LUT, regrid_LUT, save_LUT!, view_LUT
+export load_LUT, read_LUT, regrid_LUT, save_LUT!, view_LUT
 
 #export public functions for UngriddedDataset
 export process_RAW!
@@ -65,7 +65,6 @@ export fetch_ERA5!
 include("Datasets/DatasetType.jl")
 include("Datasets/FormatType.jl" )
 include("Datasets/load.jl"       )
-include("Datasets/mask.jl"       )
 include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )

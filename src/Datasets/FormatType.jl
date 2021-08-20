@@ -16,14 +16,6 @@ abstract type AbstractFormat end
 
 
 """
-    struct FormatTIFF
-"""
-struct FormatTIFF <: AbstractFormat end
-
-
-
-
-"""
     struct FormatNC
 """
 struct FormatNC <: AbstractFormat end

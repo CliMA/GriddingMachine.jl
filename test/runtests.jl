@@ -13,6 +13,8 @@ using Test
         query_collection(ClumpingIndexCollection(), "240X_1Y_V1"); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V1"  ); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V2"  ); @test true;
+        query_collection(LeafNitrogenCollection(), "2X_1Y_V1"); @test true;
+        query_collection(LeafNitrogenCollection(), "2X_1Y_V2"); @test true;
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V1"); @test true;
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V2"); @test true;
         query_collection(VcmaxCollection(), "2X_1Y_V1"); @test true;
