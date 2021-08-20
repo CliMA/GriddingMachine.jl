@@ -14,6 +14,7 @@ Collections.ClumpingIndexCollection
 Collections.LandMaskCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
+Collections.PlantFunctionalTypeCollection
 Collections.SpecificLeafAreaCollection
 Collections.TreeDensityCollection
 Collections.VcmaxCollection

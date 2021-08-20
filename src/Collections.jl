@@ -7,8 +7,8 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, SpecificLeafAreaCollection, TreeDensityCollection, VcmaxCollection,
-       WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, PlantFunctionalTypeCollection, SpecificLeafAreaCollection,
+       TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -183,6 +183,30 @@ Method to create a general dataset collection for leaf phosphorus content. Suppo
 </details>
 """
 LeafPhosphorusCollection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
+
+
+"""
+    PlantFunctionalTypeCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for plant function type ratio. Supported datasets are (click to view bibtex items)
+- `2X_1Y_V1` [(Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
+</summary>
+
+```
+@article{lawrence2007representing,
+	author = {Lawrence, Peter J and Chase, Thomas N},
+	year = {2007},
+	title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+	journal = {Journal of Geophysical Research: Biogeosciences},
+	volume = {112},
+	pages = {G01023}
+}
+```
+</details>
+"""
+PlantFunctionalTypeCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """

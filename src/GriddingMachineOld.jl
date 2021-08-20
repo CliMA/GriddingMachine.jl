@@ -30,7 +30,7 @@ MODIS_USER_PWD = "";
 
 
 # export public types for GriddedDataset
-export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006, PFTPercentCLM, SIFTropomi740, SIFTropomi740DC, SoilColor, SurfaceAreaCLM, VGMAlphaJules, VGMLogNJules, VGMThetaRJules, VGMThetaSJules
+export GPPMPIv006, GPPVPMv20, GriddedDataset, LAIMODISv006, SIFTropomi740, SIFTropomi740DC, SoilColor, SurfaceAreaCLM, VGMAlphaJules, VGMLogNJules, VGMThetaRJules, VGMThetaSJules
 
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
