@@ -8,7 +8,7 @@ using LazyArtifacts
 # export public types and constructors
 export GriddedCollection
 export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, PlantFunctionalTypeCollection, SoilColorCollection,
-       SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+       SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -246,17 +246,45 @@ Method to create a general dataset collection for soil color class to use with s
 
 ```
 @article{lawrence2007representing,
-author = {Lawrence, Peter J and Chase, Thomas N},
-year = {2007},
-title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
-journal = {Journal of Geophysical Research: Biogeosciences},
-volume = {112},
-pages = {G01023}
+    author = {Lawrence, Peter J and Chase, Thomas N},
+    year = {2007},
+    title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {112},
+    pages = {G01023}
 }
 ```
 </details>
 """
 SoilColorCollection() = GriddedCollection("SC", ["2X_1Y_V1"], "2X_1Y_V1");
+
+
+"""
+    SoilHydraulicsCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for soil hydraulic parameters. Supported datasets are (click to view bibtex items)
+- `VGA_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGA_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGN_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGN_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+</summary>
+
+```
+@article{dai2019global,
+    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng and Lu, Xingjie},
+	year = {2019},
+    title = {A global high-resolution data set of soil hydraulic and thermal properties for land surface modeling},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {11},
+	number = {9},
+	pages = {2996--3023}
+}
+```
+</details>
+"""
+SoilHydraulicsCollection() = GriddedCollection("SOIL", ["VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"], "VGA_12X_1Y_V1");
 
 
 """

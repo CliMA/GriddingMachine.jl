@@ -28,6 +28,11 @@ using Test
 
         query_collection(SoilColorCollection(), "2X_1Y_V1"); @test true;
 
+        query_collection(SoilHydraulicsCollection(), "VGA_120X_1Y_V1"); @test true;
+        query_collection(SoilHydraulicsCollection(), "VGA_12X_1Y_V1" ); @test true;
+        query_collection(SoilHydraulicsCollection(), "VGN_120X_1Y_V1"); @test true;
+        query_collection(SoilHydraulicsCollection(), "VGN_12X_1Y_V1" ); @test true;
+
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V1"); @test true;
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V2"); @test true;
 

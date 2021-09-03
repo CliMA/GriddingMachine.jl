@@ -141,44 +141,6 @@ end
 
 
 function query_LUT(
-            dt::VGMAlphaJules{FT},
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _artn = "VGM_ALPHA_$(res_g)_$(res_t)_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "Alpha";
-    _vara = Dict("longname" => "van Genuchten α",
-                 "units"    => "MPa⁻¹");
-
-    return _file, FormatNC(), "Alpha", res_t, false, _varn, _vara,
-           FT[eps(FT),Inf]
-end
-
-
-
-
-function query_LUT(
-            dt::VGMLogNJules{FT},
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _artn = "VGM_LOGN_$(res_g)_$(res_t)_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "logN";
-    _vara = Dict("longname" => "van Genuchten log(n)",
-                 "units"    => "-");
-
-    return _file, FormatNC(), "logN", res_t, false, _varn, _vara,
-           FT[eps(FT),10]
-end
-
-
-
-
-function query_LUT(
             dt::VGMThetaRJules{FT},
             res_g::String,
             res_t::String
