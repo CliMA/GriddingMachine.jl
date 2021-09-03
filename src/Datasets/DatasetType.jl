@@ -334,44 +334,6 @@ struct VGMThetaSJules{FT} <: AbstractDataset{FT} end
 
 ###############################################################################
 #
-# Surface level land mark
-#
-###############################################################################
-"""
-    struct LandElevation{FT}
-
-<details>
-<summary>
-Land elevation (height above mean sea level)
-[Link to Dataset Source](https://doi.org/10.1002/2017GL072874)
-</summary>
-
-```
-@article{yamazaki2017high,
-    author = {Yamazaki, Dai and Ikeshima, Daiki and Tawatari, Ryunosuke and
-        Yamaguchi, Tomohiro and O'Loughlin, Fiachra and Neal, Jeffery C and
-        Sampson, Christopher C and Kanae, Shinjiro and Bates, Paul D},
-    year = {2017},
-    title = {A high-accuracy map of global terrain elevations},
-    journal = {Geophysical Research Letters},
-    volume = {44},
-    number = {11},
-    pages = {5844--5853}
-}
-```
-</details>
-"""
-struct LandElevation{FT} <: AbstractDataset{FT} end
-
-
-
-
-
-
-
-
-###############################################################################
-#
 # General data struct
 #
 ###############################################################################

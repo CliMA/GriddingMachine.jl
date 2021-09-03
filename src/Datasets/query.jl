@@ -87,22 +87,6 @@ end
 
 
 
-function query_LUT(dt::LandElevation{FT}) where {FT<:AbstractFloat}
-    @warn "Note that this elevation dataset is not meant for public use...";
-    _artn = "RIVER_4X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "Elevation";
-    _vara = Dict("longname" => "Elevation",
-                 "units"    => "m");
-
-    return _file, FormatNC(), "elevtn", "1Y", true, _varn, _vara,
-           FT[-100,10000]
-end
-
-
-
-
 function query_LUT(dt::LeafChlorophyll{FT}) where {FT<:AbstractFloat}
     @warn "Note that this chloropgyll dataset is not meant for public use...";
     _artn = "CHL_2X_7D_V1";

@@ -11,6 +11,8 @@ using Test
         query_collection(CanopyHeightCollection(), "20X_1Y_V1"); @test true;
         query_collection(CanopyHeightCollection(), "2X_1Y_V2" ); @test true;
 
+        query_collection(ElevationCollection(), "4X_1Y_V1" ); @test true;
+
         query_collection(ClumpingIndexCollection(), "240X_1Y_V1"); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V1"  ); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V2"  ); @test true;

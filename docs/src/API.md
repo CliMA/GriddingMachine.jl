@@ -11,6 +11,7 @@ CurrentModule = GriddingMachine
 Collections.GriddedCollection
 Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
+Collections.ElevationCollection
 Collections.LandMaskCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
