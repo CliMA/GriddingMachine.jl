@@ -118,20 +118,6 @@ end
 
 
 
-function query_LUT(dt::SurfaceAreaCLM{FT}) where {FT<:AbstractFloat}
-    _artn = "CLM_2X_1Y_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "SurfaceArea";
-    _vara = Dict("longname" => "Surface area in a pixel",
-                 "units" => "km²");
-
-    return _file, FormatNC(), "AREA", "1Y", false, _varn, _vara, FT[0,Inf]
-end
-
-
-
-
 function query_LUT(
             dt::SIFTropomi740{FT},
             year::Int,

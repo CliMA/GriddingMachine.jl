@@ -29,6 +29,9 @@ using Test
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V1"); @test true;
         query_collection(SpecificLeafAreaCollection(), "2X_1Y_V2"); @test true;
 
+        query_collection(SurfaceAreaCollection(), "2X_1Y_V1"); @test true;
+        query_collection(SurfaceAreaCollection(), "1X_1Y_V1"); @test true;
+
         query_collection(TreeDensityCollection(), "120X_1Y_V1"); @test true;
         query_collection(TreeDensityCollection(), "2X_1Y_V1"  ); @test true;
 

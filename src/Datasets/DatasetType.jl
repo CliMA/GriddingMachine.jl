@@ -366,16 +366,6 @@ struct LandElevation{FT} <: AbstractDataset{FT} end
 
 
 
-"""
-    struct SurfaceAreaCLM{FT}
-
-Struct for surface area from CLM
-"""
-struct SurfaceAreaCLM{FT} <: AbstractDataset{FT} end
-
-
-
-
 
 
 

@@ -17,6 +17,7 @@ Collections.LeafPhosphorusCollection
 Collections.PlantFunctionalTypeCollection
 Collections.SoilColorCollection
 Collections.SpecificLeafAreaCollection
+Collections.SurfaceAreaCollection
 Collections.TreeDensityCollection
 Collections.VcmaxCollection
 Collections.WoodDensityCollection

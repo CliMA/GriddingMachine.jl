@@ -7,8 +7,8 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, PlantFunctionalTypeCollection, SpecificLeafAreaCollection,
-       SoilColorCollection TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, PlantFunctionalTypeCollection, SoilColorCollection,
+       SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -268,6 +268,31 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
 </details>
 """
 SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+
+
+"""
+    SurfaceAreaCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for earth surface area. Supported datasets are (click to view bibtex items)
+- `2X_1Y_V1` [(Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
+- `2X_1Y_V1` [(regridded; Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
+</summary>
+
+```
+@article{lawrence2007representing,
+author = {Lawrence, Peter J and Chase, Thomas N},
+year = {2007},
+title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+journal = {Journal of Geophysical Research: Biogeosciences},
+volume = {112},
+pages = {G01023}
+}
+```
+</details>
+"""
+SurfaceAreaCollection() = GriddedCollection("SA", ["2X_1Y_V1", "1X_1Y_V1"], "2X_1Y_V1");
 
 
 """
