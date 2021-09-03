@@ -13,6 +13,7 @@ Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
 Collections.ElevationCollection
 Collections.LandMaskCollection
+Collections.LeafChlorophyllCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
 Collections.PlantFunctionalTypeCollection

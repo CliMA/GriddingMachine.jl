@@ -19,6 +19,9 @@ using Test
 
         query_collection(LandMaskCollection(), "4X_1Y_V1"); @test true;
 
+        # expect warning here
+        query_collection(LeafChlorophyllCollection(), "2X_7D_V1"); @test true;
+
         query_collection(LeafNitrogenCollection(), "2X_1Y_V1"); @test true;
         query_collection(LeafNitrogenCollection(), "2X_1Y_V2"); @test true;
 

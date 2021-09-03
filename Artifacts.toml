@@ -1,3 +1,11 @@
+[CHL_2X_7D_V1]
+git-tree-sha1 = "ce410fa4f36c3abdaa18da6c3afcd78c9656d929"
+lazy = true
+
+    [[CHL_2X_7D_V1.download]]
+    sha256 = "9dd69d2072f06786d23d823640394457bf2f02245c9af52d527fa12768276f47"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/CHL_2X_7D_V1.tar.gz"
+
 [CH_20X_1Y_V1]
 git-tree-sha1 = "8e82b3b97603651740df68ff493cb497c6f7b486"
 lazy = true

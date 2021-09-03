@@ -87,21 +87,6 @@ end
 
 
 
-function query_LUT(dt::LeafChlorophyll{FT}) where {FT<:AbstractFloat}
-    @warn "Note that this chloropgyll dataset is not meant for public use...";
-    _artn = "CHL_2X_7D_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "LC";
-    _vara = Dict("longname" => "Leaf chlorophyll content",
-                 "units" => "μg cm⁻²");
-
-    return _file, FormatNC(), "chl", "7D", true, _varn, _vara, FT[eps(FT),200]
-end
-
-
-
-
 function query_LUT(
             dt::SIFTropomi740{FT},
             year::Int,

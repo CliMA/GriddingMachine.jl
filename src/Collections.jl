@@ -7,8 +7,8 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LandMaskCollection, LeafNitrogenCollection, LeafPhosphorusCollection, PlantFunctionalTypeCollection, SoilColorCollection,
-       SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection, LeafPhosphorusCollection,
+       PlantFunctionalTypeCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -146,6 +146,33 @@ Method to create a general dataset collection for land mask. Supported datasets 
 - `4X_1Y_V1` [(ERA5)]
 """
 LandMaskCollection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
+
+
+"""
+    LeafChlorophyllCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for leaf chlorophyll content. Supported datasets are (click to view bibtex items)
+- `2X_7D_V1` [(Croft et al., 2017)](https://doi.org/10.1016/j.rse.2019.111479)
+</summary>
+
+```
+@article{croft2020global,
+    author = {Croft, H and Chen, JM and Wang, R and Mo, G and Luo, S and Luo, X and He, L and Gonsamo, A and Arabian, J and Zhang, Y and others},
+    year = {2020},
+    title = {The global distribution of leaf chlorophyll content},
+    journal = {Remote Sensing of Environment},
+    volume = {236},
+    pages = {111479},
+}
+```
+</details>
+"""
+LeafChlorophyllCollection() = (
+    @warn "This dataset is only meant for those who has reached to the authors (Croft et al) for permissions. We (developers of GriddingMachine) are not responsible for unauthorized usage";
+    return GriddedCollection("CHL", ["2X_7D_V1"], "2X_7D_V1")
+);
 
 
 """

@@ -60,22 +60,6 @@ Load look up table and return the struct, given
 """
 function load_LUT(
             dt::AbstractDataset{FT},
-            g_zoom::Int;
-            nan_weight::Bool = false
-) where {FT<:AbstractFloat}
-    ds  = load_LUT(dt);
-    mask_LUT!(ds);
-    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
-                     nan_weight=nan_weight);
-
-    return rds
-end
-
-
-
-
-function load_LUT(
-            dt::AbstractDataset{FT},
             year,
             res_g::String,
             res_t::String,
@@ -83,18 +67,9 @@ function load_LUT(
             nan_weight::Bool = false
 ) where {FT<:AbstractFloat}
     ds  = load_LUT(dt, year, res_g, res_t);
-    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
-                     nan_weight=nan_weight);
+    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom); nan_weight=nan_weight);
 
     return rds
-end
-
-
-
-
-function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt);
-    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 
 
@@ -106,8 +81,8 @@ function load_LUT(
             res_g::String,
             res_t::String
 ) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt, year, res_g,
-                                                            res_t);
+    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt, year, res_g, res_t);
+
     return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 
