@@ -76,23 +76,6 @@ end
 
 function load_LUT(
             dt::AbstractDataset{FT},
-            res_g::String,
-            res_t::String,
-            g_zoom::Int;
-            nan_weight::Bool = false
-) where {FT<:AbstractFloat}
-    ds  = load_LUT(dt, res_g, res_t);
-    rds = regrid_LUT(ds, Int(size(ds.data,1)/360/g_zoom);
-                     nan_weight=nan_weight);
-
-    return rds
-end
-
-
-
-
-function load_LUT(
-            dt::AbstractDataset{FT},
             year,
             res_g::String,
             res_t::String,
@@ -111,18 +94,6 @@ end
 
 function load_LUT(dt::AbstractDataset{FT}) where {FT<:AbstractFloat}
     _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt);
-    return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
-end
-
-
-
-
-function load_LUT(
-            dt::AbstractDataset{FT},
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt = query_LUT(dt, res_g, res_t);
     return load_LUT(dt, _fn, _fmt, _lab, _res, _rev, _vn, _va, _lmt)
 end
 

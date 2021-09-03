@@ -264,7 +264,12 @@ SoilColorCollection() = GriddedCollection("SC", ["2X_1Y_V1"], "2X_1Y_V1");
 
 <details>
 <summary>
-Method to create a general dataset collection for soil hydraulic parameters. Supported datasets are (click to view bibtex items)
+Method to create a general dataset collection for soil hydraulic parameters (residual soil water content - SWCR, saturated soil water content - SWCS, van Genuchten α - VGA, van Genuchten n - VGN).
+    Supported datasets are (click to view bibtex items)
+- `SWCR_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCR_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCS_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCS_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `VGA_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `VGA_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `VGN_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
@@ -284,7 +289,8 @@ Method to create a general dataset collection for soil hydraulic parameters. Sup
 ```
 </details>
 """
-SoilHydraulicsCollection() = GriddedCollection("SOIL", ["VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"], "VGA_12X_1Y_V1");
+SoilHydraulicsCollection() = GriddedCollection("SOIL", ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1",
+                                                        "VGN_12X_1Y_V1"], "SWCS_12X_1Y_V1");
 
 
 """

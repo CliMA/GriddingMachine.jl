@@ -126,6 +126,38 @@ lazy = true
     sha256 = "4fa15068c6d10d5ec423ea4d99e288856e99876175e10b356ea32b773ea83134"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_2X_1Y_V2.tar.gz"
 
+[SOIL_SWCR_120X_1Y_V1]
+git-tree-sha1 = "356d26e5780e425dc9d83e7ae2abd7ba8b273edb"
+lazy = true
+
+    [[SOIL_SWCR_120X_1Y_V1.download]]
+    sha256 = "7ad6a56a264fa84730a129252f53bbd7ef4ff758c6ac36f381332141d9482080"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_SWCR_120X_1Y_V1.tar.gz"
+
+[SOIL_SWCR_12X_1Y_V1]
+git-tree-sha1 = "d5134186bfabf415032c06c8a484597bb235afe0"
+lazy = true
+
+    [[SOIL_SWCR_12X_1Y_V1.download]]
+    sha256 = "4931da3d989367b4f3c9bbff41e7998101a19dd45bd6d1ca241a044d130b9038"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_SWCR_12X_1Y_V1.tar.gz"
+
+[SOIL_SWCS_120X_1Y_V1]
+git-tree-sha1 = "4bbb26cb974b3ea304baacd01db370d226a7464e"
+lazy = true
+
+    [[SOIL_SWCS_120X_1Y_V1.download]]
+    sha256 = "aec559346da35ae1445b7641bab7726bec65858c00d1ca25e112f3b2080a0824"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_SWCS_120X_1Y_V1.tar.gz"
+
+[SOIL_SWCS_12X_1Y_V1]
+git-tree-sha1 = "035ee92010937a0aee873c88e8e4f3705fcc0d06"
+lazy = true
+
+    [[SOIL_SWCS_12X_1Y_V1.download]]
+    sha256 = "d9078df0f05816452fdff570f2356f7352261886bedf6f5f69473b12c9b90d22"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_SWCS_12X_1Y_V1.tar.gz"
+
 [SOIL_VGA_120X_1Y_V1]
 git-tree-sha1 = "cd15b809d89d9853834e07c075ef664d3e046dcc"
 lazy = true
