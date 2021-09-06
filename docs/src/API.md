@@ -17,6 +17,7 @@ Collections.LeafChlorophyllCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
 Collections.PlantFunctionalTypeCollection
+Collections.SIFCollection
 Collections.SoilColorCollection
 Collections.SoilHydraulicsCollection
 Collections.SpecificLeafAreaCollection

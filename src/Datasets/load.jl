@@ -121,33 +121,3 @@ function load_LUT(
                               var_name = var_name,
                               var_attr = var_attr)
 end
-
-
-
-
-function load_LUT(
-            dt::Union{SIFTropomi740{FT},SIFTropomi740DC{FT}},
-            file::String,
-            format::FormatNC,
-            label::String,
-            res_t::String,
-            rev_lat::Bool,
-            var_name::String,
-            var_attr::Dict{String,String},
-            var_lims::Array{FT,1}
-) where {FT<:AbstractFloat}
-    # SIF data is stored differently
-    _dat  = read_nc(FT, file, label);
-    _size = size(_dat);
-    _data = zeros(FT, (_size[2], _size[3], _size[1]));
-    for i in 1:_size[1]
-        view(_data, :, :, i) .= view(_dat, i, :, :);
-    end
-
-    return GriddedDataset{FT}(data     = _data   ,
-                              lims     = var_lims,
-                              res_time = res_t   ,
-                              dt       = dt      ,
-                              var_name = var_name,
-                              var_attr = var_attr)
-end

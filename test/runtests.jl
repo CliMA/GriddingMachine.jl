@@ -29,6 +29,15 @@ using Test
 
         query_collection(PlantFunctionalTypeCollection(), "2X_1Y_V1"); @test true;
 
+        query_collection(SIFCollection(), "TROPOMI_740_1X_1M_2018_V1"   ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740_1X_1M_2019_V1"   ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740_12X_8D_2018_V1"  ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740_12X_8D_2019_V1"  ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740DC_1X_1M_2018_V1" ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740DC_1X_1M_2019_V1" ); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740DC_12X_8D_2018_V1"); @test true;
+        query_collection(SIFCollection(), "TROPOMI_740DC_12X_8D_2019_V1"); @test true;
+
         query_collection(SoilColorCollection(), "2X_1Y_V1"); @test true;
 
         query_collection(SoilHydraulicsCollection(), "SWCR_120X_1Y_V1"); @test true;

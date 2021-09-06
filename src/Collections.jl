@@ -8,7 +8,8 @@ using LazyArtifacts
 # export public types and constructors
 export GriddedCollection
 export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection, LeafPhosphorusCollection,
-       PlantFunctionalTypeCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection, WoodDensityCollection
+       PlantFunctionalTypeCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection,
+       WoodDensityCollection
 
 
 # export public functions
@@ -171,6 +172,7 @@ Method to create a general dataset collection for leaf chlorophyll content. Supp
 """
 LeafChlorophyllCollection() = (
     @warn "This dataset is only meant for those who has reached to the authors (Croft et al) for permissions. We (developers of GriddingMachine) are not responsible for unauthorized usage";
+
     return GriddedCollection("CHL", ["2X_7D_V1"], "2X_7D_V1")
 );
 
@@ -263,6 +265,43 @@ PlantFunctionalTypeCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_
 
 
 """
+    SIFCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for solar-induced chlorophyll fluorescence. Supported datasets are (click to view bibtex items)
+- `TROPOMI_740_1X_1M_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_1X_1M_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_12X_8D_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_12X_8D_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_1X_1M_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_1X_1M_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_12X_8D_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_12X_8D_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+</summary>
+
+```
+@article{kohler2018global,
+    author = {K{\\"o}hler, Philipp and Frankenberg, Christian and Magney, Troy S and Guanter, Luis and Joiner, Joanna and Landgraf, Jochen},
+    year = {2018},
+    title = {Global retrievals of solar-induced chlorophyll fluorescence with {TROPOMI}: {F}irst results and intersensor comparison to {OCO-2}},
+    journal = {Geophysical Research Letters},
+    volume = {45},
+    number = {19},
+    pages = {10,456--10,463}
+}
+```
+</details>
+"""
+SIFCollection() = (
+    _supported = ["TROPOMI_740_1X_1M_2018_V1", "TROPOMI_740_1X_1M_2019_V1", "TROPOMI_740_12X_8D_2018_V1", "TROPOMI_740_12X_8D_2019_V1", "TROPOMI_740DC_1X_1M_2018_V1", "TROPOMI_740DC_1X_1M_2019_V1",
+                  "TROPOMI_740DC_12X_8D_2018_V1", "TROPOMI_740DC_12X_8D_2019_V1"];
+
+    return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")
+);
+
+
+"""
     SoilColorCollection()
 
 <details>
@@ -316,8 +355,11 @@ Method to create a general dataset collection for soil hydraulic parameters (res
 ```
 </details>
 """
-SoilHydraulicsCollection() = GriddedCollection("SOIL", ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1",
-                                                        "VGN_12X_1Y_V1"], "SWCS_12X_1Y_V1");
+SoilHydraulicsCollection() = (
+    _supported = ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"];
+
+    return GriddedCollection("SOIL", _supported, "SWCS_12X_1Y_V1")
+);
 
 
 """
