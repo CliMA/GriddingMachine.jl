@@ -17,6 +17,15 @@ using Test
         query_collection(ClumpingIndexCollection(), "2X_1Y_V1"  ); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V2"  ); @test true;
 
+        for year in 2000:2020
+            query_collection(LAICollection(), "MODIS_2X_1M_$(year)_V1" ); @test true;
+            query_collection(LAICollection(), "MODIS_2X_8D_$(year)_V1" ); @test true;
+            query_collection(LAICollection(), "MODIS_10X_1M_$(year)_V1"); @test true;
+            query_collection(LAICollection(), "MODIS_10X_8D_$(year)_V1"); @test true;
+            query_collection(LAICollection(), "MODIS_20X_1M_$(year)_V1"); @test true;
+            query_collection(LAICollection(), "MODIS_20X_8D_$(year)_V1"); @test true;
+        end;
+
         query_collection(LandMaskCollection(), "4X_1Y_V1"); @test true;
 
         # expect warning here
@@ -27,16 +36,14 @@ using Test
 
         query_collection(LeafPhosphorusCollection(), "2X_1Y_V1"); @test true;
 
-        query_collection(PlantFunctionalTypeCollection(), "2X_1Y_V1"); @test true;
+        query_collection(PFTCollection(), "2X_1Y_V1"); @test true;
 
-        query_collection(SIFCollection(), "TROPOMI_740_1X_1M_2018_V1"   ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740_1X_1M_2019_V1"   ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740_12X_8D_2018_V1"  ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740_12X_8D_2019_V1"  ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740DC_1X_1M_2018_V1" ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740DC_1X_1M_2019_V1" ); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740DC_12X_8D_2018_V1"); @test true;
-        query_collection(SIFCollection(), "TROPOMI_740DC_12X_8D_2019_V1"); @test true;
+        for year in 2018:2019
+            query_collection(SIFCollection(), "TROPOMI_740_1X_1M_$(year)_V1"   ); @test true;
+            query_collection(SIFCollection(), "TROPOMI_740_12X_8D_$(year)_V1"  ); @test true;
+            query_collection(SIFCollection(), "TROPOMI_740DC_1X_1M_$(year)_V1" ); @test true;
+            query_collection(SIFCollection(), "TROPOMI_740DC_12X_8D_$(year)_V1"); @test true;
+        end;
 
         query_collection(SoilColorCollection(), "2X_1Y_V1"); @test true;
 

@@ -12,11 +12,12 @@ Collections.GriddedCollection
 Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
 Collections.ElevationCollection
+Collections.LAICollection
 Collections.LandMaskCollection
 Collections.LeafChlorophyllCollection
 Collections.LeafNitrogenCollection
 Collections.LeafPhosphorusCollection
-Collections.PlantFunctionalTypeCollection
+Collections.PFTCollection
 Collections.SIFCollection
 Collections.SoilColorCollection
 Collections.SoilHydraulicsCollection

@@ -65,21 +65,3 @@ function query_LUT(
 
     return _file, FormatNC(), "GPP", res_t, true, _varn, _vara, FT[-10,100]
 end
-
-
-
-
-function query_LUT(
-            dt::LAIMODISv006{FT},
-            year::Int,
-            res_g::String,
-            res_t::String
-) where {FT<:AbstractFloat}
-    _artn = "LAI_$(res_g)_$(res_t)_$(year)_V1";
-    predownload_artifact!(_artn, ARTIFACTs_TOML);
-    _file = @artifact_str(_artn) * "/$(_artn).nc";
-    _varn = "LAI";
-    _vara = Dict("longname" => "Leaf area index", "units" => "-");
-
-    return _file, FormatNC(), "lai", res_t, true, _varn, _vara, FT[eps(FT),20]
-end

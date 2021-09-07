@@ -7,8 +7,8 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection, LeafPhosphorusCollection,
-       PlantFunctionalTypeCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection,
+export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LAICollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection, LeafPhosphorusCollection,
+       PFTCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection,
        WoodDensityCollection
 
 
@@ -141,6 +141,48 @@ ElevationCollection() = GriddedCollection("ELEV", ["4X_1Y_V1"], "4X_1Y_V1");
 
 
 """
+    LAICollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for leaf area index. Supported datasets are (click to view bibtex items)
+- `MODIS_2X_1M_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+- `MODIS_2X_8D_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+- `MODIS_10X_1M_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+- `MODIS_10X_8D_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+- `MODIS_20X_1M_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+- `MODIS_20X_8D_YYYY_V1` [(YYYY from 2000 to 2020; Yuan et al., 2011)](https://doi.org/10.1016/j.rse.2011.01.001)
+</summary>
+
+```
+@article{yuan2011reprocessing,
+	author = {Yuan, Hua and Dai, Yongjiu and Xiao, Zhiqiang and Ji, Duoying and Shangguan, Wei},
+	year = {2011},
+	title = {Reprocessing the MODIS Leaf Area Index products for land surface and climate modelling},
+	journal = {Remote Sensing of Environment},
+	volume = {115},
+	number = {5},
+	pages = {1171--1187}
+}
+```
+</details>
+"""
+LAICollection() = (
+    _supported = [];
+    for _year in 2000:2020
+        push!(_supported, "MODIS_2X_1M_$(year)_V1");
+        push!(_supported, "MODIS_2X_8D_$(year)_V1");
+        push!(_supported, "MODIS_10X_1M_$(year)_V1");
+        push!(_supported, "MODIS_10X_8D_$(year)_V1");
+        push!(_supported, "MODIS_20X_1M_$(year)_V1");
+        push!(_supported, "MODIS_20X_8D_$(year)_V1");
+    end;
+
+    return GriddedCollection("LAI", _supported, "MODIS_20X_8D_2020_V1")
+);
+
+
+"""
     LandMaskCollection()
 
 Method to create a general dataset collection for land mask. Supported datasets are (click to view bibtex items)
@@ -241,7 +283,7 @@ LeafPhosphorusCollection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """
-    PlantFunctionalTypeCollection()
+    PFTCollection()
 
 <details>
 <summary>
@@ -261,7 +303,7 @@ Method to create a general dataset collection for plant function type ratio. Sup
 ```
 </details>
 """
-PlantFunctionalTypeCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
+PFTCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """
@@ -270,14 +312,10 @@ PlantFunctionalTypeCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_
 <details>
 <summary>
 Method to create a general dataset collection for solar-induced chlorophyll fluorescence. Supported datasets are (click to view bibtex items)
-- `TROPOMI_740_1X_1M_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_1X_1M_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_12X_8D_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_12X_8D_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_1X_1M_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_1X_1M_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_12X_8D_2018_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_12X_8D_2019_V1` [(Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 </summary>
 
 ```
@@ -294,8 +332,13 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 </details>
 """
 SIFCollection() = (
-    _supported = ["TROPOMI_740_1X_1M_2018_V1", "TROPOMI_740_1X_1M_2019_V1", "TROPOMI_740_12X_8D_2018_V1", "TROPOMI_740_12X_8D_2019_V1", "TROPOMI_740DC_1X_1M_2018_V1", "TROPOMI_740DC_1X_1M_2019_V1",
-                  "TROPOMI_740DC_12X_8D_2018_V1", "TROPOMI_740DC_12X_8D_2019_V1"];
+    _supported = [];
+    for _year in 2018:2019
+        push!(_supported, "TROPOMI_740_1X_1M_$(year)_V1");
+        push!(_supported, "TROPOMI_740_12X_8D_$(year)_V1");
+        push!(_supported, "TROPOMI_740DC_1X_1M_$(year)_V1");
+        push!(_supported, "TROPOMI_740DC_12X_8D_$(year)_V1");
+    end;
 
     return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")
 );
