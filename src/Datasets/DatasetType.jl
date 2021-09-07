@@ -21,37 +21,6 @@ abstract type AbstractDataset{FT} end
 #
 ###############################################################################
 """
-    struct GPPMPIv006{FT}
-
-<details>
-<summary>
-Struct for MPI GPP v006
-[Link to Dataset Source](https://doi.org/10.5194/bg-17-1343-2020)
-</summary>
-
-```
-@article{jung2020scaling,
-    author = {Jung, Martin and Schwalm, Christopher and Migliavacca, Mirco and
-        Walther, Sophia and Camps-Valls, Gustau and Koirala, Sujan and Anthoni,
-        Peter and Besnard, Simon and Bodesheim, Paul and Carvalhais, Nuno and
-        others},
-    year = {2020},
-    title = {Scaling carbon fluxes from eddy covariance sites to globe:
-        {S}ynthesis and evaluation of the {FLUXCOM} approach},
-    journal = {Biogeosciences},
-    volume = {17},
-    number = {5},
-    pages = {1343--1365}
-}
-```
-</details>
-"""
-struct GPPMPIv006{FT} <: AbstractDataset{FT} end
-
-
-
-
-"""
     struct GPPVPMv20{FT}
 
 <details>
@@ -113,5 +82,5 @@ Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     var_attr::Dict{String,String} = Dict("longname" => "ZEROS",
                                          "units"    => "-")
     "Type label"
-    dt::AbstractDataset = NPPModis{FT}()
+    dt::AbstractDataset = GPPVPMv20{FT}()
 end

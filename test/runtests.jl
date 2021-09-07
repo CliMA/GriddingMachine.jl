@@ -17,6 +17,11 @@ using Test
         query_collection(ClumpingIndexCollection(), "2X_1Y_V1"  ); @test true;
         query_collection(ClumpingIndexCollection(), "2X_1Y_V2"  ); @test true;
 
+        for year in 2001:2019
+            query_collection(GPPCollection(), "MPI_RS_2X_1M_$(year)_V1"); @test true;
+            query_collection(GPPCollection(), "MPI_RS_2X_8D_$(year)_V1"); @test true;
+        end;
+
         for year in 2000:2020
             query_collection(LAICollection(), "MODIS_2X_1M_$(year)_V1" ); @test true;
             query_collection(LAICollection(), "MODIS_2X_8D_$(year)_V1" ); @test true;

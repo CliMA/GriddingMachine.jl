@@ -12,6 +12,7 @@ Collections.GriddedCollection
 Collections.CanopyHeightCollection
 Collections.ClumpingIndexCollection
 Collections.ElevationCollection
+Collections.GPPCollection
 Collections.LAICollection
 Collections.LandMaskCollection
 Collections.LeafChlorophyllCollection

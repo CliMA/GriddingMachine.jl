@@ -7,9 +7,9 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, LAICollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection, LeafPhosphorusCollection,
-       PFTCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection, VcmaxCollection,
-       WoodDensityCollection
+export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, GPPCollection, LAICollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection,
+       LeafPhosphorusCollection, PFTCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection,
+       VcmaxCollection, WoodDensityCollection
 
 
 # export public functions
@@ -140,6 +140,42 @@ Method to create a general dataset collection for surface elevation. Supported d
 ElevationCollection() = GriddedCollection("ELEV", ["4X_1Y_V1"], "4X_1Y_V1");
 
 
+
+"""
+    GPPCollection()
+
+<details>
+<summary>
+Method to create a general dataset collection for gross primary productivity. Supported datasets are (click to view bibtex items)
+- `MPI_RS_2X_1M_YYYY_V1` [(YYYY from 20001to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
+- `MPI_RS_2X_8D_YYYY_V1` [(YYYY from 20001to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
+</summary>
+
+```
+@article{tramontana2016predicting,
+    author = {Tramontana, Gianluca and Jung, Martin and Schwalm, Christopher R and Ichii, Kazuhito and Camps-Valls, Gustau and R{\'a}duly, Botond and Reichstein, Markus and Arain, M Altaf and
+              Cescatti, Alessandro and Kiely, Gerard and others},
+    year = {2016},
+    title = {Predicting carbon dioxide and energy fluxes across global FLUXNET sites with regression algorithms},
+    journal = {Biogeosciences},
+    volume = {13},
+    number = {14},
+    pages = {4291--4313}
+}
+```
+</details>
+"""
+GPPCollection() = (
+    _supported = [];
+    for _year in 2001:2019
+        push!(_supported, "MPI_RS_2X_1M_$(_year)_V1");
+        push!(_supported, "MPI_RS_2X_8D_$(_year)_V1");
+    end;
+
+    return GriddedCollection("GPP", _supported, "MPI_RS_2X_1M_2019_V1")
+);
+
+
 """
     LAICollection()
 
@@ -170,12 +206,12 @@ Method to create a general dataset collection for leaf area index. Supported dat
 LAICollection() = (
     _supported = [];
     for _year in 2000:2020
-        push!(_supported, "MODIS_2X_1M_$(year)_V1");
-        push!(_supported, "MODIS_2X_8D_$(year)_V1");
-        push!(_supported, "MODIS_10X_1M_$(year)_V1");
-        push!(_supported, "MODIS_10X_8D_$(year)_V1");
-        push!(_supported, "MODIS_20X_1M_$(year)_V1");
-        push!(_supported, "MODIS_20X_8D_$(year)_V1");
+        push!(_supported, "MODIS_2X_1M_$(_year)_V1");
+        push!(_supported, "MODIS_2X_8D_$(_year)_V1");
+        push!(_supported, "MODIS_10X_1M_$(_year)_V1");
+        push!(_supported, "MODIS_10X_8D_$(_year)_V1");
+        push!(_supported, "MODIS_20X_1M_$(_year)_V1");
+        push!(_supported, "MODIS_20X_8D_$(_year)_V1");
     end;
 
     return GriddedCollection("LAI", _supported, "MODIS_20X_8D_2020_V1")
@@ -334,10 +370,10 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 SIFCollection() = (
     _supported = [];
     for _year in 2018:2019
-        push!(_supported, "TROPOMI_740_1X_1M_$(year)_V1");
-        push!(_supported, "TROPOMI_740_12X_8D_$(year)_V1");
-        push!(_supported, "TROPOMI_740DC_1X_1M_$(year)_V1");
-        push!(_supported, "TROPOMI_740DC_12X_8D_$(year)_V1");
+        push!(_supported, "TROPOMI_740_1X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740_12X_8D_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_1X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_12X_8D_$(_year)_V1");
     end;
 
     return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")

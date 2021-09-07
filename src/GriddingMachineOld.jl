@@ -30,7 +30,7 @@ MODIS_USER_PWD = "";
 
 
 # export public types for GriddedDataset
-export GPPMPIv006, GPPVPMv20, GriddedDataset
+export GPPVPMv20, GriddedDataset
 
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
