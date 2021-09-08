@@ -1,6 +1,6 @@
 module Collections
 
-using Artifacts: @artifact_str
+using Artifacts: @artifact_str, load_artifacts_toml
 using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
 
@@ -13,7 +13,7 @@ export canopy_height_collection, clumping_index_collection, elevation_collection
 
 
 # export public functions
-export query_collection
+export clean_collections!, query_collection
 
 
 # collection types
@@ -653,6 +653,80 @@ dat_file = query_collection(canopy_height_collection());
 ```
 """
 query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)
+
+
+"""
+This function cleans up the collections, supported methods are
+
+    $(METHODLIST)
+"""
+function clean_collections! end
+
+
+"""
+    clean_collections!(selection::String="old")
+
+This method cleans up all selected artifacts of GriddingMachine.jl (through identify the `GRIDDINGMACHINE` file in the artifacts), given
+- `selection` A string indicating which artifacts to clean up
+    - `old` Artifacts from an old version of GriddingMachine.jl (default)
+    - `all` All Artifacts from GriddingMachine.jl
+"""
+clean_collections!(selection::String="old") = (
+    # read the SHA1 identifications in Artifacts.toml
+    _metas = load_artifacts_toml("../Artifacts.toml");
+    _hashs = [_meta["git-tree-sha1"] for (_,_meta) in _metas];
+
+    # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
+    _artifact_dirs = readdir("$(homedir())/.julia/artifacts");
+    for _dir in _artifact_dirs
+        if isdir("$(homedir())/.julia/artifacts/$(_dir)")
+            if isfile("$(homedir())/.julia/artifacts/$(_dir)/GRIDDINGMACHINE")
+                if selection == "all"
+                    rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
+                else
+                    if !(_dir in _hashs)
+                        rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
+                    end;
+                end;
+            end;
+        end;
+    end;
+
+    return nothing
+);
+
+
+"""
+    clean_collections!(selection::Vector{String})
+
+This method cleans up all selected artifacts in GriddingMachine.jl, given
+- `selection` A vector of artifact names
+"""
+clean_collections!(selection::Vector{String}) = (
+    # read the SHA1 identifications in Artifacts.toml
+    _metas = load_artifacts_toml("../Artifacts.toml");
+    _hashs = [_metas[_artn]["git-tree-sha1"] for _artn in selection];
+
+    # iterate the artifact hashs to remove corresponding folder
+    for _dir in _hashs
+        rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
+    end;
+
+    return nothing
+);
+
+
+"""
+    clean_collections!(selection::Vector{String})
+
+This method cleans up all selected artifacts in GriddingMachine.jl, given
+- `selection` A [`GriddedCollection`](@ref) type collection
+"""
+clean_collections!(selection::GriddedCollection) = (
+    clean_collections!(["$(selection.LABEL)_$(_ver)" for _ver in selection.SUPPORTED_COMBOS]);
+
+    return nothing
+);
 
 
 end
