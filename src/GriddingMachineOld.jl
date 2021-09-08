@@ -30,7 +30,7 @@ MODIS_USER_PWD = "";
 
 
 # export public types for GriddedDataset
-export GPPVPMv20, GriddedDataset
+export GriddedDataset
 
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
@@ -39,7 +39,7 @@ export MOD09A1v006NIRv, MOD15A2Hv006LAI
 export ERA5LandHourly, ERA5SingleLevelsHourly
 
 #export public functions for GriddedDataset
-export load_LUT, read_LUT, regrid_LUT, save_LUT!
+export read_LUT, regrid_LUT, save_LUT!
 
 #export public functions for UngriddedDataset
 export process_RAW!
@@ -52,9 +52,6 @@ export fetch_ERA5!
 
 # include functions to load/read datasets
 include("Datasets/DatasetType.jl")
-include("Datasets/FormatType.jl" )
-include("Datasets/load.jl"       )
-include("Datasets/query.jl"      )
 include("Datasets/read.jl"       )
 include("Datasets/regrid.jl"     )
 include("Datasets/save.jl"       )

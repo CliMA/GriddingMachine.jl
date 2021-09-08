@@ -358,6 +358,326 @@ lazy = true
     sha256 = "15b308120ee7b97579a3ab4fd2102f0a6c732ea586f1f875091194896188478d"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_MPI_RS_2X_8D_2019_V1.tar.gz"
 
+[GPP_VPM_12X_8D_2000_V2]
+git-tree-sha1 = "8f09b799bc0c7a45aa2ef6168ee07a29b9e8d23c"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2000_V2.download]]
+    sha256 = "b2f438e437220899da4e9a19c4d839e619b08562a39bb638fada8fbf5b281c87"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2000_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2001_V2]
+git-tree-sha1 = "a489d7218cd95a0ef731789dad071ba8ef87f62f"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2001_V2.download]]
+    sha256 = "c756a5d65fd8698eb7ecbfdd8022389c7513559e8b6257b4746e03afe9c127f8"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2001_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2002_V2]
+git-tree-sha1 = "ffabaabd24a71d7f146c60f702246869897b2f80"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2002_V2.download]]
+    sha256 = "89d33fd33c2d4a767c6ca496ef0a6cb5ebd901df98ca475637af421a564c2501"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2002_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2003_V2]
+git-tree-sha1 = "d253bf694f61085a1b68e5a38ba72dbf1255706f"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2003_V2.download]]
+    sha256 = "50296e3e4ea0c76a5be7246d20fce9838c2993f7b876fd6fc4c3c5dad170643a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2003_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2004_V2]
+git-tree-sha1 = "6354f8cc1947ccee6fb1b44bb4cd6128cf23145e"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2004_V2.download]]
+    sha256 = "da0384d938d0102767a973b7641a12fa198194677e0f1e096084d6f0cc8bedbb"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2004_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2005_V2]
+git-tree-sha1 = "b5baaea9618cc586f0dd38fec3bfd9d9dc670b22"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2005_V2.download]]
+    sha256 = "7924ebdbfcaabd69092a9efdce8d459a805866ff5d60c4aa2a6ce9e360c62f2d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2005_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2006_V2]
+git-tree-sha1 = "8f4d211766039e1b3b74c023145f59dd23945a87"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2006_V2.download]]
+    sha256 = "5090cec34f28b7a95b72791c5c341242d7f36ed5362b4bb6f440acede28b76e1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2006_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2007_V2]
+git-tree-sha1 = "695448b80cd0555ac382e7dc29f278d5d8cb5f5f"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2007_V2.download]]
+    sha256 = "45aed532cf2960cb50bd69936b341635730df54a1977a4076f993541c702891f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2007_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2008_V2]
+git-tree-sha1 = "92d48e63d62a7fc7240470684d4ed339cc2aaa4f"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2008_V2.download]]
+    sha256 = "e2a29e46101babdf28a75516ddf900e53bb266ef9812ad6f08f3fb4e89dbcb1e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2008_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2009_V2]
+git-tree-sha1 = "cf48ba0117bfa563584fd5074cbdf0656142fba7"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2009_V2.download]]
+    sha256 = "8992e50292e6df724206b80ceb508090aa97dc61689ccc82f67aa3258b0047a6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2009_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2010_V2]
+git-tree-sha1 = "7b8df154d56268891d3e321a8701e38a3ef00c05"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2010_V2.download]]
+    sha256 = "a50c2d55a74cea5230eca13dbeac61c6fa0600530b42242ab5aa2f17b879a104"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2010_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2011_V2]
+git-tree-sha1 = "546c11ef9a5506c2fc1c4ab397a00dbc524341af"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2011_V2.download]]
+    sha256 = "374011713312aa441d207dac116b739b45cac3d9098598f52c9e552722364f7f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2011_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2012_V2]
+git-tree-sha1 = "2a6f87abaa26cc2370cc5a547a3c3b7eab226b81"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2012_V2.download]]
+    sha256 = "9b4c4937248c5d4087a43f8041f5967169b896d6679ea316ef3c80c8e54ed67c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2012_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2013_V2]
+git-tree-sha1 = "58711cb94373c375a07a2bd4abebf34cafd4d54e"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2013_V2.download]]
+    sha256 = "06a20e1b7f6083eeae7fe39c8b7ad8516df7bf6eb26c14b9894eaf7ffac1ac1a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2013_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2014_V2]
+git-tree-sha1 = "0c26d699d145850ade383576943df66d601e4194"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2014_V2.download]]
+    sha256 = "dacb09390b5f9bbc7c98062a594a68ad1d85fe80ce1166b5b391690a9fb0afea"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2014_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2015_V2]
+git-tree-sha1 = "af396cea79fde005783e8e5f13bf73d9719d217a"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2015_V2.download]]
+    sha256 = "5faaf2d1790494bae42ae260fa645c437ccf8ef3a3633ee14941ea9cd172f25a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2015_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2016_V2]
+git-tree-sha1 = "92c2fe9c6694afc4006be9d6626c4ce1ae9aec96"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2016_V2.download]]
+    sha256 = "3beac53cb43415105956f083c15fa96fad54f8f3f0f0d7d404664bc782a4e2a0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2016_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2017_V2]
+git-tree-sha1 = "e3bdfba86080a39dea234d4a8bb4cce2eb85816e"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2017_V2.download]]
+    sha256 = "c705d7f7da9c024d3b9a49bbdb5ffb3c1e7955a2ec1f931c19b575ecbde6bd1f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2017_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2018_V2]
+git-tree-sha1 = "f3d50dfabc939195f9597d9cfe2c5ebce2586b3e"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2018_V2.download]]
+    sha256 = "4281c6caa4fe845f628b4cba4d3fc6cb54ab28cde75a417ceeec0128425b35bc"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2018_V2.tar.gz"
+
+[GPP_VPM_12X_8D_2019_V2]
+git-tree-sha1 = "ead30a1ce9c5bf2ca730bdbb864e9effa6d4edf7"
+lazy = true
+
+    [[GPP_VPM_12X_8D_2019_V2.download]]
+    sha256 = "33f6cb57ddd5e39e4360ef66ad5561d164df7d354f2bac2df649b0e553a2e6ab"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_12X_8D_2019_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2000_V2]
+git-tree-sha1 = "776174c5740aceacb839785ea8e833ba83b96942"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2000_V2.download]]
+    sha256 = "e8473a1ce83b6a53632b3155389fe3da94bc0e9cabbe812ce7040c1d3f6f0ef6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2000_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2001_V2]
+git-tree-sha1 = "f0d25ae9241529d8cf69fe240ea2a202178d8510"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2001_V2.download]]
+    sha256 = "e700f3c87035bae6219ccdec4cc3f98ae7a5dfe3baf76116c7e19b48d8505214"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2001_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2002_V2]
+git-tree-sha1 = "4a7d73b8b48a2da4c05de7578b64dca756578a97"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2002_V2.download]]
+    sha256 = "7bd5706d0274f64488baf60b00fc32e7077fca136f97814a80b569fc5ef11a3d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2002_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2003_V2]
+git-tree-sha1 = "070b4a3ab78d95863f93556596a91bf30fce0ede"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2003_V2.download]]
+    sha256 = "e9e577c998f29736c9e110e9e66d2141867c8750463a47306e7d80ee7a23aebc"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2003_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2004_V2]
+git-tree-sha1 = "b4beb01de9570e55e25087dd8d812725ba7d9a45"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2004_V2.download]]
+    sha256 = "a04c7c3aebefb564c1baab75fe65e0b1d594bc85b18210d9e0f2172809253d02"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2004_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2005_V2]
+git-tree-sha1 = "5be3638dfd02e36f972e96ea9901eaf50433a919"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2005_V2.download]]
+    sha256 = "86a22d4ed1e879f239d6b7e45d1c901542bf96990e2cf807d43e64eaae117d5c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2005_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2006_V2]
+git-tree-sha1 = "d3f9976c44ac721785e091587bffffebd4999cb0"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2006_V2.download]]
+    sha256 = "01e3ea6358293c1a011e99492365c9371e4352942f617dfa5c637420eccd5153"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2006_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2007_V2]
+git-tree-sha1 = "2b904756d63cd6d8290b4e1fe2eb32fcf14adf00"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2007_V2.download]]
+    sha256 = "6ffb71582a048af3ef2f12d3d20345b196fc418b5dab90d42815d011a0db936d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2007_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2008_V2]
+git-tree-sha1 = "3dd2704f689103f052a1897bb07f0f7bcdfeb251"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2008_V2.download]]
+    sha256 = "8af6d3c87f967eccd7b677b59882c009a9a9b71154040fe18ff2b737ce107c49"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2008_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2009_V2]
+git-tree-sha1 = "817bc720a1316e005e603f2ebfa9acbf58b19f4d"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2009_V2.download]]
+    sha256 = "e38497a71d7e107ec834a62cacc47099c77ffeab39c3acb50c4aa76a2aaa9c4e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2009_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2010_V2]
+git-tree-sha1 = "238abd190534499fa78efe3ca7768da3c1be926c"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2010_V2.download]]
+    sha256 = "eb54b497de590e540f8d4edaf3da896497661e942fe43427649aa09d9a408ce1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2010_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2011_V2]
+git-tree-sha1 = "c2eb9f03af42a23903c8a5e7cbcc9d1ccd7eb78b"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2011_V2.download]]
+    sha256 = "454bcf16134910bbffe8223f65c55d2de5475652fc618ebed32ed79879b37997"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2011_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2012_V2]
+git-tree-sha1 = "bd2a3f35b39a809960bf90443753674d5bfeb322"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2012_V2.download]]
+    sha256 = "6f22770553fac8a18c151b6d5cb630094f5336c95d05ed1bc826c8144f3e4d58"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2012_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2013_V2]
+git-tree-sha1 = "1b963d0d96a7f8c3ee4260f496b0dd6a3db80ae4"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2013_V2.download]]
+    sha256 = "b258989dfc7d86716941d201526babfed366170c06ea906576f0d347967c7254"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2013_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2014_V2]
+git-tree-sha1 = "9e7fe9662b77fcf57cdc72f1c1c4d7069a7bd58a"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2014_V2.download]]
+    sha256 = "72b0f25fcc1d01f1852a36fb452e9f2818c1bb0b7c77e88086858f8975fcbf7c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2014_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2015_V2]
+git-tree-sha1 = "4a71f8b3a8e7856eec4b40b3c3253cbde2914a84"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2015_V2.download]]
+    sha256 = "4e46c1a7ed15a683763c07ed03c40e6311f03cb5cfada38d35f1e3b04d7e687e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2015_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2016_V2]
+git-tree-sha1 = "bf794ad3f2ddc93530282b0152e51c1f76ab4e0e"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2016_V2.download]]
+    sha256 = "fda5f319e31329923a46aebd29159f8a6f96f840132839e025107739f1db2a38"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2016_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2017_V2]
+git-tree-sha1 = "1bd890df41128561eb61628379c1778fd65f8d8d"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2017_V2.download]]
+    sha256 = "fb2fd1459329197646e07d9e1dae31a20c549c180057dd1e2f8c76076d9ad42e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2017_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2018_V2]
+git-tree-sha1 = "fc2a302815ba745197a78be2a598dc3b2b6cbaf6"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2018_V2.download]]
+    sha256 = "dfbda36d947f56ca5f4343fe7a9d947b9d9777551402210d3af0f5cc8f61c10f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2018_V2.tar.gz"
+
+[GPP_VPM_5X_8D_2019_V2]
+git-tree-sha1 = "ee77f6b41a1b5c6e2735c95e6aca817335c503bc"
+lazy = true
+
+    [[GPP_VPM_5X_8D_2019_V2.download]]
+    sha256 = "df56cc20a2de6cc650434688fc22153d3314d8c4f0b6d5637f509ce71dc750c6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/GPP_VPM_5X_8D_2019_V2.tar.gz"
+
 [LAI_MODIS_10X_1M_2000_V1]
 git-tree-sha1 = "5a1e1e2cbe1abe60426c480dfb798e8840a8746d"
 lazy = true

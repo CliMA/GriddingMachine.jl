@@ -37,19 +37,6 @@ function read_LUT(
             lon::FT,
             ind::Int = 1
 ) where {FT<:AbstractFloat}
-    return read_LUT(ds, ds.dt, lat, lon, ind)
-end
-
-
-
-
-function read_LUT(
-            ds::GriddedDataset{FT},
-            dt::AbstractDataset{FT},
-            lat::FT,
-            lon::FT,
-            ind::Int
-) where {FT<:AbstractFloat}
     ind_lat = lat_ind(lat; res=ds.res_lat);
     ind_lon = lon_ind(lon; res=ds.res_lon);
 
@@ -64,19 +51,6 @@ function read_LUT(
             lats::Tuple{FT,FT},
             lons::Tuple{FT,FT},
             inds::Tuple{Int,Int} = (1,1)
-) where {FT<:AbstractFloat}
-    return read_LUT(ds, ds.dt, lats, lons, inds)
-end
-
-
-
-
-function read_LUT(
-            ds::GriddedDataset{FT},
-            dt::AbstractDataset{FT},
-            lats::Tuple{FT,FT},
-            lons::Tuple{FT,FT},
-            inds::Tuple{Int,Int}
 ) where {FT<:AbstractFloat}
     _lat1, _lat2 = lats;
     _lon1, _lon2 = lons;

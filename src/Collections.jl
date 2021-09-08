@@ -7,9 +7,9 @@ using LazyArtifacts
 
 # export public types and constructors
 export GriddedCollection
-export CanopyHeightCollection, ClumpingIndexCollection, ElevationCollection, GPPCollection, LAICollection, LandMaskCollection, LeafChlorophyllCollection, LeafNitrogenCollection,
-       LeafPhosphorusCollection, PFTCollection, SIFCollection, SoilColorCollection, SoilHydraulicsCollection, SpecificLeafAreaCollection, SurfaceAreaCollection, TreeDensityCollection,
-       VcmaxCollection, WoodDensityCollection
+export canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, leaf_chlorophyll_collection, leaf_nitrogen_collection,
+       leaf_phosphorus_collection, pft_collection, sif_collection, soil_color_collection, soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection,
+       vcmax_collection, wood_density_collection
 
 
 # export public functions
@@ -43,7 +43,7 @@ end
 
 # constructors for GriddedCollection
 """
-    CanopyHeightCollection()
+    canopy_height_collection()
 
 <details>
 <summary>
@@ -74,11 +74,11 @@ Method to create a general dataset collection for canopy height. Supported datas
 ```
 </details>
 """
-CanopyHeightCollection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"], "20X_1Y_V1");
+canopy_height_collection() = GriddedCollection("CH", ["20X_1Y_V1", "2X_1Y_V2"], "20X_1Y_V1");
 
 
 """
-    ClumpingIndexCollection()
+    clumping_index_collection()
 
 <details>
 <summary>
@@ -111,11 +111,11 @@ V2 dataset are classified for different plant functional types. The indices are 
 ```
 </details>
 """
-ClumpingIndexCollection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+clumping_index_collection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
 
 
 """
-    ElevationCollection()
+    elevation_collection()
 
 <details>
 <summary>
@@ -137,18 +137,19 @@ Method to create a general dataset collection for surface elevation. Supported d
 ```
 </details>
 """
-ElevationCollection() = GriddedCollection("ELEV", ["4X_1Y_V1"], "4X_1Y_V1");
-
+elevation_collection() = GriddedCollection("ELEV", ["4X_1Y_V1"], "4X_1Y_V1");
 
 
 """
-    GPPCollection()
+    gpp_collection()
 
 <details>
 <summary>
 Method to create a general dataset collection for gross primary productivity. Supported datasets are (click to view bibtex items)
-- `MPI_RS_2X_1M_YYYY_V1` [(YYYY from 20001to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
-- `MPI_RS_2X_8D_YYYY_V1` [(YYYY from 20001to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
+- `MPI_RS_2X_1M_YYYY_V1` [(YYYY from 2001 to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
+- `MPI_RS_2X_8D_YYYY_V1` [(YYYY from 2001 to 2019; Tramontana et al., 2016)](https://doi.org/10.5194/bg-13-4291-2016)
+- `VPM_5X_8D_YYYY_V2` [(YYYY from 2000 to 2019; Zhang et al., 2017)](https://doi.org/10.1038/sdata.2017.165)
+- `VPM_12X_8D_YYYY_V2` [(YYYY from 2000 to 2019; Zhang et al., 2017)](https://doi.org/10.1038/sdata.2017.165)
 </summary>
 
 ```
@@ -162,14 +163,26 @@ Method to create a general dataset collection for gross primary productivity. Su
     number = {14},
     pages = {4291--4313}
 }
+@article{zhang2017global,
+    author = {Zhang, Yao and Xiao, Xiangming and Wu, Xiaocui and Zhou, Sha and Zhang, Geli and Qin, Yuanwei and Dong, Jinwei},
+    year = {2017},
+    title = {A global moderate resolution dataset of gross primary production of vegetation for 2000--2016},
+    journal = {Scientific data},
+    volume = {4},
+    pages = {170165}
+}
 ```
 </details>
 """
-GPPCollection() = (
+gpp_collection() = (
     _supported = [];
     for _year in 2001:2019
         push!(_supported, "MPI_RS_2X_1M_$(_year)_V1");
         push!(_supported, "MPI_RS_2X_8D_$(_year)_V1");
+    end;
+    for _year in 2000:2019
+        push!(_supported, "VPM_5X_8D_$(_year)_V2");
+        push!(_supported, "VPM_12X_8D_$(_year)_V2");
     end;
 
     return GriddedCollection("GPP", _supported, "MPI_RS_2X_1M_2019_V1")
@@ -177,7 +190,7 @@ GPPCollection() = (
 
 
 """
-    LAICollection()
+    lai_collection()
 
 <details>
 <summary>
@@ -203,7 +216,7 @@ Method to create a general dataset collection for leaf area index. Supported dat
 ```
 </details>
 """
-LAICollection() = (
+lai_collection() = (
     _supported = [];
     for _year in 2000:2020
         push!(_supported, "MODIS_2X_1M_$(_year)_V1");
@@ -219,16 +232,16 @@ LAICollection() = (
 
 
 """
-    LandMaskCollection()
+    land_mask_collection()
 
 Method to create a general dataset collection for land mask. Supported datasets are (click to view bibtex items)
 - `4X_1Y_V1` [(ERA5)]
 """
-LandMaskCollection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
+land_mask_collection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
 
 
 """
-    LeafChlorophyllCollection()
+    leaf_chlorophyll_collection()
 
 <details>
 <summary>
@@ -248,7 +261,7 @@ Method to create a general dataset collection for leaf chlorophyll content. Supp
 ```
 </details>
 """
-LeafChlorophyllCollection() = (
+leaf_chlorophyll_collection() = (
     @warn "This dataset is only meant for those who has reached to the authors (Croft et al) for permissions. We (developers of GriddingMachine) are not responsible for unauthorized usage";
 
     return GriddedCollection("CHL", ["2X_7D_V1"], "2X_7D_V1")
@@ -256,7 +269,7 @@ LeafChlorophyllCollection() = (
 
 
 """
-    LeafNitrogenCollection()
+    leaf_nitrogen_collection()
 
 <details>
 <summary>
@@ -289,11 +302,11 @@ Method to create a general dataset collection for leaf nitrogen content. Support
 ```
 </details>
 """
-LeafNitrogenCollection() = GriddedCollection("LNC", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+leaf_nitrogen_collection() = GriddedCollection("LNC", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
 
 
 """
-    LeafNitrogenCollection()
+    leaf_nitrogen_collection()
 
 <details>
 <summary>
@@ -315,11 +328,11 @@ Method to create a general dataset collection for leaf phosphorus content. Suppo
 ```
 </details>
 """
-LeafPhosphorusCollection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
+leaf_phosphorus_collection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """
-    PFTCollection()
+    pft_collection()
 
 <details>
 <summary>
@@ -339,11 +352,11 @@ Method to create a general dataset collection for plant function type ratio. Sup
 ```
 </details>
 """
-PFTCollection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
+pft_collection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 """
-    SIFCollection()
+    sif_collection()
 
 <details>
 <summary>
@@ -367,7 +380,7 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 ```
 </details>
 """
-SIFCollection() = (
+sif_collection() = (
     _supported = [];
     for _year in 2018:2019
         push!(_supported, "TROPOMI_740_1X_1M_$(_year)_V1");
@@ -381,68 +394,7 @@ SIFCollection() = (
 
 
 """
-    SoilColorCollection()
-
-<details>
-<summary>
-Method to create a general dataset collection for soil color class to use with soil albedo. Supported datasets are (click to view bibtex items)
-- `2X_1Y_V1` [(Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
-</summary>
-
-```
-@article{lawrence2007representing,
-    author = {Lawrence, Peter J and Chase, Thomas N},
-    year = {2007},
-    title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
-    journal = {Journal of Geophysical Research: Biogeosciences},
-    volume = {112},
-    pages = {G01023}
-}
-```
-</details>
-"""
-SoilColorCollection() = GriddedCollection("SC", ["2X_1Y_V1"], "2X_1Y_V1");
-
-
-"""
-    SoilHydraulicsCollection()
-
-<details>
-<summary>
-Method to create a general dataset collection for soil hydraulic parameters (residual soil water content - SWCR, saturated soil water content - SWCS, van Genuchten α - VGA, van Genuchten n - VGN).
-    Supported datasets are (click to view bibtex items)
-- `SWCR_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `SWCR_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `SWCS_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `SWCS_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `VGA_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `VGA_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `VGN_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-- `VGN_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
-</summary>
-
-```
-@article{dai2019global,
-    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng and Lu, Xingjie},
-	year = {2019},
-    title = {A global high-resolution data set of soil hydraulic and thermal properties for land surface modeling},
-	journal = {Journal of Advances in Modeling Earth Systems},
-	volume = {11},
-	number = {9},
-	pages = {2996--3023}
-}
-```
-</details>
-"""
-SoilHydraulicsCollection() = (
-    _supported = ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"];
-
-    return GriddedCollection("SOIL", _supported, "SWCS_12X_1Y_V1")
-);
-
-
-"""
-    SpecificLeafAreaCollection()
+    sla_collection()
 
 <details>
 <summary>
@@ -475,11 +427,72 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
 ```
 </details>
 """
-SpecificLeafAreaCollection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+sla_collection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
 
 
 """
-    SurfaceAreaCollection()
+    soil_color_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for soil color class to use with soil albedo. Supported datasets are (click to view bibtex items)
+- `2X_1Y_V1` [(Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
+</summary>
+
+```
+@article{lawrence2007representing,
+    author = {Lawrence, Peter J and Chase, Thomas N},
+    year = {2007},
+    title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {112},
+    pages = {G01023}
+}
+```
+</details>
+"""
+soil_color_collection() = GriddedCollection("SC", ["2X_1Y_V1"], "2X_1Y_V1");
+
+
+"""
+    soil_hydraulics_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for soil hydraulic parameters (residual soil water content - SWCR, saturated soil water content - SWCS, van Genuchten α - VGA, van Genuchten n - VGN).
+    Supported datasets are (click to view bibtex items)
+- `SWCR_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCR_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCS_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `SWCS_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGA_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGA_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGN_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `VGN_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+</summary>
+
+```
+@article{dai2019global,
+    author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng and Lu, Xingjie},
+	year = {2019},
+    title = {A global high-resolution data set of soil hydraulic and thermal properties for land surface modeling},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {11},
+	number = {9},
+	pages = {2996--3023}
+}
+```
+</details>
+"""
+soil_hydraulics_collection() = (
+    _supported = ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"];
+
+    return GriddedCollection("SOIL", _supported, "SWCS_12X_1Y_V1")
+);
+
+
+"""
+    surface_area_collection()
 
 <details>
 <summary>
@@ -500,11 +513,11 @@ pages = {G01023}
 ```
 </details>
 """
-SurfaceAreaCollection() = GriddedCollection("SA", ["2X_1Y_V1", "1X_1Y_V1"], "2X_1Y_V1");
+surface_area_collection() = GriddedCollection("SA", ["2X_1Y_V1", "1X_1Y_V1"], "2X_1Y_V1");
 
 
 """
-    TreeDensityCollection()
+    tree_density_collection()
 
 <details>
 <summary>
@@ -527,11 +540,11 @@ Method to create a general dataset collection for tree density (number of trees 
 ```
 </details>
 """
-TreeDensityCollection() = GriddedCollection("TD", ["120X_1Y_V1", "2X_1Y_V1"], "2X_1Y_V1");
+tree_density_collection() = GriddedCollection("TD", ["120X_1Y_V1", "2X_1Y_V1"], "2X_1Y_V1");
 
 
 """
-    VcmaxCollection()
+    vcmax_collection()
 
 <details>
 <summary>
@@ -564,11 +577,11 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
 ```
 </details>
 """
-VcmaxCollection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
+vcmax_collection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
 
 
 """
-    WoodDensityCollection()
+    wood_density_collection()
 
 <details>
 <summary>
@@ -590,7 +603,7 @@ Method to create a general dataset collection for wood density. Supported datase
 ```
 </details>
 """
-WoodDensityCollection() = GriddedCollection("WD", ["2X_1Y_V1"], "2X_1Y_V1");
+wood_density_collection() = GriddedCollection("WD", ["2X_1Y_V1"], "2X_1Y_V1");
 
 
 # query file from gridded collections
@@ -613,7 +626,7 @@ This method queries the local data path from collection, given
 ---
 # Examples
 ```julia
-dat_file = query_collection(CanopyHeightCollection(), "20X_1Y_V1");
+dat_file = query_collection(canopy_height_collection(), "20X_1Y_V1");
 ```
 """
 query_collection(ds::GriddedCollection, version::String) = (
@@ -636,7 +649,7 @@ This method queries the local data path from collection for the default data, gi
 ---
 # Examples
 ```julia
-dat_file = query_collection(CanopyHeightCollection());
+dat_file = query_collection(canopy_height_collection());
 ```
 """
 query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)

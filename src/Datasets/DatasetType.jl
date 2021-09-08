@@ -1,59 +1,5 @@
 ###############################################################################
 #
-# Abstract dataset type
-#
-###############################################################################
-"""
-    abstract type AbstractDataset{FT}
-"""
-abstract type AbstractDataset{FT} end
-
-
-
-
-
-
-
-
-###############################################################################
-#
-# Stand Level Datasets
-#
-###############################################################################
-"""
-    struct GPPVPMv20{FT}
-
-<details>
-<summary>
-Struct for VPM GPP v20
-[Link to Dataset Source](https://doi.org/10.1038/sdata.2017.165)
-</summary>
-
-```
-@article{zhang2017global,
-    author = {Zhang, Yao and Xiao, Xiangming and Wu, Xiaocui and Zhou, Sha and
-        Zhang, Geli and Qin, Yuanwei and Dong, Jinwei},
-    year = {2017},
-    title = {A global moderate resolution dataset of gross primary production
-        of vegetation for 2000--2016},
-    journal = {Scientific data},
-    volume = {4},
-    pages = {170165}
-}
-```
-</details>
-"""
-struct GPPVPMv20{FT} <: AbstractDataset{FT} end
-
-
-
-
-
-
-
-
-###############################################################################
-#
 # General data struct
 #
 ###############################################################################
@@ -81,6 +27,4 @@ Base.@kwdef struct GriddedDataset{FT<:AbstractFloat}
     "Variable attribute"
     var_attr::Dict{String,String} = Dict("longname" => "ZEROS",
                                          "units"    => "-")
-    "Type label"
-    dt::AbstractDataset = GPPVPMv20{FT}()
 end

@@ -14,6 +14,6 @@ Pkg.add("GriddingMachine");
 ```@example preview
 using GriddingMachine.Collections;
 
-file = query_collection(VcmaxCollection(), "2X_1Y_V1");
+file = query_collection(vcmax_collection(), "2X_1Y_V1");
 @show file;
 ```

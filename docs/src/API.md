@@ -9,24 +9,24 @@ CurrentModule = GriddingMachine
 ### Gridded datasets
 ```@docs
 Collections.GriddedCollection
-Collections.CanopyHeightCollection
-Collections.ClumpingIndexCollection
-Collections.ElevationCollection
-Collections.GPPCollection
-Collections.LAICollection
-Collections.LandMaskCollection
-Collections.LeafChlorophyllCollection
-Collections.LeafNitrogenCollection
-Collections.LeafPhosphorusCollection
-Collections.PFTCollection
-Collections.SIFCollection
-Collections.SoilColorCollection
-Collections.SoilHydraulicsCollection
-Collections.SpecificLeafAreaCollection
-Collections.SurfaceAreaCollection
-Collections.TreeDensityCollection
-Collections.VcmaxCollection
-Collections.WoodDensityCollection
+Collections.canopy_height_collection
+Collections.clumping_index_collection
+Collections.elevation_collection
+Collections.gpp_collection
+Collections.lai_collection
+Collections.land_mask_collection
+Collections.leaf_chlorophyll_collection
+Collections.leaf_nitrogen_collection
+Collections.leaf_phosphorus_collection
+Collections.pft_collection
+Collections.sif_collection
+Collections.sla_collection
+Collections.soil_color_collection
+Collections.soil_hydraulics_collection
+Collections.surface_area_collection
+Collections.tree_density_collection
+Collections.vcmax_collection
+Collections.wood_density_collection
 ```
 
 ### Query gridded datasets
