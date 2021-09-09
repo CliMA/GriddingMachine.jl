@@ -1718,6 +1718,22 @@ lazy = true
     sha256 = "1ac27687cac5addef00c2db5f6b9c13125d581403ae41e274c4f53e15d3bbdda"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LPC_2X_1Y_V1.tar.gz"
 
+[MODIS_1km_grid]
+git-tree-sha1 = "d70ac2e6c4c74b48d426d1a14af46a405c1ff4ee"
+lazy = true
+
+    [[MODIS_1km_grid.download]]
+    sha256 = "081b705764e2d0163128cac780322b21b8a8cdad39f74647cf9552fb81066978"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_1km_grid.tar.gz"
+
+[MODIS_500m_grid]
+git-tree-sha1 = "50638e48fab53e6f708f388674d7f44e4aa7982a"
+lazy = true
+
+    [[MODIS_500m_grid.download]]
+    sha256 = "6efeffe26de19e9c2c8919d790c2356682ecea83e3c81527baf2a6a691f5d42d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_CLIMA_LUT/MODIS/MODIS_500m_grid.tar.gz"
+
 [PFT_2X_1Y_V1]
 git-tree-sha1 = "ecc92c654ef31d99fdea975629b899686c0bb71b"
 lazy = true

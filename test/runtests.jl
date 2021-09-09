@@ -4,7 +4,13 @@ using Test
 
 # test query_collection function
 @testset "GriddingMachine : Collections" begin
-    query_collection(vcmax_collection()); @test true;
+    # test query_collection function
+    query_collection(pft_collection()); @test true;
+    query_collection(sla_collection()); @test true;
+
+    # clean up artifacts
+    clean_collections!("old"); @test true;
+    clean_collections!(pft_collection()); @test true;
 
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.total_memory() / 2^30) > 30

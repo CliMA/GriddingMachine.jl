@@ -670,10 +670,18 @@ This method cleans up all selected artifacts of GriddingMachine.jl (through iden
 - `selection` A string indicating which artifacts to clean up
     - `old` Artifacts from an old version of GriddingMachine.jl (default)
     - `all` All Artifacts from GriddingMachine.jl
+
+---
+# Examples
+```julia
+clean_collections!();
+clean_collections!("old");
+clean_collections!("all");
+```
 """
 clean_collections!(selection::String="old") = (
     # read the SHA1 identifications in Artifacts.toml
-    _metas = load_artifacts_toml("../Artifacts.toml");
+    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
     _hashs = [_meta["git-tree-sha1"] for (_,_meta) in _metas];
 
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
@@ -701,10 +709,16 @@ clean_collections!(selection::String="old") = (
 
 This method cleans up all selected artifacts in GriddingMachine.jl, given
 - `selection` A vector of artifact names
+
+---
+# Examples
+```julia
+clean_collections!(["PFT_2X_1Y_V1"]);
+```
 """
 clean_collections!(selection::Vector{String}) = (
     # read the SHA1 identifications in Artifacts.toml
-    _metas = load_artifacts_toml("../Artifacts.toml");
+    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
     _hashs = [_metas[_artn]["git-tree-sha1"] for _artn in selection];
 
     # iterate the artifact hashs to remove corresponding folder
@@ -721,6 +735,12 @@ clean_collections!(selection::Vector{String}) = (
 
 This method cleans up all selected artifacts in GriddingMachine.jl, given
 - `selection` A [`GriddedCollection`](@ref) type collection
+
+---
+# Examples
+```julia
+clean_collections!(pft_collection());
+```
 """
 clean_collections!(selection::GriddedCollection) = (
     clean_collections!(["$(selection.LABEL)_$(_ver)" for _ver in selection.SUPPORTED_COMBOS]);
