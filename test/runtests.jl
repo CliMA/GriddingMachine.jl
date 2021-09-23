@@ -1,8 +1,9 @@
 using GriddingMachine.Collections
+using GriddingMachine.Indexer
 using Test
 
 
-# test query_collection function
+# test Collections functions
 @testset "GriddingMachine : Collections" begin
     # test query_collection function
     query_collection(pft_collection()); @test true;
@@ -85,4 +86,26 @@ using Test
 
         query_collection(wood_density_collection(), "2X_1Y_V1"); @test true;
     end
+end
+
+
+# test Indexer functions
+@testset "GriddingMachine : Indexer" begin
+    # read the full dataset
+    read_LUT(query_collection(vcmax_collection())); @test true;
+
+    # read the global map at a given cycle index
+    read_LUT(query_collection(gpp_collection()), 8); @test true;
+
+    # read the data at given lat and lon
+    read_LUT(query_collection(vcmax_collection()), 30, 116); @test true;
+    read_LUT(query_collection(vcmax_collection()), 30, 116, 0.5); @test true;
+    read_LUT(query_collection(vcmax_collection()), 30, 116; interpolation=true); @test true;
+    read_LUT(query_collection(vcmax_collection()), 30, 116, 0.5; interpolation=true); @test true;
+
+    # read the data at given lat, lon, and cycle index
+    read_LUT(query_collection(gpp_collection()), 30, 116, 8); @test true;
+    read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5); @test true;
+    read_LUT(query_collection(gpp_collection()), 30, 116, 8; interpolation=true); @test true;
+    read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
 end
