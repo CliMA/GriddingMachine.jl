@@ -219,6 +219,11 @@ end
 gif(anim, fps=3)
 #------------------------------------------------------------------------------
 
+# ### Surface area
+SUA_LUT = load_LUT(SurfaceAreaCLM{FT}(), 1);
+preview_data(SUA_LUT, 1)
+#------------------------------------------------------------------------------
+
 # ### Tree density
 TDT_LUT = load_LUT(TreeDensity{FT}(), "12X", "1Y", 1);
 preview_data(TDT_LUT, 1, (0, 150000))
