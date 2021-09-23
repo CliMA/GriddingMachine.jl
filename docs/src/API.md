@@ -33,3 +33,25 @@ Collections.wood_density_collection
 ```@docs
 Collections.query_collection
 ```
+
+### Clean up collections
+```@docs
+Collections.clean_collections!
+Collections.clean_collections!(selection::String)
+Collections.clean_collections!(selection::Vector{String})
+Collections.clean_collections!(selection::Collections.GriddedCollection)
+```
+
+
+## Indexer
+```@docs
+Indexer.lat_ind
+Indexer.lon_ind
+Indexer.read_LUT
+Indexer.read_LUT(fn::String, FT::DataType)
+Indexer.read_LUT(fn::String, cyc::Int, FT::DataType)
+Indexer.read_LUT(fn::String, lat::Number, lon::Number, res::Number, FT::DataType)
+Indexer.read_LUT(fn::String, lat::Number, lon::Number, FT::DataType)
+Indexer.read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number, FT::DataType)
+Indexer.read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, FT::DataType)
+```

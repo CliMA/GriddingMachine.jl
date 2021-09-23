@@ -731,7 +731,7 @@ clean_collections!(selection::Vector{String}) = (
 
 
 """
-    clean_collections!(selection::Vector{String})
+    clean_collections!(selection::GriddedCollection)
 
 This method cleans up all selected artifacts in GriddingMachine.jl, given
 - `selection` A [`GriddedCollection`](@ref) type collection
