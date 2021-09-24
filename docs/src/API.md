@@ -32,6 +32,9 @@ Collections.wood_density_collection
 ### Query gridded datasets
 ```@docs
 Collections.query_collection
+Collections.query_collection(artname::String)
+Collections.query_collection(ds::Collections.GriddedCollection, version::String)
+Collections.query_collection(ds::Collections.GriddedCollection)
 ```
 
 ### Clean up collections

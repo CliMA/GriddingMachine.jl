@@ -617,6 +617,36 @@ function query_collection end
 
 
 """
+    query_collection(ds::GriddedCollection)
+
+This method queries the local data path from collection for the default data, given
+- `ds` [`GriddedCollection`](@ref) type collection
+
+---
+# Examples
+```julia
+dat_file = query_collection(canopy_height_collection());
+```
+"""
+query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO);
+
+
+"""
+    query_collection(artname::String)
+
+This method queries the local data path from given artifact name
+- `artname` Artifact name
+"""
+query_collection(artname::String) = (
+    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
+    _artns = [_name for (_name,_) in _metas];
+    @assert artname in _artns;
+
+    return @artifact_str(artname) * "/$(artname).nc"
+);
+
+
+"""
     query_collection(ds::GriddedCollection, version::String)
 
 This method queries the local data path from collection, given
@@ -636,23 +666,8 @@ query_collection(ds::GriddedCollection, version::String) = (
     # determine file name from label and supported version
     _fn = "$(ds.LABEL)_$(version)";
 
-    return @artifact_str(_fn) * "/$(_fn).nc";
-)
-
-
-"""
-    query_collection(ds::GriddedCollection)
-
-This method queries the local data path from collection for the default data, given
-- `ds` [`GriddedCollection`](@ref) type collection
-
----
-# Examples
-```julia
-dat_file = query_collection(canopy_height_collection());
-```
-"""
-query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)
+    return query_collection(_fn)
+);
 
 
 """

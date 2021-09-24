@@ -8,6 +8,7 @@ using Test
     # test query_collection function
     query_collection(pft_collection()); @test true;
     query_collection(sla_collection()); @test true;
+    query_collection("PFT_2X_1Y_V1"); @test true;
 
     # clean up artifacts
     clean_collections!("old"); @test true;
