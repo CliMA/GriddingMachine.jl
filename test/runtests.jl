@@ -1,9 +1,11 @@
 using GriddingMachine.Collections
 using GriddingMachine.Indexer
+using GriddingMachine.Requestor
 using Test
 
 
 # test Collections functions
+println();
 @testset "GriddingMachine : Collections" begin
     # test query_collection function
     query_collection(pft_collection()); @test true;
@@ -91,6 +93,7 @@ end
 
 
 # test Indexer functions
+println();
 @testset "GriddingMachine : Indexer" begin
     # read the full dataset
     read_LUT(query_collection(vcmax_collection())); @test true;
@@ -109,4 +112,14 @@ end
     read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5); @test true;
     read_LUT(query_collection(gpp_collection()), 30, 116, 8; interpolation=true); @test true;
     read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
+end
+
+
+# test Requestor functions
+println();
+@testset "GriddingMachine : Indexer" begin
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
 end
