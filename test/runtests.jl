@@ -6,7 +6,29 @@ using Test
 
 # test Collections functions
 println();
-@testset "GriddingMachine : Collections" begin
+@testset "GriddingMachine : Library" begin
+    canopy_height_collection();    @test true;
+    clumping_index_collection();   @test true;
+    elevation_collection();        @test true;
+    gpp_collection();              @test true;
+    lai_collection();              @test true;
+    land_mask_collection();        @test true;
+    leaf_chlorophyll_collection(); @test true;
+    leaf_nitrogen_collection();    @test true;
+    leaf_phosphorus_collection();  @test true;
+    pft_collection();              @test true;
+    sif_collection();              @test true;
+    sla_collection();              @test true;
+    soil_color_collection();       @test true;
+    soil_hydraulics_collection();  @test true;
+    surface_area_collection();     @test true;
+    tree_density_collection();     @test true;
+    vcmax_collection();            @test true;
+    wood_density_collection();     @test true;
+end;
+
+println();
+@testset "GriddingMachine : Query Collections" begin
     # test query_collection function
     query_collection(pft_collection()); @test true;
     query_collection(sla_collection()); @test true;
@@ -88,8 +110,8 @@ println();
         query_collection(vcmax_collection(), "2X_1Y_V2"); @test true;
 
         query_collection(wood_density_collection(), "2X_1Y_V1"); @test true;
-    end
-end
+    end;
+end;
 
 
 # test Indexer functions
@@ -112,7 +134,7 @@ println();
     read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5); @test true;
     read_LUT(query_collection(gpp_collection()), 30, 116, 8; interpolation=true); @test true;
     read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
-end
+end;
 
 
 # test Requestor functions
@@ -122,4 +144,4 @@ println();
     request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
     request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
     request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
-end
+end;
