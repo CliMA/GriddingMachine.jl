@@ -32,6 +32,9 @@ Collections.wood_density_collection
 ### Query gridded datasets
 ```@docs
 Collections.query_collection
+Collections.query_collection(artname::String)
+Collections.query_collection(ds::Collections.GriddedCollection, version::String)
+Collections.query_collection(ds::Collections.GriddedCollection)
 ```
 
 ### Clean up collections
@@ -54,4 +57,11 @@ Indexer.read_LUT(fn::String, lat::Number, lon::Number, res::Number, FT::DataType
 Indexer.read_LUT(fn::String, lat::Number, lon::Number, FT::DataType)
 Indexer.read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number, FT::DataType)
 Indexer.read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, FT::DataType)
+```
+
+
+## Requestor
+```@docs
+Requestor.request_LUT
+Requestor.request_LUT(artname::String, lat::Number, lon::Number, cyc::Int)
 ```
