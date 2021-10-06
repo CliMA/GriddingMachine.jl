@@ -336,9 +336,9 @@ Read the selected part of a look-up-table from collection, given
 ---
 # Examples
 ```julia
-read_LUT(query_collection(vcmax_collection()), 30, 116, 8);
-read_LUT(query_collection(vcmax_collection()), 30, 116, 8, Float64);
-read_LUT(query_collection(vcmax_collection()), 30, 116, 8, Float64; interpolation=true);
+read_LUT(query_collection(gpp_collection()), 30, 116, 8);
+read_LUT(query_collection(gpp_collection()), 30, 116, 8, Float64);
+read_LUT(query_collection(gpp_collection()), 30, 116, 8, Float64; interpolation=true);
 ```
 """
 read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, FT::DataType = Float32; interpolation::Bool = false) = (

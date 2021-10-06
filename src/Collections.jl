@@ -227,7 +227,7 @@ lai_collection() = (
         push!(_supported, "MODIS_20X_8D_$(_year)_V1");
     end;
 
-    return GriddedCollection("LAI", _supported, "MODIS_20X_8D_2020_V1")
+    return GriddedCollection("LAI", _supported, "MODIS_2X_8D_2020_V1")
 );
 
 
@@ -306,7 +306,7 @@ leaf_nitrogen_collection() = GriddedCollection("LNC", ["2X_1Y_V1", "2X_1Y_V2"], 
 
 
 """
-    leaf_nitrogen_collection()
+    leaf_phosphorus_collection()
 
 <details>
 <summary>
@@ -632,21 +632,6 @@ query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO)
 
 
 """
-    query_collection(artname::String)
-
-This method queries the local data path from given artifact name
-- `artname` Artifact name
-"""
-query_collection(artname::String) = (
-    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-    _artns = [_name for (_name,_) in _metas];
-    @assert artname in _artns;
-
-    return @artifact_str(artname) * "/$(artname).nc"
-);
-
-
-"""
     query_collection(ds::GriddedCollection, version::String)
 
 This method queries the local data path from collection, given
@@ -667,6 +652,21 @@ query_collection(ds::GriddedCollection, version::String) = (
     _fn = "$(ds.LABEL)_$(version)";
 
     return query_collection(_fn)
+);
+
+
+"""
+    query_collection(artname::String)
+
+This method queries the local data path from given artifact name
+- `artname` Artifact name
+"""
+query_collection(artname::String) = (
+    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
+    _artns = [_name for (_name,_) in _metas];
+    @assert artname in _artns;
+
+    return @artifact_str(artname) * "/$(artname).nc"
 );
 
 
