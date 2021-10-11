@@ -9,6 +9,7 @@ CurrentModule = GriddingMachine
 ### Gridded datasets
 ```@docs
 Collections.GriddedCollection
+Collections.biomass_collection
 Collections.canopy_height_collection
 Collections.clumping_index_collection
 Collections.elevation_collection

@@ -1,3 +1,19 @@
+[BIOMASS_ROOT_120X_1Y_V1]
+git-tree-sha1 = "a376d97b605309f5da1662e1df63a2c2ab72de14"
+lazy = true
+
+    [[BIOMASS_ROOT_120X_1Y_V1.download]]
+    sha256 = "6bc783570e281da88d49eb6b1268750a85f90fe5f4295909f755583cbb01a692"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/BIOMASS_ROOT_120X_1Y_V1.tar.gz"
+
+[BIOMASS_SHOOT_120X_1Y_V1]
+git-tree-sha1 = "5f4a3affc2c098e80d3e4ac0eaaed863a13dd549"
+lazy = true
+
+    [[BIOMASS_SHOOT_120X_1Y_V1.download]]
+    sha256 = "898a3c1b45e96d6bf46864900386aa682411c453c4322a6b0296c6051331d549"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/BIOMASS_SHOOT_120X_1Y_V1.tar.gz"
+
 [CHL_2X_7D_V1]
 git-tree-sha1 = "ce410fa4f36c3abdaa18da6c3afcd78c9656d929"
 lazy = true
