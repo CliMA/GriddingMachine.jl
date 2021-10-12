@@ -1,0 +1,11 @@
+Name: GriddingMachine
+Version: 0.2.1
+Date: 2021-11-10
+Author: Yujie Wang (jesiner@gmail.com)
+Maintainer: Yujie Wang (jesiner@gmail.com)
+Title: GriddingMachine - a database and tool for earth system modeling
+Description: GriddingMachine provides convenient function to automactically
+  download and read global scale datasets, as well as to request data by
+  latitude and longitude directly from the server without downloading the
+  datasets.
+License: Apache 2.0
