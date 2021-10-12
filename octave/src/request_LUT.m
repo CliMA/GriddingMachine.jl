@@ -22,8 +22,8 @@ function [out_data, out_std] = request_LUT(art_name, lat, lon, varargin)
             pkg load jsonstuff;
         catch
             disp("Install jsonstuff for Octave...");
-            pkg install https://github.com/apjanke/octave-jsonstuff/releases/download/v0.3.3/jsonstuff-0.3.3.tar.gz;
-            pkg load jsonstuff;
+            pkg install "https://github.com/gnu-octave/pkg-json/archive/v1.5.0.tar.gz";
+            pkg load json;
         end
     end
     % define paths
