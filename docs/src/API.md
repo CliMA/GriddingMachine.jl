@@ -4,46 +4,46 @@ CurrentModule = GriddingMachine
 ```
 
 
-## Collections
+## Collector
 
 ### Gridded datasets
 ```@docs
-Collections.GriddedCollection
-Collections.biomass_collection
-Collections.canopy_height_collection
-Collections.clumping_index_collection
-Collections.elevation_collection
-Collections.gpp_collection
-Collections.lai_collection
-Collections.land_mask_collection
-Collections.leaf_chlorophyll_collection
-Collections.leaf_nitrogen_collection
-Collections.leaf_phosphorus_collection
-Collections.pft_collection
-Collections.sif_collection
-Collections.sla_collection
-Collections.soil_color_collection
-Collections.soil_hydraulics_collection
-Collections.surface_area_collection
-Collections.tree_density_collection
-Collections.vcmax_collection
-Collections.wood_density_collection
+Collector.GriddedCollection
+Collector.biomass_collection
+Collector.canopy_height_collection
+Collector.clumping_index_collection
+Collector.elevation_collection
+Collector.gpp_collection
+Collector.lai_collection
+Collector.land_mask_collection
+Collector.leaf_chlorophyll_collection
+Collector.leaf_nitrogen_collection
+Collector.leaf_phosphorus_collection
+Collector.pft_collection
+Collector.sif_collection
+Collector.sla_collection
+Collector.soil_color_collection
+Collector.soil_hydraulics_collection
+Collector.surface_area_collection
+Collector.tree_density_collection
+Collector.vcmax_collection
+Collector.wood_density_collection
 ```
 
 ### Query gridded datasets
 ```@docs
-Collections.query_collection
-Collections.query_collection(artname::String)
-Collections.query_collection(ds::Collections.GriddedCollection, version::String)
-Collections.query_collection(ds::Collections.GriddedCollection)
+Collector.query_collection
+Collector.query_collection(artname::String)
+Collector.query_collection(ds::Collector.GriddedCollection, version::String)
+Collector.query_collection(ds::Collector.GriddedCollection)
 ```
 
 ### Clean up collections
 ```@docs
-Collections.clean_collections!
-Collections.clean_collections!(selection::String)
-Collections.clean_collections!(selection::Vector{String})
-Collections.clean_collections!(selection::Collections.GriddedCollection)
+Collector.clean_collections!
+Collector.clean_collections!(selection::String)
+Collector.clean_collections!(selection::Vector{String})
+Collector.clean_collections!(selection::Collector.GriddedCollection)
 ```
 
 

@@ -1,10 +1,10 @@
-using GriddingMachine.Collections
+using GriddingMachine.Collector
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
 using Test
 
 
-# test Collections functions
+# test Collector functions
 println();
 @testset "GriddingMachine : Library" begin
     canopy_height_collection();    @test true;

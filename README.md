@@ -35,6 +35,19 @@ julia> Pkg.add("GriddingMachine");
 ## API
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
 
+To automatically download and query the file path of the dataset, use
+```julia
+julia> GriddingMachine.Collector;
+julia> file_path = query_collection('VCMAX_2X_1Y_V1');
+```
+
+To request a partial dataset from the server without download the entire dataset, use
+```julia
+julia> GriddingMachine.Requestor;
+julia> dat,std = request_LUT('VCMAX_2X_1Y_V1', 35.1, 115.2);
+julia> dat,std = request_LUT('VCMAX_2X_1Y_V1', 35.1, 115.2; interpolation=true);
+```
+
 ## Other language supports
 | Language | Link to Github repository                                                   |
 |:---------|:----------------------------------------------------------------------------|

@@ -1,4 +1,4 @@
-module Collections
+module Collector
 
 using Artifacts: @artifact_str, load_artifacts_toml
 using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
