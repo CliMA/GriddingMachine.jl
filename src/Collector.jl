@@ -827,4 +827,4 @@ clean_collections!(selection::GriddedCollection) = (
 );
 
 
-end
+end # module

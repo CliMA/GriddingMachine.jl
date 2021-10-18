@@ -1,4 +1,5 @@
 using GriddingMachine.Collector
+using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
 using Test
@@ -29,6 +30,7 @@ println();
     # test the @show function
     @show wood_density_collection(); @test true;
 end;
+
 
 println();
 @testset "GriddingMachine : Query Collections" begin
