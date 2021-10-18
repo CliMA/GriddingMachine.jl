@@ -25,6 +25,9 @@ println();
     tree_density_collection();     @test true;
     vcmax_collection();            @test true;
     wood_density_collection();     @test true;
+
+    # test the @show function
+    @show wood_density_collection(); @test true;
 end;
 
 println();
@@ -39,7 +42,7 @@ println();
     clean_collections!(pft_collection()); @test true;
 
     # only for high memory and storage cases, e.g., server
-    if Sys.islinux() && (Sys.total_memory() / 2^30) > 30
+    if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
         query_collection(biomass_collection(), "ROOT_120X_1Y_V1" ); @test true;
         query_collection(biomass_collection(), "SHOOT_120X_1Y_V1"); @test true;
 

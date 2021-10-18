@@ -4,6 +4,8 @@ using Artifacts: @artifact_str, load_artifacts_toml
 using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
 
+import Base: show
+
 
 # export public types and constructors
 export GriddedCollection
@@ -39,6 +41,32 @@ struct GriddedCollection
     "Default combination"
     DEFAULT_COMBO::String
 end
+
+
+show(io::IO, col::GriddedCollection) = (
+    # display the label
+    print(io, "\n");
+    printstyled(io, "    LABEL           ", color=:light_magenta);
+    print(io, " ⇨ \""* col.LABEL* "\"\n");
+
+    # display the supported combos
+    printstyled(io, "    SUPPORTED_COMBOS", color=:light_magenta);
+    print(io," ⇨ [\n");
+    for _i in eachindex(col.SUPPORTED_COMBOS)
+        if _i < length(col.SUPPORTED_COMBOS)
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\",\n");
+        else
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\"\n");
+        end;
+    end;
+    print(io, "                       ]\n");
+
+    # display the default combo
+    printstyled(io, "    DEFAULT_COMBO   ", color=:light_magenta);
+    print(io, " ⇨ \"" * col.DEFAULT_COMBO * "\"\n");
+
+    return nothing
+);
 
 
 # constructors for GriddedCollection
