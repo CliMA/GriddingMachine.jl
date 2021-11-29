@@ -1846,6 +1846,14 @@ lazy = true
     sha256 = "8606073cd1b6fdb2cc8cbe50844078460bce24289412138082fbe304b91a2180"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_1X_1M_2019_V1.tar.gz"
 
+[SIL_20X_1Y_V1]
+git-tree-sha1 = "79843f2c7ab59c19218fd0b13753076cdf97f7f7"
+lazy = true
+
+    [[SIL_20X_1Y_V1.download]]
+    sha256 = "1c46d0d80607347a6fa47644d5844763b1bd6e5f262e69114906e56e3dcf1f27"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIL_20X_1Y_V1.tar.gz"
+
 [SLA_2X_1Y_V1]
 git-tree-sha1 = "3c4e1ac76e251a89d2459b7c6b03b9eee7ba15b2"
 lazy = true

@@ -21,6 +21,7 @@ Collector.leaf_nitrogen_collection
 Collector.leaf_phosphorus_collection
 Collector.pft_collection
 Collector.sif_collection
+Collector.sil_collection
 Collector.sla_collection
 Collector.soil_color_collection
 Collector.soil_hydraulics_collection

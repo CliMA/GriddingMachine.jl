@@ -10,8 +10,8 @@ import Base: show
 # export public types and constructors
 export GriddedCollection
 export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, leaf_chlorophyll_collection,
-       leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, soil_color_collection, soil_hydraulics_collection, sla_collection, surface_area_collection,
-       tree_density_collection, vcmax_collection, wood_density_collection
+       leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection, soil_hydraulics_collection, sla_collection,
+       surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection
 
 
 # export public functions
@@ -454,6 +454,31 @@ sif_collection() = (
 
     return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")
 );
+
+
+"""
+    sil_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for solar-induced luminescence. Supported datasets are (click to view bibtex items)
+- `SIL_20X_1Y_V1` [(Köhler et al., 2021)](https://doi.org/10.1029/2021GL095227)
+</summary>
+
+```
+@article{kohler2021mineral,
+	author = {K{\\"o}hler, Philipp and Fischer, Woodward W and Rossman, George R and Grotzinger, John P and Doughty, Russell and Wang, Yujie and Yin, Yi and Frankenberg, Christian},
+	year = {2021},
+	title = {Mineral luminescence observed from space},
+	journal = {Geophysical Research Letters},
+	volume = {48},
+	number = {19},
+	pages = {e2021GL095227}
+}
+```
+</details>
+"""
+sil_collection() = GriddedCollection("SIL", ["20X_1Y_V1"], "20X_1Y_V1");
 
 
 """

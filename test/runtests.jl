@@ -19,6 +19,7 @@ println();
     leaf_phosphorus_collection();  @test true;
     pft_collection();              @test true;
     sif_collection();              @test true;
+    sil_collection();              @test true;
     sla_collection();              @test true;
     soil_color_collection();       @test true;
     soil_hydraulics_collection();  @test true;
@@ -93,6 +94,8 @@ println();
             query_collection(sif_collection(), "TROPOMI_740DC_1X_1M_$(year)_V1" ); @test true;
             query_collection(sif_collection(), "TROPOMI_740DC_12X_8D_$(year)_V1"); @test true;
         end;
+
+        query_collection(sil_collection(), "20X_1Y_V1"); @test true;
 
         query_collection(sla_collection(), "2X_1Y_V1"); @test true;
         query_collection(sla_collection(), "2X_1Y_V2"); @test true;
