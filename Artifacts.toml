@@ -1846,6 +1846,22 @@ lazy = true
     sha256 = "5802553430b0d6581a15b00eac9fa484cb24f6125ca28d1ac04b175301ddb8b6"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_1X_1M_2019_V1.tar.gz"
 
+[SIF_TROPOMI_740DC_5X_1M_2019_V1]
+git-tree-sha1 = "a11efd4d1f6dd2a7c3cf8d0c4ccacd63fce88a02"
+lazy = true
+
+    [[SIF_TROPOMI_740DC_5X_1M_2019_V1.download]]
+    sha256 = "91dce85233c835712cd4557832a914c2314be6f60c9b3cd069ec47976265e114"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_5X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740DC_5X_8D_2019_V1]
+git-tree-sha1 = "8f1ee1b7ce668a99ba38c698dca58a35889b7bb5"
+lazy = true
+
+    [[SIF_TROPOMI_740DC_5X_8D_2019_V1.download]]
+    sha256 = "30715f8bdbd3d04b8f2bc85a06e48b5705de2eea73adee42571b3bb672d6f73b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_5X_8D_2019_V1.tar.gz"
+
 [SIF_TROPOMI_740_12X_8D_2018_V1]
 git-tree-sha1 = "b00812a7d6a363aa99b0d9e4d13c8c2511f79009"
 lazy = true
@@ -1877,6 +1893,22 @@ lazy = true
     [[SIF_TROPOMI_740_1X_1M_2019_V1.download]]
     sha256 = "8606073cd1b6fdb2cc8cbe50844078460bce24289412138082fbe304b91a2180"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_1X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740_5X_1M_2019_V1]
+git-tree-sha1 = "74662999a8bd9abeddc014527b32e36d6c7a7b2c"
+lazy = true
+
+    [[SIF_TROPOMI_740_5X_1M_2019_V1.download]]
+    sha256 = "5525fe1e91b1a42dc18510e6b31aca6776a543b84645354b6dae69245096e4d1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_5X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740_5X_8D_2019_V1]
+git-tree-sha1 = "c3e2bacfca713c633f3843fc53de750d104db457"
+lazy = true
+
+    [[SIF_TROPOMI_740_5X_8D_2019_V1.download]]
+    sha256 = "e08cdc9f2ecad644df91eca2348c4c347e5d77de9a759ec3e4be1e939a06663e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_5X_8D_2019_V1.tar.gz"
 
 [SIL_20X_1Y_V1]
 git-tree-sha1 = "79843f2c7ab59c19218fd0b13753076cdf97f7f7"

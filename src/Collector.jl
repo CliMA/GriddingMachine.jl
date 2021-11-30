@@ -465,6 +465,12 @@ sif_collection() = (
         push!(_supported, "TROPOMI_740DC_12X_8D_$(_year)_V1");
     end;
     for _year in 2019:2019
+        push!(_supported, "TROPOMI_740_5X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740_5X_8D_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_5X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_5X_8D_$(_year)_V1");
+    end;
+    for _year in 2019:2019
         push!(_supported, "TROPOMI_683_5X_1M_$(_year)_V2");
         push!(_supported, "TROPOMI_683_5X_8D_$(_year)_V2");
         push!(_supported, "TROPOMI_683DC_5X_1M_$(_year)_V2");
