@@ -1,3 +1,19 @@
+[BIOMASS_ROOT_120X_1Y_V1]
+git-tree-sha1 = "a376d97b605309f5da1662e1df63a2c2ab72de14"
+lazy = true
+
+    [[BIOMASS_ROOT_120X_1Y_V1.download]]
+    sha256 = "6bc783570e281da88d49eb6b1268750a85f90fe5f4295909f755583cbb01a692"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/BIOMASS_ROOT_120X_1Y_V1.tar.gz"
+
+[BIOMASS_SHOOT_120X_1Y_V1]
+git-tree-sha1 = "5f4a3affc2c098e80d3e4ac0eaaed863a13dd549"
+lazy = true
+
+    [[BIOMASS_SHOOT_120X_1Y_V1.download]]
+    sha256 = "898a3c1b45e96d6bf46864900386aa682411c453c4322a6b0296c6051331d549"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/BIOMASS_SHOOT_120X_1Y_V1.tar.gz"
+
 [CHL_2X_7D_V1]
 git-tree-sha1 = "ce410fa4f36c3abdaa18da6c3afcd78c9656d929"
 lazy = true
@@ -1766,6 +1782,38 @@ lazy = true
     sha256 = "c0478388fdac36b307b6e27d92ba3720a341345710ebcb5d1d9231be0ed771f6"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SC_2X_1Y_V1.tar.gz"
 
+[SIF_TROPOMI_683DC_5X_1M_2019_V2]
+git-tree-sha1 = "24fb6df701f7954f79dbab4d4ad7f965c111818e"
+lazy = true
+
+    [[SIF_TROPOMI_683DC_5X_1M_2019_V2.download]]
+    sha256 = "3fb9959a922232f8344fa347bd7ccebbb22ff2e73b6300013bc85d939fe1feac"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_683DC_5X_1M_2019_V2.tar.gz"
+
+[SIF_TROPOMI_683DC_5X_8D_2019_V2]
+git-tree-sha1 = "f027ae295ed659b71396b168addd524602ecdb83"
+lazy = true
+
+    [[SIF_TROPOMI_683DC_5X_8D_2019_V2.download]]
+    sha256 = "3906d8c7954c3b371bfe8360eab131c0532f5fd386ba5272e553c32f995161b4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_683DC_5X_8D_2019_V2.tar.gz"
+
+[SIF_TROPOMI_683_5X_1M_2019_V2]
+git-tree-sha1 = "56355cd2d7d05c45ce3497a55725268b50d28781"
+lazy = true
+
+    [[SIF_TROPOMI_683_5X_1M_2019_V2.download]]
+    sha256 = "9b6135bb724dea1127b8881faac89686171fd2fd4ead05919f7e1e3af8a9c681"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_683_5X_1M_2019_V2.tar.gz"
+
+[SIF_TROPOMI_683_5X_8D_2019_V2]
+git-tree-sha1 = "4e75c253573e186aa29e7c8d454f1b7cbdb14969"
+lazy = true
+
+    [[SIF_TROPOMI_683_5X_8D_2019_V2.download]]
+    sha256 = "fb4e884c9968c8b17d5cf2f90c442c1ed01952233e59d2e3fe06d079fd7a8b24"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_683_5X_8D_2019_V2.tar.gz"
+
 [SIF_TROPOMI_740DC_12X_8D_2018_V1]
 git-tree-sha1 = "5015d57ca667af61962ab19fe1a1b29ac7d1ed8d"
 lazy = true
@@ -1798,6 +1846,22 @@ lazy = true
     sha256 = "5802553430b0d6581a15b00eac9fa484cb24f6125ca28d1ac04b175301ddb8b6"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_1X_1M_2019_V1.tar.gz"
 
+[SIF_TROPOMI_740DC_5X_1M_2019_V1]
+git-tree-sha1 = "a11efd4d1f6dd2a7c3cf8d0c4ccacd63fce88a02"
+lazy = true
+
+    [[SIF_TROPOMI_740DC_5X_1M_2019_V1.download]]
+    sha256 = "91dce85233c835712cd4557832a914c2314be6f60c9b3cd069ec47976265e114"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_5X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740DC_5X_8D_2019_V1]
+git-tree-sha1 = "8f1ee1b7ce668a99ba38c698dca58a35889b7bb5"
+lazy = true
+
+    [[SIF_TROPOMI_740DC_5X_8D_2019_V1.download]]
+    sha256 = "30715f8bdbd3d04b8f2bc85a06e48b5705de2eea73adee42571b3bb672d6f73b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740DC_5X_8D_2019_V1.tar.gz"
+
 [SIF_TROPOMI_740_12X_8D_2018_V1]
 git-tree-sha1 = "b00812a7d6a363aa99b0d9e4d13c8c2511f79009"
 lazy = true
@@ -1829,6 +1893,30 @@ lazy = true
     [[SIF_TROPOMI_740_1X_1M_2019_V1.download]]
     sha256 = "8606073cd1b6fdb2cc8cbe50844078460bce24289412138082fbe304b91a2180"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_1X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740_5X_1M_2019_V1]
+git-tree-sha1 = "74662999a8bd9abeddc014527b32e36d6c7a7b2c"
+lazy = true
+
+    [[SIF_TROPOMI_740_5X_1M_2019_V1.download]]
+    sha256 = "5525fe1e91b1a42dc18510e6b31aca6776a543b84645354b6dae69245096e4d1"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_5X_1M_2019_V1.tar.gz"
+
+[SIF_TROPOMI_740_5X_8D_2019_V1]
+git-tree-sha1 = "c3e2bacfca713c633f3843fc53de750d104db457"
+lazy = true
+
+    [[SIF_TROPOMI_740_5X_8D_2019_V1.download]]
+    sha256 = "e08cdc9f2ecad644df91eca2348c4c347e5d77de9a759ec3e4be1e939a06663e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_TROPOMI_740_5X_8D_2019_V1.tar.gz"
+
+[SIL_20X_1Y_V1]
+git-tree-sha1 = "79843f2c7ab59c19218fd0b13753076cdf97f7f7"
+lazy = true
+
+    [[SIL_20X_1Y_V1.download]]
+    sha256 = "1c46d0d80607347a6fa47644d5844763b1bd6e5f262e69114906e56e3dcf1f27"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIL_20X_1Y_V1.tar.gz"
 
 [SLA_2X_1Y_V1]
 git-tree-sha1 = "3c4e1ac76e251a89d2459b7c6b03b9eee7ba15b2"

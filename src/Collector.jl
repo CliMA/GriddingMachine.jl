@@ -1,15 +1,17 @@
-module Collections
+module Collector
 
 using Artifacts: @artifact_str, load_artifacts_toml
 using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
 
+import Base: show
+
 
 # export public types and constructors
 export GriddedCollection
-export canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, leaf_chlorophyll_collection, leaf_nitrogen_collection,
-       leaf_phosphorus_collection, pft_collection, sif_collection, soil_color_collection, soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection,
-       vcmax_collection, wood_density_collection
+export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, leaf_chlorophyll_collection,
+       leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection, soil_hydraulics_collection, sla_collection,
+       surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection
 
 
 # export public functions
@@ -41,7 +43,68 @@ struct GriddedCollection
 end
 
 
+show(io::IO, col::GriddedCollection) = (
+    # display the label
+    print(io, "\n");
+    printstyled(io, "    LABEL           ", color=:light_magenta);
+    print(io, " ⇨ \""* col.LABEL* "\"\n");
+
+    # display the supported combos
+    printstyled(io, "    SUPPORTED_COMBOS", color=:light_magenta);
+    print(io," ⇨ [\n");
+    for _i in eachindex(col.SUPPORTED_COMBOS)
+        if _i < length(col.SUPPORTED_COMBOS)
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\",\n");
+        else
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\"\n");
+        end;
+    end;
+    print(io, "                       ]\n");
+
+    # display the default combo
+    printstyled(io, "    DEFAULT_COMBO   ", color=:light_magenta);
+    print(io, " ⇨ \"" * col.DEFAULT_COMBO * "\"\n");
+
+    return nothing
+);
+
+
 # constructors for GriddedCollection
+"""
+    biomass_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for biomass. Supported datasets are (click to view bibtex items)
+- `ROOT_120X_1Y_V1` [(Huang et al., 2021)](https://doi.org/10.5194/essd-13-4263-2021)
+- `SHOOT_120X_1Y_V1` [(Santoro et al., 2021)](https://doi.org/10.5194/essd-13-3927-2021)
+</summary>
+
+```
+@article{huang2021global,
+	author = {Huang, Y. and Ciais, P. and Santoro, M. and Makowski, D. and Chave, J. and Schepaschenko, D. and Abramoff, R. Z. and Goll, D. S. and Yang, H. and Chen, Y. and Wei, W. and Piao, S.},
+	year = {2021},
+	title = {A global map of root biomass across the world's forests},
+	journal = {Earth System Science Data},
+	volume = {13},
+	number = {9},
+	pages = {4263–4274}
+}
+@article{santoro2021global,
+	author = {Santoro, M. and Cartus, O. and Carvalhais, N. and Rozendaal, D. M. A. and Avitabile, V. and Araza, A. and de Bruin, S. and Herold, M. and Quegan, S. and Rodr{\\'\\i}guez-Veiga, P. and Balzter, H. and Carreiras, J. and Schepaschenko, D. and Korets, M. and Shimada, M. and Itoh, T. and {Moreno Mart{\\'\\i}nez}, {\\'A}. and Cavlovic, J. and {Cazzolla Gatti}, R. and da Concei{\\c c}\\~ao Bispo, P. and Dewnath, N. and Labri{\\`e}re, N. and Liang, J. and Lindsell, J. and Mitchard, E. T. A. and Morel, A. and {Pacheco Pascagaza}, A. M. and Ryan, C. M. and Slik, F. and {Vaglio Laurin}, G. and Verbeeck, H. and Wijaya, A. and Willcock, S.},
+	year = {2021},
+	title = {The global forest above-ground biomass pool for 2010 estimated from high-resolution satellite observations},
+	journal = {Earth System Science Data},
+	volume = {13},
+	number = {8},
+	pages = {3927--3950}
+}
+```
+</details>
+"""
+biomass_collection() = GriddedCollection("BIOMASS", ["ROOT_120X_1Y_V1", "SHOOT_120X_1Y_V1"], "SHOOT_120X_1Y_V1");
+
+
 """
     canopy_height_collection()
 
@@ -154,7 +217,7 @@ Method to create a general dataset collection for gross primary productivity. Su
 
 ```
 @article{tramontana2016predicting,
-    author = {Tramontana, Gianluca and Jung, Martin and Schwalm, Christopher R and Ichii, Kazuhito and Camps-Valls, Gustau and R{\'a}duly, Botond and Reichstein, Markus and Arain, M Altaf and
+    author = {Tramontana, Gianluca and Jung, Martin and Schwalm, Christopher R and Ichii, Kazuhito and Camps-Valls, Gustau and R{\\'a}duly, Botond and Reichstein, Markus and Arain, M Altaf and
               Cescatti, Alessandro and Kiely, Gerard and others},
     year = {2016},
     title = {Predicting carbon dioxide and energy fluxes across global FLUXNET sites with regression algorithms},
@@ -361,6 +424,10 @@ pft_collection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 <details>
 <summary>
 Method to create a general dataset collection for solar-induced chlorophyll fluorescence. Supported datasets are (click to view bibtex items)
+- `TROPOMI_683_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
 - `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
@@ -377,6 +444,15 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
     number = {19},
     pages = {10,456--10,463}
 }
+@article{kohler2020global,
+	author = {K{\\"o}hler, Philipp and Behrenfeld, Michael J and Landgraf, Jochen and Joiner, Joanna and Magney, Troy S and Frankenberg, Christian},
+	year = {2020},
+	title = {Global retrievals of solar-induced chlorophyll fluorescence at red wavelengths with {TROPOMI}},
+	journal = {Geophysical Research Letters},
+	volume = {47},
+	number = {15},
+	pages = {e2020GL087541}
+}
 ```
 </details>
 """
@@ -388,9 +464,46 @@ sif_collection() = (
         push!(_supported, "TROPOMI_740DC_1X_1M_$(_year)_V1");
         push!(_supported, "TROPOMI_740DC_12X_8D_$(_year)_V1");
     end;
+    for _year in 2019:2019
+        push!(_supported, "TROPOMI_740_5X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740_5X_8D_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_5X_1M_$(_year)_V1");
+        push!(_supported, "TROPOMI_740DC_5X_8D_$(_year)_V1");
+    end;
+    for _year in 2019:2019
+        push!(_supported, "TROPOMI_683_5X_1M_$(_year)_V2");
+        push!(_supported, "TROPOMI_683_5X_8D_$(_year)_V2");
+        push!(_supported, "TROPOMI_683DC_5X_1M_$(_year)_V2");
+        push!(_supported, "TROPOMI_683DC_5X_8D_$(_year)_V2");
+    end;
 
     return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")
 );
+
+
+"""
+    sil_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for solar-induced luminescence. Supported datasets are (click to view bibtex items)
+- `SIL_20X_1Y_V1` [(Köhler et al., 2021)](https://doi.org/10.1029/2021GL095227)
+</summary>
+
+```
+@article{kohler2021mineral,
+	author = {K{\\"o}hler, Philipp and Fischer, Woodward W and Rossman, George R and Grotzinger, John P and Doughty, Russell and Wang, Yujie and Yin, Yi and Frankenberg, Christian},
+	year = {2021},
+	title = {Mineral luminescence observed from space},
+	journal = {Geophysical Research Letters},
+	volume = {48},
+	number = {19},
+	pages = {e2021GL095227}
+}
+```
+</details>
+"""
+sil_collection() = GriddedCollection("SIL", ["20X_1Y_V1"], "20X_1Y_V1");
 
 
 """
@@ -764,4 +877,4 @@ clean_collections!(selection::GriddedCollection) = (
 );
 
 
-end
+end # module

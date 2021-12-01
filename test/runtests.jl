@@ -1,10 +1,11 @@
-using GriddingMachine.Collections
+using GriddingMachine.Collector
+using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
 using Test
 
 
-# test Collections functions
+# test Collector functions
 println();
 @testset "GriddingMachine : Library" begin
     canopy_height_collection();    @test true;
@@ -18,6 +19,7 @@ println();
     leaf_phosphorus_collection();  @test true;
     pft_collection();              @test true;
     sif_collection();              @test true;
+    sil_collection();              @test true;
     sla_collection();              @test true;
     soil_color_collection();       @test true;
     soil_hydraulics_collection();  @test true;
@@ -25,7 +27,11 @@ println();
     tree_density_collection();     @test true;
     vcmax_collection();            @test true;
     wood_density_collection();     @test true;
+
+    # test the @show function
+    @show wood_density_collection(); @test true;
 end;
+
 
 println();
 @testset "GriddingMachine : Query Collections" begin
@@ -39,7 +45,10 @@ println();
     clean_collections!(pft_collection()); @test true;
 
     # only for high memory and storage cases, e.g., server
-    if Sys.islinux() && (Sys.total_memory() / 2^30) > 30
+    if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
+        query_collection(biomass_collection(), "ROOT_120X_1Y_V1" ); @test true;
+        query_collection(biomass_collection(), "SHOOT_120X_1Y_V1"); @test true;
+
         query_collection(canopy_height_collection(), "20X_1Y_V1"); @test true;
         query_collection(canopy_height_collection(), "2X_1Y_V2" ); @test true;
 
@@ -85,6 +94,20 @@ println();
             query_collection(sif_collection(), "TROPOMI_740DC_1X_1M_$(year)_V1" ); @test true;
             query_collection(sif_collection(), "TROPOMI_740DC_12X_8D_$(year)_V1"); @test true;
         end;
+        for year in 2019:2019
+            query_collection(sif_collection(), "TROPOMI_740_5X_1M_$(year)_V1"  ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740_5X_8D_$(year)_V1"  ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_5X_1M_$(year)_V1"); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_5X_8D_$(year)_V1"); @test true;
+        end;
+        for year in 2019:2019
+            query_collection(sif_collection(), "TROPOMI_683_5X_1M_$(year)_V2"  ); @test true;
+            query_collection(sif_collection(), "TROPOMI_683_5X_8D_$(year)_V2"  ); @test true;
+            query_collection(sif_collection(), "TROPOMI_683DC_5X_1M_$(year)_V2"); @test true;
+            query_collection(sif_collection(), "TROPOMI_683DC_5X_8D_$(year)_V2"); @test true;
+        end;
+
+        query_collection(sil_collection(), "20X_1Y_V1"); @test true;
 
         query_collection(sla_collection(), "2X_1Y_V1"); @test true;
         query_collection(sla_collection(), "2X_1Y_V2"); @test true;
@@ -140,8 +163,11 @@ end;
 # test Requestor functions
 println();
 @testset "GriddingMachine : Indexer" begin
-    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
-    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
-    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
-    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
+    # only for high memory and storage cases, e.g., server
+    if Sys.islinux()
+        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
+        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
+        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
+        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
+    end;
 end;
