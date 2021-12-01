@@ -164,7 +164,7 @@ end;
 println();
 @testset "GriddingMachine : Indexer" begin
     # only for high memory and storage cases, e.g., server
-    if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
+    if Sys.islinux()
         request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
         request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
         request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
