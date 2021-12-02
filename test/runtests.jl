@@ -106,6 +106,12 @@ println();
             query_collection(sif_collection(), "TROPOMI_683DC_5X_1M_$(year)_V2"); @test true;
             query_collection(sif_collection(), "TROPOMI_683DC_5X_8D_$(year)_V2"); @test true;
         end;
+        for year in 2014:2020
+            query_collection(sif_collection(), "OCO2_757_5X_1M_$(year)_V3"  ); @test true;
+            query_collection(sif_collection(), "OCO2_771_5X_1M_$(year)_V3"  ); @test true;
+            query_collection(sif_collection(), "OCO2_757DC_5X_1M_$(year)_V3"); @test true;
+            query_collection(sif_collection(), "OCO2_771DC_5X_1M_$(year)_V3"); @test true;
+        end;
 
         query_collection(sil_collection(), "20X_1Y_V1"); @test true;
 
