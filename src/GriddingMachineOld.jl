@@ -28,14 +28,8 @@ MODIS_USER_PWD = "";
 
 
 
-# export public types for GriddedDataset
-export GriddedDataset
-
 # export public types for UngriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
-
-#export public functions for GriddedDataset
-export regrid_LUT
 
 #export public functions for UngriddedDataset
 export process_RAW!
