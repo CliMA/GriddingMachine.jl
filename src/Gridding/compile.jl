@@ -59,7 +59,8 @@ function compile_RAW!(
 
         # save file to nc file
         matv ./= matn;
-        save_LUT!(matv, cache);
+        varatts = Dict("longname" => "Variable" , "units" => "-");
+        save_nc!(cache, "Var", varatts, matv);
     end
 
     return nothing
@@ -99,7 +100,8 @@ function compile_RAW!(
 
         # save file to nc file
         matv ./= matn;
-        save_LUT!(matv, cache);
+        varatts = Dict("longname" => "Variable" , "units" => "-");
+        save_nc!(cache, "Var", varatts, matv);
     end
 
     return nothing
@@ -158,7 +160,7 @@ function compile_RAW!(
         for i in eachindex(date_list)
             view(_data,:,:,i) .= read_nc(FT, new_params[i][5], "Var");
         end
-        save_LUT!(_data, _file, "NIRv", _attr);
+        save_nc!(_file, "NIRv", _attr, _data);
     end
 
     return nothing
@@ -217,7 +219,7 @@ function compile_RAW!(
         for i in eachindex(date_list)
             view(_data,:,:,i) .= read_nc(FT, new_params[i][5], "Var");
         end
-        save_LUT!(_data, _file, "LAI", _attr);
+        save_nc!(_file, "LAI", _attr, _data);
     end
 
     return nothing

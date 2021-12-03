@@ -35,7 +35,7 @@ export GriddedDataset
 export MOD09A1v006NIRv, MOD15A2Hv006LAI
 
 #export public functions for GriddedDataset
-export regrid_LUT, save_LUT!
+export regrid_LUT
 
 #export public functions for UngriddedDataset
 export process_RAW!
@@ -46,7 +46,6 @@ export process_RAW!
 # include functions to load/read datasets
 include("Datasets/DatasetType.jl")
 include("Datasets/regrid.jl"     )
-include("Datasets/save.jl"       )
 
 # include functions to grid datasets
 include("Gridding/DataType.jl" )
