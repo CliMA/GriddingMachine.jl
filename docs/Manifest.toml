@@ -128,16 +128,11 @@ version = "0.4.2"
 deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
-[[deps.Glob]]
-git-tree-sha1 = "4df9f7e06108728ebf00a0a11edee4b29a482bb2"
-uuid = "c27321d9-0574-5035-807b-f59d2c89b15c"
-version = "1.3.0"
-
 [[deps.GriddingMachine]]
-deps = ["Artifacts", "Conda", "DataFrames", "Dates", "Distributed", "DocStringExtensions", "Glob", "HTTP", "JSON", "LazyArtifacts", "PkgUtility", "ProgressMeter", "PyCall", "Test", "UnPack"]
+deps = ["Artifacts", "Conda", "Dates", "DocStringExtensions", "HTTP", "JSON", "LazyArtifacts", "PkgUtility", "ProgressMeter", "PyCall", "Test"]
 path = ".."
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
-version = "0.2.2"
+version = "0.2.3"
 
 [[deps.HDF5_jll]]
 deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "OpenSSL_jll", "Pkg", "Zlib_jll"]
@@ -443,11 +438,6 @@ version = "1.3.0"
 [[deps.UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
-
-[[deps.UnPack]]
-git-tree-sha1 = "387c1f73762231e86e0c9c5443ce3b4a0a9a0c2b"
-uuid = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
-version = "1.0.2"
 
 [[deps.Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"

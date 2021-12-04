@@ -83,6 +83,7 @@ Fetcher.ERA5LandHourly
 Fetcher.ERA5SingleLevelsHourly
 Fetcher.install_cdsapi!
 Fetcher.update_CDSAPI_info!
+Fetcher.update_MODIS_password!
 Fetcher.fetch_data!
 Fetcher.fetch_data!(dt::Fetcher.ERA5LandHourly, year::Int)
 Fetcher.fetch_data!(dt::Fetcher.ERA5SingleLevelsHourly, year::Int)

@@ -1,3 +1,4 @@
+#=
 ###############################################################################
 #
 # Query MODIS ungridded data folder
@@ -82,3 +83,4 @@ function query_RAW(dt::MOD15A2Hv006LAI{FT}, year::Int) where {FT<:AbstractFloat}
 
     return _folder, _naming, _prefix, _band, _cache, FT[0,15]
 end
+=#

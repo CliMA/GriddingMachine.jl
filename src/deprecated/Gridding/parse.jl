@@ -1,3 +1,4 @@
+#=
 ###############################################################################
 #
 # Parse h and v index from MODIS file name
@@ -16,3 +17,4 @@ function parse_HV(modis_name::String)
 
     return h,v
 end
+=#
