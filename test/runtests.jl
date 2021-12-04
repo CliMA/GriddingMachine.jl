@@ -1,3 +1,4 @@
+using GriddingMachine.Blender
 using GriddingMachine.Collector
 using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
@@ -34,7 +35,7 @@ end;
 
 
 println();
-@testset "GriddingMachine : Query Collections" begin
+@testset "GriddingMachine : Collector" begin
     # test query_collection function
     query_collection(pft_collection()); @test true;
     query_collection(sla_collection()); @test true;
@@ -143,6 +144,14 @@ println();
 end;
 
 
+# test Requestor functions
+println();
+@testset "GriddingMachine : Blender" begin
+    regrid(rand(720,360), 1); @test true;
+    regrid(rand(720,360,2), 1); @test true;
+end;
+
+
 # test Indexer functions
 println();
 @testset "GriddingMachine : Indexer" begin
@@ -168,7 +177,7 @@ end;
 
 # test Requestor functions
 println();
-@testset "GriddingMachine : Indexer" begin
+@testset "GriddingMachine : Requestor" begin
     # only for high memory and storage cases, e.g., server
     if Sys.islinux()
         request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;

@@ -37,10 +37,6 @@ export process_RAW!
 
 
 
-# include functions to load/read datasets
-include("Datasets/DatasetType.jl")
-include("Datasets/regrid.jl"     )
-
 # include functions to grid datasets
 include("Gridding/DataType.jl" )
 include("Gridding/compile.jl"  )

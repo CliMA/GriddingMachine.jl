@@ -3,6 +3,8 @@ module Blender
 using DocStringExtensions: METHODLIST
 using PkgUtility: nanmean
 
+export regrid
+
 
 """
     truncate(data::Matrix{FT}, n::Int) where {FT<:AbstractFloat}
