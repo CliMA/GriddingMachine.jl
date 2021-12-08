@@ -129,6 +129,7 @@ println();
         query_collection(soil_hydraulics_collection(), "VGA_12X_1Y_V1"  ); @test true;
         query_collection(soil_hydraulics_collection(), "VGN_120X_1Y_V1" ); @test true;
         query_collection(soil_hydraulics_collection(), "VGN_12X_1Y_V1"  ); @test true;
+        query_collection(soil_hydraulics_collection(), "KSAT_100X_1Y_V2"); @test true;
 
         query_collection(surface_area_collection(), "2X_1Y_V1"); @test true;
         query_collection(surface_area_collection(), "1X_1Y_V1"); @test true;

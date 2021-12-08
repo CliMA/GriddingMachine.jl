@@ -2158,6 +2158,14 @@ lazy = true
     sha256 = "4fa15068c6d10d5ec423ea4d99e288856e99876175e10b356ea32b773ea83134"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_2X_1Y_V2.tar.gz"
 
+[SOIL_KSAT_100X_1Y_V2]
+git-tree-sha1 = "b5ced69cd1849f1b001302ff23f1f8dbf1dabf43"
+lazy = true
+
+    [[SOIL_KSAT_100X_1Y_V2.download]]
+    sha256 = "c1bc995a37f86afdbeddfb26d8619ee7b9b6bdf2dd3b95157a3c93eb1a9197a0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_KSAT_100X_1Y_V2.tar.gz"
+
 [SOIL_SWCR_120X_1Y_V1]
 git-tree-sha1 = "356d26e5780e425dc9d83e7ae2abd7ba8b273edb"
 lazy = true
