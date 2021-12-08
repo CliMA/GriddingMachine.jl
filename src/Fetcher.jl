@@ -388,7 +388,8 @@ struct ERA5SingleLevelsHourly end;
 $(TYPEDEF)
 
 Hierachy of AbstractMODIS500m
-- [`MOD15A2Hv006LAI`](@ref)
+- [`MOD09A1v006`](@ref)
+- [`MOD15A2Hv006`](@ref)
 """
 abstract type AbstractMODIS500m end
 
@@ -396,17 +397,17 @@ abstract type AbstractMODIS500m end
 """
 $(TYPEDEF)
 
-Terra Surface Reflectance
+MODIS/Terra Surface Reflectance 8-Day L3 Global 500 m SIN Grid
 """
-struct MOD09A1v006NIRv <: AbstractMODIS500m end
+struct MOD09A1v006 <: AbstractMODIS500m end
 
 
 """
 $(TYPEDEF)
 
-Leaf area index
+MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500 m SIN Grid
 """
-struct MOD15A2Hv006LAI <: AbstractMODIS500m end
+struct MOD15A2Hv006 <: AbstractMODIS500m end
 
 
 """
@@ -647,7 +648,7 @@ fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
 
 """
 """
-fetch_data!(dt::MOD15A2Hv006LAI, year::Int) = (
+fetch_data!(dt::MOD15A2Hv006, year::Int) = (
     update_MODIS_password!();
 
     data_url = "$(MODIS_PORTAL)/MOLT/MOD15A2H.006/";
@@ -659,7 +660,7 @@ fetch_data!(dt::MOD15A2Hv006LAI, year::Int) = (
 );
 
 
-fetch_data!(dt::MOD09A1v006NIRv, year::Int) = (
+fetch_data!(dt::MOD09A1v006, year::Int) = (
     update_MODIS_password!();
 
     data_url = "$(MODIS_PORTAL)/MOLT/MOD09A1.006/";

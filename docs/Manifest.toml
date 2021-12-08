@@ -132,7 +132,7 @@ uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 deps = ["Artifacts", "Conda", "Dates", "DocStringExtensions", "HTTP", "JSON", "LazyArtifacts", "PkgUtility", "ProgressMeter", "PyCall", "Test"]
 path = ".."
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
-version = "0.2.3"
+version = "0.2.4"
 
 [[deps.HDF5_jll]]
 deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "OpenSSL_jll", "Pkg", "Zlib_jll"]
