@@ -1,3 +1,4 @@
+#=
 ###############################################################################
 #
 # Dynamically change number of workers
@@ -35,3 +36,4 @@ function dynamic_workers!(nthread::Int)
 
     return nothing
 end
+=#

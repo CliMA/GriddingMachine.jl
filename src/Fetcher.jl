@@ -1,8 +1,10 @@
 module Fetcher
 
 using Conda: add
-using DocStringExtensions: METHODLIST
+using Dates: isleapyear
+using DocStringExtensions: TYPEDEF, METHODLIST
 using PkgUtility: month_days
+using ProgressMeter: @showprogress
 using PyCall: pyimport
 
 
@@ -18,6 +20,10 @@ export fetch_data!
 CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
 CDSAPI_KEY     = "";
 CDSAPI_CLIENT  = nothing;
+MODIS_HOME     = "/net/fluo/data1/data/MODIS";
+MODIS_PORTAL   = "https://e4ftl01.cr.usgs.gov";
+MODIS_USER_ID  = "";
+MODIS_USER_PWD = "";
 
 
 # constants
@@ -363,7 +369,7 @@ const ERA5_SINGLE_LEVELS_SELECTION =[
 
 
 """
-    struct ERA5LandHourly
+$(TYPEDEF)
 
 ERA5 Land hourly data from 1981 to present: cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land
 """
@@ -371,11 +377,36 @@ struct ERA5LandHourly end;
 
 
 """
-    struct ERA5SingleLevelsHourly
+$(TYPEDEF)
 
 ERA5 Single Level hourly data from 1981 to present: cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels
 """
 struct ERA5SingleLevelsHourly end;
+
+
+"""
+$(TYPEDEF)
+
+Hierachy of AbstractMODIS500m
+- [`MOD15A2Hv006LAI`](@ref)
+"""
+abstract type AbstractMODIS500m end
+
+
+"""
+$(TYPEDEF)
+
+Terra Surface Reflectance
+"""
+struct MOD09A1v006NIRv <: AbstractMODIS500m end
+
+
+"""
+$(TYPEDEF)
+
+Leaf area index
+"""
+struct MOD15A2Hv006LAI <: AbstractMODIS500m end
 
 
 """
@@ -407,9 +438,9 @@ function update_CDSAPI_info!()
         end;
 
         # update password and client
+        cdsapi = pyimport("cdsapi");
         if isfile("$(homedir())/.cdsapirc")
             @info "Load cdsapi information from $(homedir())/.cdsapirc";
-            cdsapi        = pyimport("cdsapi");
             CDSAPI_CLIENT = cdsapi.Client();
             CDSAPI_KEY    = CDSAPI_CLIENT.key;
             CDSAPI_PORTAL = CDSAPI_CLIENT.url;
@@ -419,7 +450,6 @@ function update_CDSAPI_info!()
             CDSAPI_PORTAL = readline();
             @info "Please indicate the cdsapi key combo (uid:api-key):";
             CDSAPI_KEY    = read(Base.getpass("Password (invisble)"), String);
-            cdsapi        = pyimport("cdsapi");
             CDSAPI_CLIENT = cdsapi.Client(url=CDSAPI_PORTAL, key=CDSAPI_KEY);
         end;
     end;
@@ -429,7 +459,27 @@ end;
 
 
 """
-    Fetch data from the server. Supported methods are
+    update_MODIS_password!()
+
+Update global user name and password for LP DAAC, if either of them is empty
+"""
+function update_MODIS_password!()
+    # input MODIS_USER_ID and MODIS_USER_PWD
+    global MODIS_USER_ID, MODIS_USER_PWD;
+    if MODIS_USER_ID == "" || MODIS_USER_PWD == ""
+        @warn "Do not share your user name and password with others.";
+        @info "Please indicate your user name for LP DAAC data portal:";
+        MODIS_USER_ID  = readline();
+        @info "Please indicate your password for LP DAAC Data portal:";
+        MODIS_USER_PWD = read(Base.getpass("Password (invisble)"), String);
+    end;
+
+    return nothing
+end;
+
+
+"""
+Fetch data from the server. Supported methods are
 
 $(METHODLIST)
 
@@ -463,10 +513,10 @@ fetch_data!(dt::ERA5LandHourly, year::Int; vars::Array{String,1} = ERA5_LAND_SEL
         @info "Querying $(_item)";
 
         # file name to save the downloaded dataset
-        file_name = joinpath(folder, "$(_item)_LAND_$(year).nc");
+        _file_name = joinpath(folder, "$(_item)_LAND_$(year).nc");
 
         # retrieve data if file does not exist
-        if !isfile(file_name)
+        if !isfile(_file_name)
             CDSAPI_CLIENT.retrieve(
                 "reanalysis-era5-land",
                 Dict(
@@ -477,7 +527,7 @@ fetch_data!(dt::ERA5LandHourly, year::Int; vars::Array{String,1} = ERA5_LAND_SEL
                     "day"      => ["$(i)" for i in 1:31],
                     "time"     => ERA5_LAND_TIMES,
                 ),
-                file_name
+                _file_name
             );
         end;
     end;
@@ -512,11 +562,10 @@ fetch_data!(dt::ERA5SingleLevelsHourly, year::Int; vars::Array{String,1} = ERA5_
         @info "Querying $(_item)";
 
         # file name to save the downloaded dataset
-        file_name = joinpath(folder, "$(_item)_SL_$(year).nc");
-        @show file_name;
+        _file_name = joinpath(folder, "$(_item)_SL_$(year).nc");
 
         # retrieve data if file does not exist
-        if !isfile(file_name)
+        if !isfile(_file_name)
             CDSAPI_CLIENT.retrieve(
                 "reanalysis-era5-single-levels",
                 Dict(
@@ -528,10 +577,95 @@ fetch_data!(dt::ERA5SingleLevelsHourly, year::Int; vars::Array{String,1} = ERA5_
                     "day"          => ["$(i)" for i in 1:31],
                     "time"         => ERA5_LAND_TIMES,
                 ),
-                file_name
+                _file_name
             );
         end;
     end;
+
+    return nothing
+);
+
+
+"""
+    fetch_data!(data_url::String, data_loc::String, year::Int, label::String)
+
+Download raw product data from MODIS, given
+- `data_url` URL of the data
+- `data_loc` Where to save the downloaded data
+- `year` Which year of MODIS data to download
+- `label` Label in the MODIS data that help the identification
+"""
+fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
+    # number of days per year
+    _nday = isleapyear(year) ? 366 : 365;
+
+    # fetch file list in each folder
+    @info "Fetching file name to download...";
+    _list_urls = [];
+    _list_locs = [];
+    for _doy in 1:8:_nday
+        #folder = parse_date(year, doy, ".") * "/";
+        _folder = "/";
+        try
+            @info "Fetching file list from $(data_url * _folder)";
+            download(data_url * _folder, "temp.html");
+            for _line in readlines("temp.html")
+                if contains(_line, ".hdf\">")
+                    _ini = findfirst(label, _line);
+                    _end = findfirst(".hdf", _line);
+                    _nam = _line[_ini[1]:_end[1]+3];
+                    push!(_list_urls, data_url * _folder * _nam);
+                    push!(_list_locs, data_loc * string(year) * "/" * _nam);
+                end;
+            end;
+            rm("temp.html");
+        catch err
+            @info "Unable to fetch files from $(_folder), skip it...";
+        end;
+    end;
+
+    # download files if the file does not exist
+    @info "Downloading files...";
+    @showprogress for _i in eachindex(_list_locs)
+        _url = _list_urls[_i];
+        _loc = _list_locs[_i];
+        if Sys.which("wget") !== nothing
+            if !isfile(_loc)
+                _lst = `-q $(_url) -O $(_loc)`;
+                _psd = `--user $(MODIS_USER_ID) --password $(MODIS_USER_PWD)`;
+                run(`wget $(_psd) $(_lst)`);
+            end;
+        else
+            @warn "wget not found, exit the loop";
+            break
+        end;
+    end;
+
+    return nothing
+);
+
+
+"""
+"""
+fetch_data!(dt::MOD15A2Hv006LAI, year::Int) = (
+    update_MODIS_password!();
+
+    data_url = "$(MODIS_PORTAL)/MOLT/MOD15A2H.006/";
+    data_loc = "$(MODIS_HOME)/MOD15A2H.006/original/";
+
+    fetch_data!(data_url, data_loc, year, "MOD15A2H");
+
+    return nothing
+);
+
+
+fetch_data!(dt::MOD09A1v006NIRv, year::Int) = (
+    update_MODIS_password!();
+
+    data_url = "$(MODIS_PORTAL)/MOLT/MOD09A1.006/";
+    data_loc = "$(MODIS_HOME)/MOD09A1.006/original/";
+
+    fetch_data!(data_url, data_loc, year, "MOD09A1");
 
     return nothing
 );

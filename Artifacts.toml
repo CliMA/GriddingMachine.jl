@@ -1782,6 +1782,230 @@ lazy = true
     sha256 = "c0478388fdac36b307b6e27d92ba3720a341345710ebcb5d1d9231be0ed771f6"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SC_2X_1Y_V1.tar.gz"
 
+[SIF_OCO2_757DC_5X_1M_2014_V3]
+git-tree-sha1 = "779545b5d07bc47f85bbb2d3d2427d7279b697cb"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2014_V3.download]]
+    sha256 = "6370918933c44ab869e373dc145ad0062d633ad11d3f403850d5bc8f3746e08f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2014_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2015_V3]
+git-tree-sha1 = "1b46dc5c1a3917282bf6cab08c5a1a9e06ed14ee"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2015_V3.download]]
+    sha256 = "d193901c83ca0351ed19c78b9fb4601372f07b3467a945e7d3fd70a46aa7dff8"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2015_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2016_V3]
+git-tree-sha1 = "dcaad539b7bbce7d97c81b82c2c6485226501953"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2016_V3.download]]
+    sha256 = "990906c166088765f9c0566a8c60829b37ffed724403768548c719d17dea7d6e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2016_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2017_V3]
+git-tree-sha1 = "ef15b00996ff3a704642bcf2435fc5e9cae5c62f"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2017_V3.download]]
+    sha256 = "67131456554c4ba9ad25951650501ffe3eb32b242ce7c0310e9aa74aba391756"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2017_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2018_V3]
+git-tree-sha1 = "bb66e137d73536290f8abcd34d8c540ea42a63d8"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2018_V3.download]]
+    sha256 = "2127aa94ef0001b274788084961b5a1ba4f70cc11d5be242f3462fb73fa74fe4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2018_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2019_V3]
+git-tree-sha1 = "235fed32d19f8880da1c81a0a8f403dd832394bb"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2019_V3.download]]
+    sha256 = "835b67de24052644d84a07f39e682bff09ad76cfdcbfa5732225bd65f2ff2ffb"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2019_V3.tar.gz"
+
+[SIF_OCO2_757DC_5X_1M_2020_V3]
+git-tree-sha1 = "2a56e2359183ec70a5683774b42d6ef96d67636c"
+lazy = true
+
+    [[SIF_OCO2_757DC_5X_1M_2020_V3.download]]
+    sha256 = "12dcc937acf3259992d7e28b75888f732eab5a2e882efbeeefbbad0b85a7ed9f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757DC_5X_1M_2020_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2014_V3]
+git-tree-sha1 = "0dcc440731a8486b38e450d4e3a48f1d80829bfa"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2014_V3.download]]
+    sha256 = "656cde4277be434402bc09a72c6361a8bc02fcb5aa8a97152987d521a8988239"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2014_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2015_V3]
+git-tree-sha1 = "b3caaec8b55bde1e9e019a70334f5bbeebb196e3"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2015_V3.download]]
+    sha256 = "8bfece2baf058bc23416b545ade035fe05490600de9604bc4f6f672796ac5bb5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2015_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2016_V3]
+git-tree-sha1 = "a0fa59a7fc6acd7579044dbfb97b2a7a3cc6e345"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2016_V3.download]]
+    sha256 = "08c5f363a61498bf47517341e49eb5765760a9b720d0b1c2e9a746412ea32178"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2016_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2017_V3]
+git-tree-sha1 = "0973b09ecd042f14fe58dc5d7b53024455d801a5"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2017_V3.download]]
+    sha256 = "88a87a8efdb543a04a3524ebf406a506e289190e3d17e5c18cb765077816f1cf"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2017_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2018_V3]
+git-tree-sha1 = "173d0229570c531c01c85279cd9774ae8fe050af"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2018_V3.download]]
+    sha256 = "129d65d9b04b299b76479921451469b8449f3b271fe5cd187e945501473ea44f"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2018_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2019_V3]
+git-tree-sha1 = "efe9089d8f041969f6a082127479480069e410ef"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2019_V3.download]]
+    sha256 = "da026adf515977a056bc3264926a17f233fe481107e5d22c15a11caeb98002b6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2019_V3.tar.gz"
+
+[SIF_OCO2_757_5X_1M_2020_V3]
+git-tree-sha1 = "a0d31245c24d83842b8d5e4bf36648e4adafea93"
+lazy = true
+
+    [[SIF_OCO2_757_5X_1M_2020_V3.download]]
+    sha256 = "2860d242c467596452f05d23a09b4cd32af1dbd1dc38b4b12ee32c2be0baa672"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_757_5X_1M_2020_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2014_V3]
+git-tree-sha1 = "dfa4c296bdbc3323b4875c55f3ace750ab641a57"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2014_V3.download]]
+    sha256 = "eece3883ca928e1291fb7b015e1645c510933376665eb87ac2b1dc779e47c719"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2014_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2015_V3]
+git-tree-sha1 = "5a615fd21889c842f7566d216ea5102b3f100c51"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2015_V3.download]]
+    sha256 = "46d908762e6f9efbc6539d4a7fc54522facf2db50ce2bfb9fad7cdea0cdb18c4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2015_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2016_V3]
+git-tree-sha1 = "f935d3228cfb21e9aea8dc4b42a3c94d51bbe960"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2016_V3.download]]
+    sha256 = "dd713b18492f387a7e1e2f52a78f3d6c6ba1f01bdb897e5083e351064abc055b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2016_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2017_V3]
+git-tree-sha1 = "d2fbf9d363430e031120701568bf01eeeb8a9a1c"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2017_V3.download]]
+    sha256 = "7f50bedd3a686f8890afc80df093f5a69613946594f9980443260b4a84d7f327"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2017_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2018_V3]
+git-tree-sha1 = "0a548ef484030d671bae8e1dcad583acfeed59fd"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2018_V3.download]]
+    sha256 = "ab3859939b828b046b2d8892a2d15420fb3b490e18a47b14d0d71eb9f8d6a4c9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2018_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2019_V3]
+git-tree-sha1 = "e7562f9db9bc571cfd26b7ebb79cbfa3446ebce2"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2019_V3.download]]
+    sha256 = "cea337811b8e3c708b49a2ff6d808720ad83c8266898c63a20b9e7d46b97de04"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2019_V3.tar.gz"
+
+[SIF_OCO2_771DC_5X_1M_2020_V3]
+git-tree-sha1 = "101e2fd8a75fb339da4e74c8037ea978625ef156"
+lazy = true
+
+    [[SIF_OCO2_771DC_5X_1M_2020_V3.download]]
+    sha256 = "07bebcf102efb8d9cf5c62d9a140a1ae78b83c4e41b425b9b179ea5f64461591"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771DC_5X_1M_2020_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2014_V3]
+git-tree-sha1 = "7c0a9f2455a086082b52176edf0ca4a23ef76099"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2014_V3.download]]
+    sha256 = "a7676b5b13be1905905c8d8a974b5f6c3f7b2f9fc5c990245d9469773f7e3e58"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2014_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2015_V3]
+git-tree-sha1 = "6f46e31c31788236f1c57196bee06251a550f8fe"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2015_V3.download]]
+    sha256 = "eef62f2176073ab31a59256d0d21faee13b5fa6264f8fc76115bf213fff76e36"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2015_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2016_V3]
+git-tree-sha1 = "25f1a3db6b7ae3e748e81355828dc4a4204978df"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2016_V3.download]]
+    sha256 = "724b54fe00b04aa9267098929848ea6d8a897ed7abc17f8c4b073fd2056ae761"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2016_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2017_V3]
+git-tree-sha1 = "30c3dbbc79d154fb95e6fe2b579892d0a619aa04"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2017_V3.download]]
+    sha256 = "442666ad287e6b51fb0b99e1af50bbfcae4f3a7b1b48711905ff64bed5d4d93b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2017_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2018_V3]
+git-tree-sha1 = "d15a819f693e274d73c23c05c1ddac0d809c9f7b"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2018_V3.download]]
+    sha256 = "6d041bf5a482fb67dacef8ca3ac0d3a5b81ac418d5fada9e258f29b644afee64"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2018_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2019_V3]
+git-tree-sha1 = "a70a5932b4e69a30452b4d98ca14ffcfd25f127e"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2019_V3.download]]
+    sha256 = "ed64b3b230e72d9314a27a142a2f48bb4102b69746e11d152f9b6e7b299a3015"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2019_V3.tar.gz"
+
+[SIF_OCO2_771_5X_1M_2020_V3]
+git-tree-sha1 = "453dd77b6850b266eb2dfe77bb37a28ead872a25"
+lazy = true
+
+    [[SIF_OCO2_771_5X_1M_2020_V3.download]]
+    sha256 = "c0076fb016d23df88a278567cc0c9f38ffdda82b2bd03a9864cb6ccf847cb3cc"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIF_OCO2_771_5X_1M_2020_V3.tar.gz"
+
 [SIF_TROPOMI_683DC_5X_1M_2019_V2]
 git-tree-sha1 = "24fb6df701f7954f79dbab4d4ad7f965c111818e"
 lazy = true
@@ -1933,6 +2157,14 @@ lazy = true
     [[SLA_2X_1Y_V2.download]]
     sha256 = "4fa15068c6d10d5ec423ea4d99e288856e99876175e10b356ea32b773ea83134"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_2X_1Y_V2.tar.gz"
+
+[SOIL_KSAT_100X_1Y_V2]
+git-tree-sha1 = "b5ced69cd1849f1b001302ff23f1f8dbf1dabf43"
+lazy = true
+
+    [[SOIL_KSAT_100X_1Y_V2.download]]
+    sha256 = "c1bc995a37f86afdbeddfb26d8619ee7b9b6bdf2dd3b95157a3c93eb1a9197a0"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SOIL_KSAT_100X_1Y_V2.tar.gz"
 
 [SOIL_SWCR_120X_1Y_V1]
 git-tree-sha1 = "356d26e5780e425dc9d83e7ae2abd7ba8b273edb"

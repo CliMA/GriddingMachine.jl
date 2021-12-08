@@ -424,14 +424,22 @@ pft_collection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 <details>
 <summary>
 Method to create a general dataset collection for solar-induced chlorophyll fluorescence. Supported datasets are (click to view bibtex items)
-- `TROPOMI_683_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683DC_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683DC_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683_5X_1M_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683_5X_8D_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_1M_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_8D_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
 - `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740DC_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `OCO2_757_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
+- `OCO2_757DC_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
+- `OCO2_771_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
+- `OCO2_771DC_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 </summary>
 
 ```
@@ -452,6 +460,14 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 	volume = {47},
 	number = {15},
 	pages = {e2020GL087541}
+}
+@article{sun2017oco,
+	author = {Sun, Ying and Frankenberg, Christian and Wood, Jeffery D and Schimel, DS and Jung, Martin and Guanter, Luis and Drewry, DT and Verma, Manish and Porcar-Castell, Albert and Griffis, Timothy J and others},
+	year = {2017},
+	title = {OCO-2 advances photosynthesis observation from space via solar-induced chlorophyll fluorescence},
+	journal = {Science},
+	volume = {358},
+	number = {6360}
 }
 ```
 </details>
@@ -475,6 +491,12 @@ sif_collection() = (
         push!(_supported, "TROPOMI_683_5X_8D_$(_year)_V2");
         push!(_supported, "TROPOMI_683DC_5X_1M_$(_year)_V2");
         push!(_supported, "TROPOMI_683DC_5X_8D_$(_year)_V2");
+    end;
+    for _year in 2014:2020
+        push!(_supported, "OCO2_757_5X_1M_$(_year)_V3");
+        push!(_supported, "OCO2_757DC_5X_1M_$(_year)_V3");
+        push!(_supported, "OCO2_771_5X_1M_$(_year)_V3");
+        push!(_supported, "OCO2_771DC_5X_1M_$(_year)_V3");
     end;
 
     return GriddedCollection("SIF", _supported, "TROPOMI_740_1X_1M_2019_V1")
@@ -572,8 +594,8 @@ soil_color_collection() = GriddedCollection("SC", ["2X_1Y_V1"], "2X_1Y_V1");
 
 <details>
 <summary>
-Method to create a general dataset collection for soil hydraulic parameters (residual soil water content - SWCR, saturated soil water content - SWCS, van Genuchten α - VGA, van Genuchten n - VGN).
-    Supported datasets are (click to view bibtex items)
+Method to create a general dataset collection for soil hydraulic parameters (saturated hydraulic conductance - KSAT, residual soil water content - SWCR, saturated soil water content - SWCS, van
+    Genuchten α - VGA, van Genuchten n - VGN). Supported datasets are (click to view bibtex items)
 - `SWCR_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `SWCR_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `SWCS_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
@@ -582,6 +604,7 @@ Method to create a general dataset collection for soil hydraulic parameters (res
 - `VGA_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `VGN_120X_1Y_V1` [(Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
 - `VGN_12X_1Y_V1` [(regridded; Dai et al., 2019)](https://doi.org/10.1029/2019MS001784)
+- `KSAT_100X_1Y_V2` [(Gupta et al., 2021)](https://doi.org/10.1029/2020MS002242)
 </summary>
 
 ```
@@ -594,11 +617,20 @@ Method to create a general dataset collection for soil hydraulic parameters (res
 	number = {9},
 	pages = {2996--3023}
 }
+@article{gupta2021global,
+	author = {Gupta, Surya and Lehmann, Peter and Bonetti, Sara and Papritz, Andreas and Or, Dani},
+	year = {2021},
+	title = {Global Prediction of Soil Saturated Hydraulic Conductivity Using Random Forest in a Covariate-Based GeoTransfer Function (CoGTF) Framework},
+	journal = {Journal of Advances in Modeling Earth Systems},
+	volume = {13},
+	number = {4},
+	pages = {e2020MS002242}
+}
 ```
 </details>
 """
 soil_hydraulics_collection() = (
-    _supported = ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1"];
+    _supported = ["SWCR_120X_1Y_V1", "SWCR_12X_1Y_V1", "SWCS_120X_1Y_V1", "SWCS_12X_1Y_V1", "VGA_120X_1Y_V1", "VGA_12X_1Y_V1", "VGN_120X_1Y_V1", "VGN_12X_1Y_V1", "KSAT_100X_1Y_V2"];
 
     return GriddedCollection("SOIL", _supported, "SWCS_12X_1Y_V1")
 );
@@ -759,7 +791,7 @@ dat_file = query_collection(canopy_height_collection(), "20X_1Y_V1");
 """
 query_collection(ds::GriddedCollection, version::String) = (
     # make sure requested version is in the
-    @assert version in ds.SUPPORTED_COMBOS;
+    @assert version in ds.SUPPORTED_COMBOS "$(version)";
 
     # determine file name from label and supported version
     _fn = "$(ds.LABEL)_$(version)";
@@ -777,7 +809,7 @@ This method queries the local data path from given artifact name
 query_collection(artname::String) = (
     _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
     _artns = [_name for (_name,_) in _metas];
-    @assert artname in _artns;
+    @assert artname in _artns artname;
 
     return @artifact_str(artname) * "/$(artname).nc"
 );
