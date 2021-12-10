@@ -41,6 +41,9 @@ println();
     query_collection(sla_collection()); @test true;
     query_collection("PFT_2X_1Y_V1"); @test true;
 
+    # sync collection
+    sync_collections!(sla_collection());
+
     # clean up artifacts
     clean_collections!("old"); @test true;
     clean_collections!(pft_collection()); @test true;

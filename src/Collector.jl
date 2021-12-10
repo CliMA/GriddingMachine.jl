@@ -15,7 +15,7 @@ export biomass_collection, canopy_height_collection, clumping_index_collection, 
 
 
 # export public functions
-export clean_collections!, query_collection
+export clean_collections!, query_collection, sync_collections!
 
 
 # collection types
@@ -904,6 +904,47 @@ clean_collections!(pft_collection());
 """
 clean_collections!(selection::GriddedCollection) = (
     clean_collections!(["$(selection.LABEL)_$(_ver)" for _ver in selection.SUPPORTED_COMBOS]);
+
+    return nothing
+);
+
+
+"""
+This function sync the collections (only suggested to use with GriddingMachine server), supported methods are
+
+    $(METHODLIST)
+"""
+function sync_collections! end
+
+
+"""
+    sync_collections!(gcs::GriddedCollection)
+
+Sync collection datasets to local drive, given
+- `gc` [`GriddedCollection`](@ref) type collection
+"""
+sync_collections!(gc::GriddedCollection) = (
+    for _version in gc.SUPPORTED_COMBOS
+        query_collection(gc, _version);
+    end;
+
+    return nothing
+);
+
+
+"""
+    sync_collections!()
+
+Sync all datasets to local drive. This function is meant to initialize GriddingMachine server.
+"""
+sync_collections!() = (
+    # loop through all datasets
+    _functions = Function[biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection,
+                          leaf_chlorophyll_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
+                          soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection];
+    for _f in _functions
+        sync_collections!(_f());
+    end;
 
     return nothing
 );
