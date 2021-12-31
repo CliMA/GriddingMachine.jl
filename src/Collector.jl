@@ -77,7 +77,7 @@ show(io::IO, col::GriddedCollection) = (
 <summary>
 Method to create a general dataset collection for biomass. Supported datasets are (click to view bibtex items)
 - `ROOT_120X_1Y_V1` [(Huang et al., 2021)](https://doi.org/10.5194/essd-13-4263-2021)
-- `SHOOT_120X_1Y_V1` [(Santoro et al., 2021)](https://doi.org/10.5194/essd-13-3927-2021)
+- `SHOOT_120X_1Y_V2` [(Santoro et al., 2021)](https://doi.org/10.5194/essd-13-3927-2021)
 </summary>
 
 ```
@@ -102,7 +102,7 @@ Method to create a general dataset collection for biomass. Supported datasets ar
 ```
 </details>
 """
-biomass_collection() = GriddedCollection("BIOMASS", ["ROOT_120X_1Y_V1", "SHOOT_120X_1Y_V1"], "SHOOT_120X_1Y_V1");
+biomass_collection() = GriddedCollection("BIOMASS", ["ROOT_120X_1Y_V1", "SHOOT_120X_1Y_V2"], "SHOOT_120X_1Y_V2");
 
 
 """
@@ -429,12 +429,12 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 - `TROPOMI_683DC_5X_1M_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
 - `TROPOMI_683DC_5X_8D_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
 - `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_5X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_5X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_5X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_5X_1M_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_1M_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_8D_YYYY_V1` [(YYYY from 2019 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `TROPOMI_740DC_12X_8D_YYYY_V1` [(YYYY from 2018 to 2019; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `OCO2_757_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 - `OCO2_757DC_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
@@ -643,7 +643,7 @@ soil_hydraulics_collection() = (
 <summary>
 Method to create a general dataset collection for earth surface area. Supported datasets are (click to view bibtex items)
 - `2X_1Y_V1` [(Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
-- `2X_1Y_V1` [(regridded; Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
+- `1X_1Y_V1` [(regridded; Lawrence and Chase, 2007)](https://doi.org/10.1029/2006JG000168)
 </summary>
 
 ```

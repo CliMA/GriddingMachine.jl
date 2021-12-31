@@ -51,7 +51,7 @@ println();
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
         query_collection(biomass_collection(), "ROOT_120X_1Y_V1" ); @test true;
-        query_collection(biomass_collection(), "SHOOT_120X_1Y_V1"); @test true;
+        query_collection(biomass_collection(), "SHOOT_120X_1Y_V2"); @test true;
 
         query_collection(canopy_height_collection(), "20X_1Y_V1"); @test true;
         query_collection(canopy_height_collection(), "2X_1Y_V2" ); @test true;

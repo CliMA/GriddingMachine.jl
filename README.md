@@ -19,6 +19,10 @@
 [cov-img]: https://codecov.io/gh/CliMA/GriddingMachine.jl/branch/main/graph/badge.svg
 [cov-url]: https://codecov.io/gh/CliMA/GriddingMachine.jl
 
+## Credits
+Developers and/or maintainers have invested a lot of time into this project. Since GriddingMachine.jl has not yet been published, if you use GriddingMachine in your publications, please consider
+    sharing authorship with us.
+
 ## About
 [`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts` and FTP storage, [`GriddingMachine.jl`][gm-url] only supports julia 1.6 and above.
 
@@ -33,6 +37,17 @@ julia> Pkg.add("GriddingMachine");
 ```
 
 ## API
+
+GriddingMachine has the following sub-modules, some of which are in development. The sub-modules are
+| Sub-module  | Functionality                   | Ready to use |
+|:------------|:--------------------------------|:-------------|
+| Blender     | Regrid the gridded datasets     | No           |
+| Collector   | Distribute the gridded datasets | v0.2         |
+| Fetcher     | Download ungridded datasets     | No           |
+| Indexer     | Read the gridded datasets       | v0.2         |
+| Partitioner | Sort the ungridded datasets     | No           |
+| Requestor   | Request gridded datasets        | v0.2         |
+
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
 
 To automatically download and query the file path of the dataset, use
@@ -54,4 +69,4 @@ julia> dat,std = request_LUT('VCMAX_2X_1Y_V1', 35.1, 115.2; interpolation=true);
 | Matlab   | [octave-griddingmachine](https://github.com/Yujie-W/octave-griddingmachine) |
 | Octave   | [octave-griddingmachine](https://github.com/Yujie-W/octave-griddingmachine) |
 | R        | [r-griddingmachine](https://github.com/Yujie-W/r-griddingmachine)           |
-|Python    | [python-griddingmachine](https://github.com/Yujie-W/python-griddingmachine) |
+| Python   | [python-griddingmachine](https://github.com/Yujie-W/python-griddingmachine) |
