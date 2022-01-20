@@ -1,7 +1,7 @@
 module Indexer
 
 using DocStringExtensions: METHODLIST
-using PkgUtility: read_nc, size_nc
+using NetcdfIO: read_nc, size_nc
 
 
 # export public functions
