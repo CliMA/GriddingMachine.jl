@@ -47,12 +47,11 @@ Collector.clean_collections!(selection::Vector{String})
 Collector.clean_collections!(selection::Collector.GriddedCollection)
 ```
 
-
-## Blender
+### Sync collections
 ```@docs
-Blender.truncate
-Blender.regrid
-Blender.regrid(data::Matrix{FT}, division::Int) where {FT<:AbstractFloat}
+Collector.sync_collections!
+Collector.sync_collections!(gc::Collector.GriddedCollection)
+Collector.sync_collections!()
 ```
 
 
@@ -77,10 +76,22 @@ Requestor.request_LUT(artname::String, lat::Number, lon::Number, cyc::Int)
 ```
 
 
-## Fetcher
+## In development
+### Blender
+```@docs
+Blender.truncate
+Blender.regrid
+Blender.regrid(data::Matrix{FT}, division::Int) where {FT<:AbstractFloat}
+```
+
+
+### Fetcher
 ```@docs
 Fetcher.ERA5LandHourly
 Fetcher.ERA5SingleLevelsHourly
+Fetcher.AbstractMODIS500m
+Fetcher.MOD15A2Hv006
+Fetcher.MOD09A1v006
 Fetcher.install_cdsapi!
 Fetcher.update_CDSAPI_info!
 Fetcher.update_MODIS_password!

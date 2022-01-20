@@ -41,6 +41,9 @@ println();
     query_collection(sla_collection()); @test true;
     query_collection("PFT_2X_1Y_V1"); @test true;
 
+    # sync collection
+    sync_collections!(sla_collection());
+
     # clean up artifacts
     clean_collections!("old"); @test true;
     clean_collections!(pft_collection()); @test true;
@@ -48,7 +51,7 @@ println();
     # only for high memory and storage cases, e.g., server
     if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
         query_collection(biomass_collection(), "ROOT_120X_1Y_V1" ); @test true;
-        query_collection(biomass_collection(), "SHOOT_120X_1Y_V1"); @test true;
+        query_collection(biomass_collection(), "SHOOT_120X_1Y_V2"); @test true;
 
         query_collection(canopy_height_collection(), "20X_1Y_V1"); @test true;
         query_collection(canopy_height_collection(), "2X_1Y_V2" ); @test true;
@@ -89,17 +92,19 @@ println();
 
         query_collection(pft_collection(), "2X_1Y_V1"); @test true;
 
-        for year in 2018:2019
+        for year in 2018:2020
             query_collection(sif_collection(), "TROPOMI_740_1X_1M_$(year)_V1"   ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740_1X_8D_$(year)_V1"   ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740_5X_1M_$(year)_V1"   ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740_5X_8D_$(year)_V1"   ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740_12X_1M_$(year)_V1"  ); @test true;
             query_collection(sif_collection(), "TROPOMI_740_12X_8D_$(year)_V1"  ); @test true;
             query_collection(sif_collection(), "TROPOMI_740DC_1X_1M_$(year)_V1" ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_1X_8D_$(year)_V1" ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_5X_1M_$(year)_V1" ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_5X_8D_$(year)_V1" ); @test true;
+            query_collection(sif_collection(), "TROPOMI_740DC_12X_1M_$(year)_V1"); @test true;
             query_collection(sif_collection(), "TROPOMI_740DC_12X_8D_$(year)_V1"); @test true;
-        end;
-        for year in 2019:2019
-            query_collection(sif_collection(), "TROPOMI_740_5X_1M_$(year)_V1"  ); @test true;
-            query_collection(sif_collection(), "TROPOMI_740_5X_8D_$(year)_V1"  ); @test true;
-            query_collection(sif_collection(), "TROPOMI_740DC_5X_1M_$(year)_V1"); @test true;
-            query_collection(sif_collection(), "TROPOMI_740DC_5X_8D_$(year)_V1"); @test true;
         end;
         for year in 2019:2019
             query_collection(sif_collection(), "TROPOMI_683_5X_1M_$(year)_V2"  ); @test true;
