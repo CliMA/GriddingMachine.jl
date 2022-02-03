@@ -41,11 +41,11 @@ julia> Pkg.add("GriddingMachine");
 GriddingMachine has the following sub-modules, some of which are in development. The sub-modules are
 | Sub-module  | Functionality                   | Ready to use |
 |:------------|:--------------------------------|:-------------|
-| Blender     | Regrid the gridded datasets     | No           |
+| Blender     | Regrid the gridded datasets     | Testing      |
 | Collector   | Distribute the gridded datasets | v0.2         |
-| Fetcher     | Download ungridded datasets     | No           |
+| Fetcher     | Download ungridded datasets     | Testing      |
 | Indexer     | Read the gridded datasets       | v0.2         |
-| Partitioner | Sort the ungridded datasets     | No           |
+| Partitioner | Sort the ungridded datasets     | Testing      |
 | Requestor   | Request gridded datasets        | v0.2         |
 
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].

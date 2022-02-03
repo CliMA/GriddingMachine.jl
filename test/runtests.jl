@@ -150,7 +150,7 @@ println();
 end;
 
 
-# test Requestor functions
+# test Regrid functions
 println();
 @testset "GriddingMachine : Blender" begin
     regrid(rand(720,360), 1); @test true;
@@ -184,11 +184,8 @@ end;
 # test Requestor functions
 println();
 @testset "GriddingMachine : Requestor" begin
-    # only for high memory and storage cases, e.g., server
-    if Sys.islinux()
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
-    end;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
+    request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
 end;

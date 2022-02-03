@@ -1,7 +1,7 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 authors = ["Yujie Wang"]
-version = "0.2.4"
+version = "0.2.5"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -22,8 +22,8 @@ Conda = "1.5.2"
 DocStringExtensions = "0.8.5"
 HTTP = "0.9.14"
 JSON = "0.21.2"
-NetcdfIO = "0.1.2"
-PkgUtility = "0.1.13"
+NetcdfIO = "0.1.2, 0.2"
+PkgUtility = "0.1.13, 0.2.0"
 ProgressMeter = "1.7.1"
 PyCall = "1.92.3"
 julia = "1.6"
