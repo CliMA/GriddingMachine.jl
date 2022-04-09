@@ -17,6 +17,7 @@ Collector.gpp_collection
 Collector.lai_collection
 Collector.land_mask_collection
 Collector.leaf_chlorophyll_collection
+Collector.leaf_drymass_collection
 Collector.leaf_nitrogen_collection
 Collector.leaf_phosphorus_collection
 Collector.pft_collection

@@ -16,6 +16,7 @@ println();
     lai_collection();              @test true;
     land_mask_collection();        @test true;
     leaf_chlorophyll_collection(); @test true;
+    leaf_drymass_collection();     @test true;
     leaf_nitrogen_collection();    @test true;
     leaf_phosphorus_collection();  @test true;
     pft_collection();              @test true;
@@ -85,8 +86,13 @@ println();
         # expect warning here
         query_collection(leaf_chlorophyll_collection(), "2X_7D_V1"); @test true;
 
-        query_collection(leaf_nitrogen_collection(), "2X_1Y_V1"); @test true;
-        query_collection(leaf_nitrogen_collection(), "2X_1Y_V2"); @test true;
+        query_collection(leaf_drymass_collection(), "12X_1Y_V1"); @test true;
+        query_collection(leaf_drymass_collection(), "36X_1Y_V1"); @test true;
+
+        query_collection(leaf_nitrogen_collection(), "2X_1Y_V1" ); @test true;
+        query_collection(leaf_nitrogen_collection(), "2X_1Y_V2" ); @test true;
+        query_collection(leaf_nitrogen_collection(), "12X_1Y_V3"); @test true;
+        query_collection(leaf_nitrogen_collection(), "36X_1Y_V3"); @test true;
 
         query_collection(leaf_phosphorus_collection(), "2X_1Y_V1"); @test true;
 
