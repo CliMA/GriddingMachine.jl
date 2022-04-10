@@ -94,7 +94,9 @@ println();
         query_collection(leaf_nitrogen_collection(), "12X_1Y_V3"); @test true;
         query_collection(leaf_nitrogen_collection(), "36X_1Y_V3"); @test true;
 
-        query_collection(leaf_phosphorus_collection(), "2X_1Y_V1"); @test true;
+        query_collection(leaf_phosphorus_collection(), "2X_1Y_V1" ); @test true;
+        query_collection(leaf_phosphorus_collection(), "12X_1Y_V2"); @test true;
+        query_collection(leaf_phosphorus_collection(), "36X_1Y_V2"); @test true;
 
         query_collection(pft_collection(), "2X_1Y_V1"); @test true;
 
@@ -127,8 +129,10 @@ println();
 
         query_collection(sil_collection(), "20X_1Y_V1"); @test true;
 
-        query_collection(sla_collection(), "2X_1Y_V1"); @test true;
-        query_collection(sla_collection(), "2X_1Y_V2"); @test true;
+        query_collection(sla_collection(), "2X_1Y_V1" ); @test true;
+        query_collection(sla_collection(), "2X_1Y_V2" ); @test true;
+        query_collection(sla_collection(), "12X_1Y_V3"); @test true;
+        query_collection(sla_collection(), "36X_1Y_V3"); @test true;
 
         query_collection(soil_color_collection(), "2X_1Y_V1"); @test true;
 

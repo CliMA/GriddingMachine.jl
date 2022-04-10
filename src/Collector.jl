@@ -414,6 +414,8 @@ leaf_nitrogen_collection() = GriddedCollection("LNC", ["2X_1Y_V1", "2X_1Y_V2", "
 <summary>
 Method to create a general dataset collection for leaf phosphorus content. Supported datasets are (click to view bibtex items)
 - `2X_1Y_V1` [(Butler et al., 2017)](https://doi.org/10.1073/pnas.1708984114)
+- `12X_1Y_V2` [(Moreno-Martinez et al., 2018)](https://doi.org/10.1016/j.rse.2018.09.006)
+- `36X_1Y_V2` [(Moreno-Martinez et al., 2018)](https://doi.org/10.1016/j.rse.2018.09.006)
 </summary>
 
 ```
@@ -427,10 +429,19 @@ Method to create a general dataset collection for leaf phosphorus content. Suppo
     number = {51},
     pages = {E10937--E10946}
 }
+@article{moreno2018methodology,
+	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+              Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
+    year = {2018},
+	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+	journal = {Remote sensing of environment},
+	volume = {218},
+	pages = {69--88}
+}
 ```
 </details>
 """
-leaf_phosphorus_collection() = GriddedCollection("LPC", ["2X_1Y_V1"], "2X_1Y_V1");
+leaf_phosphorus_collection() = GriddedCollection("LPC", ["2X_1Y_V1", "12X_1Y_V2", "36X_1Y_V2"], "2X_1Y_V1");
 
 
 """
@@ -581,6 +592,8 @@ sil_collection() = GriddedCollection("SIL", ["20X_1Y_V1"], "20X_1Y_V1");
 Method to create a general dataset collection for SLA (specific leaf area). Supported datasets are (click to view bibtex items)
 - `2X_1Y_V1` [(Butler et al., 2017)](https://doi.org/10.1073/pnas.1708984114)
 - `2X_1Y_V2` [(Boonman et al., 2020)](https://doi.org/10.1111/geb.13086)
+- `12X_1Y_V3` [(Moreno-Martinez et al., 2018)](https://doi.org/10.1016/j.rse.2018.09.006)
+- `36X_1Y_V3` [(Moreno-Martinez et al., 2018)](https://doi.org/10.1016/j.rse.2018.09.006)
 </summary>
 
 ```
@@ -604,10 +617,19 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
     number = {6},
     pages = {1034--1051}
 }
+@article{moreno2018methodology,
+	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+              Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
+    year = {2018},
+	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+	journal = {Remote sensing of environment},
+	volume = {218},
+	pages = {69--88}
+}
 ```
 </details>
 """
-sla_collection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+sla_collection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2", "12X_1Y_V3", "36X_1Y_V3"], "2X_1Y_V1");
 
 
 """
