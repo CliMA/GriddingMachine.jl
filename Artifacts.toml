@@ -1702,6 +1702,22 @@ lazy = true
     sha256 = "0eb50b521b1196d7e0fd42ef30380a1cb7e561622caeb8df01e6883fef901694"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LAI_MODIS_2X_8D_2020_V1.tar.gz"
 
+[LDMC_12X_1Y_V1]
+git-tree-sha1 = "782c3c54dc80a905b6485166e483fa092940b6bb"
+lazy = true
+
+    [[LDMC_12X_1Y_V1.download]]
+    sha256 = "1e964ee6f19e87a738004e2d25b9a5d5918d5d6489dc589d6b2ba5ee84d1a7e4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LDMC_12X_1Y_V1.tar.gz"
+
+[LDMC_36X_1Y_V1]
+git-tree-sha1 = "37d250ed826e25320fac210a9b4e5283b08fb283"
+lazy = true
+
+    [[LDMC_36X_1Y_V1.download]]
+    sha256 = "3741cefe058264dd068457136b4caa804b1f21e678aa6a84edc50261d56f2bc5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LDMC_36X_1Y_V1.tar.gz"
+
 [LM_4X_1Y_V1]
 git-tree-sha1 = "a0da563ec31284f4e554cc96d1c6f947570698b4"
 lazy = true
@@ -1709,6 +1725,14 @@ lazy = true
     [[LM_4X_1Y_V1.download]]
     sha256 = "35c639490be6cbae94f042cc1e4642bab8871108ce60d42a077c0cdb70e65ca5"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LM_4X_1Y_V1.tar.gz"
+
+[LNC_12X_1Y_V3]
+git-tree-sha1 = "911926fd0ae95019fa83982f6f159ba425fb29cd"
+lazy = true
+
+    [[LNC_12X_1Y_V3.download]]
+    sha256 = "be1744c77198127ebdef474ed730b04b61d3f96d12639703afdb6b1040f418ed"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LNC_12X_1Y_V3.tar.gz"
 
 [LNC_2X_1Y_V1]
 git-tree-sha1 = "fc9e1d79d657880918c22a09202ca221ce7bc82f"
@@ -1726,6 +1750,22 @@ lazy = true
     sha256 = "3aa15293cd194c0a310a128831c7d8f6172ec4378c2e795bbbbde936378d0142"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LNC_2X_1Y_V2.tar.gz"
 
+[LNC_36X_1Y_V3]
+git-tree-sha1 = "1e909b7fa2424b69b5bc4a27b6bea3d4fc4f5c2e"
+lazy = true
+
+    [[LNC_36X_1Y_V3.download]]
+    sha256 = "03fd1d7b943991026c08aa9fc522b95ee5d90504c629c0ca256aa6a7adeeb042"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LNC_36X_1Y_V3.tar.gz"
+
+[LPC_12X_1Y_V2]
+git-tree-sha1 = "ee43664b540adbe382c94472c1709118d1996b99"
+lazy = true
+
+    [[LPC_12X_1Y_V2.download]]
+    sha256 = "ccdfffea2ec9e9252e5bb2c8e825bd7b1188e201bd2610005679f7e54f0c882d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LPC_12X_1Y_V2.tar.gz"
+
 [LPC_2X_1Y_V1]
 git-tree-sha1 = "ff5461dce4450f142e04bff844cc34123434e937"
 lazy = true
@@ -1733,6 +1773,14 @@ lazy = true
     [[LPC_2X_1Y_V1.download]]
     sha256 = "1ac27687cac5addef00c2db5f6b9c13125d581403ae41e274c4f53e15d3bbdda"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LPC_2X_1Y_V1.tar.gz"
+
+[LPC_36X_1Y_V2]
+git-tree-sha1 = "9d80801071d7a6183bfed373bc6db3ea1c1a8a8a"
+lazy = true
+
+    [[LPC_36X_1Y_V2.download]]
+    sha256 = "158db3c6f626b22c59975afccf9bebcb9d1abcb3af93c13dcabde2be9de27ae7"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LPC_36X_1Y_V2.tar.gz"
 
 [MODIS_1km_grid]
 git-tree-sha1 = "d70ac2e6c4c74b48d426d1a14af46a405c1ff4ee"
@@ -2974,6 +3022,14 @@ lazy = true
     sha256 = "1c46d0d80607347a6fa47644d5844763b1bd6e5f262e69114906e56e3dcf1f27"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SIL_20X_1Y_V1.tar.gz"
 
+[SLA_12X_1Y_V3]
+git-tree-sha1 = "f1a0979d2310d94b31df0db096516875816fb961"
+lazy = true
+
+    [[SLA_12X_1Y_V3.download]]
+    sha256 = "63356c5e22130ad6f0858f043b519a301c67b4b0501b0c3a08f85c52a12c7a3c"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_12X_1Y_V3.tar.gz"
+
 [SLA_2X_1Y_V1]
 git-tree-sha1 = "3c4e1ac76e251a89d2459b7c6b03b9eee7ba15b2"
 lazy = true
@@ -2989,6 +3045,14 @@ lazy = true
     [[SLA_2X_1Y_V2.download]]
     sha256 = "4fa15068c6d10d5ec423ea4d99e288856e99876175e10b356ea32b773ea83134"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_2X_1Y_V2.tar.gz"
+
+[SLA_36X_1Y_V3]
+git-tree-sha1 = "008a242d86eab78da3d5b40b187ae398efc92eb1"
+lazy = true
+
+    [[SLA_36X_1Y_V3.download]]
+    sha256 = "f1364c216d78c9dc3fc83101900c3d6ac13824e95e5d9d511298a12ca0ec6662"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/SLA_36X_1Y_V3.tar.gz"
 
 [SOIL_KSAT_100X_1Y_V2]
 git-tree-sha1 = "b5ced69cd1849f1b001302ff23f1f8dbf1dabf43"
