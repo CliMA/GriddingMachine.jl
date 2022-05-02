@@ -91,7 +91,10 @@ Method to create a general dataset collection for biomass. Supported datasets ar
 	pages = {4263–4274}
 }
 @article{santoro2021global,
-	author = {Santoro, M. and Cartus, O. and Carvalhais, N. and Rozendaal, D. M. A. and Avitabile, V. and Araza, A. and de Bruin, S. and Herold, M. and Quegan, S. and Rodr{\\'\\i}guez-Veiga, P. and Balzter, H. and Carreiras, J. and Schepaschenko, D. and Korets, M. and Shimada, M. and Itoh, T. and {Moreno Mart{\\'\\i}nez}, {\\'A}. and Cavlovic, J. and {Cazzolla Gatti}, R. and da Concei{\\c c}\\~ao Bispo, P. and Dewnath, N. and Labri{\\`e}re, N. and Liang, J. and Lindsell, J. and Mitchard, E. T. A. and Morel, A. and {Pacheco Pascagaza}, A. M. and Ryan, C. M. and Slik, F. and {Vaglio Laurin}, G. and Verbeeck, H. and Wijaya, A. and Willcock, S.},
+	author = {Santoro, M. and Cartus, O. and Carvalhais, N. and Rozendaal, D. M. A. and Avitabile, V. and Araza, A. and de Bruin, S. and Herold, M. and Quegan, S. and Rodr{\\'\\i}guez-Veiga, P. and
+              Balzter, H. and Carreiras, J. and Schepaschenko, D. and Korets, M. and Shimada, M. and Itoh, T. and {Moreno Mart{\\'\\i}nez}, {\\'A}. and Cavlovic, J. and {Cazzolla Gatti}, R. and
+              da Concei{\\c c}\\~ao Bispo, P. and Dewnath, N. and Labri{\\`e}re, N. and Liang, J. and Lindsell, J. and Mitchard, E. T. A. and Morel, A. and {Pacheco Pascagaza}, A. M. and
+              Ryan, C. M. and Slik, F. and {Vaglio Laurin}, G. and Verbeeck, H. and Wijaya, A. and Willcock, S.},
 	year = {2021},
 	title = {The global forest above-ground biomass pool for 2010 estimated from high-resolution satellite observations},
 	journal = {Earth System Science Data},
