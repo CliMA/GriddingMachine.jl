@@ -1718,245 +1718,245 @@ lazy = true
     sha256 = "3741cefe058264dd068457136b4caa804b1f21e678aa6a84edc50261d56f2bc5"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LDMC_36X_1Y_V1.tar.gz"
 
-[LE_RS_2X_1M_2001_V1]
-git-tree-sha1 = "7cbebcfbf910a86c4551733e5099f5a1c422e9b2"
+[LE_MPI_RS_2X_1M_2001_V1]
+git-tree-sha1 = "ea7f5fad35a76cc83115fa3b0d2a6e41776157c8"
 lazy = true
 
-    [[LE_RS_2X_1M_2001_V1.download]]
-    sha256 = "1e921c0d6246de1c1e5e133ce3281205ab27efb5e808aed2e5b5e0587ce84a8f"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2001_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2001_V1.download]]
+    sha256 = "464d4687eb5538f3dc422e56b39a697e2ecd2195510d660c9f7b0f9dd7624899"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2001_V1.tar.gz"
 
-[LE_RS_2X_1M_2002_V1]
-git-tree-sha1 = "68aa9e853ee1fffe0002ebedb2f76bca138ce6d5"
+[LE_MPI_RS_2X_1M_2002_V1]
+git-tree-sha1 = "2cb4772b984e6b3ea8110781215c8b620ce2bed1"
 lazy = true
 
-    [[LE_RS_2X_1M_2002_V1.download]]
-    sha256 = "43a98d4099426e463e398cc7753eb25876cf38131ced68a1e9a947ec92c3e4fb"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2002_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2002_V1.download]]
+    sha256 = "0fc5b5eb4e9e8a38692936c4e8790587b956f55157a0db7f7c2c2947d1a22385"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2002_V1.tar.gz"
 
-[LE_RS_2X_1M_2003_V1]
-git-tree-sha1 = "7502eb80970923fa28ef9f8fcfc9437136b54c95"
+[LE_MPI_RS_2X_1M_2003_V1]
+git-tree-sha1 = "22165cd95b9e1d87dcfae4dcc565dadf7bcc18f9"
 lazy = true
 
-    [[LE_RS_2X_1M_2003_V1.download]]
-    sha256 = "b3645f7a34c83e4c20d3b301d8ca9d23b0c5d286922036b0d1064cdcbeeee14a"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2003_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2003_V1.download]]
+    sha256 = "cb2598c58ebb21723784ef6f12361cf8eba66260a566014b09f4d18920b32c83"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2003_V1.tar.gz"
 
-[LE_RS_2X_1M_2004_V1]
-git-tree-sha1 = "fdaf35c81735e95ac2a4f1df33223e73fca8b39e"
+[LE_MPI_RS_2X_1M_2004_V1]
+git-tree-sha1 = "26d3af16542e65a6afc126919a9688c19e91fa20"
 lazy = true
 
-    [[LE_RS_2X_1M_2004_V1.download]]
-    sha256 = "ec937ddaf166678286975f8f9735a451dd940bc99706274db42815bcfd2b35d6"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2004_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2004_V1.download]]
+    sha256 = "5f3601f0bae3354e22a4298e3cf26256d602d967937d11ac32fd1396e5cca960"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2004_V1.tar.gz"
 
-[LE_RS_2X_1M_2005_V1]
-git-tree-sha1 = "cce16ec9ca21bc9548d8384491c7c7dcc1f2fc92"
+[LE_MPI_RS_2X_1M_2005_V1]
+git-tree-sha1 = "dd112bf524ed2cd66738fe523b8614f4c7da84bf"
 lazy = true
 
-    [[LE_RS_2X_1M_2005_V1.download]]
-    sha256 = "27f15ccbfe8c7d74c1e1dbad5ea508d30a072ad4e375d20817e89054ff1713fa"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2005_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2005_V1.download]]
+    sha256 = "589dc2ae5e314373373aa97cf61b59a6a242899a46baa51ab713aec1b88c21fb"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2005_V1.tar.gz"
 
-[LE_RS_2X_1M_2006_V1]
-git-tree-sha1 = "7ffa38fe867c0d6cbe13cf9515aebbb469293445"
+[LE_MPI_RS_2X_1M_2006_V1]
+git-tree-sha1 = "4406dc16d49d5ed2a642241db18005fa97a1196c"
 lazy = true
 
-    [[LE_RS_2X_1M_2006_V1.download]]
-    sha256 = "cca7313276230258b6774c8db80a9ccf2060b700d0c7b9991eb2c3090906cbaf"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2006_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2006_V1.download]]
+    sha256 = "58d810cb2ed239c78ed377405e4e83901e06142fbd57cd6b7d5e0811755b347b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2006_V1.tar.gz"
 
-[LE_RS_2X_1M_2007_V1]
-git-tree-sha1 = "dbf65ba90ecb049204e9294bf3ed9dc1967b19f1"
+[LE_MPI_RS_2X_1M_2007_V1]
+git-tree-sha1 = "5ba11430b02903a2587fd476966ec05e62d2c1cd"
 lazy = true
 
-    [[LE_RS_2X_1M_2007_V1.download]]
-    sha256 = "cedb4cd2a7a225d8ec48ee1a07fb37bf72075940123bd4607f051f60ee3f36d4"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2007_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2007_V1.download]]
+    sha256 = "2d4d87d7ebbe1a4c75487549657d2cb38beba5a6513e4215324d8cba97534eff"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2007_V1.tar.gz"
 
-[LE_RS_2X_1M_2008_V1]
-git-tree-sha1 = "fece57994b8a6ada6389bd0650824d0d1e71dcca"
+[LE_MPI_RS_2X_1M_2008_V1]
+git-tree-sha1 = "b51b5cb3e4747e662a95760f38cf555404b7d345"
 lazy = true
 
-    [[LE_RS_2X_1M_2008_V1.download]]
-    sha256 = "577f652d83c401005fb180b7145c2a333b0c186eae3b6663d9ffdd48202ce14b"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2008_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2008_V1.download]]
+    sha256 = "7b7cbaeb8101e77a57b121694aa4c0072420bc3b1e0881160e16b1194d84f12b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2008_V1.tar.gz"
 
-[LE_RS_2X_1M_2009_V1]
-git-tree-sha1 = "f7977221717963ceccfc9ded5b2ca8c3b425ed9f"
+[LE_MPI_RS_2X_1M_2009_V1]
+git-tree-sha1 = "e62624e74413b90b0fc07116ed7493a67adc0d9c"
 lazy = true
 
-    [[LE_RS_2X_1M_2009_V1.download]]
-    sha256 = "56ab237507ce8f078bff7f2d13746d727eda0f82ab04a831ddc3a933da67ef2f"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2009_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2009_V1.download]]
+    sha256 = "ba10034fe7d6d44d49e3aae73f660137ea9fb650d41bbd3aaf1651324ef7384a"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2009_V1.tar.gz"
 
-[LE_RS_2X_1M_2010_V1]
-git-tree-sha1 = "c06900d4f70e2c4b4eeca1ca10ac83cf706bfe60"
+[LE_MPI_RS_2X_1M_2010_V1]
+git-tree-sha1 = "0b15c7f6d782dbd151135692f426d33fc54f496f"
 lazy = true
 
-    [[LE_RS_2X_1M_2010_V1.download]]
-    sha256 = "0803fcd1eb62f25439a598b89f325544fd7b01c39e53db011d7c5506f21d4c93"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2010_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2010_V1.download]]
+    sha256 = "3b4ffaa965899423f87d1ec397dddabdcee140040a8f284ae161e216f1af67f3"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2010_V1.tar.gz"
 
-[LE_RS_2X_1M_2011_V1]
-git-tree-sha1 = "eb784f657267fcc746c327860970eb366cbc9e14"
+[LE_MPI_RS_2X_1M_2011_V1]
+git-tree-sha1 = "e4e3b53f9e83bb45f017c56201980042eec85d31"
 lazy = true
 
-    [[LE_RS_2X_1M_2011_V1.download]]
-    sha256 = "213c8187a16546c551bc3ab0cdd5b861e6f9eda78b969f3e5fadac77d1690098"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2011_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2011_V1.download]]
+    sha256 = "03032b4ee15b342aee05dbc677769d57e1dcb842856d0f3b75c3401333c99959"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2011_V1.tar.gz"
 
-[LE_RS_2X_1M_2012_V1]
-git-tree-sha1 = "3b1b40f816f9fdd6c002e9e56f13a5184bebfab7"
+[LE_MPI_RS_2X_1M_2012_V1]
+git-tree-sha1 = "2ca5b7829fe91cbe32de597cdf8573fe90ae8892"
 lazy = true
 
-    [[LE_RS_2X_1M_2012_V1.download]]
-    sha256 = "20646fc48c50230bf9cd25b6e157021125f3fb02070835ba27c91fb4beb9522e"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2012_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2012_V1.download]]
+    sha256 = "7f7e7732c1b5b7a4b436d5bbe09aa082c91226ae311f30ddb8ff3d6c43e6eac2"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2012_V1.tar.gz"
 
-[LE_RS_2X_1M_2013_V1]
-git-tree-sha1 = "5a584e12b6dd824b68dd9c86f41fa8009d59cc76"
+[LE_MPI_RS_2X_1M_2013_V1]
+git-tree-sha1 = "515f2ac5babc143a277e702ae4c630d9d9c5156c"
 lazy = true
 
-    [[LE_RS_2X_1M_2013_V1.download]]
-    sha256 = "f48f979a4caea4234eb235656e113a6fa99b3eb98738cd3a54b5f52bf1337546"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2013_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2013_V1.download]]
+    sha256 = "aa5d3935cd72e5f80f7a041bac299d8b76ceba78b2e96fa687fa5c216939692b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2013_V1.tar.gz"
 
-[LE_RS_2X_1M_2014_V1]
-git-tree-sha1 = "b693ce392537a94d58123401b13a0c71c4fc0bbc"
+[LE_MPI_RS_2X_1M_2014_V1]
+git-tree-sha1 = "bd5373444cdcb30d0d09f2acfc097d95c03c0001"
 lazy = true
 
-    [[LE_RS_2X_1M_2014_V1.download]]
-    sha256 = "a16769278d00d9fdc8b04ddb17eb0a7a6065ec186820d0f9b650a5bff65c395b"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2014_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2014_V1.download]]
+    sha256 = "f21e5d0f5484ff84e57a6cd9b6ab085de834f532447868107070095c81ecc261"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2014_V1.tar.gz"
 
-[LE_RS_2X_1M_2015_V1]
-git-tree-sha1 = "14a1a1161675519ff8e0ad24b2000487f0dd7fce"
+[LE_MPI_RS_2X_1M_2015_V1]
+git-tree-sha1 = "d121d99fd3fbe7afa8b48cf57b1abbbe8d3bf8d5"
 lazy = true
 
-    [[LE_RS_2X_1M_2015_V1.download]]
-    sha256 = "86b1520bc2396418f5cf487a69e813ad0c0b09dd7612f88973384dd9dc740d50"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_1M_2015_V1.tar.gz"
+    [[LE_MPI_RS_2X_1M_2015_V1.download]]
+    sha256 = "bfe868a733d77ec6c719e7b08a762b060e1013ed63d3e137b4001574eddebe2e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_1M_2015_V1.tar.gz"
 
-[LE_RS_2X_8D_2001_V1]
-git-tree-sha1 = "a6e3f0fe37994ca231785a0e4fa921e261f7b598"
+[LE_MPI_RS_2X_8D_2001_V1]
+git-tree-sha1 = "92c578ae58e73d6f9dd7d53b49990c0f03689138"
 lazy = true
 
-    [[LE_RS_2X_8D_2001_V1.download]]
-    sha256 = "a6dbefdf0e00a44bcfbd68adb25f3364c90b15d570d0e39bbb586fa5693de756"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2001_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2001_V1.download]]
+    sha256 = "866b65fe9d5ed1eee2fcd78cdc795ea2bbe6de74195ece13796f07943fdd5a03"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2001_V1.tar.gz"
 
-[LE_RS_2X_8D_2002_V1]
-git-tree-sha1 = "8a3f3ada3b49cebecf06889496abad748dd02f6f"
+[LE_MPI_RS_2X_8D_2002_V1]
+git-tree-sha1 = "e64d3e94e1d8167df24f1a4928dc633328f16417"
 lazy = true
 
-    [[LE_RS_2X_8D_2002_V1.download]]
-    sha256 = "6ef5b874bf55ce355cab7582e1775e44664faa04598321ae99a85495dde1298d"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2002_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2002_V1.download]]
+    sha256 = "1088653ed53a9cd727cec28abfec12ddbec3e3a28460c612736b84d25972aa3b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2002_V1.tar.gz"
 
-[LE_RS_2X_8D_2003_V1]
-git-tree-sha1 = "62790df8ea0e884d9bf28fb6c1a241be2be2df75"
+[LE_MPI_RS_2X_8D_2003_V1]
+git-tree-sha1 = "707baacb56d9c6b518fc3b7e3185a79a8bce4bad"
 lazy = true
 
-    [[LE_RS_2X_8D_2003_V1.download]]
-    sha256 = "1403a4db12634bc0491853d553bb567e2157966fb30443026ed4e01d89aa4714"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2003_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2003_V1.download]]
+    sha256 = "faa38759d4e48aabaa9ef32eaec543b75d34fe97d9fba38bbc22938412f0c185"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2003_V1.tar.gz"
 
-[LE_RS_2X_8D_2004_V1]
-git-tree-sha1 = "9f531d90355742039c7ade2023ca1f98a82fb102"
+[LE_MPI_RS_2X_8D_2004_V1]
+git-tree-sha1 = "5693212d4a03f5729eb4b9486e8c2350b79b6338"
 lazy = true
 
-    [[LE_RS_2X_8D_2004_V1.download]]
-    sha256 = "a0f45e3d057957823ea63e4217e34d63cbdd600a6075cb0920778c38a98f24b2"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2004_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2004_V1.download]]
+    sha256 = "f7457c95222a59c4516fde555d7a9ecf45b5f7637775e2401c6af9916628d75e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2004_V1.tar.gz"
 
-[LE_RS_2X_8D_2005_V1]
-git-tree-sha1 = "505278ba6edaaedce48169ec5e6ddb45f9f3ed3e"
+[LE_MPI_RS_2X_8D_2005_V1]
+git-tree-sha1 = "0915b15cff4b220acda0da3ac261346f6e2ea596"
 lazy = true
 
-    [[LE_RS_2X_8D_2005_V1.download]]
-    sha256 = "e994962d9a3285257e589e1c52aa9c93516ddf4b4144549419bd2efec5d80e05"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2005_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2005_V1.download]]
+    sha256 = "e28c4b6df1e032038423d735b6ab0f4d1204d121dc98963b158105dd042c5ab4"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2005_V1.tar.gz"
 
-[LE_RS_2X_8D_2006_V1]
-git-tree-sha1 = "ac9294fe1c583d2c29a0ddf9ca012996ff4c8968"
+[LE_MPI_RS_2X_8D_2006_V1]
+git-tree-sha1 = "ba27587f214fde9c6a61fa7186944792135192c9"
 lazy = true
 
-    [[LE_RS_2X_8D_2006_V1.download]]
-    sha256 = "6413dd73fca91d34c044ccd8e4c6abc6df50aec48f0ed296f2bae7979e65cbd0"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2006_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2006_V1.download]]
+    sha256 = "67550a76eaa98111498d144c8c4f5a40f418ec81dcb29f02f8dc78b7cee74600"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2006_V1.tar.gz"
 
-[LE_RS_2X_8D_2007_V1]
-git-tree-sha1 = "c8feec6e30d22f5d9fa25e1cfb70f604878cf499"
+[LE_MPI_RS_2X_8D_2007_V1]
+git-tree-sha1 = "c5350b0f96135c1d49bdb25503884a7213a1dc81"
 lazy = true
 
-    [[LE_RS_2X_8D_2007_V1.download]]
-    sha256 = "27491fcd4c6d2647472d96251bad26097f7b3b7efd03d499ccf1981736c482b1"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2007_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2007_V1.download]]
+    sha256 = "b1ad260b23f8128c82b24bc13ac3781ace22af53ca5495535b5744077c00dd52"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2007_V1.tar.gz"
 
-[LE_RS_2X_8D_2008_V1]
-git-tree-sha1 = "d42746ccab3de501d1caba9d4cd9e820cfe94d50"
+[LE_MPI_RS_2X_8D_2008_V1]
+git-tree-sha1 = "a3ec33fd30b82ce1e64a35dea7d62016b92e0759"
 lazy = true
 
-    [[LE_RS_2X_8D_2008_V1.download]]
-    sha256 = "678ee204f04892f652a0ed6502b0d16b59d8416044bca64b563e8ff02c389a0b"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2008_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2008_V1.download]]
+    sha256 = "8780fde0c271d19ba2d65858f262c04a13c1f807a5b82657a76dc4e9ee14bcf6"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2008_V1.tar.gz"
 
-[LE_RS_2X_8D_2009_V1]
-git-tree-sha1 = "af9846333a3709a2c6ec4e2cce70bbe949864256"
+[LE_MPI_RS_2X_8D_2009_V1]
+git-tree-sha1 = "1673e7ff672b630e05f49cd24fc00d80c2fa948a"
 lazy = true
 
-    [[LE_RS_2X_8D_2009_V1.download]]
-    sha256 = "1a248696640dddd36a2da9ca3dc5bb608580d0bbb6ef615baa6715964c3f8fdb"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2009_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2009_V1.download]]
+    sha256 = "97899b4fa01dcf79fc9bc6aa5814dba464120490fac5367da70c8ab8a5384dc5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2009_V1.tar.gz"
 
-[LE_RS_2X_8D_2010_V1]
-git-tree-sha1 = "4b66998bdf9a7c9da5b321f89f1b184c407d40e5"
+[LE_MPI_RS_2X_8D_2010_V1]
+git-tree-sha1 = "1458ca8265807ef08b4de6f9edc76187daf1a1c6"
 lazy = true
 
-    [[LE_RS_2X_8D_2010_V1.download]]
-    sha256 = "98aaffe19b1da41b796071b342d8f97543b426935c9f44b76fe37c91f5bd7e3e"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2010_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2010_V1.download]]
+    sha256 = "3f37b0ae8a335bc3a57a31b40ba54c2a7dacd2cad90f5f5790470a4f587511b9"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2010_V1.tar.gz"
 
-[LE_RS_2X_8D_2011_V1]
-git-tree-sha1 = "fcc9a2ededf065705764ef5ac9ca4ef35900a048"
+[LE_MPI_RS_2X_8D_2011_V1]
+git-tree-sha1 = "8b6dd641873bae65206231ca2894b180e2f2a323"
 lazy = true
 
-    [[LE_RS_2X_8D_2011_V1.download]]
-    sha256 = "314bc9fbeecd39ce2a7115730d40757926e10c8889bf35b9039182e1db59c2b4"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2011_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2011_V1.download]]
+    sha256 = "dac2578c0f44c3e505bc84d4dedbdb1508d99f4d92eb40b8797879be1e215d13"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2011_V1.tar.gz"
 
-[LE_RS_2X_8D_2012_V1]
-git-tree-sha1 = "83bc94c32b4b655adacf8e1e03a5063ed0ee3da8"
+[LE_MPI_RS_2X_8D_2012_V1]
+git-tree-sha1 = "842061bdc080f6a5f68ff535784229e33507b7da"
 lazy = true
 
-    [[LE_RS_2X_8D_2012_V1.download]]
-    sha256 = "71aa661faed311a68bd61288dc31fa98b172c5b4cb5262ee6d541f1d99e166a2"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2012_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2012_V1.download]]
+    sha256 = "f732a90475c747f64023e75410252f71f2ddcf3c0a776cabbced55fcd6f1622d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2012_V1.tar.gz"
 
-[LE_RS_2X_8D_2013_V1]
-git-tree-sha1 = "19551a9e0034f540f004b6bef7381d3d5fefd285"
+[LE_MPI_RS_2X_8D_2013_V1]
+git-tree-sha1 = "d8d9ed7d9a5f2ad0036c9ffd50c73c5a9a31862c"
 lazy = true
 
-    [[LE_RS_2X_8D_2013_V1.download]]
-    sha256 = "caedcc5a0e8a9abed0d36eb1b163295d6e9aed2b8bf9f9920a488ee8641a6177"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2013_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2013_V1.download]]
+    sha256 = "6607a818a36da78bb51b785b3f854317a67de99db4d06545a524033d924920fd"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2013_V1.tar.gz"
 
-[LE_RS_2X_8D_2014_V1]
-git-tree-sha1 = "7dfd6f70ae84201cbc3459c27c1cea486f80d87b"
+[LE_MPI_RS_2X_8D_2014_V1]
+git-tree-sha1 = "3447a95ebf13f2fa15a8fe4fc63a72fae71fd970"
 lazy = true
 
-    [[LE_RS_2X_8D_2014_V1.download]]
-    sha256 = "8f2e6235e104542b5b50d0331f526fb7eeabca9bcb47235ed9250b5fb8e31080"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2014_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2014_V1.download]]
+    sha256 = "fc8399ff19b411fc712a874d194be2069bd0b50763335159b78b808cbc7aef49"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2014_V1.tar.gz"
 
-[LE_RS_2X_8D_2015_V1]
-git-tree-sha1 = "580edacb7ac5b24a6fd8e0d44a2654d4bd77749e"
+[LE_MPI_RS_2X_8D_2015_V1]
+git-tree-sha1 = "b217ee32de7febfe5f063b85e8f83400987bcd03"
 lazy = true
 
-    [[LE_RS_2X_8D_2015_V1.download]]
-    sha256 = "6235b19944de6428d2b05871cda8e32196445d4a8b65b60daabc5b8195360d9d"
-    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_RS_2X_8D_2015_V1.tar.gz"
+    [[LE_MPI_RS_2X_8D_2015_V1.download]]
+    sha256 = "facf5d46249520c0c3a83e3519c6b68b5e79020782777f85fb2aa61dcd1d02c5"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/LE_MPI_RS_2X_8D_2015_V1.tar.gz"
 
 [LM_4X_1Y_V1]
 git-tree-sha1 = "a0da563ec31284f4e554cc96d1c6f947570698b4"

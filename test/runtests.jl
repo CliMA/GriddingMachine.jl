@@ -85,8 +85,8 @@ println();
         query_collection(land_mask_collection(), "4X_1Y_V1"); @test true;
 
         for year in 2001:2015
-            query_collection(latent_heat_collection(), "RS_2X_1M_$(year)_V1" ); @test true;
-            query_collection(latent_heat_collection(), "RS_2X_8D_$(year)_V1" ); @test true;
+            query_collection(latent_heat_collection(), "MPI_RS_2X_1M_$(year)_V1"); @test true;
+            query_collection(latent_heat_collection(), "MPI_RS_2X_8D_$(year)_V1"); @test true;
         end;
 
         # expect warning here

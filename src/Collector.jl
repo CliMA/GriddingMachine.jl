@@ -312,8 +312,8 @@ land_mask_collection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
 <details>
 <summary>
 Method to create a general dataset collection for latent heat flux. Supported datasets are (click to view bibtex items)
-- `RS_2X_8D_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
-- `RS_2X_1M_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
+- `MPI_RS_2X_8D_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
+- `MPI_RS_2X_1M_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
 </summary>
 
 ```
@@ -333,11 +333,11 @@ Method to create a general dataset collection for latent heat flux. Supported da
 latent_heat_collection() = (
     _supported = [];
     for _year in 2001:2015
-        push!(_supported, "RS_2X_8D_$(_year)_V1");
-        push!(_supported, "RS_2X_1M_$(_year)_V1");
+        push!(_supported, "MPI_RS_2X_8D_$(_year)_V1");
+        push!(_supported, "MPI_RS_2X_1M_$(_year)_V1");
     end;
 
-    return GriddedCollection("LE", _supported, "RS_2X_8D_2015_V1")
+    return GriddedCollection("LE", _supported, "MPI_RS_2X_8D_2015_V1")
 );
 
 
