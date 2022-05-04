@@ -15,6 +15,7 @@ println();
     gpp_collection();              @test true;
     lai_collection();              @test true;
     land_mask_collection();        @test true;
+    latent_heat_collection();      @test true;
     leaf_chlorophyll_collection(); @test true;
     leaf_drymass_collection();     @test true;
     leaf_nitrogen_collection();    @test true;
@@ -82,6 +83,11 @@ println();
         end;
 
         query_collection(land_mask_collection(), "4X_1Y_V1"); @test true;
+
+        for year in 2001:2015
+            query_collection(latent_heat_collection(), "MPI_RS_2X_1M_$(year)_V1"); @test true;
+            query_collection(latent_heat_collection(), "MPI_RS_2X_8D_$(year)_V1"); @test true;
+        end;
 
         # expect warning here
         query_collection(leaf_chlorophyll_collection(), "2X_7D_V1"); @test true;

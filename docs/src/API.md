@@ -16,6 +16,7 @@ Collector.elevation_collection
 Collector.gpp_collection
 Collector.lai_collection
 Collector.land_mask_collection
+Collector.latent_heat_collection
 Collector.leaf_chlorophyll_collection
 Collector.leaf_drymass_collection
 Collector.leaf_nitrogen_collection
