@@ -9,9 +9,9 @@ import Base: show
 
 # export public types and constructors
 export GriddedCollection
-export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, leaf_chlorophyll_collection,
-       leaf_drymass_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection, soil_hydraulics_collection,
-       sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection
+export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, latent_heat_collection,
+       leaf_chlorophyll_collection, leaf_drymass_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
+       soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection
 
 
 # export public functions
@@ -304,6 +304,41 @@ Method to create a general dataset collection for land mask. Supported datasets 
 - `4X_1Y_V1` [(ERA5)]
 """
 land_mask_collection() = GriddedCollection("LM", ["4X_1Y_V1"], "4X_1Y_V1");
+
+
+"""
+    latent_heat_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for latent heat flux. Supported datasets are (click to view bibtex items)
+- `RS_2X_8D_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
+- `RS_2X_1M_YYYY_V1` [(YYYY from 2001 to 2015; Jung et al., 2015)](https://doi.org/10.1038/s41597-019-0076-8)
+</summary>
+
+```
+@article{jung2019fluxcom,
+	author = {Jung, Martin and Koirala, Sujan and Weber, Ulrich and Ichii, Kazuhito and Gans, Fabian and Camps-Valls, Gustau and Papale, Dario and Schwalm, Christopher and Tramontana, Gianluca and
+              Reichstein, Markus},
+	year = {2019},
+	title = {The {FLUXCOM} ensemble of global land-atmosphere energy fluxes},
+	journal = {Scientific Data},
+	volume = {6},
+	number = {1},
+	pages = {74}
+}
+```
+</details>
+"""
+latent_heat_collection() = (
+    _supported = [];
+    for _year in 2001:2015
+        push!(_supported, "RS_2X_8D_$(_year)_V1");
+        push!(_supported, "RS_2X_1M_$(_year)_V1");
+    end;
+
+    return GriddedCollection("LE", _supported, "RS_2X_8D_2015_V1")
+);
 
 
 """
