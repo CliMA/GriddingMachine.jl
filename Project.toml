@@ -19,7 +19,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 Conda = "1.5.2"
-DocStringExtensions = "0.8.5"
+DocStringExtensions = "0.8.5, 0.9"
 HTTP = "0.9.14"
 JSON = "0.21.2"
 NetcdfIO = "0.1.2, 0.2"
