@@ -512,22 +512,22 @@ pft_collection() = GriddedCollection("PFT", ["2X_1Y_V1"], "2X_1Y_V1");
 <details>
 <summary>
 Method to create a general dataset collection for solar-induced chlorophyll fluorescence. Supported datasets are (click to view bibtex items)
-- `TROPOMI_683_5X_1M_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683_5X_8D_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683DC_5X_1M_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_683DC_5X_8D_YYYY_V2` [(YYYY from 2019 to 2019; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
-- `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_1X_8D_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_5X_1M_YYYY_V1` [(YYYY from 2019 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_5X_8D_YYYY_V1` [(YYYY from 2019 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_12X_1M_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_1X_8D_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_5X_1M_YYYY_V1` [(YYYY from 2019 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_5X_8D_YYYY_V1` [(YYYY from 2019 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_12X_1M_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
-- `TROPOMI_740DC_12X_8D_YYYY_V1` [(YYYY from 2018 to 2020; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_683_5X_1M_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683_5X_8D_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_1M_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_683DC_5X_8D_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541)
+- `TROPOMI_740_1X_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_1X_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_1M_YYYY_V1` [(YYYY from 2019 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_5X_8D_YYYY_V1` [(YYYY from 2019 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_12X_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740_12X_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_1X_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_1X_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_1M_YYYY_V1` [(YYYY from 2019 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_5X_8D_YYYY_V1` [(YYYY from 2019 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_12X_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
+- `TROPOMI_740DC_12X_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)
 - `OCO2_757_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 - `OCO2_757DC_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 - `OCO2_771_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
@@ -566,7 +566,7 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 """
 sif_collection() = (
     _supported = [];
-    for _year in 2018:2020
+    for _year in 2018:2021
         push!(_supported, "TROPOMI_740_1X_1M_$(_year)_V1");
         push!(_supported, "TROPOMI_740_1X_8D_$(_year)_V1");
         push!(_supported, "TROPOMI_740_5X_1M_$(_year)_V1");
@@ -580,7 +580,7 @@ sif_collection() = (
         push!(_supported, "TROPOMI_740DC_12X_1M_$(_year)_V1");
         push!(_supported, "TROPOMI_740DC_12X_8D_$(_year)_V1");
     end;
-    for _year in 2019:2019
+    for _year in 2018:2020
         push!(_supported, "TROPOMI_683_5X_1M_$(_year)_V2");
         push!(_supported, "TROPOMI_683_5X_8D_$(_year)_V2");
         push!(_supported, "TROPOMI_683DC_5X_1M_$(_year)_V2");
