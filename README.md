@@ -21,9 +21,8 @@
 
 
 ## Credits
-Developers and/or maintainers have invested a lot of time into this project. Since GriddingMachine.jl has not yet been published, if you use GriddingMachine in your publications, please consider
-    sharing authorship with us.
 
+Please cite our paper [here](https://www.nature.com/articles/s41597-022-01346-x).
 
 ## About
 [`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts` and FTP storage, [`GriddingMachine.jl`][gm-url] only supports julia 1.6 and above.
