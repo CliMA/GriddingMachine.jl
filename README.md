@@ -21,8 +21,13 @@
 
 
 ## Credits
+Please cite our paper(s) when you use GriddingMachine:
 
-Please cite our paper [here](https://www.nature.com/articles/s41597-022-01346-x).
+- Y. Wang, P. Köhler, R. K. Braghiere, M. Longo, R. Doughty, A. A. Bloom, and C. Frankenberg. 2022.
+  GriddingMachine, a database and software for Earth system modeling at global and regional scales.
+  Scientific Data. 9: 258.
+  [DOI](https://doi.org/10.1038/s41597-022-01346-x)
+
 
 ## About
 [`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts` and FTP storage, [`GriddingMachine.jl`][gm-url] only supports julia 1.6 and above.
