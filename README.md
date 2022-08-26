@@ -21,8 +21,12 @@
 
 
 ## Credits
-Developers and/or maintainers have invested a lot of time into this project. Since GriddingMachine.jl has not yet been published, if you use GriddingMachine in your publications, please consider
-    sharing authorship with us.
+Please cite our paper(s) when you use GriddingMachine:
+
+- Y. Wang, P. Köhler, R. K. Braghiere, M. Longo, R. Doughty, A. A. Bloom, and C. Frankenberg. 2022.
+  GriddingMachine, a database and software for Earth system modeling at global and regional scales.
+  Scientific Data. 9: 258.
+  [DOI](https://doi.org/10.1038/s41597-022-01346-x)
 
 
 ## About
