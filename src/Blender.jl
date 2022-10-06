@@ -26,7 +26,7 @@ function truncate(data::Matrix{FT}, n::Int) where {FT<:AbstractFloat}
 
     # create a new matrix to save the data
     _mat = ones(FT, Int(size(data,1)/n), Int(size(data,2)/n)) .* FT(NaN);
-    for _i in 1:size(_mat,1), _j in 1:size(_mat,2)
+    for _i in axes(_mat,1), _j in axes(_mat,2)
         _mat[_i,_j] = nanmean(data[(_i-1)*n+1:_i*n,(_j-1)*n+1:_j*n]);
     end;
 

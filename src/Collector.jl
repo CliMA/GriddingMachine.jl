@@ -152,6 +152,8 @@ Method to create a general dataset collection for clumping index. Supported data
 - `240X_1Y_V1` [(He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
 - `2X_1Y_V1` [(regridded; He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
 - `2X_1Y_V2` [(Braghiere et al., 2019)](https://doi.org/10.1029/2018GB006135)
+- `20X_1M_V3` [(Wei et al., 2019)](https://doi.org/10.1016/j.rse.2019.111296)
+- `2X_1M_V3` [(regridded; Wei et al., 2019)](https://doi.org/10.1016/j.rse.2019.111296)
 
 V2 dataset are classified for different plant functional types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and shrubland.
 </summary>
@@ -174,10 +176,18 @@ V2 dataset are classified for different plant functional types. The indices are 
     number = {11},
     pages = {1358--1369}
 }
+@article{wei2019global,
+	author = {Wei, Shanshan and Fang, Hongliang and Schaaf, Crystal B and He, Liming and Chen, Jing M},
+	year = {2019},
+	title = {Global 500 m clumping index product derived from MODIS BRDF data (2001--2017)},
+	journal = {Remote Sensing of Environment},
+	volume = {232},
+	pages = {111296}
+}
 ```
 </details>
 """
-clumping_index_collection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+clumping_index_collection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2", "20X_1M_V3"], "2X_1Y_V1");
 
 
 """
