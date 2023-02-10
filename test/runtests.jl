@@ -29,6 +29,7 @@ using Test
                    surface_area_collection(),
                    tree_density_collection(),
                    vcmax_collection(),
+                   vegetation_cover_fraction(),
                    wood_density_collection()];
 
     @testset "Library" begin

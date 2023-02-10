@@ -30,6 +30,7 @@ Collector.soil_hydraulics_collection
 Collector.surface_area_collection
 Collector.tree_density_collection
 Collector.vcmax_collection
+Collector.vegetation_cover_fraction
 Collector.wood_density_collection
 ```
 

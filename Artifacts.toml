@@ -3558,6 +3558,182 @@ lazy = true
     sha256 = "9b03d09eaae764afb4b4e2b322f844db02688e64d01fe51038777f4005262124"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/TD_2X_1Y_V1.tar.gz"
 
+[VCF_MODIS_MOD44B_2X_1Y_2000_V1]
+git-tree-sha1 = "e90ae3629fb1af041d707e2607f38a227d5a6fe9"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2000_V1.download]]
+    sha256 = "86688f5581578f0d6be7a6ccaffb8bcc14bffc52c098c58a8a58d42ed076e5ed"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2000_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2001_V1]
+git-tree-sha1 = "ea50fc2ebf8e74816a822d01bc16c3de4d01db28"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2001_V1.download]]
+    sha256 = "6b7a832bf3d9a2ebea07a6e6123443f074ce98e1859dcd60bafef9a3d4c56fbd"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2001_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2002_V1]
+git-tree-sha1 = "c8c63681f68547b435697dc2a55508a7927662a1"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2002_V1.download]]
+    sha256 = "d559fa455d4c81cbfe13974eff235340feb67453c77a75348b2f450fe874bb0b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2002_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2003_V1]
+git-tree-sha1 = "f833e76166e4b6398d45782c615bebf4fd4bc072"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2003_V1.download]]
+    sha256 = "5e8a1b5d8b7b446d11280800fdae39b38a9d79b314a10679b3607d51e9da1a62"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2003_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2004_V1]
+git-tree-sha1 = "ae972946754e8f03d852216dc6197316f2576602"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2004_V1.download]]
+    sha256 = "1279cd08ae785857ef20d30871133407e11fb7aa6de36311cf97def728541419"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2004_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2005_V1]
+git-tree-sha1 = "73b4afcd876c092f38b4bd18bb86ba70dda6484e"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2005_V1.download]]
+    sha256 = "0f1511293d5450f4565a916d00982758310d97b78e3b426f625aa96f688f246d"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2005_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2006_V1]
+git-tree-sha1 = "effc7baa584718d7d8cf8b9b40acaf754ec01a40"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2006_V1.download]]
+    sha256 = "67bed8398b88838fe5ffe631f844cdc91768d29640441646e9b717c8de6cdddc"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2006_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2007_V1]
+git-tree-sha1 = "3b4913f3628485c339868a7b70e9084d19ddadab"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2007_V1.download]]
+    sha256 = "91e82b729cd976dba4e6e88ab051f049a5cfd4e8243d618d8425016417fe7941"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2007_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2008_V1]
+git-tree-sha1 = "8456a7953c599551fe556299b081dac9acf0695b"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2008_V1.download]]
+    sha256 = "e1fb84d4b5700ea89b242e9986209cef5a871ec20b0a8c7180320891c6fd02ad"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2008_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2009_V1]
+git-tree-sha1 = "69f207c656f263990ad16d76b4e1f67a1905e247"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2009_V1.download]]
+    sha256 = "f60df3adb7751ffdf43b0fe23ff59d4ac53f004552e57787034b792ef97e747e"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2009_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2010_V1]
+git-tree-sha1 = "bc886ee3299aa4e9e2e44855d9e25bf5f92bf643"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2010_V1.download]]
+    sha256 = "72970e9292abeebea9748835ebdcf7f18cc02d0e8e578907afb1de03d03a67be"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2010_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2011_V1]
+git-tree-sha1 = "4ec55029adfcc98f2736beda0d4184c378a64c7e"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2011_V1.download]]
+    sha256 = "58ac9883ca20b20b3158fb9a88db94ae7ae050c032f04cb87d9e75ebb00a4a24"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2011_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2012_V1]
+git-tree-sha1 = "284b3e3839b412a939ba0d867c212b40c4c473c9"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2012_V1.download]]
+    sha256 = "622998475e1a581b136ffe4b1ef3b87d338cd9ccef1745c58f5388b7851dbdfe"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2012_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2013_V1]
+git-tree-sha1 = "61cb6315a360f8ba686a0a7d3ffb697018e1fb68"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2013_V1.download]]
+    sha256 = "378d72711d94687b1b39f13d733ea2470dc902bbe3f532ce4be9f129a53704ac"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2013_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2014_V1]
+git-tree-sha1 = "703cb17da8086070eb9694beae92cca08e0c6d3d"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2014_V1.download]]
+    sha256 = "5fdfeec75156ffe1f0813ac25134017448c77fc89e058405d0d4a26b727a1377"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2014_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2015_V1]
+git-tree-sha1 = "2f908a29bf24b7571b9d8ebf2434e6dc96fc99ec"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2015_V1.download]]
+    sha256 = "53a9a71a8adab930dc84de9c48ff74247eb78ae569398a0bb4e217aa7b66ae59"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2015_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2016_V1]
+git-tree-sha1 = "d83e52e1e908495d6c407f5bb02a022af6d5aaa6"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2016_V1.download]]
+    sha256 = "e32eaa1997f40c98d1548579cbc88d742bd62900fe9a2fbca659e7fbf3dd5534"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2016_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2017_V1]
+git-tree-sha1 = "c601e7aa2be54a41891515475bbe64d7c1346cbd"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2017_V1.download]]
+    sha256 = "2ad0a3412b2676cce97ad4333bba300b9fb7fc895cdd3f0e0624f875f2868363"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2017_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2018_V1]
+git-tree-sha1 = "977797a61a840a9535ed48263a59500a51452221"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2018_V1.download]]
+    sha256 = "8c835fac59eef9bc53e3f4ac731bbdcbbad0c61603c0252fe3af10d227a7c602"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2018_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2019_V1]
+git-tree-sha1 = "65b4a66cc154ffec26ac0d0a111cd234fdd31f02"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2019_V1.download]]
+    sha256 = "4a7aabd4731333dac204f43e5e3b8d7222f09f810e4370e2253ea9ae83c14dc2"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2019_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2020_V1]
+git-tree-sha1 = "a6c79f48749ca87821db83e55cace6416daeb71e"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2020_V1.download]]
+    sha256 = "7e62884265a5f04abce586144c24ffee22a5b12724cd2fe462c523360fd74bd3"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2020_V1.tar.gz"
+
+[VCF_MODIS_MOD44B_2X_1Y_2021_V1]
+git-tree-sha1 = "5a4fc8ef60b5bfeb218794e0f0fd3e1126ed84b2"
+lazy = true
+
+    [[VCF_MODIS_MOD44B_2X_1Y_2021_V1.download]]
+    sha256 = "67cdc19cfa618b78545a4671807344a9025bc760ffe341557bc5b89b3ec3b63b"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCF_MODIS_MOD44B_2X_1Y_2021_V1.tar.gz"
+
 [VCMAX_2X_1Y_V1]
 git-tree-sha1 = "3c8a9cb068a1a242df4699dfbb6baaba9899eb84"
 lazy = true
