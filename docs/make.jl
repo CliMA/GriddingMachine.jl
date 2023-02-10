@@ -30,9 +30,6 @@ if gen_preview
     push!(pages, "Data Preview" => "generated/preview.md");
 end
 
-@info "Pages to generate:"
-pretty_display!(pages);
-
 
 
 
