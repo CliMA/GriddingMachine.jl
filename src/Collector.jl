@@ -11,7 +11,7 @@ import Base: show
 export GriddedCollection
 export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, latent_heat_collection,
        leaf_chlorophyll_collection, leaf_drymass_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
-       soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection
+       soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, vegetation_cover_fraction, wood_density_collection
 
 
 # export public functions
@@ -152,6 +152,8 @@ Method to create a general dataset collection for clumping index. Supported data
 - `240X_1Y_V1` [(He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
 - `2X_1Y_V1` [(regridded; He et al., 2012)](https://doi.org/10.1016/j.rse.2011.12.008)
 - `2X_1Y_V2` [(Braghiere et al., 2019)](https://doi.org/10.1029/2018GB006135)
+- `20X_1M_V3` [(Wei et al., 2019)](https://doi.org/10.1016/j.rse.2019.111296)
+- `2X_1M_V3` [(regridded; Wei et al., 2019)](https://doi.org/10.1016/j.rse.2019.111296)
 
 V2 dataset are classified for different plant functional types. The indices are Broadleaf, Needleleaf, C3 grasses, C4 grasses, and shrubland.
 </summary>
@@ -174,10 +176,18 @@ V2 dataset are classified for different plant functional types. The indices are 
     number = {11},
     pages = {1358--1369}
 }
+@article{wei2019global,
+	author = {Wei, Shanshan and Fang, Hongliang and Schaaf, Crystal B and He, Liming and Chen, Jing M},
+	year = {2019},
+	title = {Global 500 m clumping index product derived from MODIS BRDF data (2001--2017)},
+	journal = {Remote Sensing of Environment},
+	volume = {232},
+	pages = {111296}
+}
 ```
 </details>
 """
-clumping_index_collection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V1");
+clumping_index_collection() = GriddedCollection("CI", ["240X_1Y_V1", "2X_1Y_V1", "2X_1Y_V2", "20X_1M_V3"], "2X_1Y_V1");
 
 
 """
@@ -820,6 +830,29 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
 </details>
 """
 vcmax_collection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
+
+
+"""
+    vegetation_cover_fraction()
+
+<details>
+<summary>
+Method to create a general dataset collection for vegetation cover fraction. Supported datasets are (click to view bibtex items)
+- `MODIS_MOD44B_2X_1Y_V1` [(DiMiceli et al., 2022)](https://doi.org/10.5067/MODIS/MOD44B.061)
+</summary>
+
+```
+@article{dimiceli2022modismod44b,
+    author = {DiMiceli, C. and Sohlberg, R. and Townshend, J.},
+    doi = {10.5067/MODIS/MOD44B.061},
+    year = {2022},
+    title = {MODIS/Terra Vegetation Continuous Fields Yearly L3 Global 250m SIN Grid V061},
+    journal = {NASA EOSDIS Land Processes DAAC}
+}
+```
+</details>
+"""
+vegetation_cover_fraction() = GriddedCollection("VCF", ["MODIS_MOD44B_2X_1Y_$(_year)_V1" for _year in 2000:2021], "MODIS_MOD44B_2X_1Y_2021_V1");
 
 
 """

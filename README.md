@@ -7,9 +7,6 @@
 [dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [dev-url]: https://CliMA.github.io/GriddingMachine.jl/dev/
 
-[rel-img]: https://img.shields.io/badge/docs-stable-blue.svg
-[rel-url]: https://CliMA.github.io/GriddingMachine.jl/stable/
-
 [st-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/JuliaStable/badge.svg?branch=main
 [st-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"JuliaStable"
 
@@ -32,9 +29,9 @@ Please cite our paper(s) when you use GriddingMachine:
 ## About
 [`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts` and FTP storage, [`GriddingMachine.jl`][gm-url] only supports julia 1.6 and above.
 
-| Documentation                                   | CI Status             | Compatibility           | Code Coverage           |
-|:------------------------------------------------|:----------------------|:------------------------|:------------------------|
-| [![][dev-img]][dev-url] [![][rel-img]][rel-url] | [![][st-img]][st-url] | [![][min-img]][min-url] | [![][cov-img]][cov-url] |
+| Documentation           | CI Status             | Compatibility           | Code Coverage           |
+|:------------------------|:----------------------|:------------------------|:------------------------|
+| [![][dev-img]][dev-url] | [![][st-img]][st-url] | [![][min-img]][min-url] | [![][cov-img]][cov-url] |
 
 
 ## Installation
@@ -59,15 +56,15 @@ See [`API`][gm-api] for more detailed information about how to use [`GriddingMac
 
 To automatically download and query the file path of the dataset, use
 ```julia
-julia> GriddingMachine.Collector;
-julia> file_path = query_collection('VCMAX_2X_1Y_V1');
+julia> using GriddingMachine.Collector;
+julia> file_path = query_collection("VCMAX_2X_1Y_V1");
 ```
 
 To request a partial dataset from the server without download the entire dataset, use
 ```julia
-julia> GriddingMachine.Requestor;
-julia> dat,std = request_LUT('VCMAX_2X_1Y_V1', 35.1, 115.2);
-julia> dat,std = request_LUT('VCMAX_2X_1Y_V1', 35.1, 115.2; interpolation=true);
+julia> using GriddingMachine.Requestor;
+julia> dat,std = request_LUT("VCMAX_2X_1Y_V1", 35.1, 115.2);
+julia> dat,std = request_LUT("VCMAX_2X_1Y_V1", 35.1, 115.2; interpolation=true);
 ```
 
 
