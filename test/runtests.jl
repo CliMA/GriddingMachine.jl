@@ -59,6 +59,10 @@ using Test
     @testset "Blender" begin
         regrid(rand(720,360), 1); @test true;
         regrid(rand(720,360,2), 1); @test true;
+        regrid(rand(360,180), 2); @test true;
+        regrid(rand(360,180,2), 2); @test true;
+        regrid(rand(360,180), (144,96)); @test true;
+        regrid(rand(360,180,2), (144,96)); @test true;
     end;
 
     @testset "Indexer" begin
