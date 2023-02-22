@@ -76,10 +76,14 @@ function regrid end
 
     regrid(data::Matrix{FT}, division::Int = 1) where {FT<:AbstractFloat}
     regrid(data::Array{FT,3}, division::Int = 1) where {FT<:AbstractFloat}
+    regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat}
+    regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat}
 
 Return the regridded dataset, given
 - `data` Input dataset, 2D or 3D
-- `division` Spatial resolution is `1/division` degree
+- `division` Spatial resolution is `1/division` degree (integer truncation or expansion)
+- `newsize` Target 2D size of the map (not limited to integer truncation or expansion)
+- `expansion` Data will be expanded before truncation (psudo super sampling, default is nothing)
 
 ---
 # Examples
@@ -90,6 +94,8 @@ new_2d = regrid(data_2d, 1);
 new_3d = regrid(data_3d, 1);
 new_2d = regrid(data_2d, 4);
 new_3d = regrid(data_3d, 4);
+new_2d = regrid(data_2d, (144,96));
+new_3d = regrid(data_3d, (144,96));
 ```
 
 """
@@ -126,6 +132,35 @@ regrid(data::Array{FT,3}, division::Int = 1) where {FT<:AbstractFloat} = (
     _regridded = ones(FT, 360*division, 180*division, size(data,3)) .* FT(NaN);
     for _i in 1:size(data,3)
         _regridded[:,:,_i] .= func(data[:,:,_i], _n);
+    end;
+
+    return _regridded
+);
+
+regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat} = (
+    _raw = isnothing(expansion) ? data : expand(data, expansion);
+    _res_ini = 360 / size(_raw,1);
+    _res_inj = 180 / size(_raw,2);
+    _inn_lon = collect((_res_ini/2):_res_ini:360) .- 180;
+    _inn_lat = collect((_res_inj/2):_res_inj:180) .- 90;
+    _res_oui = 360 / newsize[1];
+    _res_ouj = 180 / newsize[2];
+    _out_lon = collect((_res_oui/2):_res_oui:360) .- 180;
+    _out_lat = collect((_res_ouj/2):_res_ouj:180) .- 90;
+    _regridded = ones(FT,newsize) .* FT(NaN);
+    for _i in 1:newsize[1], _j in 1:newsize[2]
+        _ii = (_out_lon[_i] - _res_oui/2 .<= _inn_lon .<= _out_lon[_i] + _res_oui/2);
+        _jj = (_out_lat[_j] - _res_ouj/2 .<= _inn_lat .<= _out_lat[_j] + _res_ouj/2);
+        _regridded[_i,_j] = nanmean(_raw[_ii,_jj]);
+    end;
+
+    return _regridded
+);
+
+regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat} = (
+    _regridded = ones(FT, newsize[1], newsize[2], size(data,3));
+    for _i in axes(data,3)
+        _regridded[:,:,_i] = regrid(data[:,:,_i], newsize; expansion = expansion);
     end;
 
     return _regridded
