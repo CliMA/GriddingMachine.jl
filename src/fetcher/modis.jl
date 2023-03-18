@@ -2,59 +2,33 @@
 
 $(TYPEDEF)
 
-Hierachy of AbstractMODIS500m
-- [`MOD09A1v006`](@ref)
-- [`MOD15A2Hv006`](@ref)
+General struct for 500 m resolution MODIS data
 
 """
-abstract type AbstractMODIS500m end
-
-
-"""
-
-$(TYPEDEF)
-
-MODIS/Terra Surface Reflectance 8-Day L3 Global 500 m SIN Grid
-
-"""
-Base.@kwdef struct MOD09A1v006 <: AbstractMODIS500m
+mutable struct MODIS500m
     "Label of data"
-    label::String = "MOD09A1"
+    label::String
     "Local directory to save the data"
-    local_dir::String = "/net/fluo/data1/data/MODIS/MOD09A1.006/original/";
-    "Portal website"
-    portal_url::String = "https://e4ftl01.cr.usgs.gov/MOLT/MOD09A1.006/";
+    local_dir::String
+    "Portal url"
+    portal_url::String
 end
 
-
-"""
-
-$(TYPEDEF)
-
-MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500 m SIN Grid
-
-"""
-Base.@kwdef struct MOD15A2Hv006 <: AbstractMODIS500m
-    "Label of data"
-    label::String = "MOD15A2H"
-    "Local directory to save the data"
-    local_dir::String = "/net/fluo/data1/data/MODIS/MOD15A2H.006/original/";
-    "Portal website"
-    portal_url::String = "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.006/";
-end
-
+MOD09A1v006() = MODIS500m("MOD09A1", "/net/squid/data1/data/pooled/MODIS/MOD09A1.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD09A1.006/");
+MOD15A2Hv006() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.006/");
+MOD15A2Hv061() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.061/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.061/");
 
 
 """
+
+    fetch_data!(dt::MODIS500m, year::Int)
+
+Fetch data from MODIS, given
+- `dt` MODIS data struct
+- `year` Which year of data to fetch
+
 """
-fetch_data!(dt::MOD15A2Hv006, year::Int) = (
-    update_MODIS_password!();
-    fetch_data!(dt.portal_url, dt.local_dir, year, dt.label);
-
-    return nothing
-);
-
-fetch_data!(dt::MOD09A1v006, year::Int) = (
+fetch_data!(dt::MODIS500m, year::Int) = (
     update_MODIS_password!();
     fetch_data!(dt.portal_url, dt.local_dir, year, dt.label);
 
@@ -114,7 +88,7 @@ fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
             end;
         else
             @warn "wget not found, exit the loop";
-            break
+            break;
         end;
     end;
 
