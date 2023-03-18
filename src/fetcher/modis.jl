@@ -55,8 +55,7 @@ fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
     _list_urls = [];
     _list_locs = [];
     for _doy in 1:8:_nday
-        #folder = parse_date(year, doy, ".") * "/";
-        _folder = "/";
+        _folder = doy_to_str(year, _doy) * "/";
         try
             @info "Fetching file list from $(data_url * _folder)";
             download(data_url * _folder, "temp.html");
@@ -94,3 +93,21 @@ fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
 
     return nothing
 );
+
+
+"""
+
+    doy_to_str(year::Int, doy::Int)
+
+Convert doy to string like "YYYY.MM.DD", given
+- `year` Year number
+- `doy` Day of year
+
+"""
+function doy_to_str(year::Int, doy::Int)
+    # convert the year and doy to timestamp
+    _month = month_ind(year, doy);
+    _day   = doy - (isleapyear(year) ? MDAYS_LEAP[_month] : MDAYS[_month]);
+
+    return lpad(year, 4, "0") * "." * lpad(_month, 2, "0") * "." * lpad(_day, 2, "0")
+end

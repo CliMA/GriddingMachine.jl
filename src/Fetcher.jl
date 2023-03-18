@@ -3,7 +3,7 @@ module Fetcher
 using Conda: add
 using Dates: isleapyear
 using DocStringExtensions: TYPEDEF, METHODLIST
-using PkgUtility: month_days
+using PkgUtility: MDAYS, MDAYS_LEAP, month_days, month_ind
 using ProgressMeter: @showprogress
 using PyCall: pyimport
 
