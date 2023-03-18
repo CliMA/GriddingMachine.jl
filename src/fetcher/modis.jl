@@ -47,6 +47,11 @@ Download raw product data from MODIS, given
 
 """
 fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
+    if !isdir(data_loc)
+        @info "Directory does not exist, a new directory has been created!";
+        mkpath(data_loc);
+    end;
+
     # number of days per year
     _nday = isleapyear(year) ? 366 : 365;
 
