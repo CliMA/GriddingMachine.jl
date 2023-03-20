@@ -12,11 +12,13 @@ mutable struct MODIS500m
     local_dir::String
     "Portal url"
     portal_url::String
+    "Time resolution in days"
+    time_res::Int
 end
 
-MOD09A1v006() = MODIS500m("MOD09A1", "/net/squid/data1/data/pooled/MODIS/MOD09A1.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD09A1.006/");
-MOD15A2Hv006() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.006/");
-MOD15A2Hv061() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.061/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.061/");
+MOD09A1v006() = MODIS500m("MOD09A1", "/net/squid/data1/data/pooled/MODIS/MOD09A1.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD09A1.006/", 8);
+MOD15A2Hv006() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.006/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.006/", 8);
+MOD15A2Hv061() = MODIS500m("MOD15A2H", "/net/squid/data1/data/pooled/MODIS/MOD15A2H.061/original/", "https://e4ftl01.cr.usgs.gov/MOLT/MOD15A2H.061/", 8);
 
 
 """
@@ -30,26 +32,27 @@ Fetch data from MODIS, given
 """
 fetch_data!(dt::MODIS500m, year::Int) = (
     update_MODIS_password!();
-    fetch_data!(dt.portal_url, dt.local_dir, year, dt.label);
+    fetch_data!(dt.portal_url, dt.local_dir, dt.time_res, year, dt.label);
 
     return nothing
 );
 
 """
 
-    fetch_data!(data_url::String, data_loc::String, year::Int, label::String)
+    fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label::String)
 
 Download raw product data from MODIS, given
 - `data_url` URL of the data
 - `data_loc` Where to save the downloaded data
+- `time_res` Time resolution in days
 - `year` Which year of MODIS data to download
 - `label` Label in the MODIS data that help the identification
 
 """
-fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
-    if !isdir(data_loc)
+fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label::String) =(
+    if !isdir(data_loc * string(year))
         @info "Directory does not exist, a new directory has been created!";
-        mkpath(data_loc);
+        mkpath(data_loc * string(year));
     end;
 
     # number of days per year
@@ -59,7 +62,7 @@ fetch_data!(data_url::String, data_loc::String, year::Int, label::String) =(
     @info "Fetching file name to download...";
     _list_urls = [];
     _list_locs = [];
-    for _doy in 1:8:_nday
+    for _doy in 1:time_res:_nday
         _folder = doy_to_str(year, _doy) * "/";
         try
             @info "Fetching file list from $(data_url * _folder)";

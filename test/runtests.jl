@@ -8,29 +8,29 @@ using Test
 
 
 @testset verbose = true "GriddingMachine" begin
-    collections = [biomass_collection(),
-                   canopy_height_collection(),
-                   clumping_index_collection(),
-                   elevation_collection(),
-                   gpp_collection(),
-                   lai_collection(),
-                   land_mask_collection(),
-                   latent_heat_collection(),
-                   leaf_chlorophyll_collection(),
-                   leaf_drymass_collection(),
-                   leaf_nitrogen_collection(),
-                   leaf_phosphorus_collection(),
-                   pft_collection(),
-                   sif_collection(),
-                   sil_collection(),
-                   sla_collection(),
-                   soil_color_collection(),
-                   soil_hydraulics_collection(),
-                   surface_area_collection(),
-                   tree_density_collection(),
-                   vcmax_collection(),
-                   vegetation_cover_fraction(),
-                   wood_density_collection()];
+    collections = [Collector.biomass_collection(),
+                   Collector.canopy_height_collection(),
+                   Collector.clumping_index_collection(),
+                   Collector.elevation_collection(),
+                   Collector.gpp_collection(),
+                   Collector.lai_collection(),
+                   Collector.land_mask_collection(),
+                   Collector.latent_heat_collection(),
+                   Collector.leaf_chlorophyll_collection(),
+                   Collector.leaf_drymass_collection(),
+                   Collector.leaf_nitrogen_collection(),
+                   Collector.leaf_phosphorus_collection(),
+                   Collector.pft_collection(),
+                   Collector.sif_collection(),
+                   Collector.sil_collection(),
+                   Collector.sla_collection(),
+                   Collector.soil_color_collection(),
+                   Collector.soil_hydraulics_collection(),
+                   Collector.surface_area_collection(),
+                   Collector.tree_density_collection(),
+                   Collector.vcmax_collection(),
+                   Collector.vegetation_cover_fraction(),
+                   Collector.wood_density_collection()];
 
     @testset "Library" begin
         # test the collection functions
@@ -39,57 +39,57 @@ using Test
         end;
 
         # test the @show function
-        @show wood_density_collection(); @test true;
+        @show Collector.wood_density_collection(); @test true;
     end;
 
     @testset "Collector" begin
         # test query_collection function
-        query_collection(pft_collection()); @test true;
-        query_collection(sla_collection()); @test true;
-        query_collection("PFT_2X_1Y_V1"); @test true;
+        Collector.query_collection(Collector.pft_collection()); @test true;
+        Collector.query_collection(Collector.sla_collection()); @test true;
+        Collector.query_collection("PFT_2X_1Y_V1"); @test true;
 
         # sync collection
-        sync_collections!(sla_collection());
+        Collector.sync_collections!(Collector.sla_collection());
 
         # clean up artifacts
-        clean_collections!("old"); @test true;
-        clean_collections!(pft_collection()); @test true;
+        Collector.clean_collections!("old"); @test true;
+        Collector.clean_collections!(Collector.pft_collection()); @test true;
     end;
 
     @testset "Blender" begin
-        regrid(rand(720,360), 1); @test true;
-        regrid(rand(720,360,2), 1); @test true;
-        regrid(rand(360,180), 2); @test true;
-        regrid(rand(360,180,2), 2); @test true;
-        regrid(rand(360,180), (144,96)); @test true;
-        regrid(rand(360,180,2), (144,96)); @test true;
+        Blender.regrid(rand(720,360), 1); @test true;
+        Blender.regrid(rand(720,360,2), 1); @test true;
+        Blender.regrid(rand(360,180), 2); @test true;
+        Blender.regrid(rand(360,180,2), 2); @test true;
+        Blender.regrid(rand(360,180), (144,96)); @test true;
+        Blender.regrid(rand(360,180,2), (144,96)); @test true;
     end;
 
     @testset "Indexer" begin
         # read the full dataset
-        read_LUT(query_collection(vcmax_collection())); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection())); @test true;
 
         # read the global map at a given cycle index
-        read_LUT(query_collection(gpp_collection()), 8); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 8); @test true;
 
         # read the data at given lat and lon
-        read_LUT(query_collection(vcmax_collection()), 30, 116); @test true;
-        read_LUT(query_collection(vcmax_collection()), 30, 116, 0.5); @test true;
-        read_LUT(query_collection(vcmax_collection()), 30, 116; interpolation=true); @test true;
-        read_LUT(query_collection(vcmax_collection()), 30, 116, 0.5; interpolation=true); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116, 0.5); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116; interpolation=true); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116, 0.5; interpolation=true); @test true;
 
         # read the data at given lat, lon, and cycle index
-        read_LUT(query_collection(gpp_collection()), 30, 116, 8); @test true;
-        read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5); @test true;
-        read_LUT(query_collection(gpp_collection()), 30, 116, 8; interpolation=true); @test true;
-        read_LUT(query_collection(gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8, 0.5); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8; interpolation=true); @test true;
+        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
     end;
 
     @testset "Requestor" begin
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
-        request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
+        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
+        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
+        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
+        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
     end;
 
     @testset "Verification" begin
@@ -97,7 +97,7 @@ using Test
         if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
             for collection in collections
                 for tag in collection.SUPPORTED_COMBOS
-                    fn = query_collection(collection, tag);
+                    fn = Collector.query_collection(collection, tag);
                     vars = varname_nc(fn);
                     @test 4 <= length(vars) <= 5;
                     if length(vars) == 4

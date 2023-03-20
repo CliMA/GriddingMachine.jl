@@ -3,8 +3,6 @@ module Blender
 using DocStringExtensions: METHODLIST
 using PkgUtility: nanmean
 
-export regrid
-
 
 """
 
