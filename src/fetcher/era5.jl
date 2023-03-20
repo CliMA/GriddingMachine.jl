@@ -364,16 +364,6 @@ struct ERA5SingleLevelsHourly end;
 
 
 """
-
-Fetch data from the server. Supported methods are
-
-$(METHODLIST)
-
-"""
-function fetch_data! end;
-
-
-"""
     fetch_data!(dt::ERA5LandHourly, year::Int; vars::Array{String,1} = ERA5_LAND_SELECTION, folder::String = "")
 
 Download [`ERA5LandHourly`](@ref) dataset per year per item, given
