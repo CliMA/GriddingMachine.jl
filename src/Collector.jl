@@ -7,17 +7,6 @@ using LazyArtifacts
 import Base: show
 
 
-# export public types and constructors
-export GriddedCollection
-export biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection, latent_heat_collection,
-       leaf_chlorophyll_collection, leaf_drymass_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
-       soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, vegetation_cover_fraction, wood_density_collection
-
-
-# export public functions
-export clean_collections!, query_collection, sync_collections!
-
-
 # collection types
 """
 $(TYPEDEF)

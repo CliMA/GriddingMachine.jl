@@ -4,10 +4,6 @@ using DocStringExtensions: METHODLIST
 using NetcdfIO: read_nc, size_nc
 
 
-# export public functions
-export lat_ind, lon_ind, read_LUT
-
-
 # functions to calculate the lat and lon index
 """
     lat_ind(lat::Number; res::Number=1)
