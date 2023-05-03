@@ -88,7 +88,7 @@ fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label:
             end;
             rm("temp.html");
         catch err
-            @info "Unable to fetch files from $(_folder), skip it...";
+            @warn "Unable to fetch files from $(_folder), skip it...";
         end;
     end;
 
