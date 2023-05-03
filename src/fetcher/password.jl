@@ -59,14 +59,14 @@ Update global user name and password for LP DAAC, if either of them is empty
 
 """
 function update_MODIS_password!()
-    # input MODIS_USER_ID and MODIS_USER_PWD
-    global MODIS_USER_ID, MODIS_USER_PWD;
-    if MODIS_USER_ID == "" || MODIS_USER_PWD == ""
+    # input WGET_USER_ID and WGET_USER_PWD
+    global WGET_USER_ID, WGET_USER_PWD;
+    if WGET_USER_ID == "" || WGET_USER_PWD == ""
         @warn "Do not share your user name and password with others.";
         @info "Please indicate your user name for LP DAAC data portal:";
-        MODIS_USER_ID  = readline();
+        WGET_USER_ID  = readline();
         @info "Please indicate your password for LP DAAC Data portal:";
-        MODIS_USER_PWD = read(Base.getpass("Password (invisble)"), String);
+        WGET_USER_PWD = read(Base.getpass("Password (invisble)"), String);
     end;
 
     return nothing
