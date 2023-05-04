@@ -5,6 +5,7 @@ docs/src/generated/*
 docs/src/paper*
 
 *.gif
+*.html
 *.jpg
 *.nc
 *.nc4

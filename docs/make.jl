@@ -1,6 +1,5 @@
 using Documenter
 using GriddingMachine
-using Literate
 
 
 # define default docs pages
@@ -8,22 +7,6 @@ pages = Pair{Any,Any}[
     "Home" => "index.md",
     "API"  => "API.md"  ,
 ]
-
-
-# add preview pages
-gen_preview = false;
-gen_dir     = joinpath(@__DIR__, "src/generated");
-rm(gen_dir, force=true, recursive=true);
-mkpath(gen_dir);
-
-if gen_preview
-    filename    = joinpath(@__DIR__, "src/preview.jl");
-    script      = Literate.script(filename, gen_dir);
-    code        = strip(read(script, String));
-    mdpost(str) = replace(str, "@__CODE__" => code);
-    Literate.markdown(filename, gen_dir, postprocess=mdpost);
-    push!(pages, "Data Preview" => "generated/preview.md");
-end
 
 
 # format the docs
