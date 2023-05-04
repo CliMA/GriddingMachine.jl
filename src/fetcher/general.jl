@@ -32,13 +32,13 @@ function fetch_data! end
 
     fetch_data!(dt::GeneralWgetData, year::Int)
 
-Fetch data from MODIS, given
+Fetch data from general website supported by wget, given
 - `dt` general data struct
 - `year` Which year of data to fetch
 
 """
 fetch_data!(dt::GeneralWgetData, year::Int) = (
-    update_MODIS_password!();
+    update_EARTHDATA_password!();
     fetch_data!(dt.portal_url, dt.local_dir, dt.time_res, year, dt.label, dt.format);
 
     return nothing
@@ -48,12 +48,12 @@ fetch_data!(dt::GeneralWgetData, year::Int) = (
 
     fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label::String, format::String)
 
-Download raw product data from MODIS, given
+Download raw product data, given
 - `data_url` URL of the data
 - `data_loc` Where to save the downloaded data
 - `time_res` Time resolution in days
-- `year` Which year of MODIS data to download
-- `label` Label in the MODIS data that help the identification
+- `year` Which year of data to download
+- `label` Label in the data that help the identification
 - `format` Data format
 
 """
@@ -75,7 +75,7 @@ fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label:
         try
             @info "Fetching file list from $(data_url * _folder)";
             _lst = `-q $(data_url * _folder) -O temp.html`;
-            _psd = `--user $(WGET_USER_ID) --password $(WGET_USER_PWD)`;
+            _psd = `--user $(EARTH_DATA_ID) --password $(EARTH_DATA_PWD)`;
             run(`wget $(_psd) $(_lst)`);
             for _line in readlines("temp.html")
                 if contains(_line, ".$(format)\">") && contains(_line, label)
@@ -100,7 +100,7 @@ fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label:
         if Sys.which("wget") !== nothing
             if !isfile(_loc)
                 _lst = `-q $(_url) -O $(_loc)`;
-                _psd = `--user $(WGET_USER_ID) --password $(WGET_USER_PWD)`;
+                _psd = `--user $(EARTH_DATA_ID) --password $(EARTH_DATA_PWD)`;
                 run(`wget $(_psd) $(_lst)`);
             end;
         else

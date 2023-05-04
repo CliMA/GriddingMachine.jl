@@ -53,20 +53,20 @@ end;
 
 """
 
-    update_MODIS_password!()
+    update_EARTHDATA_password!()
 
-Update global user name and password for LP DAAC, if either of them is empty
+Update global user name and password for EarthData, if either of them is empty
 
 """
-function update_MODIS_password!()
-    # input WGET_USER_ID and WGET_USER_PWD
-    global WGET_USER_ID, WGET_USER_PWD;
-    if WGET_USER_ID == "" || WGET_USER_PWD == ""
+function update_EARTHDATA_password!()
+    # input EARTH_DATA_ID and EARTH_DATA_PWD
+    global EARTH_DATA_ID, EARTH_DATA_PWD;
+    if EARTH_DATA_ID == "" || EARTH_DATA_PWD == ""
         @warn "Do not share your user name and password with others.";
-        @info "Please indicate your user name for LP DAAC data portal:";
-        WGET_USER_ID  = readline();
-        @info "Please indicate your password for LP DAAC Data portal:";
-        WGET_USER_PWD = read(Base.getpass("Password (invisble)"), String);
+        @info "Please indicate your user name for Earth Data data portal:";
+        EARTH_DATA_ID  = readline();
+        @info "Please indicate your password for Earth Data data portal:";
+        EARTH_DATA_PWD = read(Base.getpass("Password (invisble)"), String);
     end;
 
     return nothing

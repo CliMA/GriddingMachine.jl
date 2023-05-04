@@ -8,11 +8,11 @@ using PyCall: pyimport
 
 
 # ERA5 related information
-CDSAPI_PORTAL = "https://cds.climate.copernicus.eu/api/v2";
-CDSAPI_KEY    = "";
-CDSAPI_CLIENT = nothing;
-WGET_USER_ID  = "";
-WGET_USER_PWD = "";
+CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
+CDSAPI_KEY     = "";
+CDSAPI_CLIENT  = nothing;
+EARTH_DATA_ID  = "";
+EARTH_DATA_PWD = "";
 
 
 # the functions below are borrowed from Yujie's Emerald repo to avoid inter-dependency
