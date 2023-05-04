@@ -4,7 +4,6 @@ using Artifacts: load_artifacts_toml
 using DocStringExtensions: METHODLIST
 using HTTP: get
 using JSON: parse
-using PkgUtility: terror
 
 
 """
@@ -51,7 +50,7 @@ request_LUT(artname::String, lat::Number, lon::Number, cyc::Int = 0; user::Strin
     # if there is no result item in the Dictionary
     if !haskey(_results, "Result")
         @show _results;
-        @error terror("There is something wrong with the request, please check the details about it!");
+        @error "There is something wrong with the request, please check the details about it!";
     end;
 
     # replace -9999 to NaN

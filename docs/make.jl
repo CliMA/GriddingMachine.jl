@@ -1,9 +1,6 @@
 using Documenter
 using GriddingMachine
 using Literate
-using PkgUtility
-
-
 
 
 # define default docs pages
@@ -11,8 +8,6 @@ pages = Pair{Any,Any}[
     "Home" => "index.md",
     "API"  => "API.md"  ,
 ]
-
-
 
 
 # add preview pages
@@ -31,24 +26,22 @@ if gen_preview
 end
 
 
-
-
 # format the docs
-mathengine = MathJax(Dict(
-    :TeX => Dict(
-        :equationNumbers => Dict(:autoNumber => "AMS"),
-        :Macros => Dict(),
-    ),
-))
+mathengine = MathJax(
+    Dict(
+        :TeX => Dict(
+            :equationNumbers => Dict(:autoNumber => "AMS"),
+            :Macros => Dict()
+        )
+    )
+);
 
 format = Documenter.HTML(
     prettyurls = get(ENV, "CI", nothing) == "true",
     mathengine = mathengine,
     collapselevel = 1,
     assets = ["assets/favicon.ico"]
-)
-
-
+);
 
 
 # build the docs
@@ -58,9 +51,7 @@ makedocs(
     clean = false,
     modules = [GriddingMachine],
     pages = pages,
-)
-
-
+);
 
 
 # function to replace strings (copied from Yujie-W/PAGES)
@@ -79,8 +70,6 @@ function replace_html(file_name::String)
 end
 
 
-
-
 # Replace the strings
 file_name = joinpath(@__DIR__, "build/API.html");
 if isfile(file_name)
@@ -95,12 +84,10 @@ else
 end
 
 
-
-
 # deploy the docs to Github gh-pages
 deploydocs(
     repo = "github.com/CliMA/GriddingMachine.jl.git",
     target = "build",
     devbranch = "main",
     push_preview = true,
-)
+);

@@ -3,7 +3,6 @@ module Fetcher
 using Conda: add
 using Dates: isleapyear
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS, METHODLIST
-using PkgUtility: MDAYS, MDAYS_LEAP, month_days, month_ind
 using ProgressMeter: @showprogress
 using PyCall: pyimport
 
@@ -16,6 +15,11 @@ WGET_USER_ID  = "";
 WGET_USER_PWD = "";
 
 
+# the functions below are borrowed from Yujie's Emerald repo to avoid inter-dependency
+include("borrowed/EmeraldUtility.jl")
+
+
+# include the function files
 include("fetcher/general.jl");
 include("fetcher/password.jl");
 

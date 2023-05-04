@@ -1,7 +1,9 @@
 module Blender
 
 using DocStringExtensions: METHODLIST
-using PkgUtility: nanmean
+
+
+include("borrowed/EmeraldMath.jl");
 
 
 """
