@@ -3,7 +3,6 @@ using GriddingMachine.Collector
 using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
-using NetcdfIO: varname_nc
 using Test
 
 
@@ -26,6 +25,7 @@ using Test
                    Collector.sla_collection(),
                    Collector.soil_color_collection(),
                    Collector.soil_hydraulics_collection(),
+                   Collector.soil_texture_collection(),
                    Collector.surface_area_collection(),
                    Collector.tree_density_collection(),
                    Collector.vcmax_collection(),
@@ -98,7 +98,7 @@ using Test
             for collection in collections
                 for tag in collection.SUPPORTED_COMBOS
                     fn = Collector.query_collection(collection, tag);
-                    vars = varname_nc(fn);
+                    vars = Indexer.varname_nc(fn);
                     @test 4 <= length(vars) <= 5;
                     if length(vars) == 4
                         @test sort(vars) == ["data", "lat", "lon", "std"];

@@ -77,28 +77,3 @@ Indexer.read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, FT::DataType)
 Requestor.request_LUT
 Requestor.request_LUT(artname::String, lat::Number, lon::Number, cyc::Int)
 ```
-
-
-## In development
-### Blender
-```@docs
-Blender.truncate
-Blender.regrid
-Blender.regrid(data::Matrix{FT}, division::Int) where {FT<:AbstractFloat}
-```
-
-
-### Fetcher
-```@docs
-Fetcher.ERA5LandHourly
-Fetcher.ERA5SingleLevelsHourly
-Fetcher.AbstractMODIS500m
-Fetcher.MOD15A2Hv006
-Fetcher.MOD09A1v006
-Fetcher.install_cdsapi!
-Fetcher.update_CDSAPI_info!
-Fetcher.update_MODIS_password!
-Fetcher.fetch_data!
-Fetcher.fetch_data!(dt::Fetcher.ERA5LandHourly, year::Int)
-Fetcher.fetch_data!(dt::Fetcher.ERA5SingleLevelsHourly, year::Int)
-```

@@ -1,9 +1,5 @@
 using Documenter
 using GriddingMachine
-using Literate
-using PkgUtility
-
-
 
 
 # define default docs pages
@@ -13,42 +9,22 @@ pages = Pair{Any,Any}[
 ]
 
 
-
-
-# add preview pages
-gen_preview = false;
-gen_dir     = joinpath(@__DIR__, "src/generated");
-rm(gen_dir, force=true, recursive=true);
-mkpath(gen_dir);
-
-if gen_preview
-    filename    = joinpath(@__DIR__, "src/preview.jl");
-    script      = Literate.script(filename, gen_dir);
-    code        = strip(read(script, String));
-    mdpost(str) = replace(str, "@__CODE__" => code);
-    Literate.markdown(filename, gen_dir, postprocess=mdpost);
-    push!(pages, "Data Preview" => "generated/preview.md");
-end
-
-
-
-
 # format the docs
-mathengine = MathJax(Dict(
-    :TeX => Dict(
-        :equationNumbers => Dict(:autoNumber => "AMS"),
-        :Macros => Dict(),
-    ),
-))
+mathengine = MathJax(
+    Dict(
+        :TeX => Dict(
+            :equationNumbers => Dict(:autoNumber => "AMS"),
+            :Macros => Dict()
+        )
+    )
+);
 
 format = Documenter.HTML(
     prettyurls = get(ENV, "CI", nothing) == "true",
     mathengine = mathengine,
     collapselevel = 1,
     assets = ["assets/favicon.ico"]
-)
-
-
+);
 
 
 # build the docs
@@ -58,9 +34,7 @@ makedocs(
     clean = false,
     modules = [GriddingMachine],
     pages = pages,
-)
-
-
+);
 
 
 # function to replace strings (copied from Yujie-W/PAGES)
@@ -79,8 +53,6 @@ function replace_html(file_name::String)
 end
 
 
-
-
 # Replace the strings
 file_name = joinpath(@__DIR__, "build/API.html");
 if isfile(file_name)
@@ -95,12 +67,10 @@ else
 end
 
 
-
-
 # deploy the docs to Github gh-pages
 deploydocs(
     repo = "github.com/CliMA/GriddingMachine.jl.git",
     target = "build",
     devbranch = "main",
     push_preview = true,
-)
+);
