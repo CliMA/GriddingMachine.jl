@@ -71,25 +71,25 @@ Method to create a general dataset collection for biomass. Supported datasets ar
 
 ```
 @article{huang2021global,
-	author = {Huang, Y. and Ciais, P. and Santoro, M. and Makowski, D. and Chave, J. and Schepaschenko, D. and Abramoff, R. Z. and Goll, D. S. and Yang, H. and Chen, Y. and Wei, W. and Piao, S.},
-	year = {2021},
-	title = {A global map of root biomass across the world's forests},
-	journal = {Earth System Science Data},
-	volume = {13},
-	number = {9},
-	pages = {4263–4274}
+    author = {Huang, Y. and Ciais, P. and Santoro, M. and Makowski, D. and Chave, J. and Schepaschenko, D. and Abramoff, R. Z. and Goll, D. S. and Yang, H. and Chen, Y. and Wei, W. and Piao, S.},
+    year = {2021},
+    title = {A global map of root biomass across the world's forests},
+    journal = {Earth System Science Data},
+    volume = {13},
+    number = {9},
+    pages = {4263–4274}
 }
 @article{santoro2021global,
-	author = {Santoro, M. and Cartus, O. and Carvalhais, N. and Rozendaal, D. M. A. and Avitabile, V. and Araza, A. and de Bruin, S. and Herold, M. and Quegan, S. and Rodr{\\'\\i}guez-Veiga, P. and
+    author = {Santoro, M. and Cartus, O. and Carvalhais, N. and Rozendaal, D. M. A. and Avitabile, V. and Araza, A. and de Bruin, S. and Herold, M. and Quegan, S. and Rodr{\\'\\i}guez-Veiga, P. and
               Balzter, H. and Carreiras, J. and Schepaschenko, D. and Korets, M. and Shimada, M. and Itoh, T. and {Moreno Mart{\\'\\i}nez}, {\\'A}. and Cavlovic, J. and {Cazzolla Gatti}, R. and
               da Concei{\\c c}\\~ao Bispo, P. and Dewnath, N. and Labri{\\`e}re, N. and Liang, J. and Lindsell, J. and Mitchard, E. T. A. and Morel, A. and {Pacheco Pascagaza}, A. M. and
               Ryan, C. M. and Slik, F. and {Vaglio Laurin}, G. and Verbeeck, H. and Wijaya, A. and Willcock, S.},
-	year = {2021},
-	title = {The global forest above-ground biomass pool for 2010 estimated from high-resolution satellite observations},
-	journal = {Earth System Science Data},
-	volume = {13},
-	number = {8},
-	pages = {3927--3950}
+    year = {2021},
+    title = {The global forest above-ground biomass pool for 2010 estimated from high-resolution satellite observations},
+    journal = {Earth System Science Data},
+    volume = {13},
+    number = {8},
+    pages = {3927--3950}
 }
 ```
 </details>
@@ -166,12 +166,12 @@ V2 dataset are classified for different plant functional types. The indices are 
     pages = {1358--1369}
 }
 @article{wei2019global,
-	author = {Wei, Shanshan and Fang, Hongliang and Schaaf, Crystal B and He, Liming and Chen, Jing M},
-	year = {2019},
-	title = {Global 500 m clumping index product derived from MODIS BRDF data (2001--2017)},
-	journal = {Remote Sensing of Environment},
-	volume = {232},
-	pages = {111296}
+    author = {Wei, Shanshan and Fang, Hongliang and Schaaf, Crystal B and He, Liming and Chen, Jing M},
+    year = {2019},
+    title = {Global 500 m clumping index product derived from MODIS BRDF data (2001--2017)},
+    journal = {Remote Sensing of Environment},
+    volume = {232},
+    pages = {111296}
 }
 ```
 </details>
@@ -270,13 +270,13 @@ Method to create a general dataset collection for leaf area index. Supported dat
 
 ```
 @article{yuan2011reprocessing,
-	author = {Yuan, Hua and Dai, Yongjiu and Xiao, Zhiqiang and Ji, Duoying and Shangguan, Wei},
-	year = {2011},
-	title = {Reprocessing the MODIS Leaf Area Index products for land surface and climate modelling},
-	journal = {Remote Sensing of Environment},
-	volume = {115},
-	number = {5},
-	pages = {1171--1187}
+    author = {Yuan, Hua and Dai, Yongjiu and Xiao, Zhiqiang and Ji, Duoying and Shangguan, Wei},
+    year = {2011},
+    title = {Reprocessing the MODIS Leaf Area Index products for land surface and climate modelling},
+    journal = {Remote Sensing of Environment},
+    volume = {115},
+    number = {5},
+    pages = {1171--1187}
 }
 ```
 </details>
@@ -317,14 +317,14 @@ Method to create a general dataset collection for latent heat flux. Supported da
 
 ```
 @article{jung2019fluxcom,
-	author = {Jung, Martin and Koirala, Sujan and Weber, Ulrich and Ichii, Kazuhito and Gans, Fabian and Camps-Valls, Gustau and Papale, Dario and Schwalm, Christopher and Tramontana, Gianluca and
+    author = {Jung, Martin and Koirala, Sujan and Weber, Ulrich and Ichii, Kazuhito and Gans, Fabian and Camps-Valls, Gustau and Papale, Dario and Schwalm, Christopher and Tramontana, Gianluca and
               Reichstein, Markus},
-	year = {2019},
-	title = {The {FLUXCOM} ensemble of global land-atmosphere energy fluxes},
-	journal = {Scientific Data},
-	volume = {6},
-	number = {1},
-	pages = {74}
+    year = {2019},
+    title = {The {FLUXCOM} ensemble of global land-atmosphere energy fluxes},
+    journal = {Scientific Data},
+    volume = {6},
+    number = {1},
+    pages = {74}
 }
 ```
 </details>
@@ -380,13 +380,13 @@ Method to create a general dataset collection for leaf dry mass content. Support
 
 ```
 @article{moreno2018methodology,
-	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+    author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
               Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
     year = {2018},
-	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
-	journal = {Remote sensing of environment},
-	volume = {218},
-	pages = {69--88}
+    title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+    journal = {Remote sensing of environment},
+    volume = {218},
+    pages = {69--88}
 }
 ```
 </details>
@@ -430,13 +430,13 @@ Method to create a general dataset collection for leaf nitrogen content. Support
     pages = {1034--1051}
 }
 @article{moreno2018methodology,
-	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+    author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
               Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
     year = {2018},
-	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
-	journal = {Remote sensing of environment},
-	volume = {218},
-	pages = {69--88}
+    title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+    journal = {Remote sensing of environment},
+    volume = {218},
+    pages = {69--88}
 }
 ```
 </details>
@@ -467,13 +467,13 @@ Method to create a general dataset collection for leaf phosphorus content. Suppo
     pages = {E10937--E10946}
 }
 @article{moreno2018methodology,
-	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+    author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
               Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
     year = {2018},
-	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
-	journal = {Remote sensing of environment},
-	volume = {218},
-	pages = {69--88}
+    title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+    journal = {Remote sensing of environment},
+    volume = {218},
+    pages = {69--88}
 }
 ```
 </details>
@@ -492,12 +492,12 @@ Method to create a general dataset collection for plant function type ratio. Sup
 
 ```
 @article{lawrence2007representing,
-	author = {Lawrence, Peter J and Chase, Thomas N},
-	year = {2007},
-	title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
-	journal = {Journal of Geophysical Research: Biogeosciences},
-	volume = {112},
-	pages = {G01023}
+    author = {Lawrence, Peter J and Chase, Thomas N},
+    year = {2007},
+    title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {112},
+    pages = {G01023}
 }
 ```
 </details>
@@ -515,10 +515,10 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
 - `TROPOMI_683_nX_8D_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541) n = [1,2,4,5,12]
 - `TROPOMI_683DC_nX_1M_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541) n = [1,2,4,5,12]
 - `TROPOMI_683DC_nX_8D_YYYY_V2` [(YYYY from 2018 to 2020; Köhler et al., 2020)](https://doi.org/10.1029/2020GL087541) n = [1,2,4,5,12]
-- `TROPOMI_740_nX_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
-- `TROPOMI_740_nX_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)) n = [1,2,4,5,12]
-- `TROPOMI_740DC_nX_1M_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
-- `TROPOMI_740DC_nX_8D_YYYY_V1` [(YYYY from 2018 to 2021; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
+- `TROPOMI_740_nX_1M_YYYY_V1` [(YYYY from 2018 to 2022; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
+- `TROPOMI_740_nX_8D_YYYY_V1` [(YYYY from 2018 to 2022; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031)) n = [1,2,4,5,12]
+- `TROPOMI_740DC_nX_1M_YYYY_V1` [(YYYY from 2018 to 2022; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
+- `TROPOMI_740DC_nX_8D_YYYY_V1` [(YYYY from 2018 to 2022; Köhler et al., 2018)](https://doi.org/10.1029/2018GL079031) n = [1,2,4,5,12]
 - `OCO2_757_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 - `OCO2_757DC_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
 - `OCO2_771_5X_1M_YYYY_V3` [(YYYY from 2014 to 2020; Sun et al., 2017)](https://doi.org/10.1126/science.aam5747)
@@ -536,28 +536,28 @@ Method to create a general dataset collection for solar-induced chlorophyll fluo
     pages = {10,456--10,463}
 }
 @article{kohler2020global,
-	author = {K{\\"o}hler, Philipp and Behrenfeld, Michael J and Landgraf, Jochen and Joiner, Joanna and Magney, Troy S and Frankenberg, Christian},
-	year = {2020},
-	title = {Global retrievals of solar-induced chlorophyll fluorescence at red wavelengths with {TROPOMI}},
-	journal = {Geophysical Research Letters},
-	volume = {47},
-	number = {15},
-	pages = {e2020GL087541}
+    author = {K{\\"o}hler, Philipp and Behrenfeld, Michael J and Landgraf, Jochen and Joiner, Joanna and Magney, Troy S and Frankenberg, Christian},
+    year = {2020},
+    title = {Global retrievals of solar-induced chlorophyll fluorescence at red wavelengths with {TROPOMI}},
+    journal = {Geophysical Research Letters},
+    volume = {47},
+    number = {15},
+    pages = {e2020GL087541}
 }
 @article{sun2017oco,
-	author = {Sun, Ying and Frankenberg, Christian and Wood, Jeffery D and Schimel, DS and Jung, Martin and Guanter, Luis and Drewry, DT and Verma, Manish and Porcar-Castell, Albert and Griffis, Timothy J and others},
-	year = {2017},
-	title = {OCO-2 advances photosynthesis observation from space via solar-induced chlorophyll fluorescence},
-	journal = {Science},
-	volume = {358},
-	number = {6360}
+    author = {Sun, Ying and Frankenberg, Christian and Wood, Jeffery D and Schimel, DS and Jung, Martin and Guanter, Luis and Drewry, DT and Verma, Manish and Porcar-Castell, Albert and Griffis, Timothy J and others},
+    year = {2017},
+    title = {OCO-2 advances photosynthesis observation from space via solar-induced chlorophyll fluorescence},
+    journal = {Science},
+    volume = {358},
+    number = {6360}
 }
 ```
 </details>
 """
 sif_collection() = (
     _supported = [];
-    for _year in 2018:2021
+    for _year in 2018:2022
         for _nx in ["1X", "2X", "4X", "5X", "12X"]
             for _nt in ["1M", "8D"]
                 push!(_supported, "TROPOMI_740_$(_nx)_$(_nt)_$(_year)_V1");
@@ -599,13 +599,13 @@ Method to create a general dataset collection for solar-induced luminescence. Su
 
 ```
 @article{kohler2021mineral,
-	author = {K{\\"o}hler, Philipp and Fischer, Woodward W and Rossman, George R and Grotzinger, John P and Doughty, Russell and Wang, Yujie and Yin, Yi and Frankenberg, Christian},
-	year = {2021},
-	title = {Mineral luminescence observed from space},
-	journal = {Geophysical Research Letters},
-	volume = {48},
-	number = {19},
-	pages = {e2021GL095227}
+    author = {K{\\"o}hler, Philipp and Fischer, Woodward W and Rossman, George R and Grotzinger, John P and Doughty, Russell and Wang, Yujie and Yin, Yi and Frankenberg, Christian},
+    year = {2021},
+    title = {Mineral luminescence observed from space},
+    journal = {Geophysical Research Letters},
+    volume = {48},
+    number = {19},
+    pages = {e2021GL095227}
 }
 ```
 </details>
@@ -647,13 +647,13 @@ Method to create a general dataset collection for SLA (specific leaf area). Supp
     pages = {1034--1051}
 }
 @article{moreno2018methodology,
-	author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
+    author = {Moreno-Mart{\\'i}nez, {\\'A}lvaro and Camps-Valls, Gustau and Kattge, Jens and Robinson, Nathaniel and Reichstein, Markus and van Bodegom, Peter and Kramer, Koen and
               Cornelissen, J Hans C and Reich, Peter and Bahn, Michael and others},
     year = {2018},
-	title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
-	journal = {Remote sensing of environment},
-	volume = {218},
-	pages = {69--88}
+    title = {A methodology to derive global maps of leaf traits using remote sensing and climate data},
+    journal = {Remote sensing of environment},
+    volume = {218},
+    pages = {69--88}
 }
 ```
 </details>
@@ -706,21 +706,21 @@ Method to create a general dataset collection for soil hydraulic parameters (sat
 ```
 @article{dai2019global,
     author = {Dai, Yongjiu and Xin, Qinchuan and Wei, Nan and Zhang, Yonggen and Shangguan, Wei and Yuan, Hua and Zhang, Shupeng and Liu, Shaofeng and Lu, Xingjie},
-	year = {2019},
+    year = {2019},
     title = {A global high-resolution data set of soil hydraulic and thermal properties for land surface modeling},
-	journal = {Journal of Advances in Modeling Earth Systems},
-	volume = {11},
-	number = {9},
-	pages = {2996--3023}
+    journal = {Journal of Advances in Modeling Earth Systems},
+    volume = {11},
+    number = {9},
+    pages = {2996--3023}
 }
 @article{gupta2021global,
-	author = {Gupta, Surya and Lehmann, Peter and Bonetti, Sara and Papritz, Andreas and Or, Dani},
-	year = {2021},
-	title = {Global Prediction of Soil Saturated Hydraulic Conductivity Using Random Forest in a Covariate-Based GeoTransfer Function (CoGTF) Framework},
-	journal = {Journal of Advances in Modeling Earth Systems},
-	volume = {13},
-	number = {4},
-	pages = {e2020MS002242}
+    author = {Gupta, Surya and Lehmann, Peter and Bonetti, Sara and Papritz, Andreas and Or, Dani},
+    year = {2021},
+    title = {Global Prediction of Soil Saturated Hydraulic Conductivity Using Random Forest in a Covariate-Based GeoTransfer Function (CoGTF) Framework},
+    journal = {Journal of Advances in Modeling Earth Systems},
+    volume = {13},
+    number = {4},
+    pages = {e2020MS002242}
 }
 ```
 </details>
@@ -730,6 +730,32 @@ soil_hydraulics_collection() = (
 
     return GriddedCollection("SOIL", _supported, "SWCS_12X_1Y_V1")
 );
+
+
+"""
+
+    soil_texture_collection()
+
+<details>
+<summary>
+Method to create a general dataset collection for soil texture. Supported datasets are (click to view bibtex items)
+- `TEXTURE_1X_1Y_V1` [(Rodell et al., 2004)](https://doi.org/10.1175/BAMS-85-3-381)
+</summary>
+
+```
+@article{rodell2004global,
+    author = {Rodell, Matthew and Houser, PR and Jambor, UEA and Gottschalck, J and Mitchell, Kieran and Meng, C-J and Arsenault, Kristi and Cosgrove, B and Radakovich, J and Bosilovich, M and Entin, J K abd Walker, J P and Lohmann, D and Toll, D},
+    year = {2004},
+    title = {{The global land data assimilation system}},
+    journal = {Bulletin of the American Meteorological Society},
+    volume = {85},
+    pages = {381--394}
+}
+```
+</details>
+
+"""
+soil_texture_collection() = GriddedCollection("SOIL", ["TEXTURE_1X_1Y_V1", "TEXTURE_4X_1Y_V1"], "TEXTURE_1X_1Y_V1");
 
 
 """
@@ -744,12 +770,12 @@ Method to create a general dataset collection for earth surface area. Supported 
 
 ```
 @article{lawrence2007representing,
-author = {Lawrence, Peter J and Chase, Thomas N},
-year = {2007},
-title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
-journal = {Journal of Geophysical Research: Biogeosciences},
-volume = {112},
-pages = {G01023}
+    author = {Lawrence, Peter J and Chase, Thomas N},
+    year = {2007},
+    title = {Representing a new MODIS consistent land surface in the Community Land Model (CLM 3.0)},
+    journal = {Journal of Geophysical Research: Biogeosciences},
+    volume = {112},
+    pages = {G01023}
 }
 ```
 </details>
@@ -806,14 +832,14 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
     pages = {506–517}
 }
 @article{luo2021global,
-	author = {Luo, Xiangzhong and Keenan, Trevor F. and Chen, Jing M. and Croft, Holly and {Colin Prentice}, I. and Smith, Nicholas G. and Walker, Anthony P. and Wang, Han and Wang, Rong and
+    author = {Luo, Xiangzhong and Keenan, Trevor F. and Chen, Jing M. and Croft, Holly and {Colin Prentice}, I. and Smith, Nicholas G. and Walker, Anthony P. and Wang, Han and Wang, Rong and
               Xu, Chonggang and Zhang, Yao},
-	year = {2021},
-	title = {Global variation in the fraction of leaf nitrogen allocated to photosynthesis},
-	journal = {Nature Communications},
-	volume = {12},
-	number = {1},
-	pages = {4866}
+    year = {2021},
+    title = {Global variation in the fraction of leaf nitrogen allocated to photosynthesis},
+    journal = {Nature Communications},
+    volume = {12},
+    number = {1},
+    pages = {4866}
 }
 ```
 </details>
@@ -1060,7 +1086,7 @@ sync_collections!() = (
     # loop through all datasets
     _functions = Function[biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection,
                           leaf_chlorophyll_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
-                          soil_hydraulics_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection];
+                          soil_hydraulics_collection, soil_texture_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection];
     for _f in _functions
         sync_collections!(_f());
     end;

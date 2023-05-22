@@ -25,6 +25,7 @@ using Test
                    Collector.sla_collection(),
                    Collector.soil_color_collection(),
                    Collector.soil_hydraulics_collection(),
+                   Collector.soil_texture_collection(),
                    Collector.surface_area_collection(),
                    Collector.tree_density_collection(),
                    Collector.vcmax_collection(),
