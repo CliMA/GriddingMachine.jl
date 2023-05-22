@@ -1,7 +1,7 @@
 module Collector
 
 using Artifacts: @artifact_str, load_artifacts_toml
-using DocStringExtensions: METHODLIST, TYPEDEF, TYPEDFIELDS
+using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
 
 import Base: show
@@ -9,11 +9,13 @@ import Base: show
 
 # collection types
 """
+
 $(TYPEDEF)
 
 Structure for general gridded dataset collection.
 
 # Fields
+
 $(TYPEDFIELDS)
 
 ---
@@ -21,6 +23,7 @@ $(TYPEDFIELDS)
 ```julia
 vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
 ```
+
 """
 struct GriddedCollection
     "Artifact label name"
@@ -30,6 +33,19 @@ struct GriddedCollection
     "Default combination"
     DEFAULT_COMBO::String
 end
+
+
+# constructors for GriddedCollection
+include("collector/biomass.jl")
+include("collector/canopy.jl")
+include("collector/gpp.jl")
+include("collector/lai.jl")
+include("collector/land.jl")
+include("collector/le.jl")
+include("collector/leaf.jl")
+include("collector/pft.jl")
+include("collector/sif.jl")
+include("collector/soil.jl")
 
 
 show(io::IO, col::GriddedCollection) = (
@@ -58,57 +74,30 @@ show(io::IO, col::GriddedCollection) = (
 );
 
 
-# constructors for GriddedCollection
-include("collector/biomass.jl")
-include("collector/canopy.jl")
-include("collector/gpp.jl")
-include("collector/lai.jl")
-include("collector/land.jl")
-include("collector/le.jl")
-include("collector/leaf.jl")
-include("collector/pft.jl")
-include("collector/sif.jl")
-include("collector/soil.jl")
-
-
-# query file from gridded collections
-"""
-This function queries data path for a dataset, supported methods are
-
-$(METHODLIST)
 
 """
-function query_collection end
 
-
-"""
     query_collection(ds::GriddedCollection)
+    query_collection(ds::GriddedCollection, version::String)
+    query_collection(artname::String)
 
 This method queries the local data path from collection for the default data, given
 - `ds` [`GriddedCollection`](@ref) type collection
+- `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
+- `artname` Artifact name
 
 ---
 # Examples
 ```julia
 dat_file = query_collection(canopy_height_collection());
-```
-"""
-query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO);
-
-
-"""
-    query_collection(ds::GriddedCollection, version::String)
-
-This method queries the local data path from collection, given
-- `ds` [`GriddedCollection`](@ref) type collection
-- `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
-
----
-# Examples
-```julia
 dat_file = query_collection(canopy_height_collection(), "20X_1Y_V1");
 ```
+
 """
+function query_collection end
+
+query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO);
+
 query_collection(ds::GriddedCollection, version::String) = (
     # make sure requested version is in the
     @assert version in ds.SUPPORTED_COMBOS "$(version)";
@@ -119,13 +108,6 @@ query_collection(ds::GriddedCollection, version::String) = (
     return query_collection(_fn)
 );
 
-
-"""
-    query_collection(artname::String)
-
-This method queries the local data path from given artifact name
-- `artname` Artifact name
-"""
 query_collection(artname::String) = (
     _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
     _artns = [_name for (_name,_) in _metas];
@@ -136,20 +118,18 @@ query_collection(artname::String) = (
 
 
 """
-This function cleans up the collections, supported methods are
 
-    $(METHODLIST)
-"""
-function clean_collections! end
-
-
-"""
     clean_collections!(selection::String="old")
+    clean_collections!(selection::Vector{String})
+    clean_collections!(selection::GriddedCollection)
 
 This method cleans up all selected artifacts of GriddingMachine.jl (through identify the `GRIDDINGMACHINE` file in the artifacts), given
-- `selection` A string indicating which artifacts to clean up
-    - `old` Artifacts from an old version of GriddingMachine.jl (default)
-    - `all` All Artifacts from GriddingMachine.jl
+- `selection`
+    - A string indicating which artifacts to clean up
+        - `old` Artifacts from an old version of GriddingMachine.jl (default)
+        - `all` All Artifacts from GriddingMachine.jl
+    - A vector of artifact names
+    - A [`GriddedCollection`](@ref) type collection
 
 ---
 # Examples
@@ -157,8 +137,13 @@ This method cleans up all selected artifacts of GriddingMachine.jl (through iden
 clean_collections!();
 clean_collections!("old");
 clean_collections!("all");
+clean_collections!(["PFT_2X_1Y_V1"]);
+clean_collections!(pft_collection());
 ```
+
 """
+function clean_collections! end
+
 clean_collections!(selection::String="old") = (
     # read the SHA1 identifications in Artifacts.toml
     _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
@@ -183,19 +168,6 @@ clean_collections!(selection::String="old") = (
     return nothing
 );
 
-
-"""
-    clean_collections!(selection::Vector{String})
-
-This method cleans up all selected artifacts in GriddingMachine.jl, given
-- `selection` A vector of artifact names
-
----
-# Examples
-```julia
-clean_collections!(["PFT_2X_1Y_V1"]);
-```
-"""
 clean_collections!(selection::Vector{String}) = (
     # read the SHA1 identifications in Artifacts.toml
     _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
@@ -209,19 +181,6 @@ clean_collections!(selection::Vector{String}) = (
     return nothing
 );
 
-
-"""
-    clean_collections!(selection::GriddedCollection)
-
-This method cleans up all selected artifacts in GriddingMachine.jl, given
-- `selection` A [`GriddedCollection`](@ref) type collection
-
----
-# Examples
-```julia
-clean_collections!(pft_collection());
-```
-"""
 clean_collections!(selection::GriddedCollection) = (
     clean_collections!(["$(selection.LABEL)_$(_ver)" for _ver in selection.SUPPORTED_COMBOS]);
 
@@ -230,19 +189,16 @@ clean_collections!(selection::GriddedCollection) = (
 
 
 """
-This function sync the collections (only suggested to use with GriddingMachine server), supported methods are
 
-    $(METHODLIST)
-"""
-function sync_collections! end
-
-
-"""
+    sync_collections!()
     sync_collections!(gcs::GriddedCollection)
 
 Sync collection datasets to local drive, given
 - `gc` [`GriddedCollection`](@ref) type collection
+
 """
+function sync_collections! end
+
 sync_collections!(gc::GriddedCollection) = (
     for _version in gc.SUPPORTED_COMBOS
         query_collection(gc, _version);
@@ -251,12 +207,6 @@ sync_collections!(gc::GriddedCollection) = (
     return nothing
 );
 
-
-"""
-    sync_collections!()
-
-Sync all datasets to local drive. This function is meant to initialize GriddingMachine server.
-"""
 sync_collections!() = (
     # loop through all datasets
     _functions = Function[biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection,
