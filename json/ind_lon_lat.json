@@ -1,0 +1,44 @@
+{
+    "GRIDDINGMACHINE": {
+        "LABEL": "TESTDATA_ind_lon_lat",
+        "VERSION": 1,
+        "EXTRA_LABEL": null,
+        "LAT_LON_RESO": 1,
+        "YEARS": null,
+        "TEMPORAL_RESO": "1Y"
+    },
+    "OUTPUT_VAR_ATTR": {
+        "about": "random data generated for testing",
+        "unit": "-"
+    },
+    "INPUT_VAR_SETS": [
+        {
+            "INDEX_AXIS_INDEX": 1,
+            "LATITUDE_AXIS_INDEX": 3,
+            "MASKING_FUNCTION": "",
+            "LONGITUDE_AXIS_INDEX": 2,
+            "SCALING_FUNCTION": "",
+            "DATA_NAME": "ind_lon_lat"
+        }
+    ],
+    "OUTPUT_REF_ATTR": {
+        "year": "NA",
+        "journal": "NA",
+        "doi": "NA",
+        "title": "NA",
+        "authors": "NA"
+    },
+    "INPUT_MAP_SETS": {
+        "FORMAT": "NETCDF",
+        "PROJECTION": "CYLINDRICAL",
+        "VALUE_AT": true,
+        "FLIP_LAT": false,
+        "FILE_NAME_PATTERN": "ind_lon_lat.nc",
+        "FOLDER": "/home/exgu/GriddingMachine.jl/test/TestArrays",
+        "FILE_NAME_FUNCTION": "",
+        "COVERAGE": "GLOBAL",
+        "FLIP_LON": false,
+        "IS_CENTER": true
+    }
+}
+
