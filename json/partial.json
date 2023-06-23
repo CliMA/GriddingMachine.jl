@@ -34,7 +34,7 @@
         "VALUE_AT": true,
         "FLIP_LAT": false,
         "FILE_NAME_PATTERN": "partial.nc",
-        "FOLDER": "/home/exgu/GriddingMachine.jl/test/TestArrays",
+        "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": [-59.5, 79.5, -179.5, 179.5],
         "FLIP_LON": false,

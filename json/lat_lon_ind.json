@@ -34,7 +34,7 @@
         "VALUE_AT": true,
         "FLIP_LAT": false,
         "FILE_NAME_PATTERN": "lat_lon_ind.nc",
-        "FOLDER": "/home/exgu/GriddingMachine.jl/test/TestArrays",
+        "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
         "FLIP_LON": false,

@@ -31,8 +31,7 @@ save_nc2!(o::Tuple, file::String, name::String, data::Array{T,N}, compress::Int 
 
 #data on edge rather than center
 edge = rand(Float64, lon, lat, ind);
-println(edge[1:3, 1:3, 1]);
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/edge.nc", "edge", edge);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/edge.nc", "edge", edge);
 
 lon = 360;
 lat = 180;
@@ -50,7 +49,7 @@ for i in range(1, lon)
     end
 end
 
-save_nc!("test/TestArrays/lon_lat_ind.nc", "lon_lat_ind", lon_lat_ind, Dict("description" => "Random data, correct format"));
+save_nc!("test/nc_files/lon_lat_ind.nc", "lon_lat_ind", lon_lat_ind, Dict("description" => "Random data, correct format"));
 
 #data with orders changed
 lon_ind_lat = zeros(Float64, lon, ind, lat);
@@ -93,22 +92,22 @@ map = Dict(("lon", "ind", "lat") => lon_ind_lat, ("lat", "lon", "ind") => lat_lo
 
 for o in order
     name = o[1]*"_"*o[2]*"_"*o[3];
-    path = "test/TestArrays/"*name*".nc";
+    path = "test/nc_files/"*name*".nc";
     save_nc2!(o, path, name, map[o]);
 end
 
 _lons = collect(359.5:-1:0) .- 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/lonf_lat_ind.nc", "lonf_lat_ind", lonf_lat_ind);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/lonf_lat_ind.nc", "lonf_lat_ind", lonf_lat_ind);
 
 _lons = collect(1/2:1:360) .- 180;
 _lats = collect(179.5:-1:0) .- 90;
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/lon_latf_ind.nc", "lon_latf_ind", lon_latf_ind);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/lon_latf_ind.nc", "lon_latf_ind", lon_latf_ind);
 
 _lons = collect(1/2:1:360) .- 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/lin_scale.nc", "lin_scale", lin_scale);
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/exp_scale.nc", "exp_scale", exp_scale);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/lin_scale.nc", "lin_scale", lin_scale);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/exp_scale.nc", "exp_scale", exp_scale);
 
 
 #data with global vs partial coverage
@@ -121,11 +120,11 @@ glob[:, (lat2+1):lat, :] .= NaN;
 
 lat = 140;
 _lats = collect(30.5:1:169.5) .- 90;
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/partial.nc", "partial", partial);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/partial.nc", "partial", partial);
 
 lat = 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc2!(("lon", "lat", "ind"), "test/TestArrays/glob.nc", "glob", glob);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/glob.nc", "glob", glob);
 
 
 #data with sep files

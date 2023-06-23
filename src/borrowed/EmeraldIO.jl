@@ -9,3 +9,4 @@ const ATTR_ABOUT = Dict("about" => "This is a file generated using Netcdf module
 include("netcdf/info.jl");
 include("netcdf/read.jl");
 include("netcdf/save.jl");
+include("Terminal.jl");
