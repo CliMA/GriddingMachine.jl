@@ -36,6 +36,7 @@ function map_info_dict()
     );
     _jdg_5(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_6(x) = (isdir(x));
+    _jdg_7(x) = (x[end-4:end] == ".tiff" || x[end-2:end] == ".nc");
     _opr_1(x) = (
         if uppercase(x) in ["G", "GEOTIFF", "TIFF"]
             return "GEOTIFF"
@@ -106,9 +107,12 @@ function map_info_dict()
         _msg = "    What is the path of the folder containing the dataset? > ";
         _folder = verified_input(_msg, _jdg_6);
 
+        _msg = "    What is the file name pattern of the folder containing the dataset? (Use format file_name.nc or file_name.tiff) > ";
+        _f_n_p = verified_input(_msg, _jdg_7);
+
         _map_info_dict = Dict{String,Any}(
             "FOLDER"             => _folder,
-            "FILE_NAME_PATTERN"  => "",
+            "FILE_NAME_PATTERN"  => _f_n_p,
             "FILE_NAME_FUNCTION" => "",
             "FORMAT"             => _format,
             "PROJECTION"         => _projection,

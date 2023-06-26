@@ -25,6 +25,7 @@ include("Fetcher.jl"    )
 include("Indexer.jl"    )
 include("Partitioner.jl")
 include("Requestor.jl"  )
+include("Processer.jl"  )
 
 
 end # module

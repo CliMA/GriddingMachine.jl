@@ -44,11 +44,11 @@ function variable_dict()
         end;
 
         _msg = "        If you have extra scaling you want to make, type it here (NCDatasets may do that already, need to double check, example: x -> log(x)) > ";
-        println(_msg);
+        print(_msg);
         _scaling_function = readline();
 
         _msg = "        What are your mask function for NaN, type it here, e.g., x -> (0.1 < x <= 0.2 && x * 6 > 1) > ";
-        println(_msg);
+        print(_msg);
         _masking_function = readline();
 
         _data_dict = Dict{String,Any}(
@@ -108,6 +108,6 @@ function variable_dicts()
         println("    For data $(_i_data):");
         push!(_data_dicts, variable_dict());
     end;
-    
+
     return _data_dicts
 end

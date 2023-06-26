@@ -22,7 +22,7 @@ function reference_attribute_dict()
             parse(Int, x)
             return true
         catch e
-            return false
+            return x == "NA"
         end;
     );
     _jdg_3(x) = (x in ["N", "NO", "Y", "YES"]);

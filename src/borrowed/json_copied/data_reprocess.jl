@@ -156,5 +156,5 @@ function reprocess_data!(
     # _count = 0;
     # push!()
 
-    return _reprocessed_data, _reprocessed_std  #nothing
+    return _reprocessed_data #nothing
 end
