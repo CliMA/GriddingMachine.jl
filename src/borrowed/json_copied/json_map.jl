@@ -35,6 +35,7 @@ function map_info_dict()
         end;
     );
     _jdg_5(x) = (x in ["N", "NO", "Y", "YES"]);
+    _jdg_6(x) = (isdir(x));
     _opr_1(x) = (
         if uppercase(x) in ["G", "GEOTIFF", "TIFF"]
             return "GEOTIFF"
@@ -93,7 +94,7 @@ function map_info_dict()
         _msg = "    Does the value represent data in the center of a grid? (Y for Center or N for Edge) > ";
         _represent = verified_input(_msg, _opr_3, _jdg_3);
 
-        _msg = "    What is the coverage of the dataset? (Global or not; if not global, type in the conner values in the order or min lat, max lat, min lon, max lon) > ";
+        _msg = "    What is the coverage of the dataset? (Global or not; if not global, type in the conner values in the order of min lat, max lat, min lon, max lon) > ";
         _coverages = verified_input(_msg, _opr_4, _jdg_4);
 
         _msg = "    Do you need to flip the latitudinal direction? (Yes or No) > ";
@@ -102,13 +103,16 @@ function map_info_dict()
         _msg = "    Do you need to flip the longitudinal direction? (Yes or No) > ";
         _flip_lon = verified_input(_msg, _opr_5, _jdg_3);
 
+        _msg = "    What is the path of the folder containing the dataset? > ";
+        _folder = verified_input(_msg, _jdg_6);
+
         _map_info_dict = Dict{String,Any}(
-            "FOLDER"             => "",
+            "FOLDER"             => _folder,
             "FILE_NAME_PATTERN"  => "",
             "FILE_NAME_FUNCTION" => "",
             "FORMAT"             => _format,
             "PROJECTION"         => _projection,
-            "VALUE_AT"           => _represent,
+            "IS_CENTER"          => _represent,
             "COVERAGE"           => _coverages,
             "FLIP_LAT"           => _flip_lat,
             "FLIP_LON"           => _flip_lon,

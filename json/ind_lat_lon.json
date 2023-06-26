@@ -31,7 +31,6 @@
     "INPUT_MAP_SETS": {
         "FORMAT": "NETCDF",
         "PROJECTION": "CYLINDRICAL",
-        "VALUE_AT": true,
         "FLIP_LAT": false,
         "FILE_NAME_PATTERN": "ind_lat_lon.nc",
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",

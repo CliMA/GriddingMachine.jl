@@ -64,7 +64,7 @@ lon_latf_ind = zeros(Float64, lon, lat, ind);
 
 #data with scaling
 lin_scale = zeros(Float64, lon, lat, ind);
-exp_scale = zeros(Float64, lon, lat, ind);
+log_scale = zeros(Float64, lon, lat, ind);
 
 for i in range(1, lon)
     for j in range(1, lat)
@@ -83,7 +83,7 @@ for i in range(1, lon)
 end
 
 lin_scale = lon_lat_ind .* 2;
-exp_scale = exp.(lon_lat_ind);
+log_scale = exp.(lon_lat_ind);
 
 order = [("lon", "ind", "lat"), ("lat", "lon", "ind"), ("lat", "ind", "lon"), ("ind", "lon", "lat"), ("ind", "lat", "lon")];
 map = Dict(("lon", "ind", "lat") => lon_ind_lat, ("lat", "lon", "ind") => lat_lon_ind, 
@@ -107,7 +107,7 @@ save_nc2!(("lon", "lat", "ind"), "test/nc_files/lon_latf_ind.nc", "lon_latf_ind"
 _lons = collect(1/2:1:360) .- 180;
 _lats = collect(1/2:1:180) .- 90;
 save_nc2!(("lon", "lat", "ind"), "test/nc_files/lin_scale.nc", "lin_scale", lin_scale);
-save_nc2!(("lon", "lat", "ind"), "test/nc_files/exp_scale.nc", "exp_scale", exp_scale);
+save_nc2!(("lon", "lat", "ind"), "test/nc_files/log_scale.nc", "log_scale", log_scale);
 
 
 #data with global vs partial coverage

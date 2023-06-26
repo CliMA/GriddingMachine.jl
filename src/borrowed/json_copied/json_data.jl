@@ -108,6 +108,6 @@ function variable_dicts()
         println("    For data $(_i_data):");
         push!(_data_dicts, variable_dict());
     end;
-
+    
     return _data_dicts
 end

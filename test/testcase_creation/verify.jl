@@ -7,9 +7,11 @@ println("start");
 
 dir = "$(@__DIR__)/../../../GriddingMachine.jl/json/";
 
-files = ["ind_lat_lon", "ind_lon_lat", "lat_lon_ind", "lon_ind_lat", "lonf_lat_ind", "lon_latf_ind", "lin_scale", "exp_scale", "edge"];
+files = ["ind_lat_lon", "ind_lon_lat", "lat_lon_ind", "lon_ind_lat", "lonf_lat_ind", "lon_latf_ind", "lin_scale", "log_scale", "edge"];
 
-correct = reprocess_data!(JSON.parsefile("$(dir)lon_lat_ind.json"););
+folder = "/home/exgu/GriddingMachine.jl/test/nc_files";
+
+correct = reprocess_data!(folder, JSON.parsefile("$(dir)lon_lat_ind.json"););
 
 for f in files
     _json = "$(dir)$(f).json";
@@ -23,15 +25,15 @@ for f in files
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;
 
-    result = reprocess_data!(json_dict; file_name_function = name_function, data_scaling_functions = data_scaling_functions, std_scaling_functions = std_scaling_functions);
+    result = reprocess_data!(folder, json_dict; file_name_function = name_function, data_scaling_functions = data_scaling_functions, std_scaling_functions = std_scaling_functions);
     if result != []
         println("$(f) pass = $(isapprox(result, correct; atol = 1e-7))");
     end
 
 end
 
-glob = reprocess_data!(JSON.parsefile("$(dir)glob.json"););
-partial = reprocess_data!(JSON.parsefile("$(dir)partial.json"););
+glob = reprocess_data!(folder, JSON.parsefile("$(dir)glob.json"););
+partial = reprocess_data!(folder, JSON.parsefile("$(dir)partial.json"););
 if partial != []
     println("partial pass = $(isequal(partial, glob))");
 end
