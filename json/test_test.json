@@ -4,7 +4,10 @@
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
-        "YEARS": null,
+        "YEARS": [
+            2015,
+            2020
+        ],
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
@@ -23,7 +26,7 @@
         }
     ],
     "OUTPUT_REF_ATTR": {
-        "year": "2023",
+        "year": "2021",
         "journal": "NA",
         "doi": "NA",
         "title": "NA",
