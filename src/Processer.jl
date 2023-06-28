@@ -3,7 +3,6 @@ module Processer
 include("borrowed/GriddingMachineData.jl")
 
 """
-
     reprocess_files()
 
 Reprocess user's dataset(s) and create corresponding JSON file(s). All information is entered manually by the user.
@@ -30,10 +29,10 @@ reprocess_files() = (
         #Get user input for directories
         _msg = "Please input the folder path of the JSON file you want to create > ";
         folder_j = verified_input(_msg, _jdg_6); #check if folder exists
-        _msg = "Please input the folder path of the reprocessed file you want to create > ";
-        folder_r = verified_input(_msg, _jdg_6); #check if folder exists
         _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
         file_j = verified_input(_msg, _jdg_7); #check if a JSON file name is given
+        _msg = "Please input the folder path of the reprocessed file you want to create > ";
+        folder_r = verified_input(_msg, _jdg_6); #check if folder exists
 
         _json = "$(folder_j)/$(file_j)";
         process_single_file(_json, folder_r);
@@ -129,15 +128,26 @@ create_from_json(_json::String, folder_r::String) = (
     #Parse JSON file created
     json_dict = JSON.parse(open(_json));
     name_function = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"]));
-    data_scaling_functions = [_dict["SCALING_FUNCTION"] == "" ? nothing :  eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
-    std_scaling_functions = if "INPUT_STD_SETS" in keys(json_dict)
+    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing :  eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
+    std_scaling_f = if "INPUT_STD_SETS" in keys(json_dict)
         [_dict["SCALING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
+    else
+        [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
+    end;
+    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing :  eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
+    std_masking_f = if "INPUT_STD_SETS" in keys(json_dict)
+        [_dict["MASKING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
     else
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;
 
     #Reprocess the data
-    reprocess_data!(folder_r, json_dict; file_name_function = name_function, data_scaling_functions = data_scaling_functions, std_scaling_functions = std_scaling_functions);
+    reprocess_data!(folder_r, json_dict;
+                    file_name_function = name_function, 
+                    data_scaling_functions = data_scaling_f, 
+                    std_scaling_functions = std_scaling_f,
+                    data_masking_functions = data_masking_f,
+                    std_masking_functions = std_masking_f);
     @info "Process complete";
 )
 

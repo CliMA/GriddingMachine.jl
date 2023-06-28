@@ -36,7 +36,9 @@ function map_info_dict()
     );
     _jdg_5(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_6(x) = (isdir(x));
-    _jdg_7(x) = (length(x) >= 3 && (x[end-2:end] == ".nc" || x[end-3:end] == ".tif" || x[end-4:end] == ".tiff"));
+    _jdg_7(x) = ((length(x) >= 3 && x[end-2:end] == ".nc") 
+                || (length(x) >= 4 && x[end-3:end] == ".tif") 
+                || (length(x) >= 5 && x[end-4:end] == ".tiff"));
     _opr_1(x) = (
         if uppercase(x) in ["G", "GEOTIFF", "TIFF"]
             return "GEOTIFF"
@@ -107,13 +109,17 @@ function map_info_dict()
         _msg = "    What is the path of the folder containing the dataset? > ";
         _folder = verified_input(_msg, _jdg_6);
 
-        _msg = "    What is the file name pattern of the folder containing the dataset? (Use format file_name.file_format) > ";
+        _msg = "    What is the file name (pattern) of the dataset? (file_name.file_format, replace variable with XXXXXXXX) > ";
         _f_n_p = verified_input(_msg, _jdg_7);
+
+        _msg = "    What is the file name function of the dataset? (x -> lpad(x,4,\"0\") for varying years) > ";
+        print(_msg)
+        _f_n_f = readline();
 
         _map_info_dict = Dict{String,Any}(
             "FOLDER"             => _folder,
             "FILE_NAME_PATTERN"  => _f_n_p,
-            "FILE_NAME_FUNCTION" => "",
+            "FILE_NAME_FUNCTION" => _f_n_f,
             "FORMAT"             => _format,
             "PROJECTION"         => _projection,
             "IS_CENTER"          => _represent,

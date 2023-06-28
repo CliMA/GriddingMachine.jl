@@ -47,7 +47,7 @@ function variable_dict()
         print(_msg);
         _scaling_function = readline();
 
-        _msg = "        What are your mask function for NaN, type it here, e.g., x -> (0.1 < x <= 0.2 && x * 6 > 1) > ";
+        _msg = "        What are your mask function for NaN, type it here, e.g., x -> (0.1 < x <= 0.2 && x * 6 > 1 ? NaN : x) > ";
         print(_msg);
         _masking_function = readline();
 

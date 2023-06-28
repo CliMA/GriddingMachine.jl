@@ -13,13 +13,17 @@
                 dict::Dict;
                 file_name_function::Union{Function,Nothing} = nothing,
                 data_scaling_functions::Vector = [nothing for _i in eachindex(dict["VARIABLE_SETTINGS"])],
-                std_scaling_functions::Vector = [nothing for _i in eachindex(dict["VARIABLE_SETTINGS"])])
+                std_scaling_functions::Vector = [nothing for _i in eachindex(dict["VARIABLE_SETTINGS"])],
+                data_masking_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])],
+                std_masking_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])])
 
 Reprocess the data to use in GriddingMachine artifacts, given
 - `dict` JSON dict
 - `file_name_function` Function to find file
 - `data_scaling_functions` Functions to scale data
 - `std_scaling_functions` Functions to scale std
+- `data_masking_functions` Functions to mask data to NaN
+- `std_masking_functions` Functions to mask std to NaN
 
 """
 function reprocess_data!(
@@ -27,7 +31,9 @@ function reprocess_data!(
             dict::Dict;
             file_name_function::Union{Function,Nothing} = nothing,
             data_scaling_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])],
-            std_scaling_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])])
+            std_scaling_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])],
+            data_masking_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])],
+            std_masking_functions::Vector = [nothing for _i in eachindex(dict["INPUT_VAR_SETS"])])
     _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
 
     _dict_file = dict["INPUT_MAP_SETS"];
@@ -62,8 +68,8 @@ function reprocess_data!(
 
         if isfile(_reprocessed_file)
             @info "File $(_reprocessed_file) exists already";
-            _msg_re = "Do you still want to reprocess the data? Type Y/y or N/n to continue > ";
-            if (verified_input(_msg_re, uppercase, _jdg_1) in ["N", "NO"])
+            _msg = "Do you still want to reprocess the data? Type Y/y or N/n to continue > ";
+            if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
                 @info "Skipping...";
                 continue;
             end;
@@ -81,6 +87,7 @@ function reprocess_data!(
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
                         scaling_function = data_scaling_functions[1],
+                        masking_function = data_masking_functions[1],
                         is_center = _dict_file["IS_CENTER"]);
             _reprocessed_std = if !isnothing(_dict_stds)
                 read_data(
@@ -90,6 +97,7 @@ function reprocess_data!(
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
                         scaling_function = std_scaling_functions[1],
+                        masking_function = std_masking_functions[1],
                         is_center = _dict_file["IS_CENTER"])
             else
                 similar(_reprocessed_data) .* NaN
@@ -105,6 +113,7 @@ function reprocess_data!(
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
                         scaling_function = data_scaling_functions[_i_var],
+                        masking_function = data_masking_functions[_i_var],
                         is_center = _dict_file["IS_CENTER"]);
                 if !isnothing(_dict_stds)
                     _reprocessed_std[:,:,_i_var] = read_data(
@@ -114,21 +123,22 @@ function reprocess_data!(
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
                         scaling_function = std_scaling_functions[_i_var],
+                        masking_function = std_masking_functions[_i_var],
                         is_center = _dict_file["IS_CENTER"]);
                 end;
             end;
         end;
 
         #ask user whether to plot data
-        _msg_plot = "Do you want to plot the data? Type Y/y or N/n to continue > ";
-        _plot = (verified_input(_msg_plot, uppercase, _jdg_1) in ["Y", "YES"]);
+        _msg = "Do you want to plot the data? Type Y/y or N/n to continue > ";
+        _plot = (verified_input(_msg, uppercase, _jdg_1) in ["Y", "YES"]);
         if _plot
             #To be implemented elsewhere
         end
 
         #ask user whether to save file
-        _msg_save = "Do you want to save the data? Type Y/y or N/n to continue > ";
-        _save_data = (verified_input(_msg_save, uppercase, _jdg_1) in ["Y", "YES"]);
+        _msg = "Do you want to save the data? Type Y/y or N/n to continue > ";
+        _save_data = (verified_input(_msg, uppercase, _jdg_1) in ["Y", "YES"]);
 
         # save the file
         if _save_data
