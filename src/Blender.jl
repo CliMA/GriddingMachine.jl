@@ -2,6 +2,8 @@ module Blender
 
 using DocStringExtensions: METHODLIST
 
+export regrid
+
 
 include("borrowed/EmeraldMath.jl");
 

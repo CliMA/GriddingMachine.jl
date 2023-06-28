@@ -6,6 +6,9 @@ using DocStringExtensions: TYPEDEF, TYPEDFIELDS, METHODLIST
 using ProgressMeter: @showprogress
 using PyCall: pyimport
 
+export GeneralWgetData
+export fetch_data!
+
 
 # ERA5 related information
 CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
@@ -25,6 +28,7 @@ include("fetcher/password.jl");
 
 include("fetcher/carbontracker.jl");
 include("fetcher/era5.jl");
+include("fetcher/gedi.jl");
 include("fetcher/modis.jl");
 include("fetcher/smap.jl");
 

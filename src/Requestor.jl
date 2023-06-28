@@ -5,6 +5,8 @@ using DocStringExtensions: METHODLIST
 using HTTP: get
 using JSON: parse
 
+export request_LUT
+
 
 """
 This function requests data from our server for supported datasets (only latest datasets supported). Supported methods are
