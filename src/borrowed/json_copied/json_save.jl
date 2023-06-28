@@ -15,13 +15,24 @@ Create a JSON file to generate GriddingMachine dataset, given
 """
 function griddingmachine_json!(filename::String = "test.json")
     # create a dict to save as JSON file
+    g_d = griddingmachine_dict();
+    m_i_d = map_info_dict();
+    v_d = variable_dicts();
+    r_a_d = reference_attribute_dict();
+    v_a_d = variable_attribute_dict();
+
     _json_dict = Dict{String,Any}(
-        "GRIDDINGMACHINE" => griddingmachine_dict(),
-        "INPUT_MAP_SETS"  => map_info_dict(),
-        "INPUT_VAR_SETS"  => variable_dicts(),
-        "OUTPUT_REF_ATTR" => reference_attribute_dict(),
-        "OUTPUT_VAR_ATTR" => variable_attribute_dict(),
+        "GRIDDINGMACHINE" => g_d,
+        "INPUT_MAP_SETS"  => m_i_d,
+        "INPUT_VAR_SETS"  => v_d[1],
+        "INPUT_STD_SETS"  => v_d[2],
+        "OUTPUT_REF_ATTR" => r_a_d,
+        "OUTPUT_VAR_ATTR" => v_a_d
     );
+
+    if (length(v_d[2]) == 0)
+        delete!(_json_dict, "INPUT_STD_SETS")
+    end;
 
     # save the JSON file
     _filename = filename[end-4:end] == ".json" ? filename : "$(filename).json";
