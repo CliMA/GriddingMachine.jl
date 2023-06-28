@@ -95,21 +95,30 @@ process_single_file(_json::String, folder_r::String) = (
         @info "File $(_json) exists already";
         _msg = "Do you still want to create the JSON file? Type Y/y or N/n to continue > ";
         if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
-            @info "Skipping...";
-            return nothing;
+            _msg = "Do you still want to reprocess the dataset based on the JSON file? Type Y/y or N/n to continue > ";
+            if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
+                @info "Terminating...";
+                return nothing;
+            else
+                @info "Skipping...";
+            end;
+        else
+            #Create JSON file
+            griddingmachine_json!(_json);
+            @info "JSON file successfully saved";
         end;
     else
         @info "File $(_json) does not exist, creating...";
+        #Create JSON file
+        griddingmachine_json!(_json);
+        @info "JSON file successfully saved";
     end;
 
-    #Create JSON file
-    griddingmachine_json!(_json);
-    @info "JSON file successfully saved";
-
     #Reprocess data
+    @info "Reprocessing data...";
     create_from_json(_json, folder_r);
 
-    return nothing;
+    return true;
 );
 
 
@@ -127,16 +136,16 @@ function create_from_json end;
 create_from_json(_json::String, folder_r::String) = (
     #Parse JSON file created
     json_dict = JSON.parse(open(_json));
-    name_function = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"]));
-    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing :  eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
+    name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
+    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
     std_scaling_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["SCALING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
+        [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
     else
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;
-    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing :  eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
+    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
     std_masking_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["MASKING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
+        [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
     else
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;

@@ -1,6 +1,6 @@
 {
     "GRIDDINGMACHINE": {
-        "LABEL": "TEST2",
+        "LABEL": "TEST4",
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
@@ -19,10 +19,10 @@
         {
             "INDEX_AXIS_INDEX": 3,
             "LATITUDE_AXIS_INDEX": 2,
-            "MASKING_FUNCTION": "",
+            "MASKING_FUNCTION": "x -> (x > 1 ? NaN : x)",
             "LONGITUDE_AXIS_INDEX": 1,
-            "SCALING_FUNCTION": "x -> x/2",
-            "DATA_NAME": "lin_scale"
+            "SCALING_FUNCTION": "x -> x",
+            "DATA_NAME": "lon_latf_ind"
         }
     ],
     "OUTPUT_REF_ATTR": {
@@ -35,8 +35,8 @@
     "INPUT_MAP_SETS": {
         "FORMAT": "NETCDF",
         "PROJECTION": "CYLINDRICAL",
-        "FLIP_LAT": false,
-        "FILE_NAME_PATTERN": "lin_scale.nc",
+        "FLIP_LAT": true,
+        "FILE_NAME_PATTERN": "lon_latf_ind.nc",
         "IS_CENTER": true,
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",

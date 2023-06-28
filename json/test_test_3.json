@@ -1,13 +1,10 @@
 {
     "GRIDDINGMACHINE": {
-        "LABEL": "TEST2",
+        "LABEL": "TEST3",
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
-        "YEARS": [
-            2021,
-            2022
-        ],
+        "YEARS": null,
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
