@@ -2,6 +2,8 @@ module Indexer
 
 using DocStringExtensions: METHODLIST
 
+export lat_ind, lon_ind, read_LUT
+
 
 include("borrowed/EmeraldIO.jl");
 
