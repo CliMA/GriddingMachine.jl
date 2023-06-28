@@ -4,14 +4,11 @@
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
-        "YEARS": [
-            2015,
-            2020
-        ],
+        "YEARS": null,
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
-        "about": "-",
+        "about": "Test variable",
         "long_name": "lon_lat_ind",
         "unit": "-"
     },
@@ -26,7 +23,7 @@
         }
     ],
     "OUTPUT_REF_ATTR": {
-        "year": "2021",
+        "year": "NA",
         "journal": "NA",
         "doi": "NA",
         "title": "NA",

@@ -18,11 +18,14 @@ function reference_attribute_dict()
     # functions to use in while loop
     _jdg_1(x) = (x != "");
     _jdg_2(x) = (
+        if x == "NA"
+            return true
+        end;
         try
             parse(Int, x)
             return true
         catch e
-            return x == "NA"
+            return false
         end;
     );
     _jdg_3(x) = (x in ["N", "NO", "Y", "YES"]);

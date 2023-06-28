@@ -44,14 +44,14 @@ function reprocess_data!(
         push!(_files, _dict_file["FOLDER"] * "/" * _dict_file["FILE_NAME_PATTERN"]);
     else
         for _year in _years
-            println("ok")
-            println(replace(_dict_file["FILE_NAME_PATTERN"], "XXXXXXXX" => file_name_function(_year)))
-            push!(_files, _dict_file["FOLDER"] * "/" * replace(_dict_file["FILE_NAME_PATTERN"], "XXXXXXXX" => file_name_function(_year)));
+            push!(_files, _dict_file["FOLDER"] * "/" * 
+                (file_name_function  == "" || file_name_function === nothing ? _dict_file["FILE_NAME_PATTERN"] : 
+                replace(_dict_file["FILE_NAME_PATTERN"], "XXXXXXXX" => file_name_function(_year))));
         end;
     end;
 
-    _reprocessed_data = []
-    _reprocessed_std = []
+    _reprocessed_data = [];
+    _reprocessed_std = [];
 
     # iterate through the files
     _i_years = (isnothing(_years) ? [1] : eachindex(_years));
@@ -159,4 +159,4 @@ function reprocess_data!(
     # push!()
 
     return _reprocessed_data #nothing
-end
+end;

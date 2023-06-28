@@ -43,7 +43,7 @@ function variable_dict()
             _i_ind = nothing;
         end;
 
-        _msg = "        If you have extra scaling you want to make, type it here (NCDatasets may do that already, need to double check, example: x -> log(x)) > ";
+        _msg = "        If you have extra scaling you want to make, type it here (NCDatasets may do that already, double check, example: x -> log(x)) > ";
         print(_msg);
         _scaling_function = readline();
 

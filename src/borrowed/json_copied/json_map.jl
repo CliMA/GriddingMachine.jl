@@ -36,7 +36,7 @@ function map_info_dict()
     );
     _jdg_5(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_6(x) = (isdir(x));
-    _jdg_7(x) = (x[end-2:end] == ".nc" || x[end-3:end] == ".tif" || x[end-4:end] == ".tiff");
+    _jdg_7(x) = (length(x) >= 3 && (x[end-2:end] == ".nc" || x[end-3:end] == ".tif" || x[end-4:end] == ".tiff"));
     _opr_1(x) = (
         if uppercase(x) in ["G", "GEOTIFF", "TIFF"]
             return "GEOTIFF"
@@ -122,7 +122,7 @@ function map_info_dict()
             "FLIP_LON"           => _flip_lon,
         )
         @show _map_info_dict
-
+        
         # ask if the Dict looks okay, if so break
         _msg = "Is the generated dict okay? If not, type <N/n or No> to redo the inputs > ";
         _try_again = (verified_input(_msg, uppercase, _jdg_5) in ["N", "NO"]);

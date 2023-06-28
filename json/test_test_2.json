@@ -1,14 +1,18 @@
 {
     "GRIDDINGMACHINE": {
-        "LABEL": "TESTDATA_exp_scale",
+        "LABEL": "TEST2",
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
-        "YEARS": null,
+        "YEARS": [
+            2021,
+            2022
+        ],
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
-        "about": "random data generated for testing",
+        "about": "-",
+        "long_name": "-",
         "unit": "-"
     },
     "INPUT_VAR_SETS": [
@@ -17,8 +21,8 @@
             "LATITUDE_AXIS_INDEX": 2,
             "MASKING_FUNCTION": "",
             "LONGITUDE_AXIS_INDEX": 1,
-            "SCALING_FUNCTION": "x -> log(x)",
-            "DATA_NAME": "exp_scale"
+            "SCALING_FUNCTION": "",
+            "DATA_NAME": "lon_lat_ind"
         }
     ],
     "OUTPUT_REF_ATTR": {
@@ -32,11 +36,11 @@
         "FORMAT": "NETCDF",
         "PROJECTION": "CYLINDRICAL",
         "FLIP_LAT": false,
-        "FILE_NAME_PATTERN": "exp_scale.nc",
+        "FILE_NAME_PATTERN": "lon_lat_ind.nc",
+        "IS_CENTER": true,
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
-        "FLIP_LON": false,
-        "IS_CENTER": true
+        "FLIP_LON": false
     }
 }
