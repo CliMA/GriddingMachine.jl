@@ -8,12 +8,12 @@ include("borrowed/GriddingMachineData.jl")
 Reprocess user's dataset(s) and create corresponding JSON file(s). All information is entered manually by the user.
 
 #
-    reprocess_files(folder_j::String, folder_r::String)
+    reprocess_files(JSON_locf::String, rep_locf::String)
 
 Reprocess user's dataset(s) and create corresponding JSON file(s) with folder paths given.
 
-- `folder_j` Path of folder where the created JSON file will be stored
-- `folder_r` Path of folder where the reprocessed dataset will be stored
+- `JSON_locf` Path of folder where the created JSON file will be stored
+- `rep_locf` Path of folder where the reprocessed dataset will be stored
 
 """
 function reprocess_files end
@@ -28,14 +28,17 @@ reprocess_files() = (
     while true
         #Get user input for directories
         _msg = "Please input the folder path of the JSON file you want to create > ";
-        folder_j = verified_input(_msg, _jdg_6); #check if folder exists
+        JSON_locf = verified_input(_msg, _jdg_6); #check if folder exists
         _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
-        file_j = verified_input(_msg, _jdg_7); #check if a JSON file name is given
+        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
         _msg = "Please input the folder path of the reprocessed file you want to create > ";
-        folder_r = verified_input(_msg, _jdg_6); #check if folder exists
+        rep_locf = verified_input(_msg, _jdg_6); #check if folder exists
 
-        _json = "$(folder_j)/$(file_j)";
-        process_single_file(_json, folder_r);
+        #Process the file and store JSON and reprocessed files in given directories
+        _json = "$(JSON_locf)/$(JSON_name)";
+        process_single_file(_json, rep_locf);
+
+        #
 
         #Ask user if they want to reprocess another dataset
         _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
@@ -48,7 +51,8 @@ reprocess_files() = (
     
 );
 
-reprocess_files(folder_j::String, folder_r::String) = (
+
+reprocess_files(JSON_locf::String, rep_locf::String) = (
     @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
 
     _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
@@ -57,11 +61,11 @@ reprocess_files(folder_j::String, folder_r::String) = (
     while true
         #Get user input for directories
         _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
-        file_j = verified_input(_msg, _jdg_7); #check if a JSON file name is given
+        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
 
-        _json = "$(folder_j)/$(file_j)";
-
-        process_single_file(_json, folder_r);
+        #Process the file and store JSON and reprocessed files in given directories
+        _json = "$(JSON_locf)/$(JSON_name)";
+        process_single_file(_json, rep_locf);
 
         #Ask user if they want to reprocess another dataset
         _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
@@ -76,17 +80,17 @@ reprocess_files(folder_j::String, folder_r::String) = (
 
 
 """
-    process_single_file(_json::String, folder_r::String)
+    process_single_file(_json::String, rep_locf::String)
 
 This is a helper method that creates a single JSON file based on user input and reprocesses the data represented by the JSON file 
 
 - `_json` Path of JSON file to be created
-- `folder_r` Path of folder where the reprocessed dataset will be stored
+- `rep_locf` Path of folder where the reprocessed dataset will be stored
 
 """
 function process_single_file end;
 
-process_single_file(_json::String, folder_r::String) = (
+process_single_file(_json::String, rep_locf::String) = (
 
     _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
     
@@ -116,24 +120,24 @@ process_single_file(_json::String, folder_r::String) = (
 
     #Reprocess data
     @info "Reprocessing data...";
-    create_from_json(_json, folder_r);
+    create_from_json(_json, rep_locf);
 
     return true;
 );
 
 
 """
-    create_from_json(_json::String, folder_r::String)
+    create_from_json(_json::String, rep_locf::String)
 
 This is a helper method that reprocesses the data represented by a given JSON file 
 
 - `_json` Path of JSON file to be parsed
-- `folder_r` Path of folder where the reprocessed dataset will be stored
+- `rep_locf` Path of folder where the reprocessed dataset will be stored
 
 """
 function create_from_json end;
 
-create_from_json(_json::String, folder_r::String) = (
+create_from_json(_json::String, rep_locf::String) = (
     #Parse JSON file created
     json_dict = JSON.parse(open(_json));
     name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
@@ -151,13 +155,18 @@ create_from_json(_json::String, folder_r::String) = (
     end;
 
     #Reprocess the data
-    reprocess_data!(folder_r, json_dict;
+    reprocess_data!(rep_locf, json_dict;
                     file_name_function = name_function, 
                     data_scaling_functions = data_scaling_f, 
                     std_scaling_functions = std_scaling_f,
                     data_masking_functions = data_masking_f,
                     std_masking_functions = std_masking_f);
     @info "Process complete";
+
+    #Deploying artifact
+    @info "Deploying reprocessed dataset as artifact";
+    deploy_griddingmachine_artifacts!(json_dict, "/home/exgu/GriddingMachine.jl/Artifacts.toml", rep_locf, "/home/exgu/GriddingMachine.jl/artifacts");
+    @info "Artifact deployed";
 )
 
 end; #module
