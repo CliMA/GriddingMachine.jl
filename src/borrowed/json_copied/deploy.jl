@@ -16,7 +16,7 @@ Deploy GriddingMachine artifacts, given
 """
 function deploy_griddingmachine_artifacts! end;
 
-deploy_griddingmachine_artifacts!(dict::Dict, art_toml::String, rep_locf::String, art_tarf::String; FTP_URLS::Vector{String} = FTP_URLS) = (
+deploy_griddingmachine_artifacts!(dict::Dict, art_toml::String, rep_locf::String, art_tarf::String; art_urls::Vector{String} = FTP_URLS) = (
     _dict_grid = dict["GRIDDINGMACHINE"];
 
     # determine if there is any information for years
@@ -25,12 +25,13 @@ deploy_griddingmachine_artifacts!(dict::Dict, art_toml::String, rep_locf::String
     for _i_year in _i_years
         _tag = (isnothing(_years) ? griddingmachine_tag(dict, 0) : griddingmachine_tag(dict, _years[_i_year]));
         _artifact_files = ["$(_tag).nc"];
-        deploy_artifact!(art_toml, _tag, rep_locf, _artifact_files, art_tarf, FTP_URLS);
+        deploy_artifact!(art_toml, _tag, rep_locf, _artifact_files, art_tarf, art_urls);
     end;
 
     return nothing
 )
-"""
+
+#=
 deploy_griddingmachine_artifacts!(dict::Dict) = (
     _dict_grid = dict["GRIDDINGMACHINE"];
 
@@ -44,6 +45,6 @@ deploy_griddingmachine_artifacts!(dict::Dict) = (
     end;
 
     return nothing
-)"""
+)=#
 
 
