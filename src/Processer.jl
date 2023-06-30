@@ -9,6 +9,7 @@ function combine_files end
 
 combine_files(folder::String) = (
     files = String[_file for _file in readdir(folder)];
+
 )
 
 
@@ -55,8 +56,6 @@ reprocess_files() = (
         #Process the file and store JSON and reprocessed files in given directories
         _json = "$(JSON_locf)/$(JSON_name)";
         reprocess_file(_json, rep_locf);
-
-        #
 
         #Ask user if they want to reprocess another dataset
         _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
@@ -112,7 +111,7 @@ reprocess_file(_json::String, rep_locf::String) = (
 
     _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_2(x) = (
-        length(x) >= 14 && x[end-13:end] == "Artifacts.toml" && isdir(x)
+        length(x) >= 14 && x[end-13:end] == "Artifacts.toml" && isfile(x)
     );
     _jdg_3(x) = (
         try
@@ -172,7 +171,7 @@ reprocess_file(_json::String, rep_locf::String) = (
     _msg = "Please input the folder of the compressed data to be stored > ";
     art_tarf = verified_input(_msg, _jdg_6);
     _msg = "Please inpt the URLs where the compressed files are to be uploaded, separated by , > ";
-    art_urls = verified_input(_msg, _jdg_3);
+    art_urls = convert(Vector{String}, split(verified_input(_msg, _jdg_3), ","));
 
     @info "Deploying reprocessed dataset as artifact...";
     deploy_from_json(_json, art_toml, rep_locf, art_tarf, art_urls);

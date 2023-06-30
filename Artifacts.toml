@@ -3734,6 +3734,14 @@ lazy = true
     sha256 = "9b03d09eaae764afb4b4e2b322f844db02688e64d01fe51038777f4005262124"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/TD_2X_1Y_V1.tar.gz"
 
+[TEST5_1X_1Y_V1]
+git-tree-sha1 = "82cac193133c99541b8723d22491e7bcb10f7481"
+lazy = true
+
+    [[TEST5_1X_1Y_V1.download]]
+    sha256 = "618daa921c0c477b37214a1e3543f1d3ecfa0b26c133efffffc19f3f8cab922e"
+    url = "/TEST5_1X_1Y_V1.tar.gz"
+
 [VCF_MODIS_MOD44B_2X_1Y_2000_V1]
 git-tree-sha1 = "e90ae3629fb1af041d707e2607f38a227d5a6fe9"
 lazy = true
