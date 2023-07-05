@@ -144,7 +144,7 @@ append_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes:
 #######################################################################################################################################################################################################
 """
 
-    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}, var_dims::Vector{String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
+    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
 
 Save the 1D, 2D, or 3D data as netcdf file, given
 - `file` Path to save the dataset
@@ -157,8 +157,8 @@ Save the 1D, 2D, or 3D data as netcdf file, given
 
 Note that this is a wrapper function of create_nc and append_nc:
 - If var_data is 1D, the dim is set to ind
-- If var_data is 2D, the dims are set to lon and lat
-- If var_data is 3D, the dims are set to long, lat, and ind
+- If var_data is 2D, and no var_dims are given, the dims are set to lon and lat
+- If var_data is 3D, and no var_dims are given, the dims are set to lon, lat, and ind
 
 #
     save_nc!(file::String, df::DataFrame, var_names::Vector{String}, var_attributes::Vector{Dict{String,String}}; compress::Int = 4, growable::Bool = false)
@@ -197,7 +197,8 @@ save_nc!("test.nc", df);
 """
 function save_nc! end
 
-save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}, var_dims::Vector{String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
+
+save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
     @assert 1 <= N <= 3 "Variable must be a 1D, 2D, or 3D dataset!";
     @assert 0 <= compress <= 9 "Compression rate must be within 0 to 9";
 

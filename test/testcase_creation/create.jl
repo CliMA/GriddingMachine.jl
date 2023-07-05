@@ -16,7 +16,7 @@ order = [["lon", "lat", "ind"], ["lon", "ind", "lat"], ["lat", "lon", "ind"], ["
 
 #data on edge rather than center
 edge = rand(Float64, lon, lat, ind);
-save_nc!("test/nc_files/edge.nc", "edge", edge, Dict("description" => "Random data"), order[1]);
+save_nc!("test/nc_files/edge.nc", "edge", edge, Dict("description" => "Random data"));
 
 lon = 360;
 lat = 180;
@@ -34,7 +34,7 @@ for i in range(1, lon)
     end
 end
 
-save_nc!("test/nc_files/lon_lat_ind.nc", "lon_lat_ind", lon_lat_ind, Dict("description" => "Random data, correct format"), order[1]);
+save_nc!("test/nc_files/lon_lat_ind.nc", "lon_lat_ind", lon_lat_ind, Dict("description" => "Random data, correct format"));
 
 #data with orders changed
 lon_ind_lat = zeros(Float64, lon, ind, lat);
@@ -78,21 +78,21 @@ for o in order
     if o == ["lon", "lat", "ind"] continue; end;
     name = o[1]*"_"*o[2]*"_"*o[3];
     path = "test/nc_files/"*name*".nc";
-    save_nc!(path, name, map[o], Dict("description" => "Random data"), o);
+    save_nc!(path, name, map[o], Dict("description" => "Random data"); var_dims = o);
 end
 
 _lons = collect(359.5:-1:0) .- 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc!("test/nc_files/lonf_lat_ind.nc", "lonf_lat_ind", lonf_lat_ind, Dict("description" => "Random data"), order[1]);
+save_nc!("test/nc_files/lonf_lat_ind.nc", "lonf_lat_ind", lonf_lat_ind, Dict("description" => "Random data"));
 
 _lons = collect(1/2:1:360) .- 180;
 _lats = collect(179.5:-1:0) .- 90;
-save_nc!("test/nc_files/lon_latf_ind.nc", "lon_latf_ind", lon_latf_ind, Dict("description" => "Random data"), order[1]);
+save_nc!("test/nc_files/lon_latf_ind.nc", "lon_latf_ind", lon_latf_ind, Dict("description" => "Random data"));
 
 _lons = collect(1/2:1:360) .- 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc!("test/nc_files/lin_scale.nc", "lin_scale", lin_scale, Dict("description" => "Random data, linearly scaled"), order[1]);
-save_nc!("test/nc_files/exp_scale.nc", "exp_scale", exp_scale, Dict("description" => "Random data, exponentially scaled"), order[1]);
+save_nc!("test/nc_files/lin_scale.nc", "lin_scale", lin_scale, Dict("description" => "Random data, linearly scaled"));
+save_nc!("test/nc_files/exp_scale.nc", "exp_scale", exp_scale, Dict("description" => "Random data, exponentially scaled"));
 
 
 #data with global vs partial coverage
@@ -105,11 +105,11 @@ glob[:, (lat2+1):lat, :] .= NaN;
 
 lat = 140;
 _lats = collect(30.5:1:169.5) .- 90;
-save_nc!("test/nc_files/partial.nc", "partial", partial, Dict("description" => "Random data, partial"), order[1]);
+save_nc!("test/nc_files/partial.nc", "partial", partial, Dict("description" => "Random data, partial"));
 
 lat = 180;
 _lats = collect(1/2:1:180) .- 90;
-save_nc!("test/nc_files/glob.nc", "glob", glob, Dict("description" => "Random data, global"), order[1]);
+save_nc!("test/nc_files/glob.nc", "glob", glob, Dict("description" => "Random data, global"));
 
 
 #data with sep files
@@ -117,8 +117,8 @@ same_file = rand(Float64, lon, lat, 2);
 file_1 = reshape(same_file[:, :, 1], lon, lat);
 file_2 = reshape(same_file[:, :, 2], lon, lat);
 
-save_nc!("test/nc_files/same_file.nc", "same_file", same_file, Dict("description" => "Random data, same file"), order[1]);
-save_nc!("test/nc_files/file_1.nc", "same_file", file_1, Dict("description" => "Random data, file 1"), ["lon", "lat"]);
-save_nc!("test/nc_files/file_2.nc", "same_file", file_2, Dict("description" => "Random data, file 2"), ["lon", "lat"]);
+save_nc!("test/nc_files/same_file.nc", "same_file", same_file, Dict("description" => "Random data, same file"));
+save_nc!("test/nc_files/file_1.nc", "same_file", file_1, Dict("description" => "Random data, file 1"); var_dims = ["lon", "lat"]);
+save_nc!("test/nc_files/file_2.nc", "same_file", file_2, Dict("description" => "Random data, file 2"); var_dims = ["lon", "lat"]);
 
 print("ok");
