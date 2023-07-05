@@ -1,16 +1,6 @@
 {
-    "INPUT_STD_SETS": [
-        {
-            "INDEX_AXIS_INDEX": 3,
-            "LATITUDE_AXIS_INDEX": 2,
-            "MASKING_FUNCTION": "",
-            "LONGITUDE_AXIS_INDEX": 1,
-            "SCALING_FUNCTION": "",
-            "DATA_NAME": "lon_lat_ind"
-        }
-    ],
     "GRIDDINGMACHINE": {
-        "LABEL": "TEST1",
+        "LABEL": "TESTDATA_same_file",
         "VERSION": 1,
         "EXTRA_LABEL": null,
         "LAT_LON_RESO": 1,
@@ -18,8 +8,7 @@
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
-        "about": "-",
-        "long_name": "-",
+        "about": "random data generated for testing",
         "unit": "-"
     },
     "INPUT_VAR_SETS": [
@@ -29,7 +18,7 @@
             "MASKING_FUNCTION": "",
             "LONGITUDE_AXIS_INDEX": 1,
             "SCALING_FUNCTION": "",
-            "DATA_NAME": "lon_lat_ind"
+            "DATA_NAME": "same_file"
         }
     ],
     "OUTPUT_REF_ATTR": {
@@ -43,11 +32,12 @@
         "FORMAT": "NETCDF",
         "PROJECTION": "CYLINDRICAL",
         "FLIP_LAT": false,
-        "FILE_NAME_PATTERN": "lon_lat_ind.nc",
-        "IS_CENTER": true,
+        "FILE_NAME_PATTERN": "same_file.nc",
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
-        "FLIP_LON": false
+        "FLIP_LON": false,
+        "IS_CENTER": true
     }
 }
+

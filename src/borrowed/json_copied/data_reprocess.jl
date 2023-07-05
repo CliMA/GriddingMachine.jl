@@ -144,7 +144,7 @@ function reprocess_data!(
         if _save_data
             _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
             _dim_names = length(size(_reprocessed_std)) == 3 ? ["lon", "lat", "ind"] : ["lon", "lat"];
-            save_nc!(_reprocessed_file, "data", _reprocessed_data, _var_attr);
+            save_nc!(_reprocessed_file, "data", _reprocessed_data, _var_attr, _dim_names);
             append_nc!(_reprocessed_file, "std", _reprocessed_std, _var_attr, _dim_names);
             @info "File saved";
         else

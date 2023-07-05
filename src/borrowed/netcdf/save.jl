@@ -144,13 +144,14 @@ append_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes:
 #######################################################################################################################################################################################################
 """
 
-    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Dict{String,String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
+    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}, var_dims::Vector{String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
 
 Save the 1D, 2D, or 3D data as netcdf file, given
 - `file` Path to save the dataset
 - `var_name` Variable name for the data in the NC file
 - `var_data` Data to save
-- `var_attribute` Variable attributes for the data, such as unit and long name
+- `var_attributes` Variable attributes for the data, such as unit and long name
+- `var_dims` Dimension name of each dimension of the variable data
 - `compress` Compression level fro NetCDF, default is 4
 - `growable` If true, make index growable, default is false
 
@@ -196,7 +197,7 @@ save_nc!("test.nc", df);
 """
 function save_nc! end
 
-save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Dict{String,String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
+save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}, var_dims::Vector{String}; compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
     @assert 1 <= N <= 3 "Variable must be a 1D, 2D, or 3D dataset!";
     @assert 0 <= compress <= 9 "Compression rate must be within 0 to 9";
 
@@ -214,7 +215,7 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Di
         _inds  = collect(eachindex(var_data));
         add_nc_dim!(_dset, "ind", _n_ind);
         append_nc!(_dset, "ind", _inds, ATTR_CYC, ["ind"]; compress=compress);
-        append_nc!(_dset, var_name, var_data, var_attribute, ["ind"]; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attributes, ["ind"]; compress=compress);
 
         close(_dset);
 
@@ -222,8 +223,20 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Di
     end;
 
     # if the dimension is 2D or 3D
-    _n_lon   = size(var_data, 1);
-    _n_lat   = size(var_data, 2);
+
+    _lon = 0;
+    _lat = 0;
+    _ind = 0;
+    for i in range(1, length(var_dims))
+        if var_dims[i] == "lon" _lon = i; end
+        if var_dims[i] == "lat" _lat = i; end
+        if var_dims[i] == "ind" _ind = i; end
+    end;
+
+    @assert _lon > 0 && _lat > 0 "Two of the dimensions must be named lon and lat (and ind for third dimension if there is one)";
+
+    _n_lon   = size(var_data, _lon);
+    _n_lat   = size(var_data, _lat);
     _res_lon = 360 / _n_lon;
     _res_lat = 180 / _n_lat;
     _lons    = collect(_res_lon/2:_res_lon:360) .- 180;
@@ -234,13 +247,13 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Di
     append_nc!(_dset, "lat", _lats, ATTR_LAT, ["lat"]; compress=compress);
 
     if N==2
-        append_nc!(_dset, var_name, var_data, var_attribute, ["lon", "lat"]; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attributes, var_dims; compress=compress);
     elseif N==3
-        _n_ind = (growable ? Inf : size(var_data,3));
+        _n_ind = (growable ? Inf : size(var_data, _ind));
         _inds  = collect(1:_n_ind);
         add_nc_dim!(_dset, "ind", _n_ind);
         append_nc!(_dset, "ind", _inds, ATTR_CYC, ["ind"]; compress=compress);
-        append_nc!(_dset, var_name, var_data, var_attribute, ["lon", "lat", "ind"]; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attributes, var_dims; compress=compress);
     end;
 
     close(_dset);

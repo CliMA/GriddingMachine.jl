@@ -1,15 +1,39 @@
 module Processer
 
 include("borrowed/GriddingMachineData.jl")
+include("judges.jl")
+
 
 """
-    combine_files(folder::String)
+    combine_files(folder::String, sep_files::Vector{String}, var_name::String, var_attributes::Dict{String,String}, var_dims::Vector{String}, file_name::String)
+
+Combine files in same folder that are of the same format (same variables, units, orientation, etc.) and save to the same folder
+
+- `folder` Folder containing the datasets
+- `sep_files` Vector of file names to be combined. Order matters
+- `var_name` Name of variable to be combined
+- `var_attributes` Attributes of the variable
+- `var_dims` Dimension names of the combined data to be saved
+- `file_name` Name of new file to be created
 """
-function combine_files end
+function combine_files end;
 
-combine_files(folder::String) = (
-    files = String[_file for _file in readdir(folder)];
+combine_files(folder::String, sep_files::Vector{String}, var_name::String, 
+        var_attributes::Dict{String,String}, var_dims::Vector{String}, file_name::String) = (
+    
+    @info "Combining files $(sep_files)";
+    combined_var = [];
 
+    if (length(file_name) < 3 || file_name[end-2:end] != ".nc") file_name = file_name * ".nc" end;
+    
+    for _file in sep_files
+        cur_var = read_nc("$(folder)/$(String(_file))", var_name);
+        combined_var = (combined_var == [] ? cur_var : cat(combined_var, cur_var, dims=indexin(["ind"], var_dims)[1]));
+    end;
+
+    save_nc!("$(folder)/$(file_name)", var_name, combined_var, var_attributes, var_dims);
+
+    return nothing
 )
 
 
@@ -31,18 +55,6 @@ function reprocess_files end
 
 reprocess_files() = (
     @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
-
-    _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
-    _jdg_6(x) = (
-        if isdir(x) return true end;
-        try 
-            mkpath(x);
-            return true
-        catch e
-            return false
-        end;
-    );
-    _jdg_7(x) = (length(x) >= 5 && x[end-4:end] == ".json");
     
     while true
         #Get user input for directories
@@ -71,9 +83,6 @@ reprocess_files() = (
 
 reprocess_files(JSON_locf::String, rep_locf::String) = (
     @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
-
-    _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
-    _jdg_7(x) = (length(x) >= 5 && x[end-4:end] == ".json");
 
     while true
         #Get user input for directories
@@ -108,28 +117,6 @@ This is a helper method that creates a single JSON file based on user input and 
 function reprocess_file end;
 
 reprocess_file(_json::String, rep_locf::String) = (
-
-    _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
-    _jdg_2(x) = (
-        length(x) >= 14 && x[end-13:end] == "Artifacts.toml" && isfile(x)
-    );
-    _jdg_3(x) = (
-        try
-            split(x, ",");
-            return true;
-        catch e
-            return false;
-        end;
-    );
-    _jdg_6(x) = (
-        if isdir(x) return true end;
-        try 
-            mkpath(x);
-            return true
-        catch e
-            return false
-        end;
-    );
     
     #Check if JSON file exists already
     if isfile(_json)
@@ -247,8 +234,5 @@ deploy_from_json(_json::String, art_toml::String, rep_locf::String, art_tarf::St
     end;
     @info "Artifact deployed";
 );
-
-#"/home/exgu/GriddingMachine.jl/Artifacts.toml"
-#"/home/exgu/GriddingMachine.jl/artifacts"
 
 end; #module

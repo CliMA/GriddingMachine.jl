@@ -61,11 +61,11 @@ function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox
     _fata = flipping[1] ? _eata[:,end:-1:1] : _eata;
     _gata = flipping[2] ? _fata[end:-1:1,:] : _fata;
 
-    # add a scaling function
-    _hata = isnothing(scaling_function) ? _gata : scaling_function.(_gata);
-
     # add a masking function
-    _hata = isnothing(masking_function) ? _hata : masking_function.(_hata);
+    _hata = isnothing(masking_function) ? _gata : masking_function.(_gata);
+
+    # add a scaling function
+    _hata = isnothing(scaling_function) ? _hata : scaling_function.(_hata);
 
     #change from edge to center if needed
     if !is_center
@@ -143,7 +143,7 @@ function read_data(filename::String, dict::Dict, flipping::Vector, resox::Int;
                                             masking_function = masking_function,
                                             is_center = is_center);
         end;
-
+        
         return _eata
     end;
 end

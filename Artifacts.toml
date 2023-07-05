@@ -3742,6 +3742,14 @@ lazy = true
     sha256 = "618daa921c0c477b37214a1e3543f1d3ecfa0b26c133efffffc19f3f8cab922e"
     url = "/TEST5_1X_1Y_V1.tar.gz"
 
+[TEST_COMBINED_1X_1Y_V1]
+git-tree-sha1 = "06fb6ed2fea267d3f935549fa48e0256d11ccfbf"
+lazy = true
+
+    [[TEST_COMBINED_1X_1Y_V1.download]]
+    sha256 = "65ad07876126e74ebdf3a324e0db2662bb8b6d2d0ffbab945069bed8265237d6"
+    url = "/TEST_COMBINED_1X_1Y_V1.tar.gz"
+
 [VCF_MODIS_MOD44B_2X_1Y_2000_V1]
 git-tree-sha1 = "e90ae3629fb1af041d707e2607f38a227d5a6fe9"
 lazy = true
