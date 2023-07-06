@@ -37,7 +37,7 @@ function variable_dict(_has_std::Bool)
         if (type == "error" && !_has_std) continue end;
         
         while true
-            _msg = "        Please input $(type) label or band name > ";
+            _msg = "        Please input $(type) label or band number > ";
             _name = verified_input(_msg, _jdg_1);
 
             _msg = "        What is the longitude axis number of the $(type)? (e.g., 1 for [lon,lat,time] and 2 for [lat,lon,time]) > ";
@@ -119,7 +119,7 @@ function variable_dicts()
     @info "These questions are about how to read the data, please be careful about them...";
 
     # ask for how many independent variables do you want to save as DATA
-    _msg = "    How many variables do you want to save as DATA (e.g., combine data1 and data2 in one netcdf file) > ";
+    _msg = "    How many variables/bands do you want to save as DATA (e.g., combine data1 and data2 in one netcdf file) > ";
     _data_count = parse(Int, verified_input(_msg, _jdg_1));
     _data_dicts = Dict{String,Any}[];
     

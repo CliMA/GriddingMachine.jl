@@ -111,6 +111,7 @@ end
 Return the formatted data, given
 - `filename` File to read
 - `dict` Dict about the data format
+- `type` Type of file
 - `flipping` Whether to flip latitude and longitude
 - `resox` Spatial resolution (N means 1/N °)
 - `coverage` The coverage of input map
@@ -119,13 +120,17 @@ Return the formatted data, given
 - `is_center` Whether the data is at center
 
 """
-function read_data(filename::String, dict::Dict, flipping::Vector, resox::Int;
+function read_data(filename::String, dict::Dict, type::String, flipping::Vector, resox::Int;
                     coverage::Union{String,Vector} = "GLOBAL", 
                     scaling_function::Union{Function,Nothing} = nothing, 
                     masking_function::Union{Function,Nothing} = nothing, 
                     is_center::Bool = true)
 
-    _data = read_nc(filename, dict["DATA_NAME"]);
+    if type == "NETCDF"
+        _data = read_nc(filename, dict["DATA_NAME"]);
+    elseif type == "GEOTIFF"
+        _data = read_tif(filename, dict["DATA NAME"]);
+    end;
 
     # rotate the data if necessary
     if isnothing(dict["INDEX_AXIS_INDEX"])

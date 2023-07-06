@@ -83,6 +83,7 @@ function reprocess_data!(
             _reprocessed_data = read_data(
                         _file,
                         _dict_vars[1],
+                        _dict_file["FORMAT"],
                         [_dict_file["FLIP_LAT"],_dict_file["FLIP_LON"]],
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
@@ -93,6 +94,7 @@ function reprocess_data!(
                 read_data(
                         _file,
                         _dict_stds[1],
+                        _dict_file["FORMAT"],
                         [_dict_file["FLIP_LAT"],_dict_file["FLIP_LON"]],
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
@@ -109,6 +111,7 @@ function reprocess_data!(
                 _reprocessed_data[:,:,_i_var] = read_data(
                         _file,
                         _dict_vars[_i_var],
+                        _dict_file["FORMAT"],
                         [_dict_file["FLIP_LAT"],_dict_file["FLIP_LON"]],
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
@@ -119,6 +122,7 @@ function reprocess_data!(
                     _reprocessed_std[:,:,_i_var] = read_data(
                         _file,
                         _dict_stds[_i_var],
+                        _dict_file["FORMAT"],
                         [_dict_file["FLIP_LAT"],_dict_file["FLIP_LON"]],
                         _dict_grid["LAT_LON_RESO"];
                         coverage = _dict_file["COVERAGE"],
@@ -144,7 +148,7 @@ function reprocess_data!(
         if _save_data
             _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
             _dim_names = length(size(_reprocessed_std)) == 3 ? ["lon", "lat", "ind"] : ["lon", "lat"];
-            save_nc!(_reprocessed_file, "data", _reprocessed_data, _var_attr, _dim_names);
+            save_nc!(_reprocessed_file, "data", _reprocessed_data, _var_attr; var_dims = _dim_names);
             append_nc!(_reprocessed_file, "std", _reprocessed_std, _var_attr, _dim_names);
             @info "File saved";
         else

@@ -109,8 +109,9 @@ function map_info_dict()
         _msg = "    What is the path of the folder containing the dataset? > ";
         _folder = verified_input(_msg, _jdg_6);
 
-        _msg = "    What is the file name (pattern) of the dataset? (file_name.file_format, replace variable with XXXXXXXX) > ";
-        _f_n_p = verified_input(_msg, _jdg_7);
+        _msg = "    What is the file name (pattern) of the dataset? (name.format, replace variable with XXXXXXXX) > ";
+        print(_msg)
+        _f_n_p = readline();
 
         _msg = "    What is the file name function of the dataset? (x -> lpad(x,4,\"0\") for varying years) > ";
         print(_msg)
