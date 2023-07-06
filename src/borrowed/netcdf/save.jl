@@ -7,6 +7,7 @@
 #     2022-Jan-28: add method to add dim information to Dataset using Inf
 #     2022-Jan-28: add method to add dim information to file directly
 #     2023-Feb-23: migrate from JuliaUtility to Emerald
+#     2023-Jul-05: add parameter var_dims to function save_nc! for data in array
 #
 #######################################################################################################################################################################################################
 """
@@ -258,6 +259,43 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::D
     end;
 
     close(_dset);
+
+    return nothing
+);
+
+save_nc!(file::String, df::DataFrame, var_names::Vector{String}, var_attributes::Vector{Dict{String,String}}; compress::Int = 4, growable::Bool = false) = (
+    @assert 0 <= compress <= 9 "Compression rate must be within 0 to 9";
+    @assert length(var_names) == length(var_attributes) "Variable name and attributes lengths must match!";
+
+    # create the file
+    _dset = Dataset(file, "c");
+
+    # global title attribute
+    for (_title,_notes) in ATTR_ABOUT
+        _dset.attrib[_title] = _notes;
+    end;
+
+    # define dimension related variables
+    _n_ind = (growable ? Inf : size(df)[1]);
+    _inds  = collect(1:_n_ind);
+
+    # save the variables
+    add_nc_dim!(_dset, "ind", _n_ind);
+    append_nc!(_dset, "ind", _inds, ATTR_CYC, ["ind"]; compress=compress);
+    for _i in eachindex(var_names)
+        append_nc!(_dset, var_names[_i], df[:, var_names[_i]], var_attributes[_i], ["ind"]; compress = compress);
+    end;
+
+    close(_dset);
+
+    return nothing
+);
+
+save_nc!(file::String, df::DataFrame; compress::Int = 4, growable::Bool = false) = (
+    _var_names = names(df);
+    _var_attrs = [Dict{String,String}(_vn => _vn) for _vn in _var_names];
+
+    save_nc!(file, df, _var_names, _var_attrs; compress=compress, growable = growable);
 
     return nothing
 );

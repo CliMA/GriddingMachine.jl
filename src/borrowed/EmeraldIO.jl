@@ -6,6 +6,7 @@ const ATTR_ABOUT = Dict("about" => "This is a file generated using Netcdf module
 
 using NCDatasets: Dataset, defVar
 using ArchGDAL: read, nraster, getband, getname
+using DataFrames
 
 include("netcdf/info.jl");
 include("netcdf/read.jl");

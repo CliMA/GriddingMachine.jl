@@ -31,7 +31,7 @@ combine_files(folder::String, sep_files::Vector{String}, var_name::String,
         combined_var = (combined_var == [] ? cur_var : cat(combined_var, cur_var, dims=indexin(["ind"], var_dims)[1]));
     end;
 
-    save_nc!("$(folder)/$(file_name)", var_name, combined_var, var_attributes, var_dims);
+    save_nc!("$(folder)/$(file_name)", var_name, combined_var, var_attributes; var_dims = var_dims);
 
     return nothing
 )

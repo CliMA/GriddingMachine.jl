@@ -1,0 +1,24 @@
+{
+
+    "OUTPUT_MAP_SETS": {
+        "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
+        "LABEL": "TROPO_SIF_gridded",
+        "SPATIAL_RESO": 5,
+        "LOG_FILE": ""
+
+    },
+    "INPUT_VAR_SETS": [
+        {
+            "MASKING_FUNCTION": "",
+            "SCALING_FUNCTION": "",
+            "DATA_NAME": "sif"
+        }
+    ],
+    "INPUT_MAP_SETS": {
+        "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
+        "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",
+        "FILE_NAME_FUNCTION": "",
+        "START_DATE": "2019-04-01",
+        "END_DATE": "2019-04-02"
+    }
+}
