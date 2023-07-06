@@ -1,10 +1,10 @@
 {
-
     "OUTPUT_MAP_SETS": {
-        "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
+        "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files/gridded",
         "LABEL": "TROPO_SIF_gridded",
-        "SPATIAL_RESO": 5,
-        "LOG_FILE": ""
+        "SPATIAL_RESO": 72,
+        "LOG_FILE": "",
+        "PER_MONTH": false
 
     },
     "INPUT_VAR_SETS": [
@@ -17,8 +17,10 @@
     "INPUT_MAP_SETS": {
         "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
         "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",
-        "FILE_NAME_FUNCTION": "",
-        "START_DATE": "2019-04-01",
-        "END_DATE": "2019-04-02"
+        "YEAR": 2019,
+        "START_MONTH": 4,
+        "START_DAY": 1,
+        "END_MONTH": 4,
+        "END_DAY": 2
     }
 }

@@ -2,9 +2,10 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames
+using DataFrames, JSON
 
 include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldIO.jl")
+include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldUtility.jl")
 
 
 """
@@ -35,15 +36,24 @@ partition(dict::Dict) = (
             gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], sif=Float32[], time=Float64[]);
         end;
     end;
-                
-
+    
     folder = _dict_file["FOLDER"];
-    y = 2019;
-    m_start = 4; m_end = 4;
-    d_start = 1; d_end = 2;
+    y = _dict_file["YEAR"];
+    m_start = _dict_file["START_MONTH"]; m_end = _dict_file["END_MONTH"];
+    d_start = _dict_file["START_DAY"]; d_end = _dict_file["END_DAY"];
+
+    if (isleapyear(y))
+        month_days = MDAYS;
+    else
+        month_days = MDAYS_LEAP;
+    end;
 
     for m in range(m_start, m_end)
-        for d in range(d_start, d_end)
+        d_s = 1; d_e = month_days[m];
+        if m == m_start d_s = d_start end;
+        if m == m_end d_e = d_end end;
+
+        for d in range(d_s, d_e)
             file_name = replace(_dict_file["FILE_NAME_PATTERN"], "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"));
             lon_cur = read_nc("$(folder)/$(file_name)", "lon");
             lat_cur = read_nc("$(folder)/$(file_name)", "lat");
@@ -59,13 +69,15 @@ partition(dict::Dict) = (
 
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(y)";
-            save_nc!(cur_file, gridded_data[i, j]);
+            cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(y).nc";
+            save_nc!(cur_file, gridded_data[i, j]; growable = true);
         end;
     end;
-    
+
     return nothing
 );
+
+partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"))
 
 
 end # module
