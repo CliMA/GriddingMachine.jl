@@ -63,9 +63,12 @@ partition(dict::Dict) = (
 
     for y in range(y_start, y_end)
 
+        m_s = y == y_start ? m_start : 1;
+        m_e = y == y_end ? m_end : 12;
+
         month_days = isleapyear(y) ? MDAYS : MDAYS_LEAP;
 
-        for m in range(m_start, m_end)
+        for m in range(m_s, m_e)
             
             d_s = m == m_start ? d_start : 1;
             d_e = m == m_end ? d_end : month_days[m];
@@ -128,7 +131,5 @@ partition(dict::Dict) = (
 
     return nothing
 );
-
-partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"))
 
 end # module
