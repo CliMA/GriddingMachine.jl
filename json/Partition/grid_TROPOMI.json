@@ -4,7 +4,6 @@
         "LABEL": "TROPO_SIF_gridded",
         "SPATIAL_RESO": 36,
         "PER_MONTH": false
-
     },
     "INPUT_VAR_SETS": [
         {
@@ -18,10 +17,15 @@
         "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",
         "START_YEAR": 2019,
         "END_YEAR": 2019,
-        "START_MONTH": 4,
+        "START_MONTH": 8,
         "START_DAY": 1,
-        "END_MONTH": 4,
+        "END_MONTH": 8,
         "END_DAY": 2
     },
-    "LOG_FILE": ""
+    "LOG_FILES": {
+        "FOLDER": "/home/exgu/GriddingMachine.jl/log_files",
+        "SUCCESSFUL": "successful_files.log",
+        "UNSUCCESSFUL": "unsuccessful_files.log",
+        "MISSING": "missing_files.log"
+    }
 }
