@@ -8,7 +8,6 @@ include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldIO.jl")
 include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldUtility.jl")
 
 """
-
     partition(dict::Dict)
 
 Partition data into grid based on JSON dict given
@@ -54,59 +53,73 @@ partition(dict::Dict) = (
         end;
     end;
 
+    #Empty grid with dataframes set up
     grid_template = copy(gridded_data);
     
+    #Folder and date information from JSON
     folder = _dict_file["FOLDER"];
     y_start = _dict_file["START_YEAR"]; y_end = _dict_file["END_YEAR"];
     m_start = _dict_file["START_MONTH"]; m_end = _dict_file["END_MONTH"];
     d_start = _dict_file["START_DAY"]; d_end = _dict_file["END_DAY"];
 
+    #Create folder if it does not exist yet
+    if !isdir(folder) mkpath(folder) end;
+
+    #Loop over years
     for y in range(y_start, y_end)
 
+        #Start (end) month is 1 (12) if currently not in start (end) year
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
 
+        #Get array corresponding to number of days in the 12 months of current year
         month_days = isleapyear(y) ? MDAYS : MDAYS_LEAP;
 
+        #Loop over months
         for m in range(m_s, m_e)
             
-            d_s = m == m_start ? d_start : 1;
-            d_e = m == m_end ? d_end : month_days[m];
+            #Start (end) day is 1 (31, 30, 29, or 28) if currently not in start (end) year and month
+            d_s = m == m_start && y = y_start ? d_start : 1;
+            d_e = m == m_end && y = y_end ? d_end : month_days[m];
 
             for d in range(d_s, d_e)
                 file_name = replace(_dict_file["FILE_NAME_PATTERN"], "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"));
                 file_path = "$(folder)/$(file_name)";
 
                 #Check if file already processed
+                #f = open(_dict_file["LOG_FILE"], "r")
 
-                #Read data from file
+                #Read lon, lat, and time data from file
                 lon_cur = read_nc(file_path, "lon");
                 lat_cur = read_nc(file_path, "lat");
                 time_cur = read_nc(file_path, "TIME");
                 data = Dict{String, Vector}()
                 std = Dict{String, Vector}()
 
-                for k in data_names
-                    data[k] = read_nc(file_path, k);
+                #Read the desired variables and std from file
+                for name in data_names
+                    data[name] = read_nc(file_path, name);
                 end;
-                for k in std_names
-                    std[k] = read_nc(file_path, k);
+                for name in std_names
+                    std[name] = read_nc(file_path, name);
                 end;
 
+                #Loop over all data and push datapoint to corresponding block in the grid
                 for i in range(1, size(time_cur)[1])
                     _lon_i = ceil(Int, (lon_cur[i]+180)/_reso);
                     _lat_i = ceil(Int, (lat_cur[i]+90)/_reso);
                     data_row = [lon_cur[i], lat_cur[i], time_cur[i]];
-                    for k in data_names
-                        push!(data_row, data[k][i])
+                    for name in data_names
+                        push!(data_row, data[name][i])
                     end;
-                    for k in std_names
-                        push!(data_row, std[k][i])
+                    for name in std_names
+                        push!(data_row, std[name][i])
                     end;
                     push!(gridded_data[_lon_i, _lat_i], data_row);
                 end;
             end;
 
+            #Save file for each month if set PER_MONTH to true
             if (_dict_outm["PER_MONTH"])
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
@@ -119,6 +132,7 @@ partition(dict::Dict) = (
 
         end;
 
+        #Save file for each year if set PER_MONTH to false
         if (!_dict_outm["PER_MONTH"])
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)

@@ -3,8 +3,7 @@
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files/gridded",
         "LABEL": "TROPO_SIF_gridded",
         "SPATIAL_RESO": 36,
-        "LOG_FILE": "",
-        "PER_MONTH": true
+        "PER_MONTH": false
 
     },
     "INPUT_VAR_SETS": [
@@ -22,6 +21,7 @@
         "START_MONTH": 4,
         "START_DAY": 1,
         "END_MONTH": 4,
-        "END_DAY": 1
-    }
+        "END_DAY": 2
+    },
+    "LOG_FILE": ""
 }
