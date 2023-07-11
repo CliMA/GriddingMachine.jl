@@ -2,10 +2,11 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames, JSON, Logging
+using DataFrames, JSON
 
-include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldIO.jl")
-include("/home/exgu/GriddingMachine.jl/src/borrowed/EmeraldUtility.jl")
+include("borrowed/EmeraldIO.jl")
+include("borrowed/EmeraldUtility.jl")
+include("borrowed/ModifyLogs.jl")
 
 """
     partition(dict::Dict)
@@ -91,25 +92,13 @@ partition(dict::Dict) = (
 
                 #Check if file exists. If not, write to missing_files.log
                 if !isfile(file_path)
-                    open("$(_dict_logs["FOLDER"])/$(_dict_logs["MISSING"])", "a") do missing_log
-                        write(missing_log, "$(file_name)\n");
-                    end;
+                    write_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["MISSING"])", file_name);
                     @info "File $(file_name) is missing, skipping...";
                     continue;
                 end;
 
                 #Check if file already processed. If so, skip the file
-                gridded = false;
-                open("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])") do success_log
-                    for l in eachline(success_log)
-                        if (l == file_name)
-                            gridded = true;
-                            @info "File $(file_name) already gridded, skipping..."
-                            break;
-                        end;
-                    end;
-                end;
-                if gridded continue end;
+                if(check_log_for_message("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])", file_name)) continue; end;
                 @info "Gridding $(file_name) ..."
                 
                 try
@@ -143,14 +132,10 @@ partition(dict::Dict) = (
                     end;
 
                     #Add file to successful_files.log
-                    open("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])", "a") do success_log
-                        write(success_log, "$(file_name)\n");
-                    end;
+                    append_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])", file_name);
+
                 catch e
-                    #Add file to unsuccessful_files.log
-                    open("$(_dict_logs["FOLDER"])/$(_dict_logs["UNSUCCESSFUL"])", "a") do unsuccess_log
-                        write(unsuccess_log, "$(file_name)\n");
-                    end;
+                    write_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["UNSUCCESSFUL"])", file_name)
                     @info "File $(file_name) processing unsuccessful";
                 end;
                 
@@ -161,7 +146,7 @@ partition(dict::Dict) = (
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
                         cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                        save_nc!(cur_file, gridded_data[i, j]);
+                        save_nc!(cur_file, gridded_data[i, j]; growable = true);
                     end;
                 end;
                 gridded_data = copy(grid_template);
@@ -174,7 +159,7 @@ partition(dict::Dict) = (
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
                     cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
-                    save_nc!(cur_file, gridded_data[i, j]);
+                    save_nc!(cur_file, gridded_data[i, j]; growable = true);
                 end;
             end;
         end;

@@ -15,8 +15,8 @@
     "INPUT_MAP_SETS": {
         "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
         "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",
-        "START_YEAR": 2019,
-        "END_YEAR": 2019,
+        "START_YEAR": 2023,
+        "END_YEAR": 2023,
         "START_MONTH": 8,
         "START_DAY": 1,
         "END_MONTH": 8,

@@ -8,6 +8,7 @@
 #     2022-Jan-28: add method to add dim information to file directly
 #     2023-Feb-23: migrate from JuliaUtility to Emerald
 #     2023-Jul-05: add parameter var_dims to function save_nc! for data in array
+#     2023-Jul-11: fixed bug for save_nc! for growable = true
 #
 #######################################################################################################################################################################################################
 """
@@ -277,7 +278,7 @@ save_nc!(file::String, df::DataFrame, var_names::Vector{String}, var_attributes:
 
     # define dimension related variables
     _n_ind = (growable ? Inf : size(df)[1]);
-    _inds  = collect(1:_n_ind);
+    _inds  = collect(1:size(df)[1]);
 
     # save the variables
     add_nc_dim!(_dset, "ind", _n_ind);
