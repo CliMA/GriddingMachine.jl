@@ -33,28 +33,32 @@ partition(dict::Dict) = (
     _n_lon = Int(360/_reso);
     _n_lat = Int(180/_reso);
 
-    #Initialize array to store data
-    gridded_data = Array{DataFrame}(undef, _n_lon, _n_lat);
-
-    data_names = [];
-    std_names = [];
+    #Parse data name, masking function, and scaling function
+    data_info = [];
+    std_info = [];
     for k in eachindex(_dict_vars)
-        push!(data_names, _dict_vars[k]["DATA_NAME"]);
+        data_masking_f = _dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
+        data_scaling_f = _dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
+        push!(data_info, (_dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
     end;
     if _dict_stds !== nothing
         for k in eachindex(_dict_stds)
-            push!(std_names, _dict_stds[k]["DATA_NAME"]);
+            std_masking_f = _dict_stds[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_stds[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
+            std_scaling_f = _dict_stds[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_stds[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
+            push!(std_info, (_dict_stds[k]["DATA_NAME"], std_masking_f, std_scaling_f));
         end;
     end;
 
+    #Initialize array to store data
+    gridded_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
             gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
-            for k in data_names
-                gridded_data[i, j][!, k] = Float32[];
+            for k in data_info
+                gridded_data[i, j][!, k[1]] = Float32[];
             end;
-            for k in std_names
-                gridded_data[i, j][!, k] = Float32[];
+            for k in std_info
+                gridded_data[i, j][!, k[1]] = Float32[];
             end;
         end;
     end;
@@ -113,12 +117,16 @@ partition(dict::Dict) = (
                     data = Dict{String, Vector}();
                     std = Dict{String, Vector}();
 
-                    #Read the desired variables and std from file
-                    for name in data_names
-                        data[name] = read_nc(file_path, name);
+                    #Read the desired variables and std from file and apply given functions
+                    for k in data_info
+                        data[k[1]] = read_nc(file_path, k[1]);
+                        data[k[1]] = isnothing(k[2]) ? data[k[1]] : k[2].(data[k[1]]);
+                        data[k[1]] = isnothing(k[3]) ? data[k[1]] : k[3].(data[k[1]]);
                     end;
-                    for name in std_names
-                        std[name] = read_nc(file_path, name);
+                    for k in std_info
+                        std[k[1]] = read_nc(file_path, k[1]);
+                        std[k[1]] = isnothing(k[2]) ? std[k[1]] : k[2].(std[k[1]]);
+                        std[k[1]] = isnothing(k[3]) ? std[k[1]] : k[3].(std[k[1]]);
                     end;
 
                     #Loop over all data and push datapoint to corresponding block in the grid
@@ -126,11 +134,11 @@ partition(dict::Dict) = (
                         _lon_i = ceil(Int, (lon_cur[i]+180)/_reso);
                         _lat_i = ceil(Int, (lat_cur[i]+90)/_reso);
                         data_row = [lon_cur[i], lat_cur[i], time_cur[i]];
-                        for name in data_names
-                            push!(data_row, data[name][i]);
+                        for k in data_info
+                            push!(data_row, data[k[1]][i]);
                         end;
-                        for name in std_names
-                            push!(data_row, std[name][i]);
+                        for k in std_info
+                            push!(data_row, std[k[1]][i]);
                         end;
                         push!(gridded_data[_lon_i, _lat_i], data_row);
                     end;
@@ -157,7 +165,6 @@ partition(dict::Dict) = (
                 end;
                 gridded_data = copy(grid_template);
             end;
-
         end;
 
         #Save file for each year if set PER_MONTH to false
@@ -173,6 +180,10 @@ partition(dict::Dict) = (
 
     return nothing
 );
+
+
+function get_rectangle end;
+
 
 Partitioner.partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
 
