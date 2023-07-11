@@ -133,12 +133,10 @@ function reprocess_data!(
             end;
         end;
 
-        #ask user whether to plot data
-        _msg = "Do you want to plot the data? Type Y/y or N/n to continue > ";
-        _plot = (verified_input(_msg, uppercase, _jdg_1) in ["Y", "YES"]);
-        if _plot
-            #To be implemented elsewhere
-        end
+        #Check if file is land only and if processed data falls on land
+        if _dict_file["LAND_ONLY"] && !check_land_mask(_reprocessed_data; division = _dict_grid["LAT_LON_RESO"])
+            @warn "The dataset is set to be land only, but values not on land are found."
+        end;
 
         #ask user whether to save file
         _msg = "Do you want to save the data? Type Y/y or N/n to continue > ";
@@ -174,3 +172,41 @@ function reprocess_data!(
 
     return _reprocessed_data #nothing
 end;
+
+"""
+
+    check_land_mask(data::Array{FT,N}; division::Int = 1, threshold::Number = 0.01) where {FT,N}
+
+Check if data falls on land
+- `data` Data to check
+- `division` Spatial resolution of the land mask is 1/division degree
+- `threshold` Threshold of land mask
+
+"""
+function check_land_mask(data::Array{FT,N}; division::Int = 1, threshold::Number = 0.01) where {FT,N}
+    @assert N in [2, 3] "data must be 2D or 3D";
+    @assert size(data,1) == division * 360 "data must be 360 * division in longitude";
+    @assert size(data,2) == division * 180 "data must be 180 * division in latitude";
+
+    # read land mask data from GriddingMachine if the data is not yet loaded into memory
+    global LAND_MASK = read_LUT(query_collection("LM_4X_1Y_V1"))[1];
+
+    # regrid land mask data to the same resolution as data
+    _land_mask = regrid(LAND_MASK, division);
+
+    # filter out NaNs in data based on land mask threshold
+    # replace NaNs in data with replacement
+    if N == 2
+        _nan_mask = !isnan.(data) .|| (_land_mask .>= threshold);
+        return !(false in _nan_mask);
+    end;
+    if N == 3
+        for _i in axes(data, 3)
+            _nan_mask = !isnan.(data[:,:,_i]) .|| (_land_mask .>= threshold);
+            if (false in _nan_mask) return false; end;
+        end;
+        return true;
+    end;
+
+    return true;
+end

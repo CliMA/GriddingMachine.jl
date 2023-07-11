@@ -38,6 +38,7 @@
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
-        "FLIP_LON": false
+        "FLIP_LON": false,
+        "LAND_ONLY": false
     }
 }

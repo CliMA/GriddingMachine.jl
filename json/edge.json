@@ -37,7 +37,8 @@
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
         "FLIP_LON": false,
-        "IS_CENTER": false
+        "IS_CENTER": false,
+        "LAND_ONLY": false
     }
 }
 

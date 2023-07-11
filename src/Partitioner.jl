@@ -159,7 +159,7 @@ partition(dict::Dict) = (
             if (_dict_outm["PER_MONTH"])
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
-                        cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
+                        cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
                         save_nc!(cur_file, gridded_data[i, j]; growable = true);
                     end;
                 end;
@@ -171,7 +171,7 @@ partition(dict::Dict) = (
         if (!_dict_outm["PER_MONTH"])
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
-                    cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_$(lpad(i, 3, "0"))_$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
+                    cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
                     save_nc!(cur_file, gridded_data[i, j]; growable = true);
                 end;
             end;
@@ -182,10 +182,19 @@ partition(dict::Dict) = (
 );
 
 
-function get_rectangle end;
+"""
+    get_data()
+
+Get data from a specific satelite within the given closed polygonal region over the given time range
+"""
+function get_data end;
+
+get_data() = (
+
+);
 
 
-Partitioner.partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
+#Partitioner.partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
 
 end; # module
 

@@ -1,7 +1,79 @@
 module Processer
 
+using ..Indexer: read_LUT
+using ..Collector: query_collection
+using ..Blender: regrid
+
 include("borrowed/GriddingMachineData.jl")
 include("judges.jl")
+
+"""
+    reprocess_from_json(_json::String, rep_locf::String)
+
+This method reprocesses the data represented by a given JSON file 
+
+- `_json` Path of JSON file to be parsed
+- `rep_locf` Path of folder where the reprocessed dataset will be stored
+
+"""
+function reprocess_from_json end;
+
+reprocess_from_json(_json::String, rep_locf::String) = (
+    #Parse JSON file created
+    json_dict = JSON.parse(open(_json));
+
+    #Get all the functions
+    name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
+    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
+    std_scaling_f = if "INPUT_STD_SETS" in keys(json_dict)
+        [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
+    else
+        [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
+    end;
+    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
+    std_masking_f = if "INPUT_STD_SETS" in keys(json_dict)
+        [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
+    else
+        [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
+    end;
+
+    #Reprocess the data
+    reprocess_data!(rep_locf, json_dict;
+                    file_name_function = name_function, 
+                    data_scaling_functions = data_scaling_f, 
+                    std_scaling_functions = std_scaling_f,
+                    data_masking_functions = data_masking_f,
+                    std_masking_functions = std_masking_f);
+    @info "Process complete";
+);
+
+
+"""
+    deploy_from_json(_json::String, rep_locf::String)
+
+This method deploys the data represented by a given JSON file that is stored in a local folder
+
+- `_json` Path of JSON file to be parsed
+- `art_toml` Directory of Artifacts.toml file
+- `rep_locf` Path of folder where the reprocessed dataset is stored
+- `art_tarf` Path of folder where the compressed data would be stored
+- `art_urls` Vector of public urls, where the compressed files are to be uploaded (user need to upload the file manually)
+
+"""
+function deploy_from_json end;
+
+deploy_from_json(_json::String, art_toml::String, rep_locf::String, art_tarf::String, art_urls::Vector{String}) = (
+    #Parse JSON file
+    json_dict = JSON.parse(open(_json));
+
+    #Deploy artifact
+    if art_urls == []
+        deploy_griddingmachine_artifacts!(json_dict, art_toml, rep_locf, art_tarf);
+    else
+        deploy_griddingmachine_artifacts!(json_dict, art_toml, rep_locf, art_tarf; art_urls = art_urls);
+    end;
+    @info "Artifact deployed";
+);
 
 
 """
@@ -164,75 +236,6 @@ reprocess_file(_json::String, rep_locf::String) = (
     deploy_from_json(_json, art_toml, rep_locf, art_tarf, art_urls);
 
     return true;
-);
-
-
-"""
-    reprocess_from_json(_json::String, rep_locf::String)
-
-This method reprocesses the data represented by a given JSON file 
-
-- `_json` Path of JSON file to be parsed
-- `rep_locf` Path of folder where the reprocessed dataset will be stored
-
-"""
-function reprocess_from_json end;
-
-reprocess_from_json(_json::String, rep_locf::String) = (
-    #Parse JSON file created
-    json_dict = JSON.parse(open(_json));
-
-    #Get all the functions
-    name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
-    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
-    std_scaling_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
-    else
-        [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
-    end;
-    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
-    std_masking_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
-    else
-        [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
-    end;
-
-    #Reprocess the data
-    reprocess_data!(rep_locf, json_dict;
-                    file_name_function = name_function, 
-                    data_scaling_functions = data_scaling_f, 
-                    std_scaling_functions = std_scaling_f,
-                    data_masking_functions = data_masking_f,
-                    std_masking_functions = std_masking_f);
-    @info "Process complete";
-);
-
-
-"""
-    deploy_from_json(_json::String, rep_locf::String)
-
-This method deploys the data represented by a given JSON file that is stored in a local folder
-
-- `_json` Path of JSON file to be parsed
-- `art_toml` Directory of Artifacts.toml file
-- `rep_locf` Path of folder where the reprocessed dataset is stored
-- `art_tarf` Path of folder where the compressed data would be stored
-- `art_urls` Vector of public urls, where the compressed files are to be uploaded (user need to upload the file manually)
-
-"""
-function deploy_from_json end;
-
-deploy_from_json(_json::String, art_toml::String, rep_locf::String, art_tarf::String, art_urls::Vector{String}) = (
-    #Parse JSON file
-    json_dict = JSON.parse(open(_json));
-
-    #Deploy artifact
-    if art_urls == []
-        deploy_griddingmachine_artifacts!(json_dict, art_toml, rep_locf, art_tarf);
-    else
-        deploy_griddingmachine_artifacts!(json_dict, art_toml, rep_locf, art_tarf; art_urls = art_urls);
-    end;
-    @info "Artifact deployed";
 );
 
 end; #module

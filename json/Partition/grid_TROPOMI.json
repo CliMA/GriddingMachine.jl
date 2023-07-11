@@ -1,6 +1,6 @@
 {
     "OUTPUT_MAP_SETS": {
-        "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files/gridded",
+        "FOLDER": "/net/fluo/data1/group/emilyg/gridded_test",
         "LABEL": "TROPO_SIF_gridded",
         "SPATIAL_RESO": 36,
         "PER_MONTH": false
