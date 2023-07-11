@@ -24,6 +24,10 @@ partition(dict::Dict) = (
     _dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
     _dict_logs = dict["LOG_FILES"];
 
+    success_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])";
+    unsuccess_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["UNSUCCESSFUL"])";
+    missing_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["MISSING"])";
+
     #Compute number of blocks along lon and lat
     _reso = _dict_outm["SPATIAL_RESO"];
     _n_lon = Int(360/_reso);
@@ -92,13 +96,13 @@ partition(dict::Dict) = (
 
                 #Check if file exists. If not, write to missing_files.log
                 if !isfile(file_path)
-                    write_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["MISSING"])", file_name);
+                    write_to_log(missing_file_log, file_name);
                     @info "File $(file_name) is missing, skipping...";
                     continue;
                 end;
 
                 #Check if file already processed. If so, skip the file
-                if(check_log_for_message("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])", file_name)) continue; end;
+                if (check_log_for_message(success_file_log, file_name)) continue; end;
                 @info "Gridding $(file_name) ..."
                 
                 try
@@ -131,11 +135,13 @@ partition(dict::Dict) = (
                         push!(gridded_data[_lon_i, _lat_i], data_row);
                     end;
 
-                    #Add file to successful_files.log
-                    append_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])", file_name);
+                    #Add file to successful_files.log and remove from other logs
+                    append_to_log(success_file_log, file_name);
+                    remove_from_log(unsuccess_file_log, file_name);
+                    remove_from_log(missing_file_log, file_name);
 
                 catch e
-                    write_to_log("$(_dict_logs["FOLDER"])/$(_dict_logs["UNSUCCESSFUL"])", file_name)
+                    write_to_log(unsuccess_file_log, file_name)
                     @info "File $(file_name) processing unsuccessful";
                 end;
                 

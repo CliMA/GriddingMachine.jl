@@ -1,5 +1,30 @@
 """
-check_log_for_message(file_path::String, message::String)
+    remove_from_log(file_path::String, message::String)
+
+Remove message from log if it exists
+- `file_path` Path to log file
+- `message` The message to be removed
+"""
+function remove_from_log end;
+
+remove_from_log(file_path::String, message::String) = (
+    log = open(file_path);
+    lines = readlines(log);
+    close(log);
+
+    open(file_path, "w") do log
+        for l in lines
+            if (l != message)
+                write(log, "$(l)\n")
+            end;
+        end;
+    end;
+    return nothing;
+);
+
+
+"""
+    check_log_for_message(file_path::String, message::String)
 
 Check if message exists in log file already
 - `file_path` Path to log file
@@ -21,7 +46,7 @@ check_log_for_message(file_path::String, message::String) = (
 
 
 """
-append_to_log(file_path::String, message::String)
+    append_to_log(file_path::String, message::String)
 
 Append message to end of log file
 - `file_path` Path to log file
@@ -39,7 +64,7 @@ append_to_log(file_path::String, message::String) = (
 
 
 """
-write_to_log(file_path::String, message::String)
+    write_to_log(file_path::String, message::String)
 
 Write message to end of log file as a separate line if message does not exist already
 - `file_path` Path to log file
