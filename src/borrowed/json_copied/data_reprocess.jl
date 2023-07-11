@@ -135,7 +135,7 @@ function reprocess_data!(
 
         #Check if file is land only and if processed data falls on land
         if _dict_file["LAND_ONLY"] && !check_land_mask(_reprocessed_data; division = _dict_grid["LAT_LON_RESO"])
-            @warn "The dataset is set to be land only, but values not on land are found."
+            @warn "The dataset is set to be land only, but not all values are on land."
         end;
 
         #ask user whether to save file
@@ -197,12 +197,12 @@ function check_land_mask(data::Array{FT,N}; division::Int = 1, threshold::Number
     # filter out NaNs in data based on land mask threshold
     # replace NaNs in data with replacement
     if N == 2
-        _nan_mask = !isnan.(data) .|| (_land_mask .>= threshold);
+        _nan_mask = isnan.(data) .|| (_land_mask .>= threshold);
         return !(false in _nan_mask);
     end;
     if N == 3
         for _i in axes(data, 3)
-            _nan_mask = !isnan.(data[:,:,_i]) .|| (_land_mask .>= threshold);
+            _nan_mask = isnan.(data[:,:,_i]) .|| (_land_mask .>= threshold);
             if (false in _nan_mask) return false; end;
         end;
         return true;
