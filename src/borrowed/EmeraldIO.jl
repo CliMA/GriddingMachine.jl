@@ -11,5 +11,6 @@ using DataFrames
 include("netcdf/info.jl");
 include("netcdf/read.jl");
 include("netcdf/save.jl");
+include("netcdf/grow.jl");
 include("geotiff/read.jl");
 include("Terminal.jl");

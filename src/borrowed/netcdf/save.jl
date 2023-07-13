@@ -7,8 +7,6 @@
 #     2022-Jan-28: add method to add dim information to Dataset using Inf
 #     2022-Jan-28: add method to add dim information to file directly
 #     2023-Feb-23: migrate from JuliaUtility to Emerald
-#     2023-Jul-05: add parameter var_dims to function save_nc! for data in array
-#     2023-Jul-11: fixed bug for save_nc! for growable = true
 #
 #######################################################################################################################################################################################################
 """
@@ -142,6 +140,8 @@ append_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes:
 #     2022-Jan-28: remove the complicated funtion to create var and dim at the same time
 #     2022-Jan-28: add global attributes to the generated file
 #     2023-Feb-23: migrate from JuliaUtility to Emerald
+#     2023-Jul-05: add parameter var_dims to function save_nc! for data in array
+#     2023-Jul-11: fixed bug for save_nc! for growable = true
 #
 #######################################################################################################################################################################################################
 """

@@ -71,6 +71,8 @@ partition(dict::Dict) = (
     #Loop over years
     for y in range(y_start, y_end)
 
+        successful_files = [];
+
         #Start (end) month is 1 (12) if currently not in start (end) year
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
@@ -95,7 +97,10 @@ partition(dict::Dict) = (
                 end;
 
                 #Check if file already processed. If so, skip the file
-                if (check_log_for_message(success_file_log, file_name)) continue; end;
+                if (check_log_for_message(success_file_log, file_name))
+                    @info "File $(file_name) is already processed, skipping...";
+                    continue;
+                end;
                 @info "Gridding $(file_name) ..."
                 
                 try
@@ -116,8 +121,8 @@ partition(dict::Dict) = (
 
                     #Loop over all data and push datapoint to corresponding block in the grid
                     for i in range(1, size(time_cur)[1])
-                        _lon_i = ceil(Int, (lon_cur[i]+180)/_reso);
-                        _lat_i = ceil(Int, (lat_cur[i]+90)/_reso);
+                        _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
+                        _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
                         data_row = [lon_cur[i], lat_cur[i], time_cur[i]];
                         for k in data_info
                             push!(data_row, data[k[1]][i]);
@@ -125,16 +130,14 @@ partition(dict::Dict) = (
                         push!(gridded_data[_lon_i, _lat_i], data_row);
                     end;
 
-                    #Add file to successful_files.log and remove from other logs
-                    append_to_log(success_file_log, file_name);
-                    remove_from_log(unsuccess_file_log, file_name);
+                    #Add file to successful_files array and remove from missing log
+                    push!(successful_files, file_name);
                     remove_from_log(missing_file_log, file_name);
 
                 catch e
                     write_to_log(unsuccess_file_log, file_name)
                     @info "File $(file_name) processing unsuccessful";
                 end;
-                
             end;
 
             #Save file for each month if set PER_MONTH to true
@@ -143,10 +146,19 @@ partition(dict::Dict) = (
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
                         cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                        save_nc!(cur_file, gridded_data[i, j]; growable = true);
+                        if !isfile(cur_file)
+                            save_nc!(cur_file, gridded_data[i, j]; growable = true);
+                        else
+                            grow_nc!(cur_file, gridded_data[i, j]);
+                        end;
                     end;
                 end;
                 gridded_data = copy(grid_template);
+                for f in successful_files
+                    append_to_log(success_file_log, f);
+                    remove_from_log(unsuccess_file_log, f);
+                end;
+                successful_files = [];
             end;
         end;
 
@@ -156,8 +168,16 @@ partition(dict::Dict) = (
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
                     cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
-                    save_nc!(cur_file, gridded_data[i, j]; growable = true);
+                    if !isfile(cur_file)
+                        save_nc!(cur_file, gridded_data[i, j]; growable = true);
+                    else
+                        grow_nc!(cur_file, gridded_data[i, j]);
+                    end;
                 end;
+            end;
+            for f in successful_files
+                append_to_log(success_file_log, f);
+                remove_from_log(unsuccess_file_log, f);
             end;
         end;
     end;
@@ -256,7 +276,8 @@ clean_files(folder::String, label::String, reso::Int, year::Int) = (
 #println(DataFrame(lon=Float32[], a.value=Float32[]))
 #println(hasintersect(Ngon((0, 0), (1, 0), (0, 1)), Point(0.25, 0.25)))
 
-Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI_R005.json"));
+#Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
+#Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI_R005.json"));
 
 end; # module
 
