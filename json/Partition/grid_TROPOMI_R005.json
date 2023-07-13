@@ -1,0 +1,36 @@
+{
+    "OUTPUT_MAP_SETS": {
+        "FOLDER": "/net/fluo/data1/group/emilyg/gridded_test",
+        "LABEL": "TROPO_SIF",
+        "SPATIAL_RESO": 5,
+        "PER_MONTH": false
+    },
+    "INPUT_VAR_SETS": [
+        {
+            "MASKING_FUNCTION": "",
+            "SCALING_FUNCTION": "",
+            "DATA_NAME": "sif"
+        }
+    ],
+    "INPUT_DIM_SETS": {
+        "LON_NAME": "lon",
+        "LAT_NAME": "lat",
+        "TIME_NAME": "TIME"
+    },
+    "INPUT_MAP_SETS": {
+        "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
+        "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",
+        "START_YEAR": 2020,
+        "END_YEAR": 2020,
+        "START_MONTH": 1,
+        "START_DAY": 1,
+        "END_MONTH": 12,
+        "END_DAY": 31
+    },
+    "LOG_FILES": {
+        "FOLDER": "/home/exgu/GriddingMachine.jl/log_files",
+        "SUCCESSFUL": "successful_files.log",
+        "UNSUCCESSFUL": "unsuccessful_files.log",
+        "MISSING": "missing_files.log"
+    }
+}

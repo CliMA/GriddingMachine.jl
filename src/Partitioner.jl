@@ -74,16 +74,14 @@ partition(dict::Dict) = (
         #Start (end) month is 1 (12) if currently not in start (end) year
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
-
-        #Get array corresponding to number of days in the 12 months of current year
-        month_days = isleapyear(y) ? MDAYS : MDAYS_LEAP;
+        month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
 
         #Loop over months
         for m in range(m_s, m_e)
             
             #Start (end) day is 1 (31, 30, 29, or 28) if currently not in start (end) year and month
             d_s = (m == m_start && y == y_start) ? d_start : 1;
-            d_e = (m == m_end && y == y_end) ? d_end : month_days[m];
+            d_e = (m == m_end && y == y_end) ? d_end : month_days[m+1]-month_days[m];
 
             for d in range(d_s, d_e)
                 file_name = replace(_dict_file["FILE_NAME_PATTERN"], "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"));
@@ -141,6 +139,7 @@ partition(dict::Dict) = (
 
             #Save file for each month if set PER_MONTH to true
             if (_dict_outm["PER_MONTH"])
+                @info "Saving files for $(lpad(y, 4, "0")), $(lpad(m, 2, "0"))..."
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
                         cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
@@ -153,6 +152,7 @@ partition(dict::Dict) = (
 
         #Save file for each year if set PER_MONTH to false
         if (!_dict_outm["PER_MONTH"])
+            @info "Saving files for $(lpad(y, 4, "0"))..."
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
                     cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
@@ -161,15 +161,19 @@ partition(dict::Dict) = (
             end;
         end;
     end;
+    @info "Process complete";
 
     return nothing
 );
 
 
 """
-    get_data(dict::Dict, poly::Vector, y::Int, var_name::String)
+    get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_name::String)
 
 Get data from a specific satelite within the given closed polygonal region of a year
+- `folder` Path to the folder storing the gridded files
+- `label` Label of the dataset
+- `reso` Resolution of the grid
 - `dict` JSON dict containing information for the gridded dataset
 - `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `y` The year of interest
@@ -177,41 +181,45 @@ Get data from a specific satelite within the given closed polygonal region of a 
 """
 function get_data end;
 
-get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
-    
-    _dict_outm = dict["OUTPUT_MAP_SETS"];
-    _dict_logs = dict["LOG_FILES"];
-    
-    _reso = _dict_outm["SPATIAL_RESO"];
+get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_name::String) = (
+
     polygon = Ngon(poly);
     data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
     data[!, var_name] = Float32[];
 
     @info "Querying data...";
-    for lon in range(-180, 180-_reso; step=_reso)
-        for lat in range(-90, 90-_reso; step=_reso)
-            i = Int((lon+180)/_reso+1);
-            j = Int((lat+90)/_reso+1);
-            file_path = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
-            grid_cell = Ngon((lon, lat), (lon+_reso, lat), (lon+_reso, lat+_reso), (lon, lat+_reso));
+    try
+        for lon in range(-180, 180-reso; step=reso)
+            for lat in range(-90, 90-reso; step=reso)
+                i = Int((lon+180)/reso+1);
+                j = Int((lat+90)/reso+1);
+                file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
+                if !isfile(file_path)
+                    @warn "File $(file_path) does not exist";
+                    continue;
+                end;
+                grid_cell = Ngon((lon, lat), (lon+reso, lat), (lon+reso, lat+reso), (lon, lat+reso));
 
-            if hasintersect(polygon, grid_cell)
-                #Read lon, lat, time, and desired data from file
-                lon_cur = read_nc(file_path, "lon");
-                lat_cur = read_nc(file_path, "lat");
-                time_cur = read_nc(file_path, "time");
-                data_cur = read_nc(file_path, var_name);
+                if hasintersect(polygon, grid_cell)
+                    #Read lon, lat, time, and desired data from file
+                    lon_cur = read_nc(file_path, "lon");
+                    lat_cur = read_nc(file_path, "lat");
+                    time_cur = read_nc(file_path, "time");
+                    data_cur = read_nc(file_path, var_name);
 
-                #Loop over all data and push datapoint if in polygon
-                for i in range(1, size(time_cur)[1])
-                    if hasintersect(polygon, Point(lon_cur[i], lat_cur[i]))
-                        push!(data, [lon_cur[i], lat_cur[i], time_cur[i], data_cur[i]]);
+                    #Loop over all data and push datapoint if in polygon
+                    for i in range(1, size(time_cur)[1])
+                        if hasintersect(polygon, Point(lon_cur[i], lat_cur[i]))
+                            push!(data, [lon_cur[i], lat_cur[i], time_cur[i], data_cur[i]]);
+                        end;
                     end;
                 end;
             end;
         end;
+        @info "Process complete";
+    catch e
+        @warn "Failed to query data. Process terminated";
     end;
-    @info "Process complete";
 
     return data;
 );
@@ -221,10 +229,10 @@ get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
     clean_files(folder::String, label::String, reso::Int, year::Int)
 
 Get data from a specific satelite within the given closed polygonal region of a year
-- `dict` JSON dict containing information for the gridded dataset
-- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
-- `y` The year of interest
-- `var_name` The variable name of the queried data
+- `folder` Path to the folder storing the gridded files
+- `label` Label of the dataset
+- `reso` Resolution of the grid
+- `year` The year of interest
 """
 function clean_files end;
 
@@ -248,7 +256,7 @@ clean_files(folder::String, label::String, reso::Int, year::Int) = (
 #println(DataFrame(lon=Float32[], a.value=Float32[]))
 #println(hasintersect(Ngon((0, 0), (1, 0), (0, 1)), Point(0.25, 0.25)))
 
-#Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
+Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI_R005.json"));
 
 end; # module
 
