@@ -106,76 +106,7 @@ combine_files(folder::String, sep_files::Vector{String}, var_name::String,
     save_nc!("$(folder)/$(file_name)", var_name, combined_var, var_attributes; var_dims = var_dims);
 
     return nothing
-)
-
-
-"""
-    reprocess_files()
-
-Reprocess user's dataset(s) and create corresponding JSON file(s). All information is entered manually by the user.
-
-#
-    reprocess_files(JSON_locf::String, rep_locf::String)
-
-Reprocess user's dataset(s) and create corresponding JSON file(s) with folder paths given.
-
-- `JSON_locf` Path of folder where the created JSON file will be stored
-- `rep_locf` Path of folder where the reprocessed dataset will be stored
-
-"""
-function reprocess_files end
-
-reprocess_files() = (
-    @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
-    
-    while true
-        #Get user input for directories
-        _msg = "Please input the folder path of the JSON file you want to create > ";
-        JSON_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
-        _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
-        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
-        _msg = "Please input the folder path of the reprocessed file you want to create > ";
-        rep_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
-
-        #Process the file and store JSON and reprocessed files in given directories
-        _json = "$(JSON_locf)/$(JSON_name)";
-        reprocess_file(_json, rep_locf);
-
-        #Ask user if they want to reprocess another dataset
-        _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
-        if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
-            return nothing;
-        end;
-    end;
-    
-    return nothing;
-    
 );
-
-
-reprocess_files(JSON_locf::String, rep_locf::String) = (
-    @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
-
-    while true
-        #Get user input for directories
-        _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
-        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
-
-        #Process the file and store JSON and reprocessed files in given directories
-        _json = "$(JSON_locf)/$(JSON_name)";
-        reprocess_file(_json, rep_locf);
-
-        #Ask user if they want to reprocess another dataset
-        _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
-        if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
-            return nothing;
-        end;
-    end;
-
-    return nothing;
-
-);
-
 
 """
     reprocess_file(_json::String, rep_locf::String)
@@ -236,6 +167,73 @@ reprocess_file(_json::String, rep_locf::String) = (
     deploy_from_json(_json, art_toml, rep_locf, art_tarf, art_urls);
 
     return true;
+);
+
+
+"""
+    reprocess_files()
+
+Reprocess user's dataset(s) and create corresponding JSON file(s). All information is entered manually by the user.
+
+#
+    reprocess_files(JSON_locf::String, rep_locf::String)
+
+Reprocess user's dataset(s) and create corresponding JSON file(s) with folder paths given.
+
+- `JSON_locf` Path of folder where the created JSON file will be stored
+- `rep_locf` Path of folder where the reprocessed dataset will be stored
+
+"""
+function reprocess_files end
+
+reprocess_files() = (
+    @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
+    
+    while true
+        #Get user input for directories
+        _msg = "Please input the folder path of the JSON file you want to create > ";
+        JSON_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
+        _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
+        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
+        _msg = "Please input the folder path of the reprocessed file you want to create > ";
+        rep_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
+
+        #Process the file and store JSON and reprocessed files in given directories
+        _json = "$(JSON_locf)/$(JSON_name)";
+        reprocess_file(_json, rep_locf);
+
+        #Ask user if they want to reprocess another dataset
+        _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
+        if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
+            return nothing;
+        end;
+    end;
+    
+    return nothing;
+    
+);
+
+reprocess_files(JSON_locf::String, rep_locf::String) = (
+    @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
+
+    while true
+        #Get user input for directories
+        _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
+        JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
+
+        #Process the file and store JSON and reprocessed files in given directories
+        _json = "$(JSON_locf)/$(JSON_name)";
+        reprocess_file(_json, rep_locf);
+
+        #Ask user if they want to reprocess another dataset
+        _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
+        if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
+            return nothing;
+        end;
+    end;
+
+    return nothing;
+
 );
 
 end; #module

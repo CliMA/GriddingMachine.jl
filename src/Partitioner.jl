@@ -2,7 +2,9 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames, JSON
+using DataFrames: DataFrame
+using JSON: Dict, parsefile
+using Meshes: hasintersect, Point, Ngon
 
 include("borrowed/EmeraldIO.jl")
 include("borrowed/EmeraldUtility.jl")
@@ -183,18 +185,66 @@ partition(dict::Dict) = (
 
 
 """
-    get_data()
+    get_data(dict::Dict, poly, y::Int, var_name::String)
 
-Get data from a specific satelite within the given closed polygonal region over the given time range
+Get data from a specific satelite within the given closed polygonal region of a year
+- `dict` JSON dict containing information for the gridded dataset
+- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `y` The year of interest
+- `var_name` The variable name of the queried data
 """
 function get_data end;
 
-get_data() = (
+get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
+    polygon = Ngon(poly);
+    
+    _dict_file = dict["INPUT_MAP_SETS"];
+    _dict_outm = dict["OUTPUT_MAP_SETS"];
+    _dict_vars = dict["INPUT_VAR_SETS"];
+    _dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
+    _dict_logs = dict["LOG_FILES"];
 
+    _reso = _dict_outm["SPATIAL_RESO"];
+
+    data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
+    data[!, var_name] = Float32[];
+
+    @info "Querying data...";
+    for lon in range(-180, 180-_reso; step=_reso)
+        for lat in range(-90, 90-_reso; step=_reso)
+            i = Int((lon+180)/_reso+1);
+            j = Int((lat+90)/_reso+1);
+            file_path = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
+            grid_cell = Ngon((lon, lat), (lon+_reso, lat), (lon+_reso, lat+_reso), (lon, lat+_reso));
+
+            if hasintersect(polygon, grid_cell)
+                #Read lon, lat, time, and desired data from file
+                lon_cur = read_nc(file_path, "lon");
+                lat_cur = read_nc(file_path, "lat");
+                time_cur = read_nc(file_path, "time");
+                data_cur = read_nc(file_path, var_name);
+
+                #Loop over all data and push datapoint to corresponding block in the grid
+                for i in range(1, size(time_cur)[1])
+                    if hasintersect(polygon, Point(lon_cur[i], lat_cur[i]))
+                        push!(data, [lon_cur[i], lat_cur[i], time_cur[i], data_cur[i]]);
+                    end;
+                end;
+            end;
+        end;
+    end;
+    @info "Process complete";
+
+    return data;
 );
 
+#println(Partitioner.get_data(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"), 
+#                    [(0, 0), (7, 0), (7, 7), (0, 7)], 2020, "sif"))
 
-#Partitioner.partition(JSON.parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
+#println(DataFrame(lon=Float32[], a.value=Float32[]))
+#println(hasintersect(Ngon((0, 0), (1, 0), (0, 1)), Point(0.25, 0.25)))
+
+#Partitioner.partition(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"));
 
 end; # module
 

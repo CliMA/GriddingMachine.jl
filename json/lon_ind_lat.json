@@ -38,7 +38,7 @@
         "COVERAGE": "GLOBAL",
         "FLIP_LON": false,
         "IS_CENTER": true,
-        "LAND_ONLY": true
+        "LAND_ONLY": false
     }
 }
 
