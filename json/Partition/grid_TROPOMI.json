@@ -1,7 +1,7 @@
 {
     "OUTPUT_MAP_SETS": {
         "FOLDER": "/net/fluo/data1/group/emilyg/gridded_test",
-        "LABEL": "TROPO_SIF_gridded",
+        "LABEL": "TROPO_SIF",
         "SPATIAL_RESO": 36,
         "PER_MONTH": false
     },
@@ -12,6 +12,11 @@
             "DATA_NAME": "sif"
         }
     ],
+    "INPUT_DIM_SETS": {
+        "LON_NAME": "lon",
+        "LAT_NAME": "lat",
+        "TIME_NAME": "TIME"
+    },
     "INPUT_MAP_SETS": {
         "FOLDER": "/net/squid/data1/projects/TROPOMI/nc_ungridded",
         "FILE_NAME_PATTERN": "TROPO_SIF_year-month-day_ungridded.nc",

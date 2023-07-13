@@ -23,7 +23,7 @@ partition(dict::Dict) = (
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_outm = dict["OUTPUT_MAP_SETS"];
     _dict_vars = dict["INPUT_VAR_SETS"];
-    _dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
+    _dict_dims = dict["INPUT_DIM_SETS"];
     _dict_logs = dict["LOG_FILES"];
 
     success_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])";
@@ -37,18 +37,10 @@ partition(dict::Dict) = (
 
     #Parse data name, masking function, and scaling function
     data_info = [];
-    std_info = [];
     for k in eachindex(_dict_vars)
         data_masking_f = _dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
         data_scaling_f = _dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
         push!(data_info, (_dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
-    end;
-    if _dict_stds !== nothing
-        for k in eachindex(_dict_stds)
-            std_masking_f = _dict_stds[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_stds[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
-            std_scaling_f = _dict_stds[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_stds[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
-            push!(std_info, (_dict_stds[k]["DATA_NAME"], std_masking_f, std_scaling_f));
-        end;
     end;
 
     #Initialize array to store data
@@ -57,9 +49,6 @@ partition(dict::Dict) = (
         for j in range(1, _n_lat)
             gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
             for k in data_info
-                gridded_data[i, j][!, k[1]] = Float32[];
-            end;
-            for k in std_info
                 gridded_data[i, j][!, k[1]] = Float32[];
             end;
         end;
@@ -113,22 +102,18 @@ partition(dict::Dict) = (
                 
                 try
                     #Read lon, lat, and time data from file
-                    lon_cur = read_nc(file_path, "lon");
-                    lat_cur = read_nc(file_path, "lat");
-                    time_cur = read_nc(file_path, "TIME");
+                    lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
+                    lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
+                    time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
+
+                    #Instantiate dicts for storing data and std
                     data = Dict{String, Vector}();
-                    std = Dict{String, Vector}();
 
                     #Read the desired variables and std from file and apply given functions
                     for k in data_info
                         data[k[1]] = read_nc(file_path, k[1]);
                         data[k[1]] = isnothing(k[2]) ? data[k[1]] : k[2].(data[k[1]]);
                         data[k[1]] = isnothing(k[3]) ? data[k[1]] : k[3].(data[k[1]]);
-                    end;
-                    for k in std_info
-                        std[k[1]] = read_nc(file_path, k[1]);
-                        std[k[1]] = isnothing(k[2]) ? std[k[1]] : k[2].(std[k[1]]);
-                        std[k[1]] = isnothing(k[3]) ? std[k[1]] : k[3].(std[k[1]]);
                     end;
 
                     #Loop over all data and push datapoint to corresponding block in the grid
@@ -138,9 +123,6 @@ partition(dict::Dict) = (
                         data_row = [lon_cur[i], lat_cur[i], time_cur[i]];
                         for k in data_info
                             push!(data_row, data[k[1]][i]);
-                        end;
-                        for k in std_info
-                            push!(data_row, std[k[1]][i]);
                         end;
                         push!(gridded_data[_lon_i, _lat_i], data_row);
                     end;
@@ -185,7 +167,7 @@ partition(dict::Dict) = (
 
 
 """
-    get_data(dict::Dict, poly, y::Int, var_name::String)
+    get_data(dict::Dict, poly::Vector, y::Int, var_name::String)
 
 Get data from a specific satelite within the given closed polygonal region of a year
 - `dict` JSON dict containing information for the gridded dataset
@@ -196,16 +178,12 @@ Get data from a specific satelite within the given closed polygonal region of a 
 function get_data end;
 
 get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
-    polygon = Ngon(poly);
     
-    _dict_file = dict["INPUT_MAP_SETS"];
     _dict_outm = dict["OUTPUT_MAP_SETS"];
-    _dict_vars = dict["INPUT_VAR_SETS"];
-    _dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
     _dict_logs = dict["LOG_FILES"];
-
+    
     _reso = _dict_outm["SPATIAL_RESO"];
-
+    polygon = Ngon(poly);
     data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
     data[!, var_name] = Float32[];
 
@@ -224,7 +202,7 @@ get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
                 time_cur = read_nc(file_path, "time");
                 data_cur = read_nc(file_path, var_name);
 
-                #Loop over all data and push datapoint to corresponding block in the grid
+                #Loop over all data and push datapoint if in polygon
                 for i in range(1, size(time_cur)[1])
                     if hasintersect(polygon, Point(lon_cur[i], lat_cur[i]))
                         push!(data, [lon_cur[i], lat_cur[i], time_cur[i], data_cur[i]]);
@@ -237,6 +215,32 @@ get_data(dict::Dict, poly::Vector, y::Int, var_name::String) = (
 
     return data;
 );
+
+
+"""
+    clean_files(folder::String, label::String, reso::Int, year::Int)
+
+Get data from a specific satelite within the given closed polygonal region of a year
+- `dict` JSON dict containing information for the gridded dataset
+- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `y` The year of interest
+- `var_name` The variable name of the queried data
+"""
+function clean_files end;
+
+clean_files(folder::String, label::String, reso::Int, year::Int) = (
+    @info "Cleaning files...";
+    for i in range(1, Int(360/reso))
+        for j in range(1, Int(180/reso))
+            cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc";
+            rm(cur_file; force = true);
+        end;
+    end;
+    @info "Process complete";
+    return nothing
+)
+
+#clean_files("/net/fluo/data1/group/emilyg/gridded_test", "TROPO_SIF_gridded", 36, 2020);
 
 #println(Partitioner.get_data(parsefile("/home/exgu/GriddingMachine.jl/json/Partition/grid_TROPOMI.json"), 
 #                    [(0, 0), (7, 0), (7, 7), (0, 7)], 2020, "sif"))
