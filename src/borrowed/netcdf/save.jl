@@ -142,11 +142,12 @@ append_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes:
 #     2023-Feb-23: migrate from JuliaUtility to Emerald
 #     2023-Jul-05: add parameter var_dims to function save_nc! for data in array
 #     2023-Jul-11: fixed bug for save_nc! for growable = true
+#     2023-Jul-13: made code cleaner
 #
 #######################################################################################################################################################################################################
 """
 
-    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
+    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = N == 2 ? ["lon", "lat"] : ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
 
 Save the 1D, 2D, or 3D data as netcdf file, given
 - `file` Path to save the dataset
@@ -199,10 +200,12 @@ save_nc!("test.nc", df);
 """
 function save_nc! end
 
-
-save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
+save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Dict{String,String}; var_dims::Vector{String} = N == 2 ? ["lon", "lat"] : ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N} = (
     @assert 1 <= N <= 3 "Variable must be a 1D, 2D, or 3D dataset!";
     @assert 0 <= compress <= 9 "Compression rate must be within 0 to 9";
+    @assert N == 1 || "lon" in var_dims "2D or 3D data must have a dimension named lon";
+    @assert N == 1 || "lat" in var_dims "2D or 3D data must have a dimension named lat";
+    @assert N < 3 || "ind" in var_dims "3D data must have a dimension named ind";
 
     # create the file
     _dset = Dataset(file, "c");
@@ -218,7 +221,7 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::D
         _inds  = collect(eachindex(var_data));
         add_nc_dim!(_dset, "ind", _n_ind);
         append_nc!(_dset, "ind", _inds, ATTR_CYC, ["ind"]; compress=compress);
-        append_nc!(_dset, var_name, var_data, var_attributes, ["ind"]; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attribute, ["ind"]; compress=compress);
 
         close(_dset);
 
@@ -226,17 +229,8 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::D
     end;
 
     # if the dimension is 2D or 3D
-
-    _lon = 0;
-    _lat = 0;
-    _ind = 0;
-    for i in range(1, length(var_dims))
-        if var_dims[i] == "lon" _lon = i; end
-        if var_dims[i] == "lat" _lat = i; end
-        if var_dims[i] == "ind" _ind = i; end
-    end;
-
-    @assert _lon > 0 && _lat > 0 "Two of the dimensions must be named lon and lat (and ind for third dimension if there is one)";
+    _lon = findfirst(isequal("lon"), var_dims);
+    _lat = findfirst(isequal("lat"), var_dims);
 
     _n_lon   = size(var_data, _lon);
     _n_lat   = size(var_data, _lat);
@@ -250,13 +244,14 @@ save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::D
     append_nc!(_dset, "lat", _lats, ATTR_LAT, ["lat"]; compress=compress);
 
     if N==2
-        append_nc!(_dset, var_name, var_data, var_attributes, var_dims; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attribute, var_dims; compress=compress);
     elseif N==3
+        _ind = findfirst(isequal("ind"), var_dims);
         _n_ind = (growable ? Inf : size(var_data, _ind));
         _inds  = collect(1:_n_ind);
         add_nc_dim!(_dset, "ind", _n_ind);
         append_nc!(_dset, "ind", _inds, ATTR_CYC, ["ind"]; compress=compress);
-        append_nc!(_dset, var_name, var_data, var_attributes, var_dims; compress=compress);
+        append_nc!(_dset, var_name, var_data, var_attribute, var_dims; compress=compress);
     end;
 
     close(_dset);

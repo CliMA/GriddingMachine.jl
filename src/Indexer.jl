@@ -1,9 +1,7 @@
 module Indexer
 
 using DocStringExtensions: METHODLIST
-
-
-include("borrowed/EmeraldIO.jl");
+using NetcdfIO: read_nc, size_nc
 
 
 # functions to calculate the lat and lon index
