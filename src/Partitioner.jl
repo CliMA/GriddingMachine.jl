@@ -6,6 +6,7 @@ using DataFrames: DataFrame
 using JSON: Dict, parsefile
 using Meshes: hasintersect, Point, Ngon
 using NetcdfIO: read_nc, save_nc!, grow_nc!
+using PolygonInbounds: inpoly2
 
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
@@ -188,7 +189,7 @@ partition(dict::Dict) = (
 
 
 """
-    get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_name::String)
+    get_data(folder::String, label::String, reso::Int, poly::Matrix, y::Int, var_name::String)
 
 Get data from a specific satelite within the given closed polygonal region of a year
 - `folder` Path to the folder storing the gridded files
@@ -204,6 +205,12 @@ function get_data end;
 get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_name::String) = (
 
     polygon = Ngon(poly);
+    nodes = Array{Float32}(undef, length(poly), 2);
+    for i in range(1, length(poly))
+        nodes[i, 1] = poly[i][1];
+        nodes[i, 2] = poly[i][2];
+    end;
+
     data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
     data[!, var_name] = Float32[];
 
@@ -228,12 +235,14 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
                     time_cur = read_nc(file_path, "time");
                     data_cur = read_nc(file_path, var_name);
 
-                    #Loop over all data and push datapoint if in polygon
-                    for i in range(1, size(time_cur)[1])
-                        if hasintersect(polygon, Point(lon_cur[i], lat_cur[i]))
-                            push!(data, [lon_cur[i], lat_cur[i], time_cur[i], data_cur[i]]);
-                        end;
-                    end;
+                    #Find all points within the polygon and push datapoints
+                    #Note: points on the boundary might be ignored
+                    points = hcat(lon_cur, lat_cur);
+                    overlaps = inpoly2(points, nodes)[:, 1];
+                    append!(data.lon, lon_cur[overlaps]);
+                    append!(data.lat, lat_cur[overlaps]);
+                    append!(data.time, time_cur[overlaps]);
+                    append!(data[!,var_name], data_cur[overlaps]);
                 end;
             end;
         end;
