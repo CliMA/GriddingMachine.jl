@@ -25,7 +25,7 @@
         "START_MONTH": 1,
         "START_DAY": 1,
         "END_MONTH": 2,
-        "END_DAY": 10
+        "END_DAY": 20
     },
     "LOG_FILES": {
         "FOLDER": "/home/exgu/GriddingMachine.jl/log_files",

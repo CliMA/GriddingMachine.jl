@@ -1,14 +1,15 @@
 {
     "GRIDDINGMACHINE": {
-        "LABEL": "TESTDATA_lon_ind_lat",
+        "LABEL": "TESTDATA",
         "VERSION": 1,
-        "EXTRA_LABEL": null,
+        "EXTRA_LABEL": "LON_LAT_IND",
         "LAT_LON_RESO": 1,
         "YEARS": null,
         "TEMPORAL_RESO": "1Y"
     },
     "OUTPUT_VAR_ATTR": {
-        "about": "random data generated for testing",
+        "about": "-",
+        "long_name": "-",
         "unit": "-"
     },
     "INPUT_VAR_SETS": [
@@ -33,12 +34,11 @@
         "PROJECTION": "CYLINDRICAL",
         "FLIP_LAT": false,
         "FILE_NAME_PATTERN": "lon_ind_lat.nc",
+        "IS_CENTER": true,
         "FOLDER": "/home/exgu/GriddingMachine.jl/test/nc_files",
         "FILE_NAME_FUNCTION": "",
+        "LAND_ONLY": false,
         "COVERAGE": "GLOBAL",
-        "FLIP_LON": false,
-        "IS_CENTER": true,
-        "LAND_ONLY": false
+        "FLIP_LON": false
     }
 }
-

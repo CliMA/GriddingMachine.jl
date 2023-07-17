@@ -6,7 +6,6 @@ using ..Blender: regrid
 
 using NetcdfIO: read_nc, save_nc!, append_nc!
 
-#include("borrowed/GriddingMachineData.jl")
 include("processer/ProcessJSON.jl")
 include("processer/judges.jl")
 
