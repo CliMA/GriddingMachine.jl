@@ -189,21 +189,26 @@ partition(dict::Dict) = (
 
 
 """
-    get_data(folder::String, label::String, reso::Int, poly::Matrix, y::Int, var_name::String)
+    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_names::Vector{String})
 
-Get data from a specific satelite within the given closed polygonal region of a year
+Get data of variables from a specific satelite within the given closed polygonal region of a year
 - `folder` Path to the folder storing the gridded files
 - `label` Label of the dataset
 - `reso` Resolution of the grid
 - `dict` JSON dict containing information for the gridded dataset
 - `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
-- `y` The year of interest
-- `var_name` The variable name of the queried data
+- `year` The year of interest
+- `var_names` The names of the variables to be queried
+
+#
+    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_name::String)
+
+Get data of one variable from a specific satelite within the given closed polygonal region of a year
+- `var_name` The name of a specific variable to be queried
 """
 function get_data end;
 
-get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_name::String) = (
-
+get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_names::Vector{String}) = (
     polygon = Ngon(poly);
     nodes = Array{Float32}(undef, length(poly), 2);
     for i in range(1, length(poly))
@@ -212,7 +217,9 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
     end;
 
     data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
-    data[!, var_name] = Float32[];
+    for var_name in var_names
+        data[!, var_name] = Float32[];
+    end;
 
     @info "Querying data...";
     try
@@ -220,7 +227,7 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
             for lat in range(-90, 90-reso; step=reso)
                 i = Int((lon+180)/reso+1);
                 j = Int((lat+90)/reso+1);
-                file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
+                file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc"
                 if !isfile(file_path)
                     @warn "File $(file_path) does not exist";
                     continue;
@@ -229,11 +236,10 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
                 println("i: $(i), j: $(j)");
 
                 if hasintersect(polygon, grid_cell)
-                    #Read lon, lat, time, and desired data from file
+                    #Read lon, lat, time from file
                     lon_cur = read_nc(file_path, "lon");
                     lat_cur = read_nc(file_path, "lat");
                     time_cur = read_nc(file_path, "time");
-                    data_cur = read_nc(file_path, var_name);
 
                     #Find all points within the polygon and push datapoints
                     #Note: points on the boundary might be ignored
@@ -242,7 +248,10 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
                     append!(data.lon, lon_cur[overlaps]);
                     append!(data.lat, lat_cur[overlaps]);
                     append!(data.time, time_cur[overlaps]);
-                    append!(data[!,var_name], data_cur[overlaps]);
+                    for var_name in var_names
+                        data_cur = read_nc(file_path, var_name);
+                        append!(data[!,var_name], data_cur[overlaps]);
+                    end;
                 end;
             end;
         end;
@@ -252,6 +261,10 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
     end;
 
     return data;
+)
+
+get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_name::String) = (
+    return get_data(folder, label, reso, poly, year, [var_name]);
 );
 
 
