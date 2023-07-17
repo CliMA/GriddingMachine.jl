@@ -5,10 +5,10 @@ module Partitioner
 using DataFrames: DataFrame
 using JSON: Dict, parsefile
 using Meshes: hasintersect, Point, Ngon
+using NetcdfIO: read_nc, save_nc!, grow_nc!
 
-include("borrowed/EmeraldIO.jl")
 include("borrowed/EmeraldUtility.jl")
-include("borrowed/ModifyLogs.jl")
+include("partitioner/ModifyLogs.jl")
 
 """
     partition(dict::Dict)

@@ -4,8 +4,14 @@ using ..Indexer: read_LUT
 using ..Collector: query_collection
 using ..Blender: regrid
 
-include("borrowed/GriddingMachineData.jl")
-include("judges.jl")
+using NetcdfIO: read_nc, save_nc!, append_nc!
+
+#include("borrowed/GriddingMachineData.jl")
+include("processer/ProcessJSON.jl")
+include("processer/judges.jl")
+
+include("borrowed/EmeraldUtility.jl")
+include("borrowed/Terminal.jl")
 
 """
     reprocess_from_json(_json::String, rep_locf::String)
