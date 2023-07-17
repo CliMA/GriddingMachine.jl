@@ -147,13 +147,13 @@ append_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes:
 #######################################################################################################################################################################################################
 """
 
-    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attributes::Dict{String,String}; var_dims::Vector{String} = N == 2 ? ["lon", "lat"] : ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
+    save_nc!(file::String, var_name::String, var_data::Array{T,N}, var_attribute::Dict{String,String}; var_dims::Vector{String} = N == 2 ? ["lon", "lat"] : ["lon", "lat", "ind"], compress::Int = 4, growable::Bool = false) where {T<:Union{AbstractFloat,Int,String},N}
 
 Save the 1D, 2D, or 3D data as netcdf file, given
 - `file` Path to save the dataset
 - `var_name` Variable name for the data in the NC file
 - `var_data` Data to save
-- `var_attributes` Variable attributes for the data, such as unit and long name
+- `var_attribute` Variable attributes for the data, such as unit and long name
 - `var_dims` Dimension name of each dimension of the variable data
 - `compress` Compression level fro NetCDF, default is 4
 - `growable` If true, make index growable, default is false

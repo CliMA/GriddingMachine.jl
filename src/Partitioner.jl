@@ -219,6 +219,7 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, y::Int, var_nam
                     continue;
                 end;
                 grid_cell = Ngon((lon, lat), (lon+reso, lat), (lon+reso, lat+reso), (lon, lat+reso));
+                println("i: $(i), j: $(j)");
 
                 if hasintersect(polygon, grid_cell)
                     #Read lon, lat, time, and desired data from file

@@ -106,6 +106,9 @@ function map_info_dict()
         _msg = "    Do you need to flip the longitudinal direction? (Yes or No) > ";
         _flip_lon = verified_input(_msg, _opr_5, _jdg_3);
 
+        _msg = "    Is the data on land only? (Yes or No) > ";
+        _land_only = verified_input(_msg, _opr_5, _jdg_3);
+
         _msg = "    What is the path of the folder containing the dataset? > ";
         _folder = verified_input(_msg, _jdg_6);
 
@@ -127,6 +130,7 @@ function map_info_dict()
             "COVERAGE"           => _coverages,
             "FLIP_LAT"           => _flip_lat,
             "FLIP_LON"           => _flip_lon,
+            "LAND_ONLY"          => _land_only
         )
         @show _map_info_dict
         

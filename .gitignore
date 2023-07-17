@@ -13,3 +13,9 @@ docs/src/paper*
 *.pdf
 *.png
 *.tar.gz
+
+test/demo_*.jl
+test/testcase_creation/*
+test/test_*.jl
+
+json/Partition/*_demo*.json

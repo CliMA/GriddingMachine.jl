@@ -22,6 +22,9 @@ reprocess_from_json(_json::String, rep_locf::String) = (
     #Parse JSON file created
     json_dict = JSON.parse(open(_json));
 
+    #Create folder for reprocessed data if it does not exist
+    if !isdir(rep_locf) mkpath(rep_locf) end;
+
     #Get all the functions
     name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
     data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
@@ -126,12 +129,11 @@ reprocess_file(_json::String, rep_locf::String) = (
         @info "File $(_json) exists already";
         _msg = "Do you still want to create the JSON file? Type Y/y or N/n to continue > ";
         if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
+            @info "Skipping...";
             _msg = "Do you still want to reprocess the dataset based on the JSON file? Type Y/y or N/n to continue > ";
             if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
                 @info "Terminating...";
                 return nothing;
-            else
-                @info "Skipping...";
             end;
         else
             #Create JSON file
