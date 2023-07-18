@@ -311,22 +311,38 @@ get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matri
 );
 
 """
-    clean_files(folder::String, label::String, reso::Int, year::Int)
+    clean_files(folder::String, label::String, reso::Int, year::Int; per_month = false)
 
-Get data from a specific satelite within the given closed polygonal region of a year
+Clean files of a year
 - `folder` Path to the folder storing the gridded files
 - `label` Label of the dataset
 - `reso` Resolution of the grid
 - `year` The year of interest
+- `per_month` Whether gridded data is per month; default to false
 """
 function clean_files end;
 
-clean_files(folder::String, label::String, reso::Int, year::Int) = (
+clean_files(folder::String, label::String, reso::Int, year::Int; per_month = false) = (
     @info "Cleaning files...";
     for i in range(1, Int(360/reso))
         for j in range(1, Int(180/reso))
-            cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc";
-            rm(cur_file; force = true);
+            if !per_month
+                cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc";
+                rm(cur_file; force = true);
+            else
+                for m in range(1, 12)
+                    cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0"))_$(lpad(m, 2, "0")).nc";
+                    rm(cur_file; force = true);
+                end;
+            end;
+        end;
+    end;
+    @info "Gridded files deleted. Removing files from successful files log...";
+    month_days = isleapyear(year) ? MDAYS_LEAP : MDAYS;
+    for m in range(1, 12)
+        for d in range(1, month_days[m+1]-month_days[m])
+            remove_from_log("/home/exgu/GriddingMachine.jl/log_files/successful_files.log",
+                            "$(label)_$(lpad(year, 4, "0"))-$(lpad(m, 2, "0"))-$(lpad(d, 2, "0"))_ungridded.nc");
         end;
     end;
     @info "Process complete";
