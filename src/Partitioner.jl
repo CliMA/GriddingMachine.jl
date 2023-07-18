@@ -4,7 +4,6 @@ module Partitioner
 
 using DataFrames: DataFrame
 using JSON: Dict, parsefile
-using Meshes: hasintersect, Point, Ngon
 using NetcdfIO: read_nc, save_nc!, grow_nc!
 using PolygonInbounds: inpoly2
 
@@ -187,36 +186,63 @@ partition(dict::Dict) = (
     return nothing
 );
 
+"""
+    get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names::Vector{String})
+
+Append data within the given polygonal region from a file to DataFrame 
+- `data` DataFrame storing data cumulatively
+- `file_path` Path to the file containing the desired data
+- `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `var_names` The names of the variables to be queried
+"""
+get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names::Vector{String}) = (
+    if !isfile(file_path)
+        @warn "File $(file_path) does not exist, skipping...";
+        return nothing;
+    end;
+    #Read lon, lat, time from file
+    lon_cur = read_nc(file_path, "lon");
+    lat_cur = read_nc(file_path, "lat");
+    time_cur = read_nc(file_path, "time");
+
+    #Find all points within the polygon and push datapoints
+    #Note: points on the boundary might be ignored
+    points = hcat(lon_cur, lat_cur);
+    overlap_matrix = inpoly2(points, nodes);
+    overlaps = overlap_matrix[:, 1] .|| overlap_matrix[:, 2];
+    append!(data.lon, lon_cur[overlaps]);
+    append!(data.lat, lat_cur[overlaps]);
+    append!(data.time, time_cur[overlaps]);
+    for var_name in var_names
+        data_cur = read_nc(file_path, var_name);
+        append!(data[!,var_name], data_cur[overlaps]);
+    end;
+);
+
 
 """
-    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_names::Vector{String})
-    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_name::String)
+    get_data(folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, per_month = false)
+    get_data(folder::String, label::String, nodes::Matrix, year::Int, var_name::String; reso::Int = 5, per_month = false)
 
 Get data as DataFrame of variables from a specific satelite within the given closed polygonal region of a year
 - `folder` Path to the folder storing the gridded files
 - `label` Label of the dataset
-- `reso` Resolution of the grid
-- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `year` The year of interest
 - `var_names` The names of the variables to be queried
 - `var_name` The name of a specific variable to be queried
+- `reso` Resolution of the grid; default to 5
+- `per_month` Whether gridded data is per month; default to false
 
 #
-    get_data(folder::String, label::String, reso::Int, poly::Matrix, year_list::Vector{Int}, var_names::Vector{String})
+    get_data(folder::String, label::String, nodes::Matrix, year_list::Vector{Int}, var_names::Vector{String}; reso::Int = 5, per_month = false)
 
 Get data as dictionary mapping from year to DataFrame for each listed year
 - `year_list` Vector of years 
 """
 function get_data end;
 
-get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_names::Vector{String}) = (
-    polygon = Ngon(poly);
-    nodes = Array{Float32}(undef, length(poly), 2);
-    for i in range(1, length(poly))
-        nodes[i, 1] = poly[i][1];
-        nodes[i, 2] = poly[i][2];
-    end;
-
+get_data(folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, per_month = false) = (
     data = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
     for var_name in var_names
         data[!, var_name] = Float32[];
@@ -224,34 +250,19 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_
 
     @info "Querying data...";
     try
-        for lon in range(-180, 180-reso; step=reso)
-            for lat in range(-90, 90-reso; step=reso)
-                i = Int((lon+180)/reso+1);
-                j = Int((lat+90)/reso+1);
-                file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc"
-                if !isfile(file_path)
-                    @warn "File $(file_path) does not exist, skipping...";
-                    continue;
-                end;
-                grid_cell = Ngon((lon, lat), (lon+reso, lat), (lon+reso, lat+reso), (lon, lat+reso));
-                println("i: $(i), j: $(j)");
-
-                if hasintersect(polygon, grid_cell)
-                    #Read lon, lat, time from file
-                    lon_cur = read_nc(file_path, "lon");
-                    lat_cur = read_nc(file_path, "lat");
-                    time_cur = read_nc(file_path, "time");
-
-                    #Find all points within the polygon and push datapoints
-                    #Note: points on the boundary might be ignored
-                    points = hcat(lon_cur, lat_cur);
-                    overlaps = inpoly2(points, nodes)[:, 1];
-                    append!(data.lon, lon_cur[overlaps]);
-                    append!(data.lat, lat_cur[overlaps]);
-                    append!(data.time, time_cur[overlaps]);
-                    for var_name in var_names
-                        data_cur = read_nc(file_path, var_name);
-                        append!(data[!,var_name], data_cur[overlaps]);
+        min_i = floor(Int, (minimum(nodes[:, 1])+180)/reso+1);
+        max_i = floor(Int, (maximum(nodes[:, 1])+180)/reso+1);
+        min_j = floor(Int, (minimum(nodes[:, 2])+90)/reso+1);
+        max_j = floor(Int, (maximum(nodes[:, 2])+90)/reso+1);
+        for i in range(min_i, max_i)
+            for j in range(min_j, max_j)
+                if !per_month
+                    file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc"
+                    get_data_from_file!(data, file_path, nodes, var_names);
+                else
+                    for m in range(1, 12)
+                        file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0"))_$(lpad(m, 2, "0")).nc"
+                        get_data_from_file!(data, file_path, nodes, var_names);
                     end;
                 end;
             end;
@@ -264,40 +275,39 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_
     return data;
 );
 
-get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_name::String) = (
-    return get_data(folder, label, reso, poly, year, [var_name]);
+get_data(folder::String, label::String, nodes::Matrix, year::Int, var_name::String; reso::Int = 5, per_month = false) = (
+    return get_data(folder, label, nodes, year, [var_name]; reso=reso, per_month=per_month);
 );
 
-get_data(folder::String, label::String, reso::Int, poly::Vector, year_list::Vector{Int}, var_names::Vector{String}) = (
+get_data(folder::String, label::String, nodes::Matrix, year_list::Vector{Int}, var_names::Vector{String}; reso::Int = 5, per_month = false) = (
     dfs = Dict{Int, DataFrame}();
     for year in year_list
-        dfs[year] = get_data(folder, label, reso, poly, year, var_names);
+        dfs[year] = get_data(folder, label, nodes, year, var_names; reso=reso, per_month=per_month);
     end;
     return dfs;
 );
 
 
 """
-    get_data_as_nc(queried_locf::String, folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_names::Vector{String})
+    get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, per_month = false)
 
-Get data within the given closed polygonal region, with each year saved as a NetCDF file
+Get data within the given closed polygonal region and sav as a NetCDF file. The file path is returned
 - `queried_locf` Path to the folder storing the queried data
 - `folder` Path to the folder storing the gridded files
 - `label` Label of the dataset
-- `reso` Resolution of the grid
-- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `year` The year of interest
 - `var_names` The names of the variables to be queried
+- `reso` Resolution of the grid; default to 5
+- `per_month` Whether gridded data is per month; default to false
 """
 function get_data_as_nc end;
 
-get_data_as_nc(queried_locf::String, folder::String, label::String, reso::Int, poly::Vector, year_list::Vector{Int}, var_names::Vector{String}) = (
-    dfs = get_data(folder, label, reso, poly, year_list, var_names);
-    for year in year_list
-        cur_file = "$(queried_locf)/$(label)_$(lpad(year, 4, "0"))_Poly$(poly).nc";
-        save_nc!(cur_file, dfs[year]);
-    end;
-    return nothing;
+get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, per_month = false) = (
+    df = get_data(folder, label, nodes, year, var_names; reso=reso, per_month=per_month);
+    cur_file = "$(queried_locf)/$(label)_$(lpad(year, 4, "0"))_Poly$(nodes).nc";
+    save_nc!(cur_file, df);
+    return cur_file;
 );
 
 """
@@ -324,5 +334,3 @@ clean_files(folder::String, label::String, reso::Int, year::Int) = (
 );
 
 end; # module
-
-
