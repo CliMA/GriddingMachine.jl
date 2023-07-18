@@ -190,21 +190,22 @@ partition(dict::Dict) = (
 
 """
     get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_names::Vector{String})
+    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_name::String)
 
-Get data of variables from a specific satelite within the given closed polygonal region of a year
+Get data as DataFrame of variables from a specific satelite within the given closed polygonal region of a year
 - `folder` Path to the folder storing the gridded files
 - `label` Label of the dataset
 - `reso` Resolution of the grid
-- `dict` JSON dict containing information for the gridded dataset
 - `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `year` The year of interest
 - `var_names` The names of the variables to be queried
+- `var_name` The name of a specific variable to be queried
 
 #
-    get_data(folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_name::String)
+    get_data(folder::String, label::String, reso::Int, poly::Matrix, year_list::Vector{Int}, var_names::Vector{String})
 
-Get data of one variable from a specific satelite within the given closed polygonal region of a year
-- `var_name` The name of a specific variable to be queried
+Get data as dictionary mapping from year to DataFrame for each listed year
+- `year_list` Vector of years 
 """
 function get_data end;
 
@@ -229,7 +230,7 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_
                 j = Int((lat+90)/reso+1);
                 file_path = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc"
                 if !isfile(file_path)
-                    @warn "File $(file_path) does not exist";
+                    @warn "File $(file_path) does not exist, skipping...";
                     continue;
                 end;
                 grid_cell = Ngon((lon, lat), (lon+reso, lat), (lon+reso, lat+reso), (lon, lat+reso));
@@ -261,12 +262,43 @@ get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_
     end;
 
     return data;
-)
+);
 
 get_data(folder::String, label::String, reso::Int, poly::Vector, year::Int, var_name::String) = (
     return get_data(folder, label, reso, poly, year, [var_name]);
 );
 
+get_data(folder::String, label::String, reso::Int, poly::Vector, year_list::Vector{Int}, var_names::Vector{String}) = (
+    dfs = Dict{Int, DataFrame}();
+    for year in year_list
+        dfs[year] = get_data(folder, label, reso, poly, year, var_names);
+    end;
+    return dfs;
+);
+
+
+"""
+    get_data_as_nc(queried_locf::String, folder::String, label::String, reso::Int, poly::Matrix, year::Int, var_names::Vector{String})
+
+Get data within the given closed polygonal region, with each year saved as a NetCDF file
+- `queried_locf` Path to the folder storing the queried data
+- `folder` Path to the folder storing the gridded files
+- `label` Label of the dataset
+- `reso` Resolution of the grid
+- `poly` Vector of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `year` The year of interest
+- `var_names` The names of the variables to be queried
+"""
+function get_data_as_nc end;
+
+get_data_as_nc(queried_locf::String, folder::String, label::String, reso::Int, poly::Vector, year_list::Vector{Int}, var_names::Vector{String}) = (
+    dfs = get_data(folder, label, reso, poly, year_list, var_names);
+    for year in year_list
+        cur_file = "$(queried_locf)/$(label)_$(lpad(year, 4, "0"))_Poly$(poly).nc";
+        save_nc!(cur_file, dfs[year]);
+    end;
+    return nothing;
+);
 
 """
     clean_files(folder::String, label::String, reso::Int, year::Int)
@@ -289,7 +321,7 @@ clean_files(folder::String, label::String, reso::Int, year::Int) = (
     end;
     @info "Process complete";
     return nothing
-)
+);
 
 end; # module
 

@@ -18,4 +18,4 @@ test/demo_*.jl
 test/testcase_creation/*
 test/test_*.jl
 
-json/Partition/*_demo*.json
+json/*
