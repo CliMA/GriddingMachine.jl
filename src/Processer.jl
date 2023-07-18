@@ -9,6 +9,7 @@ using NetcdfIO: read_nc, save_nc!, append_nc!
 include("processer/ProcessJSON.jl")
 include("processer/judges.jl")
 
+include("borrowed/EmeraldMath.jl")
 include("borrowed/EmeraldUtility.jl")
 include("borrowed/Terminal.jl")
 

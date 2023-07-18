@@ -72,7 +72,8 @@ function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox
         _data = zeros(Float64, resox * 360, resox * 180);
         for lon in range(1, resox * 360)
             for lat in range(1, resox * 180)
-                _data[lon, lat] = (_hata[lon, lat] + _hata[lon+1, lat] + _hata[lon, lat+1] + _hata[lon+1, lat+1])/4;
+                cell = filter(x -> x !== NaN, [_hata[lon, lat] + _hata[lon+1, lat] + _hata[lon, lat+1] + _hata[lon+1, lat+1]]);
+                _data[lon, lat] = nanmean(cell);
             end
         end
         _hata = _data;
