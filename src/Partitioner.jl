@@ -47,7 +47,7 @@ partition(dict::Dict) = (
     gridded_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], time=Float64[]);
+            gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], lon_bnds=Tuple[], lat_bnds=Tuple[], time=Float64[], month=Int[], iday=Int[]);
             for k in data_info
                 gridded_data[i, j][!, k[1]] = Float32[];
             end;
@@ -107,12 +107,12 @@ partition(dict::Dict) = (
                     #Read lon, lat, and time data from file
                     lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
                     lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
+                    lon_bnds_cur = read_nc(file_path, _dict_dims["LON_BNDS"]);
+                    lat_bnds_cur = read_nc(file_path, _dict_dims["LAT_BNDS"]);
                     time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
 
-                    #Instantiate dicts for storing data and std
-                    data = Dict{String, Vector}();
-
                     #Read the desired variables and std from file and apply given functions
+                    data = Dict{String, Vector}();
                     for k in data_info
                         data[k[1]] = read_nc(file_path, k[1]);
                         data[k[1]] = isnothing(k[2]) ? data[k[1]] : k[2].(data[k[1]]);
@@ -123,7 +123,7 @@ partition(dict::Dict) = (
                     for i in range(1, size(time_cur)[1])
                         _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
                         _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
-                        data_row = [lon_cur[i], lat_cur[i], time_cur[i]];
+                        data_row = [lon_cur[i], lat_cur[i], Tuple(lon_bnds_cur[i, :]), Tuple(lat_bnds_cur[i, :]), time_cur[i], m, d+month_days[m]];
                         for k in data_info
                             push!(data_row, data[k[1]][i]);
                         end;
