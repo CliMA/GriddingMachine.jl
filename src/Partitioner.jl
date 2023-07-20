@@ -4,7 +4,7 @@ module Partitioner
 
 using DataFrames: DataFrame
 using JSON
-using NetcdfIO: read_nc, save_nc!, grow_nc!
+using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!
 using PolygonInbounds: inpoly2
 
 include("borrowed/EmeraldUtility.jl")
@@ -323,13 +323,10 @@ function grid_from_json end;
 grid_from_json(json_file::String) = (
 
     dict = JSON.parsefile(json_file);
-    
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_grid = dict["GRIDDINGMACHINE"];
-    _dict_vars = dict["INPUT_VAR_SETS"];
     _dict_outv = dict["OUTPUT_VAR_ATTR"];
     _dict_refs = dict["OUTPUT_REF_ATTR"];
-    #_dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
 
     gridded_locf = _dict_grid["FOLDER"];
     if !isdir(gridded_locf) mkpath(gridded_locf) end;
@@ -337,29 +334,35 @@ grid_from_json(json_file::String) = (
     reso = _dict_grid["LAT_LON_RESO"];
     
     for y in _dict_grid["YEARS"]
+        @info "Gridding file for year $(lpad(y, 4, "0"))..."
         data = zeros(Float32, 360*reso, 180*reso, 12);
+        std = zeros(Float32, 360*reso, 180*reso, 12);
         count = zeros(Int, 360*reso, 180*reso, 12);
         for i in range(1, Int(360/_dict_file["RESO"]))
             for j in range(1, Int(180/_dict_file["RESO"]))
-                file_path = "$(_dict_file["FOLDER"])/$(_dict_file["LABEL"])_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
+                file_path = "$(_dict_file["FOLDER"])/$(_dict_file["LABEL"])_R$(lpad(_dict_file["RESO"], 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
                 lon_cur = read_nc(file_path, "lon");
                 lat_cur = read_nc(file_path, "lat");
-                data_cur = read_nc(file_path, _dict_vars["DATA_NAME"]);
+                data_cur = read_nc(file_path, dict["INPUT_VAR"]);
+                std_cur = "INPUT_STD" in keys(dict) ? read_nc(file_path, dict["INPUT_STD"]) : nothing;
                 month_cur = read_nc(file_path, "month");
                 for k in range(1, length(data_cur))
                     grid_i = min(ceil(Int, (lon_cur[k]+180)*reso + 1), 360);
                     grid_j = min(ceil(Int, (lat_cur[k]+90)*reso + 1), 180);
                     data[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : data_cur[k]);
                     count[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : 1);
+                    std[grid_i, grid_j, month_cur[k]] += std_cur === nothing ? 0 : std_cur[k] === NaN ? 0 : 1;
                 end;
             end;
         end;
         gridded_data = data ./ count;
+        gridded_std = replace(std, 0 => NaN) ./ count;
         
         _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
         _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
-        gridded_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(_dict_grid["TEMPORAL_RESO"])_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])";
+        gridded_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(_dict_grid["TEMPORAL_RESO"])_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
         save_nc!(gridded_file, "data", gridded_data, _var_attr; var_dims = ["lon", "lat", "ind"]);
+        append_nc!(gridded_file, "std", gridded_std, _var_attr, ["lon", "lat", "ind"]);
         @info "File saved for year $(lpad(y, 4, "0"))";
     end;
 
