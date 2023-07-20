@@ -3,7 +3,7 @@ module Partitioner
 #import ..GriddingMachine: TropomiL2SIF
 
 using DataFrames: DataFrame
-using JSON: Dict, parsefile
+using JSON
 using NetcdfIO: read_nc, save_nc!, grow_nc!
 using PolygonInbounds: inpoly2
 
@@ -13,8 +13,8 @@ include("partitioner/ModifyLogs.jl")
 """
     partition(dict::Dict)
 
-Partition data into grid based on JSON dict given
-- `dict` JSON dict containing information for partitioning/gridding
+Partition data into blocks based on JSON dict given
+- `dict` JSON dict containing information for partitioning
 
 """
 function partition end;
@@ -35,6 +35,8 @@ partition(dict::Dict) = (
     _n_lon = Int(360/_reso);
     _n_lat = Int(180/_reso);
 
+    data_dims = ["lon", "lat", "lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
+
     #Parse data name, masking function, and scaling function
     data_info = [];
     for k in eachindex(_dict_vars)
@@ -44,18 +46,21 @@ partition(dict::Dict) = (
     end;
 
     #Initialize array to store data
-    gridded_data = Array{DataFrame}(undef, _n_lon, _n_lat);
+    partitioned_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], lon_bnds=[], lat_bnds=[], time=Float64[], month=Int[], iday=Int[]);
-            for k in data_info
-                gridded_data[i, j][!, k[1]] = Float32[];
+            partitioned_data[i, j] = DataFrame(time=Float64[], month=Int[], iday=Int[]);
+            for dim in data_dims
+                partitioned_data[i, j][!, dim] = Float32[];
+            end;
+            for info in data_info
+                partitioned_data[i, j][!, info[1]] = Float32[];
             end;
         end;
     end;
 
-    #Empty grid with dataframes set up
-    grid_template = copy(gridded_data);
+    #Empty partition with dataframes set up
+    partition_template = copy(partitioned_data);
     
     #Folder and date information from JSON
     folder = _dict_file["FOLDER"];
@@ -101,7 +106,7 @@ partition(dict::Dict) = (
                     @info "File $(file_name) is already processed, skipping...";
                     continue;
                 end;
-                @info "Gridding $(file_name) ..."
+                @info "Partitioning $(file_name) ..."
                 
                 try
                     #Read lon, lat, and time data from file
@@ -113,21 +118,25 @@ partition(dict::Dict) = (
 
                     #Read the desired variables and std from file and apply given functions
                     data = Dict{String, Vector}();
-                    for k in data_info
-                        data[k[1]] = read_nc(file_path, k[1]);
-                        data[k[1]] = isnothing(k[2]) ? data[k[1]] : k[2].(data[k[1]]);
-                        data[k[1]] = isnothing(k[3]) ? data[k[1]] : k[3].(data[k[1]]);
+                    for info in data_info
+                        data[info[1]] = read_nc(file_path, info[1]);
+                        data[info[1]] = isnothing(info[2]) ? data[info[1]] : info[2].(data[info[1]]);
+                        data[info[1]] = isnothing(info[3]) ? data[info[1]] : info[3].(data[info[1]]);
                     end;
 
-                    #Loop over all data and push datapoint to corresponding block in the grid
+                    #Loop over all data and push datapoint to corresponding block in the partition
                     for i in range(1, size(time_cur)[1])
                         _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
                         _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
-                        data_row = [lon_cur[i], lat_cur[i], lon_bnds_cur[i, :], lat_bnds_cur[i, :], time_cur[i], m, d+month_days[m]];
-                        for k in data_info
-                            push!(data_row, data[k[1]][i]);
+                        data_row = [time_cur[i], m, d+month_days[m], lon_cur[i], lat_cur[i]];
+                        for j in range(1, 4)
+                            push!(data_row, lon_bnds_cur[i, j]);
+                            push!(data_row, lat_bnds_cur[i, j]);
                         end;
-                        push!(gridded_data[_lon_i, _lat_i], data_row);
+                        for info in data_info
+                            push!(data_row, data[info[1]][i]);
+                        end;
+                        push!(partitioned_data[_lon_i, _lat_i], data_row);
                     end;
 
                     #Add file to successful_files array and remove from missing log
@@ -146,14 +155,10 @@ partition(dict::Dict) = (
                 for i in range(1, _n_lon)
                     for j in range(1, _n_lat)
                         cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                        if !isfile(cur_file)
-                            save_nc!(cur_file, gridded_data[i, j]; growable = true);
-                        else
-                            grow_nc!(cur_file, gridded_data[i, j]);
-                        end;
+                        !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
                     end;
                 end;
-                gridded_data = copy(grid_template);
+                partitioned_data = copy(partition_template);
                 for f in successful_files
                     append_to_log(success_file_log, f);
                     remove_from_log(unsuccess_file_log, f);
@@ -168,11 +173,7 @@ partition(dict::Dict) = (
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
                     cur_file = "$(_dict_outm["FOLDER"])/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc";
-                    if !isfile(cur_file)
-                        save_nc!(cur_file, gridded_data[i, j]; growable = true);
-                    else
-                        grow_nc!(cur_file, gridded_data[i, j]);
-                    end;
+                    !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
                 end;
             end;
             for f in successful_files
@@ -225,14 +226,14 @@ get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names
     get_data(folder::String, label::String, nodes::Matrix, year::Int, var_name::String; reso::Int = 5, per_month = false)
 
 Get data as DataFrame of variables from a specific satelite within the given closed polygonal region of a year
-- `folder` Path to the folder storing the gridded files
+- `folder` Path to the folder storing the partitioned files
 - `label` Label of the dataset
 - `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `year` The year of interest
 - `var_names` The names of the variables to be queried
 - `var_name` The name of a specific variable to be queried
-- `reso` Resolution of the grid; default to 5
-- `per_month` Whether gridded data is per month; default to false
+- `reso` Resolution of the partition; default to 5
+- `per_month` Whether partitioned data is per month; default to false
 
 #
     get_data(folder::String, label::String, nodes::Matrix, year_list::Vector{Int}, var_names::Vector{String}; reso::Int = 5, per_month = false)
@@ -291,15 +292,15 @@ get_data(folder::String, label::String, nodes::Matrix, year_list::Vector{Int}, v
 """
     get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, per_month = false)
 
-Get data within the given closed polygonal region and sav as a NetCDF file. The file path is returned
+Get data within the given closed polygonal region and save as a NetCDF file. The file path is returned
 - `queried_locf` Path to the folder storing the queried data
-- `folder` Path to the folder storing the gridded files
+- `folder` Path to the folder storing the partitioned files
 - `label` Label of the dataset
 - `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
 - `year` The year of interest
 - `var_names` The names of the variables to be queried
-- `reso` Resolution of the grid; default to 5
-- `per_month` Whether gridded data is per month; default to false
+- `reso` Resolution of the partition; default to 5
+- `per_month` Whether partitioned data is per month; default to false
 """
 function get_data_as_nc end;
 
@@ -309,6 +310,62 @@ get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matri
     save_nc!(cur_file, df);
     return cur_file;
 );
+
+
+"""
+    grid_from_json(json_file::String)
+
+Grid satellite data using information given in JSON file
+- `json_file` Path to the JSON file
+"""
+function grid_from_json end;
+
+grid_from_json(json_file::String) = (
+
+    dict = JSON.parsefile(json_file);
+    
+    _dict_file = dict["INPUT_MAP_SETS"];
+    _dict_grid = dict["GRIDDINGMACHINE"];
+    _dict_vars = dict["INPUT_VAR_SETS"];
+    _dict_outv = dict["OUTPUT_VAR_ATTR"];
+    _dict_refs = dict["OUTPUT_REF_ATTR"];
+    #_dict_stds = "INPUT_STD_SETS" in keys(dict) ? dict["INPUT_STD_SETS"] : nothing;
+
+    gridded_locf = _dict_grid["FOLDER"];
+    if !isdir(gridded_locf) mkpath(gridded_locf) end;
+    
+    reso = _dict_grid["LAT_LON_RESO"];
+    
+    for y in _dict_grid["YEARS"]
+        data = zeros(Float32, 360*reso, 180*reso, 12);
+        count = zeros(Int, 360*reso, 180*reso, 12);
+        for i in range(1, Int(360/_dict_file["RESO"]))
+            for j in range(1, Int(180/_dict_file["RESO"]))
+                file_path = "$(_dict_file["FOLDER"])/$(_dict_file["LABEL"])_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
+                lon_cur = read_nc(file_path, "lon");
+                lat_cur = read_nc(file_path, "lat");
+                data_cur = read_nc(file_path, _dict_vars["DATA_NAME"]);
+                month_cur = read_nc(file_path, "month");
+                for k in range(1, length(data_cur))
+                    grid_i = min(ceil(Int, (lon_cur[k]+180)*reso + 1), 360);
+                    grid_j = min(ceil(Int, (lat_cur[k]+90)*reso + 1), 180);
+                    data[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : data_cur[k]);
+                    count[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : 1);
+                end;
+            end;
+        end;
+        gridded_data = data ./ count;
+        
+        _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
+        _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
+        gridded_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(_dict_grid["TEMPORAL_RESO"])_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])";
+        save_nc!(gridded_file, "data", gridded_data, _var_attr; var_dims = ["lon", "lat", "ind"]);
+        @info "File saved for year $(lpad(y, 4, "0"))";
+    end;
+
+    @info "Process complete";
+);
+
 
 """
     clean_files(folder::String, label::String, reso::Int, year::Int; per_month = false)
