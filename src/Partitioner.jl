@@ -47,7 +47,7 @@ partition(dict::Dict) = (
     gridded_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], lon_bnds=Tuple[], lat_bnds=Tuple[], time=Float64[], month=Int[], iday=Int[]);
+            gridded_data[i, j] = DataFrame(lon=Float32[], lat=Float32[], lon_bnds=[], lat_bnds=[], time=Float64[], month=Int[], iday=Int[]);
             for k in data_info
                 gridded_data[i, j][!, k[1]] = Float32[];
             end;
@@ -123,7 +123,7 @@ partition(dict::Dict) = (
                     for i in range(1, size(time_cur)[1])
                         _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
                         _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
-                        data_row = [lon_cur[i], lat_cur[i], Tuple(lon_bnds_cur[i, :]), Tuple(lat_bnds_cur[i, :]), time_cur[i], m, d+month_days[m]];
+                        data_row = [lon_cur[i], lat_cur[i], lon_bnds_cur[i, :], lat_bnds_cur[i, :], time_cur[i], m, d+month_days[m]];
                         for k in data_info
                             push!(data_row, data[k[1]][i]);
                         end;

@@ -58,12 +58,11 @@ reprocess_from_json(_json::String, rep_locf::String) = (
 
 
 """
-    deploy_from_json(_json::String, rep_locf::String)
+    deploy_from_json(_json::String, rep_locf::String, art_tarf::String, art_urls::Vector{String})
 
 This method deploys the data represented by a given JSON file that is stored in a local folder
 
 - `_json` Path of JSON file to be parsed
-- `art_toml` Directory of Artifacts.toml file
 - `rep_locf` Path of folder where the reprocessed dataset is stored
 - `art_tarf` Path of folder where the compressed data would be stored
 - `art_urls` Vector of public urls, where the compressed files are to be uploaded (user need to upload the file manually)
@@ -71,9 +70,10 @@ This method deploys the data represented by a given JSON file that is stored in 
 """
 function deploy_from_json end;
 
-deploy_from_json(_json::String, art_toml::String, rep_locf::String, art_tarf::String, art_urls::Vector{String}) = (
+deploy_from_json(_json::String, rep_locf::String, art_tarf::String, art_urls::Vector{String}) = (
     #Parse JSON file
     json_dict = JSON.parse(open(_json));
+    art_toml = joinpath(@__DIR__, "../Artifacts.toml");
 
     #Deploy artifact
     if art_urls == []
@@ -164,15 +164,13 @@ reprocess_file(_json::String, rep_locf::String) = (
     end;
 
     #Deploy artifact
-    _msg = "Please input the directory of the Artifacts.toml file > ";
-    art_toml = verified_input(_msg, _jdg_2);
     _msg = "Please input the folder of the compressed data to be stored > ";
     art_tarf = verified_input(_msg, _jdg_6);
     _msg = "Please inpt the URLs where the compressed files are to be uploaded, separated by , > ";
     art_urls = convert(Vector{String}, split(verified_input(_msg, _jdg_3), ","));
 
     @info "Deploying reprocessed dataset as artifact...";
-    deploy_from_json(_json, art_toml, rep_locf, art_tarf, art_urls);
+    deploy_from_json(_json, rep_locf, art_tarf, art_urls);
 
     return true;
 );
