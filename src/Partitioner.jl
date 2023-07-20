@@ -4,7 +4,7 @@ module Partitioner
 
 using DataFrames: DataFrame
 using JSON
-using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!
+using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
 
 include("borrowed/EmeraldUtility.jl")
@@ -73,6 +73,9 @@ partition(dict::Dict) = (
         mkpath(_dict_outm["FOLDER"]);
     end;
 
+    #Ensure that hdf4 is supported
+    switch_netcdf_lib!(use_default = false, user_defined = "$(homedir()).julia/conda/3/x86_64/lib/libnetcdf.so");
+    
     #Loop over years
     for y in range(y_start, y_end)
 
