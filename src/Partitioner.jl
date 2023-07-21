@@ -35,7 +35,7 @@ partition(dict::Dict) = (
     _n_lon = Int(360/_reso);
     _n_lat = Int(180/_reso);
 
-    data_dims = ["lon", "lat", "lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
+    data_dims = ["lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
 
     #Parse data name, masking function, and scaling function
     data_info = [];
@@ -49,9 +49,11 @@ partition(dict::Dict) = (
     partitioned_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            partitioned_data[i, j] = DataFrame(time=Float64[], month=Int[], iday=Int[]);
-            for dim in data_dims
-                partitioned_data[i, j][!, dim] = Float32[];
+            partitioned_data[i, j] = DataFrame(time=Float64[], month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
+            if "LON_BNDS" in keys(_dict_dims)
+                for dim in data_dims
+                    partitioned_data[i, j][!, dim] = Float32[];
+                end;
             end;
             for info in data_info
                 partitioned_data[i, j][!, info[1]] = Float32[];
@@ -123,8 +125,8 @@ partition(dict::Dict) = (
                         #Read lon, lat, and time data from file
                         lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
                         lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
-                        lon_bnds_cur = read_nc(file_path, _dict_dims["LON_BNDS"]);
-                        lat_bnds_cur = read_nc(file_path, _dict_dims["LAT_BNDS"]);
+                        lon_bnds_cur = "LON_BNDS" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["LON_BNDS"]) : nothing;
+                        lat_bnds_cur = "LAT_BNDS" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["LAT_BNDS"]) : nothing;
                         time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
 
                         #Read the desired variables and std from file and apply given functions
@@ -140,9 +142,11 @@ partition(dict::Dict) = (
                             _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
                             _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
                             data_row = [time_cur[i], m, d+month_days[m], lon_cur[i], lat_cur[i]];
-                            for j in range(1, 4)
-                                push!(data_row, lon_bnds_cur[i, j]);
-                                push!(data_row, lat_bnds_cur[i, j]);
+                            if "LON_BNDS" in keys(_dict_dims)
+                                for j in range(1, 4)
+                                    push!(data_row, lon_bnds_cur[i, j]);
+                                    push!(data_row, lat_bnds_cur[i, j]);
+                                end;
                             end;
                             for info in data_info
                                 push!(data_row, data[info[1]][i]);
