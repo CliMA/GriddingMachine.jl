@@ -94,7 +94,7 @@ using Test
 
     @testset "Verification" begin
         # only for high memory and storage cases, e.g., server
-        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
+        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64 && homedir() == "/home/wyujie"
             for collection in collections
                 for tag in collection.SUPPORTED_COMBOS
                     fn = Collector.query_collection(collection, tag);

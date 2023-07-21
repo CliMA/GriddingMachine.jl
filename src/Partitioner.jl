@@ -2,7 +2,7 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames: DataFrame
+using DataFrames: DataFrame, push!
 using JSON
 using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
@@ -64,8 +64,7 @@ partition(dict::Dict) = (
     #Empty partition with dataframes set up
     partition_template = copy(partitioned_data);
     
-    #Folder and date information from JSON
-    folder = _dict_file["FOLDER"];
+    #Date information from JSON
     y_start = _dict_file["START_YEAR"]; y_end = _dict_file["END_YEAR"];
     m_start = _dict_file["START_MONTH"]; m_end = _dict_file["END_MONTH"];
     d_start = _dict_file["START_DAY"]; d_end = _dict_file["END_DAY"];
@@ -77,7 +76,7 @@ partition(dict::Dict) = (
     end;
 
     #Ensure that hdf4 is supported
-    switch_netcdf_lib!(use_default = false, user_defined = "$(homedir()).julia/conda/3/x86_64/lib/libnetcdf.so");
+    switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so");
     
     #Loop over years
     for y in range(y_start, y_end)
@@ -97,12 +96,25 @@ partition(dict::Dict) = (
             d_e = (m == m_end && y == y_end) ? d_end : month_days[m+1]-month_days[m];
 
             for d in range(d_s, d_e; step = d_step)
+                folder =  replace(_dict_file["FOLDER"],
+                                    "year" => lpad(y, 4, "0"),
+                                    "month" => lpad(m, 2, "0"),
+                                    "day" => lpad(d, 2, "0"),
+                                    "date" => lpad(d + month_days[m], 3, "0"),
+                                    "yyyy" => lpad(mod(y, 1000), 2, "0"));
                 file_name_pattern = replace(_dict_file["FILE_NAME_PATTERN"],
                                     "year" => lpad(y, 4, "0"),
                                     "month" => lpad(m, 2, "0"),
                                     "day" => lpad(d, 2, "0"),
                                     "date" => lpad(d + month_days[m], 3, "0"),
-                                    "yy" => lpad(mod(y, 1000), 2, "0"));
+                                    "yyyy" => lpad(mod(y, 1000), 2, "0"));
+                if !isdir(folder)
+                    @info "Folder $(folder) does not exist."
+                    write_to_log(missing_file_log, file_name_pattern);
+                    @info "Files of form $(file_name_pattern) are missing, skipping...";
+                    continue;
+                end;
+
                 files = filter(x -> occursin(file_name_pattern, x), readdir(folder));
 
                 #Check if file exists. If not, write to missing_files.log
@@ -126,8 +138,10 @@ partition(dict::Dict) = (
                         lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
                         lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
                         lon_bnds_cur = "LON_BNDS" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["LON_BNDS"]) : nothing;
+                        lon_bnds_cur = size(lon_bnds_cur)[2] == 4 ? lon_bnds_cur : lon_bnds_cur'
                         lat_bnds_cur = "LAT_BNDS" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["LAT_BNDS"]) : nothing;
-                        time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
+                        lat_bnds_cur = size(lat_bnds_cur)[2] == 4 ? lat_bnds_cur : lat_bnds_cur'
+                        time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]; transform = false);
 
                         #Read the desired variables and std from file and apply given functions
                         data = Dict{String, Vector}();
@@ -156,7 +170,7 @@ partition(dict::Dict) = (
 
                         #Add file to successful_files array and remove from missing log
                         push!(successful_files, file_name);
-                        remove_from_log(missing_file_log, file_name);
+                        remove_from_log(missing_file_log, file_name_pattern);
 
                     catch e
                         write_to_log(unsuccess_file_log, file_name)
@@ -354,6 +368,7 @@ grid_from_json(json_file::String) = (
         data = zeros(Float32, 360*reso, 180*reso, 12);
         std = zeros(Float32, 360*reso, 180*reso, 12);
         count = zeros(Int, 360*reso, 180*reso, 12);
+
         for i in range(1, Int(360/_dict_file["RESO"]))
             for j in range(1, Int(180/_dict_file["RESO"]))
                 file_path = "$(_dict_file["FOLDER"])/$(_dict_file["LABEL"])_R$(lpad(_dict_file["RESO"], 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0")).nc"
