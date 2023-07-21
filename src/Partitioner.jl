@@ -67,6 +67,7 @@ partition(dict::Dict) = (
     y_start = _dict_file["START_YEAR"]; y_end = _dict_file["END_YEAR"];
     m_start = _dict_file["START_MONTH"]; m_end = _dict_file["END_MONTH"];
     d_start = _dict_file["START_DAY"]; d_end = _dict_file["END_DAY"];
+    d_step = _dict_file["DAY_STEP"];
 
     #Create folder if it does not exist yet
     if !isdir(_dict_outm["FOLDER"])
@@ -93,62 +94,70 @@ partition(dict::Dict) = (
             d_s = (m == m_start && y == y_start) ? d_start : 1;
             d_e = (m == m_end && y == y_end) ? d_end : month_days[m+1]-month_days[m];
 
-            for d in range(d_s, d_e)
-                file_name = replace(_dict_file["FILE_NAME_PATTERN"], "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"));
-                file_path = "$(folder)/$(file_name)";
+            for d in range(d_s, d_e; step = d_step)
+                file_name_pattern = replace(_dict_file["FILE_NAME_PATTERN"],
+                                    "year" => lpad(y, 4, "0"),
+                                    "month" => lpad(m, 2, "0"),
+                                    "day" => lpad(d, 2, "0"),
+                                    "date" => lpad(d + month_days[m], 3, "0"),
+                                    "yy" => lpad(mod(y, 1000), 2, "0"));
+                files = filter(x -> occursin(file_name_pattern, x), readdir(folder));
 
                 #Check if file exists. If not, write to missing_files.log
-                if !isfile(file_path)
-                    write_to_log(missing_file_log, file_name);
-                    @info "File $(file_name) is missing, skipping...";
+                if isempty(files)
+                    write_to_log(missing_file_log, file_name_pattern);
+                    @info "Files of form $(file_name_pattern) are missing, skipping...";
                     continue;
                 end;
 
                 #Check if file already processed. If so, skip the file
-                if (check_log_for_message(success_file_log, file_name))
-                    @info "File $(file_name) is already processed, skipping...";
-                    continue;
-                end;
-                @info "Partitioning $(file_name) ..."
-                
-                try
-                    #Read lon, lat, and time data from file
-                    lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
-                    lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
-                    lon_bnds_cur = read_nc(file_path, _dict_dims["LON_BNDS"]);
-                    lat_bnds_cur = read_nc(file_path, _dict_dims["LAT_BNDS"]);
-                    time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
-
-                    #Read the desired variables and std from file and apply given functions
-                    data = Dict{String, Vector}();
-                    for info in data_info
-                        data[info[1]] = read_nc(file_path, info[1]);
-                        data[info[1]] = isnothing(info[2]) ? data[info[1]] : info[2].(data[info[1]]);
-                        data[info[1]] = isnothing(info[3]) ? data[info[1]] : info[3].(data[info[1]]);
+                for file_name in files
+                    file_path = "$(folder)/$(file_name)"
+                    if (check_log_for_message(success_file_log, file_name))
+                        @info "File $(file_name) is already processed, skipping...";
+                        continue;
                     end;
+                    @info "Partitioning $(file_name) ..."
+                    
+                    try
+                        #Read lon, lat, and time data from file
+                        lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
+                        lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
+                        lon_bnds_cur = read_nc(file_path, _dict_dims["LON_BNDS"]);
+                        lat_bnds_cur = read_nc(file_path, _dict_dims["LAT_BNDS"]);
+                        time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]);
 
-                    #Loop over all data and push datapoint to corresponding block in the partition
-                    for i in range(1, size(time_cur)[1])
-                        _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
-                        _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
-                        data_row = [time_cur[i], m, d+month_days[m], lon_cur[i], lat_cur[i]];
-                        for j in range(1, 4)
-                            push!(data_row, lon_bnds_cur[i, j]);
-                            push!(data_row, lat_bnds_cur[i, j]);
-                        end;
+                        #Read the desired variables and std from file and apply given functions
+                        data = Dict{String, Vector}();
                         for info in data_info
-                            push!(data_row, data[info[1]][i]);
+                            data[info[1]] = read_nc(file_path, info[1]);
+                            data[info[1]] = isnothing(info[2]) ? data[info[1]] : info[2].(data[info[1]]);
+                            data[info[1]] = isnothing(info[3]) ? data[info[1]] : info[3].(data[info[1]]);
                         end;
-                        push!(partitioned_data[_lon_i, _lat_i], data_row);
+
+                        #Loop over all data and push datapoint to corresponding block in the partition
+                        for i in range(1, size(time_cur)[1])
+                            _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
+                            _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
+                            data_row = [time_cur[i], m, d+month_days[m], lon_cur[i], lat_cur[i]];
+                            for j in range(1, 4)
+                                push!(data_row, lon_bnds_cur[i, j]);
+                                push!(data_row, lat_bnds_cur[i, j]);
+                            end;
+                            for info in data_info
+                                push!(data_row, data[info[1]][i]);
+                            end;
+                            push!(partitioned_data[_lon_i, _lat_i], data_row);
+                        end;
+
+                        #Add file to successful_files array and remove from missing log
+                        push!(successful_files, file_name);
+                        remove_from_log(missing_file_log, file_name);
+
+                    catch e
+                        write_to_log(unsuccess_file_log, file_name)
+                        @info "File $(file_name) processing unsuccessful";
                     end;
-
-                    #Add file to successful_files array and remove from missing log
-                    push!(successful_files, file_name);
-                    remove_from_log(missing_file_log, file_name);
-
-                catch e
-                    write_to_log(unsuccess_file_log, file_name)
-                    @info "File $(file_name) processing unsuccessful";
                 end;
             end;
 
