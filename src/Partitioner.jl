@@ -23,7 +23,7 @@ partition(dict::Dict) = (
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_outm = dict["OUTPUT_MAP_SETS"];
     _dict_vars = dict["INPUT_VAR_SETS"];
-    _dict_dims = "INPUT_DIM_SETS" in keys(dict) ? dict["INPUT_DIM_SETS"] : nothing;
+    _dict_dims = dict["INPUT_DIM_SETS"];
     _dict_logs = dict["LOG_FILES"];
 
     success_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])";
@@ -49,12 +49,13 @@ partition(dict::Dict) = (
     partitioned_data = Array{DataFrame}(undef, _n_lon, _n_lat);
     for i in range(1, _n_lon)
         for j in range(1, _n_lat)
-            partitioned_data[i, j] = DataFrame(time=Float64[], month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
-            if _dict_dims !== nothing && "LON_BNDS" in keys(_dict_dims)
+            partitioned_data[i, j] = DataFrame(month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
+            if "LON_BNDS" in keys(_dict_dims)
                 for dim in data_dims
                     partitioned_data[i, j][!, dim] = Float32[];
                 end;
             end;
+            if "TIME_NAME" in keys(_dict_dims) partitioned_data[i, j][!, time] = Float64[]; end;
             for info in data_info
                 partitioned_data[i, j][!, info[1]] = Float32[];
             end;
@@ -116,7 +117,6 @@ partition(dict::Dict) = (
 
                 #Check if file already processed. If so, skip the file
                 for file_name in files
-                    file_path = "$(folder)/$(file_name)"
                     if (check_log_for_message(success_file_log, file_name))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
@@ -124,8 +124,8 @@ partition(dict::Dict) = (
                     @info "Partitioning $(file_name) ..."
                     
                     try
-                        if _dict_file["IS_VECTOR"] process_vector_data(file_path, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
-                        else process_blocked_data(file_path, lon_map, lat_map, data_info, _reso, m, d, partitioned_data, month_days);
+                        if _dict_file["IS_VECTOR"] process_vector_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
+                        else process_blocked_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
                         end;
                         #Add file to successful_files array and remove from missing log
                         push!(successful_files, file_name);
@@ -176,7 +176,9 @@ partition(dict::Dict) = (
     return nothing
 );
 
-process_vector_data(file_path::String, _dict_dims::Dict, data_info::Array, _reso::Int, m::Int, d::Int, partitioned_data, month_days::Vector) = (
+process_vector_data(file_name::String, folder::String, _dict_dims::Dict, data_info::Array, _reso::Int, m::Int, d::Int, partitioned_data, month_days::Vector) = (
+    file_path = "$(folder)/$(file_name)";
+
     #Read lon, lat, and time data from file
     lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
     lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
@@ -184,7 +186,7 @@ process_vector_data(file_path::String, _dict_dims::Dict, data_info::Array, _reso
     lon_bnds_cur = size(lon_bnds_cur)[2] == 4 ? lon_bnds_cur : lon_bnds_cur';
     lat_bnds_cur = "LAT_BNDS" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["LAT_BNDS"]) : nothing;
     lat_bnds_cur = size(lat_bnds_cur)[2] == 4 ? lat_bnds_cur : lat_bnds_cur';
-    time_cur = read_nc(file_path, _dict_dims["TIME_NAME"]; transform = false);
+    time_cur = "TIME_NAME" in keys(_dict_dims) ? read_nc(file_path, _dict_dims["TIME_NAME"]; transform = false) : nothing;
 
     #Read the desired variables and std from file and apply given functions
     data = Dict{String, Vector}();
@@ -195,16 +197,17 @@ process_vector_data(file_path::String, _dict_dims::Dict, data_info::Array, _reso
     end;
 
     #Loop over all data and push datapoint to corresponding block in the partition
-    for i in range(1, size(time_cur)[1])
+    for i in range(1, size(lon_cur)[1])
         _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
         _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
-        data_row = [time_cur[i], m, d+month_days[m], lon_cur[i], lat_cur[i]];
+        data_row = [m, d+month_days[m], lon_cur[i], lat_cur[i]];
         if "LON_BNDS" in keys(_dict_dims)
             for j in range(1, 4)
                 push!(data_row, lon_bnds_cur[i, j]);
                 push!(data_row, lat_bnds_cur[i, j]);
             end;
         end;
+        if "TIME_NAME" in keys(_dict_dims) push!(data_row, time_cur[i]); end;
         for info in data_info
             push!(data_row, data[info[1]][i]);
         end;
@@ -212,14 +215,38 @@ process_vector_data(file_path::String, _dict_dims::Dict, data_info::Array, _reso
     end;
 );
 
-process_blocked_data(file_path::String, lon_map::Array, lat_map::Array, data_info::Array, _reso::Int, m::Int, d::Int, partitioned_data, month_days::Vector) = (
+process_blocked_data(file_name::String, folder::String, _dict_dims::Dict, data_info::Array, _reso::Int, m::Int, d::Int, partitioned_data, month_days::Vector) = (
+    file_path = "$(folder)/$(file_name)";
+
     #Read the desired variables and std from file and apply given functions
     data = Dict{String, Array}();
     for info in data_info
-        data[info[1]] = read_nc(file_path, info[1]);
-        data[info[1]] = isnothing(info[2]) ? data[info[1]] : info[2].(data[info[1]]);
-        data[info[1]] = isnothing(info[3]) ? data[info[1]] : info[3].(data[info[1]]);
+        cur_data = read_nc(file_path, info[1]);
+        cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
+        cur_data = isnothing(info[3]) ? cur_data : info[3].(cur_data);
+        data[info[1]] = vcat(cur_data...);
     end;
+
+    i_h = findfirst("h", file_name)[1];
+    cur_h = parse(Int, file_name[i_h+1:i_h+2]);
+    i_v = findfirst("v", file_name)[1];
+    cur_v = parse(Int, file_name[i_v+1:i_v+2]);
+
+    println("Reading lon_cur...");
+    lon_cur = vcat(read_nc(_dict_dims["LON_LAT_MAP"], "longitude", [cur_h+1, cur_v+1, :, :])...);
+    println("Finished reading lon_cur");
+    lat_cur = vcat(read_nc(_dict_dims["LON_LAT_MAP"], "latitude", [cur_h+1, cur_v+1, :, :])...);
+
+    for i in range(1, size(lon_cur)[1])
+        _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/_reso));
+        _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/_reso));
+        data_row = [m, d+month_days[m], lon_cur[i], lat_cur[i]];
+        for info in data_info
+            push!(data_row, data[info[1]][i]);
+        end;
+        push!(partitioned_data[_lon_i, _lat_i], data_row);
+    end;
+    
 );
 
 format_with_date(path::String, y::Int, m::Int, d::Int, month_days::Vector) = (
