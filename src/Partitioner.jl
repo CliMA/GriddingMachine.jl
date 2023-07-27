@@ -55,7 +55,7 @@ partition(dict::Dict) = (
                     partitioned_data[i, j][!, dim] = Float32[];
                 end;
             end;
-            if "TIME_NAME" in keys(_dict_dims) partitioned_data[i, j][!, time] = Float64[]; end;
+            if "TIME_NAME" in keys(_dict_dims) partitioned_data[i, j][!, "time"] = Float64[]; end;
             for info in data_info
                 partitioned_data[i, j][!, info[1]] = Float32[];
             end;
@@ -224,6 +224,7 @@ process_blocked_data(file_name::String, folder::String, _dict_dims::Dict, data_i
         cur_data = read_nc(file_path, info[1]);
         cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
         cur_data = isnothing(info[3]) ? cur_data : info[3].(cur_data);
+        cur_data = cur_data';
         data[info[1]] = vcat(cur_data...);
     end;
 
@@ -397,9 +398,10 @@ grid_from_json(json_file::String) = (
     
     for y in _dict_grid["YEARS"]
         @info "Gridding file for year $(lpad(y, 4, "0"))..."
-        data = zeros(Float32, 360*reso, 180*reso, 12);
-        std = zeros(Float32, 360*reso, 180*reso, 12);
-        count = zeros(Int, 360*reso, 180*reso, 12);
+        month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
+        data = zeros(Float32, 360*reso, 180*reso, month_days[end]);
+        std = zeros(Float32, 360*reso, 180*reso, month_days[end]);
+        count = zeros(Int, 360*reso, 180*reso, month_days[end]);
 
         for i in range(1, Int(360/_dict_file["RESO"]))
             for j in range(1, Int(180/_dict_file["RESO"]))
@@ -408,25 +410,54 @@ grid_from_json(json_file::String) = (
                 lat_cur = read_nc(file_path, "lat");
                 data_cur = read_nc(file_path, dict["INPUT_VAR"]);
                 std_cur = "INPUT_STD" in keys(dict) ? read_nc(file_path, dict["INPUT_STD"]) : nothing;
-                month_cur = read_nc(file_path, "month");
+                iday_cur = read_nc(file_path, "iday");
                 for k in range(1, length(data_cur))
-                    grid_i = min(ceil(Int, (lon_cur[k]+180)*reso + 1), 360);
-                    grid_j = min(ceil(Int, (lat_cur[k]+90)*reso + 1), 180);
-                    data[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : data_cur[k]);
-                    count[grid_i, grid_j, month_cur[k]] += (data_cur[k] === NaN ? 0 : 1);
-                    std[grid_i, grid_j, month_cur[k]] += std_cur === nothing ? 0 : std_cur[k] === NaN ? 0 : 1;
+                    grid_i = max(ceil(Int, (lon_cur[k]+180)*reso), 1);
+                    grid_j = max(ceil(Int, (lat_cur[k]+90)*reso), 1);
+                    data[grid_i, grid_j, iday_cur[k]] += (data_cur[k] === NaN ? 0 : data_cur[k]);
+                    count[grid_i, grid_j, iday_cur[k]] += (data_cur[k] === NaN ? 0 : 1);
+                    std[grid_i, grid_j, iday_cur[k]] += std_cur === nothing ? 0 : std_cur[k] === NaN ? 0 : 1;
                 end;
             end;
         end;
-        gridded_data = data ./ count;
-        gridded_std = replace(std, 0 => NaN) ./ count;
+
+        @info "All datapoints stored, gridding based on temporal resolutions given..."
         
         _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
         _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
-        gridded_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(_dict_grid["TEMPORAL_RESO"])_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
-        save_nc!(gridded_file, "data", gridded_data, _var_attr; var_dims = ["lon", "lat", "ind"]);
-        append_nc!(gridded_file, "std", gridded_std, _var_attr, ["lon", "lat", "ind"]);
-        @info "File saved for year $(lpad(y, 4, "0"))";
+        for temp in _dict_grid["TEMPORAL_RESO"]
+            t_reso = parse(Int, temp[1:end-1])
+            if temp[end:end] == "Y"
+                @assert t_reso == 1 "Temporal resolution for year must be 1"
+                cur_data = sum(data, dims = 3);
+                cur_std = sum(std, dims = 3);
+                cur_count = sum(count, dims = 3);
+            elseif temp[end:end] == "M"
+                @assert 1 <= t_reso <= 12 "Temporal resolution for month must be 1"
+                cur_data = zeros(Float32, 360*reso, 180*reso, 12);
+                cur_std = zeros(Float32, 360*reso, 180*reso, 12);
+                cur_count = zeros(Float32, 360*reso, 180*reso, 12);
+                for m in range(1, 12)
+                    cur_data[:,:,m] = sum(data[:, :, month_days[m]+1:month_days[m+1]], dims = 3)
+                    cur_std[:,:,m] = sum(std[:, :, month_days[m]+1:month_days[m+1]], dims = 3)
+                    cur_count[:,:,m] = sum(count[:, :, month_days[m]+1:month_days[m+1]], dims = 3)
+                end;
+            elseif temp[end:end] == "D"
+                @assert 1 <= t_reso <= month_days[end] "Temporal resolution for day must be between 1 and number of days per year"
+                cur_data = zeros(Float32, 360*reso, 180*reso, ceil(Int, month_days[end]/t_reso));
+                cur_std = zeros(Float32, 360*reso, 180*reso, ceil(Int, month_days[end]/t_reso));
+                cur_count = zeros(Float32, 360*reso, 180*reso, ceil(Int, month_days[end]/t_reso));
+                for i in range(1, ceil(Int, month_days[end]/t_reso))
+                    cur_data[:,:,i] = sum(data[:, :, (i-1)*t_reso+1:min(i*t_reso, month_days[end])], dims = 3)
+                    cur_std[:,:,i] = sum(std[:, :, (i-1)*t_reso+1:min(i*t_reso, month_days[end])], dims = 3)
+                    cur_count[:,:,i] = sum(count[:, :, (i-1)*t_reso+1:min(i*t_reso, month_days[end])], dims = 3)
+                end;
+            end;
+            cur_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
+            save_nc!(cur_file, "data", cur_data ./ cur_count, _var_attr; var_dims = ["lon", "lat", "ind"]);
+            append_nc!(cur_file, "std", cur_std ./ cur_count, _var_attr, ["lon", "lat", "ind"]);
+            @info "File saved for year $(lpad(y, 4, "0")), temporal resolution $(temp)";
+        end;
     end;
 
     @info "Process complete";
