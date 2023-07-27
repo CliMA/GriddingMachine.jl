@@ -232,9 +232,7 @@ process_blocked_data(file_name::String, folder::String, _dict_dims::Dict, data_i
     i_v = findfirst("v", file_name)[1];
     cur_v = parse(Int, file_name[i_v+1:i_v+2]);
 
-    println("Reading lon_cur...");
     lon_cur = vcat(read_nc(_dict_dims["LON_LAT_MAP"], "longitude", [cur_h+1, cur_v+1, :, :])...);
-    println("Finished reading lon_cur");
     lat_cur = vcat(read_nc(_dict_dims["LON_LAT_MAP"], "latitude", [cur_h+1, cur_v+1, :, :])...);
 
     for i in range(1, size(lon_cur)[1])
