@@ -175,8 +175,8 @@ get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names
     points = hcat(lon_cur, lat_cur);
     overlap_matrix = inpoly2(points, nodes);
     overlaps = overlap_matrix[:, 1] .|| overlap_matrix[:, 2];
-    append!(data.lon, months_cur[overlaps]);
-    append!(data.lat, idays_cur[overlaps]);
+    append!(data.month, months_cur[overlaps]);
+    append!(data.iday, idays_cur[overlaps]);
     append!(data.lon, lon_cur[overlaps]);
     append!(data.lat, lat_cur[overlaps]);
     for var_name in var_names
@@ -218,6 +218,9 @@ function get_data end;
 get_data(folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, months::Vector{Int} = collect(1:12)) = (
     
     data = DataFrame(month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
+    for var_name in var_names
+        data[!, var_name] = Float32[];
+    end;
 
     @info "Querying data...";
     try
@@ -229,9 +232,6 @@ get_data(folder::String, label::String, nodes::Matrix, year::Int, var_names::Vec
             for j in range(min_j, max_j)
                 for m in months
                     file_path = format_with_date("$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_year_month.nc", year; m = m);
-                    for var_name in var_names
-                        data[!, var_name] = Float32[];
-                    end;
                     get_data_from_file!(data, file_path, nodes, var_names);
                 end;
             end;
@@ -297,7 +297,6 @@ grid_from_json(json_file::String) = (
     _dict_refs = dict["OUTPUT_REF_ATTR"];
 
     gridded_locf = _dict_grid["FOLDER"];
-    if !isdir(gridded_locf) mkpath(gridded_locf) end;
     
     reso = _dict_grid["LAT_LON_RESO"];
     
@@ -332,14 +331,17 @@ grid_from_json(json_file::String) = (
         
         _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
         _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
-        cur_file = "$(gridded_locf)/$(_labeling)_$(reso)X_1D_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])_grid_info.nc";
+        cur_locf = format_with_date(gridded_locf, y)
+        if !isdir(cur_locf) mkpath(cur_locf) end;
+        cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])_grid_info.nc";
         save_nc!(cur_file, "data", data, _var_attr; var_dims = ["lon", "lat", "ind"]);
         append_nc!(cur_file, "std", std, _var_attr, ["lon", "lat", "ind"]);
         append_nc!(cur_file, "count", count, _var_attr, ["lon", "lat", "ind"]);
+        @info "Grid info file saved for year $(lpad(y, 4, "0"))";
 
         for temp in _dict_grid["TEMPORAL_RESO"]
             cur_data, cur_std, cur_count = grid_for_temporal_reso(data, std, count, parse(Int, temp[1:end-1]), temp[end:end], reso, month_days);
-            cur_file = "$(gridded_locf)/$(_labeling)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
+            cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
             save_nc!(cur_file, "data", cur_data ./ cur_count, _var_attr; var_dims = ["lon", "lat", "ind"]);
             append_nc!(cur_file, "std", cur_std ./ cur_count, _var_attr, ["lon", "lat", "ind"]);
             @info "File saved for year $(lpad(y, 4, "0")), temporal resolution $(temp)";
@@ -353,7 +355,7 @@ grid_from_json(json_file::String) = (
 function regrid_for_temp end;
 
 regrid_for_temp(folder::String, label::String, reso::Int, y::Int, version::Int, var_attr::Dict{String, String}, temp_resos::Vector{String}) = (
-    file = "$(folder)/$(label)_$(reso)X_1D_$(lpad(y, 4, "0"))_V$(version)_grid_info.nc";
+    file = "$(folder)/$(label)_$(reso)X_$(lpad(y, 4, "0"))_V$(version)_grid_info.nc";
     data = read_nc(file, "data");
     std = read_nc(file, "std");
     count = read_nc(file, "count");
