@@ -6,6 +6,8 @@ using DataFrames: DataFrame, push!
 using JSON
 using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
+using JLD2
+using FileIO
 
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
@@ -320,9 +322,9 @@ grid_from_json(json_file::String) = (
                         for k in range(1, length(data_cur))
                             grid_i = max(ceil(Int, (lon_cur[k]+180)*reso), 1);
                             grid_j = max(ceil(Int, (lat_cur[k]+90)*reso), 1);
-                            data[grid_i, grid_j, iday_cur[k]] += (data_cur[k] === NaN ? 0 : data_cur[k]);
-                            count[grid_i, grid_j, iday_cur[k]] += (data_cur[k] === NaN ? 0 : 1);
-                            std[grid_i, grid_j, iday_cur[k]] += std_cur === nothing ? 0 : std_cur[k] === NaN ? 0 : 1;
+                            data[grid_i, grid_j, iday_cur[k]] += (isnan(data_cur[k]) ? 0 : data_cur[k]);
+                            count[grid_i, grid_j, iday_cur[k]] += (isnan(data_cur[k]) ? 0 : 1);
+                            std[grid_i, grid_j, iday_cur[k]] += std_cur === nothing ? 0 : isnan(std_cur[k]) ? 0 : 1;
                         end;
                     end;
                 end;
@@ -333,10 +335,8 @@ grid_from_json(json_file::String) = (
         _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
         cur_locf = format_with_date(gridded_locf, y)
         if !isdir(cur_locf) mkpath(cur_locf) end;
-        cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])_grid_info.nc";
-        save_nc!(cur_file, "data", data, _var_attr; var_dims = ["lon", "lat", "ind"]);
-        append_nc!(cur_file, "std", std, _var_attr, ["lon", "lat", "ind"]);
-        append_nc!(cur_file, "count", count, _var_attr, ["lon", "lat", "ind"]);
+        cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])_grid_info.jld2";
+        jldsave(cur_file; data, std, count);
         @info "Grid info file saved for year $(lpad(y, 4, "0"))";
 
         for temp in _dict_grid["TEMPORAL_RESO"]
@@ -355,10 +355,10 @@ grid_from_json(json_file::String) = (
 function regrid_for_temp end;
 
 regrid_for_temp(folder::String, label::String, reso::Int, y::Int, version::Int, var_attr::Dict{String, String}, temp_resos::Vector{String}) = (
-    file = "$(folder)/$(label)_$(reso)X_$(lpad(y, 4, "0"))_V$(version)_grid_info.nc";
-    data = read_nc(file, "data");
-    std = read_nc(file, "std");
-    count = read_nc(file, "count");
+    file = "$(folder)/$(label)_$(reso)X_$(lpad(y, 4, "0"))_V$(version)_grid_info.jld2";
+    data = load(file, "data");
+    std = load(file, "std");
+    count = load(file, "count");
     month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS;
     for temp in temp_resos
         cur_data, cur_std, cur_count = grid_for_temporal_reso(data, std, count, parse(Int, temp[1:end-1]), temp[end:end], reso, month_days);

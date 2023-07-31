@@ -13,6 +13,7 @@ docs/src/paper*
 *.pdf
 *.png
 *.tar.gz
+*.jld2
 
 test/demo_*.jl
 test/testcase_creation/*

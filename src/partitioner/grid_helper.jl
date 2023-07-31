@@ -5,7 +5,7 @@ grid_for_temporal_reso(data, std, count, t_reso, type, reso, month_days) = (
         cur_std = sum(std, dims = 3);
         cur_count = sum(count, dims = 3);
     elseif type == "M"
-        @assert 1 <= t_reso <= 12 "Customized temporal resolution for month must be 1"
+        @assert t_reso == 1 "Customized temporal resolution for month must be 1"
         cur_data = zeros(Float32, 360*reso, 180*reso, 12);
         cur_std = zeros(Float32, 360*reso, 180*reso, 12);
         cur_count = zeros(Float32, 360*reso, 180*reso, 12);
