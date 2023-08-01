@@ -352,9 +352,22 @@ grid_from_json(json_file::String) = (
 );
 
 
-function regrid_for_temp end;
+"""
+    grid_for_temp(grid_locf::String, folder::String, label::String, reso::Int, y::Int, version::Int, var_attr::Dict{String, String}, temp_resos::Vector{String})
 
-regrid_for_temp(folder::String, label::String, reso::Int, y::Int, version::Int, var_attr::Dict{String, String}, temp_resos::Vector{String}) = (
+Grid satellite data using JLD2 file for multiple temporal resolutions
+- `grid_locf` Folder for storing the gridded dataset
+- `folder` Folder containing the JLD2 file
+- `label` Dataset label
+- `reso` Spatial resolution for data
+- `y` Year for data
+- `version` Version of data
+- `var_attr` Attributes of variable
+- `temp_resos` Vector of temporal resolutions to grid to
+"""
+function grid_for_temp end;
+
+grid_for_temp(grid_locf::String, folder::String, label::String, reso::Int, y::Int, version::Int, var_attr::Dict{String, String}, temp_resos::Vector{String}) = (
     file = "$(folder)/$(label)_$(reso)X_$(lpad(y, 4, "0"))_V$(version)_grid_info.jld2";
     data = load(file, "data");
     std = load(file, "std");
@@ -362,7 +375,7 @@ regrid_for_temp(folder::String, label::String, reso::Int, y::Int, version::Int, 
     month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS;
     for temp in temp_resos
         cur_data, cur_std, cur_count = grid_for_temporal_reso(data, std, count, parse(Int, temp[1:end-1]), temp[end:end], reso, month_days);
-        cur_file = "$(folder)/$(label)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(version).nc";
+        cur_file = "$(grid_locf)/$(label)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(version).nc";
         save_nc!(cur_file, "data", cur_data ./ cur_count, var_attr; var_dims = ["lon", "lat", "ind"]);
         append_nc!(cur_file, "std", cur_std ./ cur_count, var_attr, ["lon", "lat", "ind"]);
         @info "File saved for year $(lpad(y, 4, "0")), temporal resolution $(temp)";
