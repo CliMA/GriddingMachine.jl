@@ -2,8 +2,8 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames: DataFrame, push!
-using JSON
+using DataFrames: DataFrame, push!, nrow
+using JSON: parsefile
 using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
 using JLD2
@@ -15,15 +15,18 @@ include("partitioner/partition_helper.jl")
 include("partitioner/grid_helper.jl")
 
 """
-    partition(dict::Dict)
+    partition(json_file::String)
 
 Partition data into blocks based on JSON dict given
-- `dict` JSON dict containing information for partitioning
+- `json_file` File path to JSON file containing information for partitioning
 
 """
 function partition end;
 
-partition(dict::Dict) = (
+partition(json_file::String) = (
+
+    dict = parsefile(json_file);
+
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_outm = dict["OUTPUT_MAP_SETS"];
     _dict_vars = dict["INPUT_VAR_SETS"];
@@ -92,10 +95,13 @@ partition(dict::Dict) = (
                 end;
             end;
 
+            partition_template = deepcopy(partitioned_data);
+
             successful_files = [];
             d_s = (m == m_start && y == y_start) ? d_start : 1;
             d_e = (m == m_end && y == y_end) ? d_end : month_days[m+1]-month_days[m];
 
+            counter = 0; #counter to keep track of number of files processed
             for d in range(d_s, d_e; step = d_step)
                 folder = format_with_date(_dict_file["FOLDER"], y; m = m, d = d, month_days = month_days);
                 file_name_pattern = format_with_date(_dict_file["FILE_NAME_PATTERN"], y; m = m, d = d, month_days = month_days);
@@ -130,11 +136,25 @@ partition(dict::Dict) = (
                         write_to_log(unsuccess_file_log, file_name)
                         @info "File $(file_name) processing unsuccessful";
                     end;
+                    
+                    counter += 1;
+                    if counter == 50 #Save file and clear memory if 50 files processed
+                        @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))..."
+                        for i in range(1, _n_lon)
+                            for j in range(1, _n_lat)
+                                cur_file = "$(out_locf)/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
+                                !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
+                            end;
+                        end;
+                        partitioned_data = nothing;
+                        partitioned_data = deepcopy(partition_template);
+                        counter = 0;
+                    end;
                 end;
             end;
-
-            #Save file
-            @info "Saving files for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))..."
+            
+            #Save file for the month
+            @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))..."
             for i in range(1, _n_lon)
                 for j in range(1, _n_lat)
                     cur_file = "$(out_locf)/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
@@ -292,7 +312,7 @@ function grid_from_json end;
 
 grid_from_json(json_file::String) = (
 
-    dict = JSON.parsefile(json_file);
+    dict = parsefile(json_file);
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_grid = dict["GRIDDINGMACHINE"];
     _dict_outv = dict["OUTPUT_VAR_ATTR"];
