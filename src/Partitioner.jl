@@ -6,8 +6,7 @@ using DataFrames: DataFrame, push!, nrow
 using JSON: parsefile
 using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
-using JLD2
-using FileIO
+using JLD2, FileIO, CSV
 
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
@@ -31,11 +30,7 @@ partition(json_file::String) = (
     _dict_outm = dict["OUTPUT_MAP_SETS"];
     _dict_vars = dict["INPUT_VAR_SETS"];
     _dict_dims = dict["INPUT_DIM_SETS"];
-    _dict_logs = dict["LOG_FILES"];
-
-    success_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["SUCCESSFUL"])";
-    unsuccess_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["UNSUCCESSFUL"])";
-    missing_file_log = "$(_dict_logs["FOLDER"])/$(_dict_logs["MISSING"])";
+    file_log = CSV.read(dict["LOG_FILE"], DataFrame);
 
     #Compute number of blocks along lon and lat
     _reso = _dict_outm["SPATIAL_RESO"];
@@ -108,32 +103,28 @@ partition(json_file::String) = (
 
                 if !isdir(folder)
                     @info "Folder $(folder) does not exist."
-                    write_to_log(missing_file_log, file_name_pattern);
                     @info "Files of form $(file_name_pattern) are missing, skipping...";
                     continue;
                 end;
                 files = filter(x -> occursin(file_name_pattern, x), readdir(folder));
                 if isempty(files)
-                    write_to_log(missing_file_log, file_name_pattern);
                     @info "Files of form $(file_name_pattern) are missing, skipping...";
                     continue;
                 end;
 
                 for file_name in files
-                    if (check_log_for_message(success_file_log, file_name))
+                    if (check_log_for_condition(file_log, "file_name", file_name, "partitioned"))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
                     end;
-                    @info "Partitioning $(file_name) ..."
                     
+                    @info "Partitioning $(file_name) ..."
                     try
-                        if _dict_file["IS_VECTOR"] process_vector_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
+                        if _dict_file["SATELLITE_NAME"] == "MODIS" || _dict_file["SATELLITE_NAME"] == "MODIS" process_vector_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
                         elseif _dict_file["SATELLITE_NAME"] == "MODIS" process_MODIS_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
                         end;
                         push!(successful_files, file_name);
-                        remove_from_log(missing_file_log, file_name_pattern);
                     catch e
-                        write_to_log(unsuccess_file_log, file_name)
                         @info "File $(file_name) processing unsuccessful";
                     end;
                     
@@ -162,8 +153,7 @@ partition(json_file::String) = (
                 end;
             end;
             for f in successful_files
-                append_to_log(success_file_log, f);
-                remove_from_log(unsuccess_file_log, f);
+                change_log_condition(file_log, "file_name", f, "partitioned", true);
             end;
         end;
     end;

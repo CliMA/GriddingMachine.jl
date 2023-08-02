@@ -1,50 +1,44 @@
 """
-    remove_from_log(file_path::String, message::String)
+    check_log_for_condition(df::DataFrame, variable::String, match::String, condition::String)
 
-Remove message from log if it exists
-- `file_path` Path to log file
-- `message` The message to be removed
+Check if condition is true for a specific row in the dataframe (where some variable matches a specific value)
+- `df` DataFrame to check
+- `variable` The variable to match
+- `match` The value that the variable should match
+- `condition` The condition to check
 """
-function remove_from_log end;
+function check_log_for_condition end;
 
-remove_from_log(file_path::String, message::String) = (
-    log = open(file_path);
-    lines = readlines(log);
-    close(log);
-
-    open(file_path, "w") do log
-        for l in lines
-            if (l != message)
-                write(log, "$(l)\n")
-            end;
-        end;
-    end;
-    return nothing;
-);
-
-
-"""
-    check_log_for_message(file_path::String, message::String)
-
-Check if message exists in log file already
-- `file_path` Path to log file
-- `message` The message to be checked in the log file
-
-"""
-function check_log_for_message end;
-
-check_log_for_message(file_path::String, message::String) = (
-    log = open(file_path);
-    for l in eachline(log)
-        if (l == message)
+check_log_for_condition(df::DataFrame, variable::String, match::String, condition::String) = (
+    for row in eachrow(df)
+        if (row[variable] == match && row[condition])
             return true;
         end;
     end;
-    close(log);
     return false;
 );
 
+"""
+    change_log_condition(df::DataFrame, variable::String, match::String, condition::String, new_val::Bool)
 
+Change condition to specified value for a specific row in the dataframe (where some variable matches a specific value)
+- `df` DataFrame to check
+- `variable` The variable to match
+- `match` The value that the variable should match
+- `condition` The condition to check
+- `new_val` The new value to store
+"""
+function change_log_condition end;
+
+change_log_condition(df::DataFrame, variable::String, match::String, condition::String, new_val::Bool) = (
+    for row in eachrow(df)
+        if (row[variable] == match)
+            row[condition] = new_val
+        end;
+    end;
+);
+
+#=
 """
     append_to_log(file_path::String, message::String)
 
@@ -81,4 +75,4 @@ write_to_log(file_path::String, message::String) = (
         append_to_log(file_path, message);
     end;
     return nothing;
-)
+)=#
