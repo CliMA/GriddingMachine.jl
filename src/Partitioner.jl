@@ -22,7 +22,7 @@ Partition data into blocks based on JSON dict given
 """
 function partition end;
 
-partition(json_file::String) = (
+partition(json_file::String, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_start::Int, d_end::Int) = (
 
     dict = parsefile(json_file);
 
@@ -30,7 +30,6 @@ partition(json_file::String) = (
     _dict_outm = dict["OUTPUT_MAP_SETS"];
     _dict_vars = dict["INPUT_VAR_SETS"];
     _dict_dims = dict["INPUT_DIM_SETS"];
-    file_log = CSV.read(dict["LOG_FILE"], DataFrame);
 
     #Compute number of blocks along lon and lat
     _reso = _dict_outm["SPATIAL_RESO"];
@@ -46,11 +45,7 @@ partition(json_file::String) = (
         data_scaling_f = _dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
         push!(data_info, (_dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
     end;
-    
-    #Date information from JSON
-    y_start = _dict_file["START_YEAR"]; y_end = _dict_file["END_YEAR"];
-    m_start = _dict_file["START_MONTH"]; m_end = _dict_file["END_MONTH"];
-    d_start = _dict_file["START_DAY"]; d_end = _dict_file["END_DAY"];
+
     d_step = _dict_file["DAY_STEP"];
 
     #Ensure that hdf4 is supported ***** To be altered
@@ -66,6 +61,17 @@ partition(json_file::String) = (
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
+
+        cur_log = format_with_date(dict["LOG_FILE"], y)
+
+        if !isfile(cur_log)
+            @info "Log file for $(json_file) does not exist, creating..."
+            df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
+            write(cur_log, df)
+        end;
+
+        log_data = read(cur_log, DataFrame)
+        latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
         #Loop over months
         for m in range(m_s, m_e)
@@ -112,8 +118,12 @@ partition(json_file::String) = (
                     continue;
                 end;
 
+                past_latest = isnothing(latest_log) || latest_log["month"] < m || (latest_log["month"] == m && latest_log["day"] < d);
+
                 for file_name in files
-                    if (check_log_for_condition(file_log, "file_name", file_name, "partitioned"))
+                    if past_latest || !(file_name in log_data[!, "file_name"])
+                        push!(log_data, [m, d, file_name, false, false, false, false, false])
+                    elseif (check_log_for_condition(log_data, "file_name", file_name, "partitioned"))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
                     end;
@@ -153,7 +163,7 @@ partition(json_file::String) = (
                 end;
             end;
             for f in successful_files
-                change_log_condition(file_log, "file_name", f, "partitioned", true);
+                change_log_condition(log_data, "file_name", f, "partitioned", true);
             end;
         end;
     end;
