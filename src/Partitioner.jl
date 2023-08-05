@@ -22,9 +22,7 @@ Partition data into blocks based on JSON dict given
 """
 function partition end;
 
-partition(json_file::String, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_start::Int, d_end::Int) = (
-
-    dict = parsefile(json_file);
+partition(dict::Dict, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_start::Int, d_end::Int) = (
 
     _dict_file = dict["INPUT_MAP_SETS"];
     _dict_outm = dict["OUTPUT_MAP_SETS"];
@@ -65,7 +63,7 @@ partition(json_file::String, y_start::Int, y_end::Int, m_start::Int, m_end::Int,
         cur_log = format_with_date(dict["LOG_FILE"], y)
 
         if !isfile(cur_log)
-            @info "Log file for $(json_file) does not exist, creating..."
+            @info "Log file does not exist, creating..."
             df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
             write(cur_log, df)
         end;
@@ -166,6 +164,7 @@ partition(json_file::String, y_start::Int, y_end::Int, m_start::Int, m_end::Int,
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
             end;
         end;
+        write(cur_log, log_data)
     end;
     @info "Process complete";
 
@@ -401,6 +400,39 @@ grid_for_temp(grid_locf::String, folder::String, label::String, reso::Int, y::In
         @info "File saved for year $(lpad(y, 4, "0")), temporal resolution $(temp)";
     end;
 );
+
+function grid_single_file end;
+
+grid_single_file(file_path::String, dict::Dict, reso::Int) = (
+
+    _dict_vars = dict["INPUT_VAR_SETS"];
+    _dict_dims = dict["INPUT_DIM_SETS"];
+
+    grid_dict = Dict{String, Array}();
+
+    for var in _dict_vars
+        data = zeros(Float32, 360*reso, 180*reso);
+        count = zeros(Int, 360*reso, 180*reso);
+
+        lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
+        lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
+        data_cur = read_nc(file_path, var["DATA_NAME"]);
+        data_cur = var["MASKING_FUNCTION"].(data_cur);
+        data_cur = var["SCALING_FUNCTION"].(data_cur);
+
+        for k in range(1, length(data_cur))
+            grid_i = max(ceil(Int, (lon_cur[k]+180)*reso), 1);
+            grid_j = max(ceil(Int, (lat_cur[k]+90)*reso), 1);
+            data[grid_i, grid_j] += (isnan(data_cur[k]) ? 0 : data_cur[k]);
+            count[grid_i, grid_j] += (isnan(data_cur[k]) ? 0 : 1);
+        end;
+
+        grid_dict[var["DATA_NAME"]] = data ./ count;
+
+    end;
+
+    return grid_dict
+)
 
 """
     clean_files(folder::String, label::String, reso::Int, year::Int; per_month = false)
