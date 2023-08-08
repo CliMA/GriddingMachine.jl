@@ -66,6 +66,7 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
         cur_log = format_with_date(dict["LOG_FILE"], y)
         if !isfile(cur_log)
             @info "Log file does not exist, creating..."
+            touch(cur_log)
             df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
             write(cur_log, df)
         end;
