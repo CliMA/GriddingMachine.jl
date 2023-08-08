@@ -25,7 +25,7 @@ get_files(folder::String, file_name_pattern::String) = (
 )
 
 save_partitioned_files(y::Int, m::Int, n_lon::Int, n_lat::Int, out_locf::String, label::String, p_reso::Int, partitioned_data::Array) = (
-    @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
+    @info "Saving/growing partitioned files for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
     for i in range(1, n_lon)
         for j in range(1, n_lat)
             cur_file = "$(out_locf)/$(label)_R$(lpad(p_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
@@ -34,25 +34,6 @@ save_partitioned_files(y::Int, m::Int, n_lon::Int, n_lat::Int, out_locf::String,
     end;
     partitioned_data = nothing;
 )
-
-get_dim_info(file_path::String, dict_dims::Dict) = (
-    keys = keys(dict_dims);
-    lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
-    lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
-    lon_bnds_cur = "LON_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
-    lat_bnds_cur = "LAT_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LAT_BNDS"])' : read_nc(file_path, dict_dims["LAT_BNDS"]) : nothing;
-    time_cur = "TIME_NAME" in keys ? read_nc(file_path, dict_dims["TIME_NAME"]; transform = false) : nothing;
-
-    return (lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur)
-);
-
-initialize_dataframe(name_vector::Vector{String}, type_vector::Vector) = (
-    temp = DataFrame();
-    for i in range(1, length(name_vector)[1])
-        temp[name_vector[i]] = type_vector[i][];
-    end;
-    return temp
-);
 
 initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Array) = (
     data_dims = ["lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
@@ -73,29 +54,19 @@ initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Ar
     end;
 )
 
-get_data(file_path::String, data_info::Array) = (
-    data = Dict{String, Vector}();
-    for info in data_info
-        cur_data = read_nc(file_path, info[1]);
-        cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
-        data[info[1]] = isnothing(info[3]) ? cur_data : info[3].(cur_data);
-    end;
-    return data
-);
-
-initialize_grid(data_info::Array) = (
+initialize_grid(data_info::Array, month_days::Vector) = (
     gridded_sum = Dict{String, Vector}();
     gridded_count = Dict{String, Vector}();
     for info in data_info
-        gridded_sum[info[1]] = zeros(360, 180);
-        gridded_count[info[1]] = zeros(360, 180);
+        gridded_sum[info[1]] = zeros(360, 180, month_days[end]);
+        gridded_count[info[1]] = zeros(360, 180, month_days[end]);
     end;
     return gridded_sum, gridded_count
 );
 
-partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array, p_reso::Int, m::Int, d::Int, partitioned_data::Array, month_days::Vector, is_MODIS::Bool; grid_files = false) = (
+partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array, p_reso::Int, m::Int, d::Int, partitioned_data::Array, month_days::Vector, is_MODIS::Bool;
+                grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing) = (
     (lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur, data) = is_MODIS ? read_MODIS_file(file_name, folder, dict_dims, data_info) : read_vector_file(file_name, folder, dict_dims, data_info);
-    if grid_files (gridded_sum, gridded_count) = initialize_grid(data_info); end;
 
     for i in range(1, size(lon_cur)[1])
         _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/p_reso));
@@ -115,19 +86,32 @@ partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Ar
         for info in data_info
             push!(data_row, data[info[1]][i]);
             if grid_files
-                gridded_sum[info[1]][grid_i, grid_j] += (isnan(data[info[1]][i]) ? 0 : data[info[1]][i]);
-                gridded_count[info[1]][grid_i, grid_j] += (isnan(data[info[1]][i]) ? 0 : 1);
+                gridded_sum[info[1]][grid_i, grid_j, d] += (isnan(data[info[1]][i]) ? 0 : data[info[1]][i]);
+                gridded_count[info[1]][grid_i, grid_j, d] += (isnan(data[info[1]][i]) ? 0 : 1);
             end;
         end;
         push!(partitioned_data[_lon_i, _lat_i], data_row);
     end;
+
+    return gridded_sum, gridded_count
 )
 
 read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array) = (
     file_path = "$(folder)/$(file_name)";
 
-    (lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur) = get_dim_info(file_path, dict_dims);
-    data = get_data(file_path, data_info);
+    keys = keys(dict_dims);
+    lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
+    lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
+    lon_bnds_cur = "LON_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
+    lat_bnds_cur = "LAT_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LAT_BNDS"])' : read_nc(file_path, dict_dims["LAT_BNDS"]) : nothing;
+    time_cur = "TIME_NAME" in keys ? read_nc(file_path, dict_dims["TIME_NAME"]; transform = false) : nothing;
+    
+    data = Dict{String, Vector}();
+    for info in data_info
+        cur_data = read_nc(file_path, info[1]);
+        cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
+        data[info[1]] = isnothing(info[3]) ? cur_data : info[3].(cur_data);
+    end;
 
     return lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur, data
 )

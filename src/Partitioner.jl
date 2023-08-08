@@ -13,7 +13,7 @@ include("partitioner/ModifyLogs.jl")
 include("partitioner/partition_and_grid_helper.jl")
 
 """
-    partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files = false)
+    partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files = false, grid_locf::String = "")
 
 Partition data into blocks based on JSON dict given
 - `dict`JSON dict containing information for partitioning
@@ -21,7 +21,7 @@ Partition data into blocks based on JSON dict given
 """
 function partition_from_json end;
 
-partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files::Bool = false, grid_dict::Dict = nothing) = (
+partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files::Bool = false, grid_locf::String = "") = (
     
     #Define variables for components in JSON dict
     dict_file = dict["INPUT_MAP_SETS"];
@@ -72,6 +72,8 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
         log_data = read(cur_log, DataFrame)
         latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
+        gridded_sum, gridded_count = initialize_grid(data_info, month_days)
+
         #Loop over months
         for m in range(m_s, m_e)
 
@@ -106,7 +108,8 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
                     
                     @info "Partitioning $(file_name) ..."
                     try
-                        partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS"; grid_files = grid_files);
+                        partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
+                                        grid_files = grid_files, gridded_sum = gridded_sum, gridded_count = gridded_count);
                         push!(successful_files, file_name);
                     catch e @info "File $(file_name) processing unsuccessful";
                     end;
@@ -126,6 +129,18 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
             end;
+        end;
+
+        for info in data_info
+            cur_file = "$(grid_locf)/$(dict_outm["LABEL"])_$(info)_$(lpad(y, 4, "0"))_daily_grid.jld2";
+            cur_data = gridded_sum[info[1]];
+            cur_count = gridded_count[info[1]];
+            if isfile(cur_file)
+                data, count = load(cur_file)
+                cur_data += data
+                cur_count += count
+            end;
+            jldsave(cur_file; cur_data, cur_count);
         end;
         write(cur_log, log_data);
     end;
