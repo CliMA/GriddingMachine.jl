@@ -10,43 +10,44 @@ using JLD2, FileIO, CSV
 
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
-include("partitioner/partition_helper.jl")
-include("partitioner/grid_helper.jl")
+include("partitioner/partition_and_grid_helper.jl")
 
 """
-    partition(json_file::String)
+    partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files = false)
 
 Partition data into blocks based on JSON dict given
-- `json_file` File path to JSON file containing information for partitioning
+- `dict`JSON dict containing information for partitioning
 
 """
-function partition end;
+function partition_from_json end;
 
-partition(dict::Dict, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_start::Int, d_end::Int) = (
-
-    _dict_file = dict["INPUT_MAP_SETS"];
-    _dict_outm = dict["OUTPUT_MAP_SETS"];
-    _dict_vars = dict["INPUT_VAR_SETS"];
-    _dict_dims = dict["INPUT_DIM_SETS"];
+partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files::Bool = false, grid_dict::Dict = nothing) = (
+    
+    #Define variables for components in JSON dict
+    dict_file = dict["INPUT_MAP_SETS"];
+    dict_outm = dict["OUTPUT_MAP_SETS"];
+    dict_vars = dict["INPUT_VAR_SETS"];
+    dict_dims = dict["INPUT_DIM_SETS"];
 
     #Compute number of blocks along lon and lat
-    _reso = _dict_outm["SPATIAL_RESO"];
-    _n_lon = Int(360/_reso);
-    _n_lat = Int(180/_reso);
-
-    data_dims = ["lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
+    p_reso = dict_outm["SPATIAL_RESO"];
+    n_lon = Int(360/p_reso);
+    n_lat = Int(180/p_reso);
 
     #Parse data name, masking function, and scaling function
     data_info = [];
-    for k in eachindex(_dict_vars)
-        data_masking_f = _dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
-        data_scaling_f = _dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
-        push!(data_info, (_dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
+    for k in eachindex(dict_vars)
+        data_masking_f = dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(dict_vars[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
+        data_scaling_f = dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
+        push!(data_info, (dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
     end;
 
-    d_step = _dict_file["DAY_STEP"];
+    #Get start and end days
+    (y_start, m_start, d_start) = parse_date(date_start);
+    (y_end, m_end, d_end) = parse_date(date_end);
+    d_step = dict_file["DAY_STEP"];
 
-    #Ensure that hdf4 is supported ***** To be altered
+    #Ensure that hdf4 is supported ******************** To be altered ********************
     if isfile("$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so")
         switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so");
     elseif isfile("$(homedir())/.julia/conda/3/lib/libnetcdf.so")
@@ -56,65 +57,42 @@ partition(dict::Dict, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_star
     #Loop over years
     for y in range(y_start, y_end)
 
+        #Find corresponding months
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
-
+        
+        #Get current log data
         cur_log = format_with_date(dict["LOG_FILE"], y)
-
         if !isfile(cur_log)
             @info "Log file does not exist, creating..."
             df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
             write(cur_log, df)
         end;
-
         log_data = read(cur_log, DataFrame)
         latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
         #Loop over months
         for m in range(m_s, m_e)
 
-            out_locf = format_with_date(_dict_outm["FOLDER"], y; m = m);
+            #Ensure output location is valid
+            out_locf = format_with_date(dict_outm["FOLDER"], y; m = m);
             if !isdir(out_locf) mkpath(out_locf) end;
-
+            
             #Initialize array to store data
-            partitioned_data = Array{DataFrame}(undef, _n_lon, _n_lat);
-            for i in range(1, _n_lon)
-                for j in range(1, _n_lat)
-                    partitioned_data[i, j] = DataFrame(month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
-                    if "LON_BNDS" in keys(_dict_dims)
-                        for dim in data_dims
-                            partitioned_data[i, j][!, dim] = Float32[];
-                        end;
-                    end;
-                    if "TIME_NAME" in keys(_dict_dims) partitioned_data[i, j][!, "time"] = Float64[]; end;
-                    for info in data_info
-                        partitioned_data[i, j][!, info[1]] = Float32[];
-                    end;
-                end;
-            end;
-
+            partitioned_data = initialize_partition_grid(dict_dims, n_lon, n_lat, data_info);
             partition_template = deepcopy(partitioned_data);
-
             successful_files = [];
+
             d_s = (m == m_start && y == y_start) ? d_start : 1;
             d_e = (m == m_end && y == y_end) ? d_end : month_days[m+1]-month_days[m];
 
             counter = 0; #counter to keep track of number of files processed
             for d in range(d_s, d_e; step = d_step)
-                folder = format_with_date(_dict_file["FOLDER"], y; m = m, d = d, month_days = month_days);
-                file_name_pattern = format_with_date(_dict_file["FILE_NAME_PATTERN"], y; m = m, d = d, month_days = month_days);
-
-                if !isdir(folder)
-                    @info "Folder $(folder) does not exist."
-                    @info "Files of form $(file_name_pattern) are missing, skipping...";
-                    continue;
-                end;
-                files = filter(x -> occursin(file_name_pattern, x), readdir(folder));
-                if isempty(files)
-                    @info "Files of form $(file_name_pattern) are missing, skipping...";
-                    continue;
-                end;
+                folder = format_with_date(dict_file["FOLDER"], y; m = m, d = d, month_days = month_days);
+                file_name_pattern = format_with_date(dict_file["FILE_NAME_PATTERN"], y; m = m, d = d, month_days = month_days);
+                files = get_files(folder, file_name_pattern);
+                if isempty(files) continue end;
 
                 past_latest = isnothing(latest_log) || latest_log["month"] < m || (latest_log["month"] == m && latest_log["day"] < d);
 
@@ -128,24 +106,14 @@ partition(dict::Dict, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_star
                     
                     @info "Partitioning $(file_name) ..."
                     try
-                        if _dict_file["SATELLITE_NAME"] == "MODIS" || _dict_file["SATELLITE_NAME"] == "MODIS" process_vector_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
-                        elseif _dict_file["SATELLITE_NAME"] == "MODIS" process_MODIS_data(file_name, folder, _dict_dims, data_info, _reso, m, d, partitioned_data, month_days);
-                        end;
+                        partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS"; grid_files = grid_files);
                         push!(successful_files, file_name);
-                    catch e
-                        @info "File $(file_name) processing unsuccessful";
+                    catch e @info "File $(file_name) processing unsuccessful";
                     end;
                     
                     counter += 1;
-                    if counter == 50 #Save file and clear memory if 50 files processed
-                        @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))..."
-                        for i in range(1, _n_lon)
-                            for j in range(1, _n_lat)
-                                cur_file = "$(out_locf)/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                                !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
-                            end;
-                        end;
-                        partitioned_data = nothing;
+                    if counter == 50
+                        save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
                         partitioned_data = deepcopy(partition_template);
                         counter = 0;
                     end;
@@ -153,18 +121,13 @@ partition(dict::Dict, y_start::Int, y_end::Int, m_start::Int, m_end::Int, d_star
             end;
             
             #Save file for the month
-            @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))..."
-            for i in range(1, _n_lon)
-                for j in range(1, _n_lat)
-                    cur_file = "$(out_locf)/$(_dict_outm["LABEL"])_R$(lpad(_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                    !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
-                end;
-            end;
+            @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
+            save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
             end;
         end;
-        write(cur_log, log_data)
+        write(cur_log, log_data);
     end;
     @info "Process complete";
 
@@ -312,26 +275,26 @@ function grid_from_json end;
 grid_from_json(json_file::String) = (
 
     dict = parsefile(json_file);
-    _dict_file = dict["INPUT_MAP_SETS"];
-    _dict_grid = dict["GRIDDINGMACHINE"];
-    _dict_outv = dict["OUTPUT_VAR_ATTR"];
-    _dict_refs = dict["OUTPUT_REF_ATTR"];
+    dict_file = dict["INPUT_MAP_SETS"];
+    dict_grid = dict["GRIDDINGMACHINE"];
+    dict_outv = dict["OUTPUT_VAR_ATTR"];
+    dict_refs = dict["OUTPUT_REF_ATTR"];
 
-    gridded_locf = _dict_grid["FOLDER"];
+    gridded_locf = dict_grid["FOLDER"];
     
-    reso = _dict_grid["LAT_LON_RESO"];
+    reso = dict_grid["LAT_LON_RESO"];
     
-    for y in _dict_grid["YEARS"]
+    for y in dict_grid["YEARS"]
         @info "Gridding file for year $(lpad(y, 4, "0"))..."
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS;
         data = zeros(Float32, 360*reso, 180*reso, month_days[end]);
         std = zeros(Float32, 360*reso, 180*reso, month_days[end]);
         count = zeros(Int, 360*reso, 180*reso, month_days[end]);
 
-        for i in range(1, Int(360/_dict_file["RESO"]))
-            for j in range(1, Int(180/_dict_file["RESO"]))
+        for i in range(1, Int(360/dict_file["RESO"]))
+            for j in range(1, Int(180/dict_file["RESO"]))
                 for m in range(1, 12)
-                    file_path = format_with_date("$(_dict_file["FOLDER"])/$(_dict_file["LABEL"])_R$(lpad(_dict_file["RESO"], 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_year_month.nc", y; m = m);
+                    file_path = format_with_date("$(dict_file["FOLDER"])/$(dict_file["LABEL"])_R$(lpad(dict_file["RESO"], 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_year_month.nc", y; m = m);
                     if isfile(file_path)
                         lon_cur = read_nc(file_path, "lon");
                         lat_cur = read_nc(file_path, "lat");
@@ -350,17 +313,17 @@ grid_from_json(json_file::String) = (
             end;
         end;
         
-        _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
-        _labeling = isnothing(_dict_grid["EXTRA_LABEL"]) ? _dict_grid["LABEL"] : _dict_grid["LABEL"] * "_" *_dict_grid["EXTRA_LABEL"];
+        _var_attr::Dict{String,String} = merge(dict_outv,dict_refs);
+        _labeling = isnothing(dict_grid["EXTRA_LABEL"]) ? dict_grid["LABEL"] : dict_grid["LABEL"] * "_" *dict_grid["EXTRA_LABEL"];
         cur_locf = format_with_date(gridded_locf, y)
         if !isdir(cur_locf) mkpath(cur_locf) end;
-        cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"])_grid_info.jld2";
+        cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(lpad(y, 4, "0"))_V$(dict_grid["VERSION"])_grid_info.jld2";
         jldsave(cur_file; data, std, count);
         @info "Grid info file saved for year $(lpad(y, 4, "0"))";
 
-        for temp in _dict_grid["TEMPORAL_RESO"]
+        for temp in dict_grid["TEMPORAL_RESO"]
             cur_data, cur_std, cur_count = grid_for_temporal_reso(data, std, count, parse(Int, temp[1:end-1]), temp[end:end], reso, month_days);
-            cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(_dict_grid["VERSION"]).nc";
+            cur_file = "$(cur_locf)/$(_labeling)_$(reso)X_$(temp)_$(lpad(y, 4, "0"))_V$(dict_grid["VERSION"]).nc";
             save_nc!(cur_file, "data", cur_data ./ cur_count, _var_attr; var_dims = ["lon", "lat", "ind"]);
             append_nc!(cur_file, "std", cur_std ./ cur_count, _var_attr, ["lon", "lat", "ind"]);
             @info "File saved for year $(lpad(y, 4, "0")), temporal resolution $(temp)";
@@ -405,17 +368,17 @@ function grid_single_file end;
 
 grid_single_file(file_path::String, dict::Dict, reso::Int) = (
 
-    _dict_vars = dict["INPUT_VAR_SETS"];
-    _dict_dims = dict["INPUT_DIM_SETS"];
+    dict_vars = dict["INPUT_VAR_SETS"];
+    dict_dims = dict["INPUT_DIM_SETS"];
 
     grid_dict = Dict{String, Array}();
 
-    for var in _dict_vars
+    for var in dict_vars
         data = zeros(Float32, 360*reso, 180*reso);
         count = zeros(Int, 360*reso, 180*reso);
 
-        lon_cur = read_nc(file_path, _dict_dims["LON_NAME"]);
-        lat_cur = read_nc(file_path, _dict_dims["LAT_NAME"]);
+        lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
+        lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
         data_cur = read_nc(file_path, var["DATA_NAME"]);
         data_cur = var["MASKING_FUNCTION"].(data_cur);
         data_cur = var["SCALING_FUNCTION"].(data_cur);
