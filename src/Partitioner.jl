@@ -132,7 +132,7 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
         end;
 
         for info in data_info
-            cur_file = "$(grid_locf)/$(dict_outm["LABEL"])_$(info)_$(lpad(y, 4, "0"))_daily_grid.jld2";
+            cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info)_$(lpad(y, 4, "0"))_daily_grid.jld2";
             cur_data = gridded_sum[info[1]];
             cur_count = gridded_count[info[1]];
             if isfile(cur_file)
