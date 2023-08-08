@@ -5,8 +5,8 @@ format_with_date(path::String, y::Int; m::Int = 1, d::Int = 1, month_days::Vecto
 
 parse_date(date::String) = (
     year = parse(Int, date[1:4]);
-    month = parse(Int, date[5:6]);
-    day = parse(Int, date[7:8]);
+    month = parse(Int, date[6:7]);
+    day = parse(Int, date[9:10]);
     return year, month, day
 )
 
