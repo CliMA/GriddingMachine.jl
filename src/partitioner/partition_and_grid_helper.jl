@@ -28,6 +28,7 @@ save_partitioned_files(y::Int, m::Int, n_lon::Int, n_lat::Int, out_locf::String,
     @info "Saving/growing partitioned files for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
     for i in range(1, n_lon)
         for j in range(1, n_lat)
+            if nrow(partitioned_data[i, j]) == 0 continue; end;
             cur_file = "$(out_locf)/$(label)_R$(lpad(p_reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(y, 4, "0"))_$(lpad(m, 2, "0")).nc";
             !isfile(cur_file) ? save_nc!(cur_file, partitioned_data[i, j]; growable = true) : grow_nc!(cur_file, partitioned_data[i, j]);
         end;
