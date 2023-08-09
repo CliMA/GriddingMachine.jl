@@ -105,7 +105,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
 
                 for file_name in files
                     if past_latest || !(file_name in log_data[!, "file_name"])
-                        push!(log_data, [m, d, file_name, false, false, false, false, false])
+                        push!(log_data, [m, d, file_name, false, false, false, false])
                     elseif (check_log_for_condition(log_data, "file_name", file_name, "partitioned"))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
