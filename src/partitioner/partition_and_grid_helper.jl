@@ -3,10 +3,10 @@ format_with_date(path::String, y::Int; m::Int = 1, d::Int = 1, month_days::Vecto
     return replace(path, "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"), "date" => lpad(d + month_days[m], 3, "0"), "yyyy" => lpad(mod(y, 1000), 2, "0"));
 );
 
-parse_date(date::String) = (
-    year = parse(Int, date[1:4]);
-    month = parse(Int, date[6:7]);
-    day = parse(Int, date[9:10]);
+parse_date(date::Date) = (
+    year = Dates.year(date);
+    month = Dates.month(date);
+    day = Dates.day(date);
     return year, month, day
 )
 
