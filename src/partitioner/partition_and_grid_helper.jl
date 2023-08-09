@@ -3,10 +3,10 @@ format_with_date(path::String, y::Int; m::Int = 1, d::Int = 1, month_days::Vecto
     return replace(path, "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"), "date" => lpad(d + month_days[m], 3, "0"), "yyyy" => lpad(mod(y, 1000), 2, "0"));
 );
 
-parse_date(date::Date) = (
-    year = Dates.year(date);
-    month = Dates.month(date);
-    day = Dates.day(date);
+parse_date(date::String) = (
+    year = parse(Int, date[1:4]);
+    month = parse(Int, date[6:7]);
+    day = parse(Int, date[9:10]);
     return year, month, day
 )
 
@@ -53,12 +53,11 @@ initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Ar
             end;
         end;
     end;
-    return partitioned_data
 )
 
 initialize_grid(data_info::Array, month_days::Vector) = (
-    gridded_sum = Dict{String, Array}();
-    gridded_count = Dict{String, Array}();
+    gridded_sum = Dict{String, Vector}();
+    gridded_count = Dict{String, Vector}();
     for info in data_info
         gridded_sum[info[1]] = zeros(360, 180, month_days[end]);
         gridded_count[info[1]] = zeros(360, 180, month_days[end]);
@@ -100,12 +99,13 @@ partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Ar
 
 read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array) = (
     file_path = "$(folder)/$(file_name)";
-    
+
+    keys = keys(dict_dims);
     lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
     lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
-    lon_bnds_cur = "LON_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
-    lat_bnds_cur = "LAT_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LAT_BNDS"])' : read_nc(file_path, dict_dims["LAT_BNDS"]) : nothing;
-    time_cur = "TIME_NAME" in keys(dict_dims) ? read_nc(file_path, dict_dims["TIME_NAME"]; transform = false) : nothing;
+    lon_bnds_cur = "LON_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
+    lat_bnds_cur = "LAT_BNDS" in keys ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LAT_BNDS"])' : read_nc(file_path, dict_dims["LAT_BNDS"]) : nothing;
+    time_cur = "TIME_NAME" in keys ? read_nc(file_path, dict_dims["TIME_NAME"]; transform = false) : nothing;
     
     data = Dict{String, Vector}();
     for info in data_info

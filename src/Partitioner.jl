@@ -2,11 +2,11 @@ module Partitioner
 
 #import ..GriddingMachine: TropomiL2SIF
 
-using DataFrames: DataFrame, push!, nrow, sort
+using DataFrames: DataFrame, push!, nrow
 using JSON: parsefile
 using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
-using JLD2, FileIO, CSV, Dates
+using JLD2, FileIO, CSV
 
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
@@ -21,9 +21,7 @@ Partition data into blocks based on JSON dict given
 """
 function partition_from_json end;
 
-partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = "") = (
-
-    types = Dict("month" => Int, "iday" => Int, "file_name" => String, "partitioned" => Bool, "day_plot" => Bool, "D" => Bool, "M" => Bool);
+partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files::Bool = false, grid_locf::String = "") = (
     
     #Define variables for components in JSON dict
     dict_file = dict["INPUT_MAP_SETS"];
@@ -45,8 +43,8 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
     end;
 
     #Get start and end days
-    (y_start, m_start, d_start) = parse_date(Date(dict_file["START_DATE"]));
-    (y_end, m_end, d_end) = parse_date(dict_file["END_DATE"] == "" ? today() : Date(dict_file["END_DATE"]));
+    (y_start, m_start, d_start) = parse_date(date_start);
+    (y_end, m_end, d_end) = parse_date(date_end);
     d_step = dict_file["DAY_STEP"];
 
     #Ensure that hdf4 is supported ******************** To be altered ********************
@@ -65,16 +63,14 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
         
         #Get current log data
-        log_folder = format_with_date(dict["LOG_FILE"]["FOLDER"], y)
-        log_file_name = format_with_date(dict["LOG_FILE"]["FILE_NAME"], y)
-        cur_log = "$(log_folder)/$(log_file_name)"
+        cur_log = format_with_date(dict["LOG_FILE"], y)
         if !isfile(cur_log)
             @info "Log file does not exist, creating..."
-            if !isdir(log_folder) mkpath(log_folder) end;
-            df = DataFrame(month=Int[], iday=Int[], file_name=String[], partitioned=Bool[], day_plot=Bool[], D=Bool[], M=Bool[])
-            CSV.write(cur_log, df)
+            touch(cur_log)
+            df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
+            write(cur_log, df)
         end;
-        log_data = CSV.read(cur_log, DataFrame; types=types)
+        log_data = read(cur_log, DataFrame)
         latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
         gridded_sum, gridded_count = initialize_grid(data_info, month_days)
@@ -129,14 +125,15 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
             end;
             
             #Save file for the month
+            @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
             save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
-            @info "Updating log information ..."
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
                 CSV.write(cur_log, log_data);
             end;
         end;
 
+<<<<<<< HEAD
         if grid_files
             for info in data_info
                 cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
@@ -148,10 +145,19 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
                     cur_count += load(cur_file, "cur_count")
                 end;
                 jldsave(cur_file; cur_data, cur_count);
+=======
+        for info in data_info
+            cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info)_$(lpad(y, 4, "0"))_daily_grid.jld2";
+            cur_data = gridded_sum[info[1]];
+            cur_count = gridded_count[info[1]];
+            if isfile(cur_file)
+                data, count = load(cur_file)
+                cur_data += data
+                cur_count += count
+>>>>>>> parent of 09bb122 (Fixed bugs; code works for OCO2)
             end;
         end;
-        sort(log_data, ["month", "iday"])
-        CSV.write(cur_log, log_data);
+        write(cur_log, log_data);
     end;
     @info "Process complete";
 
