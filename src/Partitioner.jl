@@ -22,6 +22,8 @@ Partition data into blocks based on JSON dict given
 function partition_from_json end;
 
 partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files::Bool = false, grid_locf::String = "") = (
+
+    types = Dict("month" => Int, "iday" => Int, "file_name" => String, "day_plot" => Bool, "partitioned" => Bool, "D" => Bool, "M" => Bool, "Y" => Bool);
     
     #Define variables for components in JSON dict
     dict_file = dict["INPUT_MAP_SETS"];
@@ -63,14 +65,15 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
         
         #Get current log data
-        cur_log = format_with_date(dict["LOG_FILE"], y)
+        log_folder = format_with_date(dict["LOG_FILE"], y)
+        cur_log = "$(log_folder)/log.csv"
         if !isfile(cur_log)
             @info "Log file does not exist, creating..."
-            touch(cur_log)
+            if !isdir(log_folder) mkpath(log_folder) end;
             df = DataFrame(month=Int[], iday=Int[], file_name=String[], day_plot=Bool[], partitioned=Bool[], D=Bool[], M=Bool[], Y=Bool[])
-            write(cur_log, df)
+            CSV.write(cur_log, df)
         end;
-        log_data = read(cur_log, DataFrame)
+        log_data = CSV.read(cur_log, DataFrame; types=types)
         latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
         gridded_sum, gridded_count = initialize_grid(data_info, month_days)
@@ -108,12 +111,12 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
                     end;
                     
                     @info "Partitioning $(file_name) ..."
-                    try
+                    #try
                         partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
                                         grid_files = grid_files, gridded_sum = gridded_sum, gridded_count = gridded_count);
                         push!(successful_files, file_name);
-                    catch e @info "File $(file_name) processing unsuccessful";
-                    end;
+                    #catch e @info "File $(file_name) processing unsuccessful";
+                    #end;
                     
                     counter += 1;
                     if counter == 50
@@ -125,15 +128,16 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
             end;
             
             #Save file for the month
-            @info "Saving/growing file for $(lpad(y, 4, "0"))-$(lpad(m, 2, "0"))...";
             save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
+            @info "Updating log information ..."
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
             end;
         end;
 
         for info in data_info
-            cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info)_$(lpad(y, 4, "0"))_daily_grid.jld2";
+            cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
+            @info "Saving/growing $(cur_file)..."
             cur_data = gridded_sum[info[1]];
             cur_count = gridded_count[info[1]];
             if isfile(cur_file)
@@ -143,7 +147,7 @@ partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files
             end;
             jldsave(cur_file; cur_data, cur_count);
         end;
-        write(cur_log, log_data);
+        CSV.write(cur_log, log_data);
     end;
     @info "Process complete";
 
