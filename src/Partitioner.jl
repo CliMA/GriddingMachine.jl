@@ -21,7 +21,7 @@ Partition data into blocks based on JSON dict given
 """
 function partition_from_json end;
 
-partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = "") = (
+partition_from_json(dict::Dict; grid_files::Bool = false) = (
 
     types = Dict("month" => Int, "iday" => Int, "file_name" => String, "partitioned" => Bool, "day_plot" => Bool, "D" => Bool, "M" => Bool);
     
@@ -138,8 +138,10 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
         end;
 
         if grid_files
+            grid_locf = format_with_date(dict_outm["JLD2_FOLDER"], y)
+            if !isdir(grid_locf) mkpath(grid_locf) end;
             for info in data_info
-                cur_file = "$(format_with_date(grid_locf, y))/$(dict_outm["LABEL"])_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
+                cur_file = "$(grid_locf)/$(dict_outm["LABEL"])_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
                 @info "Saving/growing daily grid for $(info[1])..."
                 cur_data = gridded_sum[info[1]];
                 cur_count = gridded_count[info[1]];
