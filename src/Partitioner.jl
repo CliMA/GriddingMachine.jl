@@ -105,7 +105,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false, grid_locf::String = ""
 
                 for file_name in files
                     if past_latest || !(file_name in log_data[!, "file_name"])
-                        push!(log_data, [m, d, file_name, false, false, false, false])
+                        push!(log_data, [m, d+month_days[m], file_name, false, false, false, false])
                     elseif (check_log_for_condition(log_data, "file_name", file_name, "partitioned"))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
@@ -285,6 +285,25 @@ get_data_as_nc(queried_locf::String, folder::String, label::String, nodes::Matri
     cur_file = "$(queried_locf)/$(label)_$(lpad(year, 4, "0"))_Poly$(nodes).nc";
     save_nc!(cur_file, df);
     return cur_file;
+);
+
+"""
+    get_data_from_json(dict::Dict, nodes::Matrix, year::Int)
+
+Get data using JSON file containing information of partitioned files. The data is returned as a DataFrame
+
+- `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
+- `year` The year of interest
+"""
+function get_data_from_json end;
+
+get_data_from_json(dict::Dict, nodes::Matrix, year::Int) = (
+    dict_outm = dict["OUTPUT_MAP_SETS"];
+    var_names = String[];
+    for var in dict["INPUT_VAR_SETS"]
+        push!(var_names, var["DATA_NAME"])
+    end;
+    return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["SPATIAL_RESO"]);
 );
 
 
