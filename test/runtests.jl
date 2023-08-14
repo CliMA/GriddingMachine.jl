@@ -3,6 +3,9 @@ using GriddingMachine.Collector
 using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
+using GriddingMachine.Processer
+using GriddingMachine.Partitioner
+using NetcdfIO: read_nc
 using Test
 
 
@@ -90,6 +93,19 @@ using Test
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
+    end;
+
+    @testset "Processer" begin
+        #@test isequal(Processer.reprocess_from_json(json, rep_locf)[1], read_nc(file, "data"));
+        #@test isequal(Processer.reprocess_from_json(json, rep_locf)[1], read_nc(file, "data"));
+        #rm()
+        #rm()
+    end;
+
+    @testset "Partitioner" begin
+        #Partitioner.partition_from_json(dict); @test true;
+        #Partitioner.get_data_from_json(dict, nodes, year); @test true;
+        #Partitioner.clean_files(); @test true;
     end;
 
     @testset "Verification" begin
