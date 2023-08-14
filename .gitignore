@@ -13,10 +13,11 @@ docs/src/paper*
 *.pdf
 *.png
 *.tar.gz
-*.jld2
 
 test/demo_*.jl
 test/testcase_creation/*
 test/test_*.jl
+
+test/nc_files/gridded/2022/MODIS_LAI_*
 
 json/*

@@ -68,11 +68,12 @@ function reprocess_data!(
 
         if isfile(_reprocessed_file)
             @info "File $(_reprocessed_file) exists already";
-            _msg = "Do you still want to reprocess the data? Type Y/y or N/n to continue > ";
+            continue;
+            #=_msg = "Do you still want to reprocess the data? Type Y/y or N/n to continue > ";
             if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
                 @info "Skipping...";
                 continue;
-            end;
+            end;=#
         else
             @info "File $(_reprocessed_file) does not exist, reprocessing...";
         end;
@@ -139,19 +140,19 @@ function reprocess_data!(
         end;
 
         #ask user whether to save file
-        _msg = "Do you want to save the data? Type Y/y or N/n to continue > ";
-        _save_data = (verified_input(_msg, uppercase, _jdg_1) in ["Y", "YES"]);
+        #=_msg = "Do you want to save the data? Type Y/y or N/n to continue > ";
+        _save_data = (verified_input(_msg, uppercase, _jdg_1) in ["Y", "YES"]);=#
 
         # save the file
-        if _save_data
+        #if _save_data
             _var_attr::Dict{String,String} = merge(_dict_outv,_dict_refs);
             _dim_names = length(size(_reprocessed_std)) == 3 ? ["lon", "lat", "ind"] : ["lon", "lat"];
             save_nc!(_reprocessed_file, "data", _reprocessed_data, _var_attr; var_dims = _dim_names);
             append_nc!(_reprocessed_file, "std", _reprocessed_std, _var_attr, _dim_names);
             @info "File saved";
-        else
+        #=else
             @info "File not saved";
-        end;
+        end;=#
 
     end;
 
@@ -170,7 +171,7 @@ function reprocess_data!(
     # _count = 0;
     # push!()
 
-    return _reprocessed_data #nothing
+    return _reprocessed_data, _reprocessed_std #nothing
 end;
 
 """
@@ -189,7 +190,7 @@ function check_land_mask(data::Array{FT,N}; division::Int = 1, threshold::Number
     @assert size(data,2) == division * 180 "data must be 180 * division in latitude";
 
     # read land mask data from GriddingMachine if the data is not yet loaded into memory
-    global LAND_MASK = read_LUT(query_collection("LM_4X_1Y_V1"))[1];
+    LAND_MASK = load("src/processer/land_mask.jld2", "LAND_MASK")
 
     # regrid land mask data to the same resolution as data
     _land_mask = regrid(LAND_MASK, division);

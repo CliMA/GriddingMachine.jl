@@ -296,13 +296,13 @@ Get data using JSON file containing information of partitioned files. The data i
 """
 function get_data_from_json end;
 
-get_data_from_json(dict::Dict, nodes::Matrix, year::Int) = (
+get_data_from_json(dict::Dict, nodes::Matrix, year::Int; months::Vector{Int} = collect(1:12)) = (
     dict_outm = dict["OUTPUT_MAP_SETS"];
     var_names = String[];
     for var in dict["INPUT_VAR_SETS"]
         push!(var_names, var["DATA_NAME"])
     end;
-    return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["PARTITION_RESO"]);
+    return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["PARTITION_RESO"], months = months);
 );
 
 

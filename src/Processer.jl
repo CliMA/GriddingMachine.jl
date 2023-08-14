@@ -5,6 +5,7 @@ using ..Collector: query_collection
 using ..Blender: regrid
 
 using NetcdfIO: read_nc, save_nc!, append_nc!
+using JLD2: load
 
 include("processer/ProcessJSON.jl")
 include("processer/judges.jl")
