@@ -136,6 +136,9 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
             
             #Save file for the month
             save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
+            if grid_files
+                add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
+            end;
             @info "Updating log information ..."
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, "partitioned", true);
@@ -144,19 +147,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
         end;
 
         if grid_files
-            grid_locf = format_with_date(dict_outm["JLD2_FOLDER"], y)
-            if !isdir(grid_locf) mkpath(grid_locf) end;
-            for info in data_info
-                cur_file = "$(grid_locf)/$(dict_outm["LABEL"])_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
-                @info "Saving/growing daily grid for $(info[1])..."
-                cur_data = gridded_sum[info[1]];
-                cur_count = gridded_count[info[1]];
-                if isfile(cur_file)
-                    cur_data += load(cur_file, "cur_data")
-                    cur_count += load(cur_file, "cur_count")
-                end;
-                jldsave(cur_file; cur_data, cur_count);
-            end;
+            add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
         end;
         sort(log_data, ["month", "iday"])
         CSV.write(cur_log, log_data);

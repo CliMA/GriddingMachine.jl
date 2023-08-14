@@ -36,6 +36,22 @@ save_partitioned_files(y::Int, m::Int, n_lon::Int, n_lat::Int, out_locf::String,
     partitioned_data = nothing;
 )
 
+add_to_JLD2(jld2_f::String, y::Int, data_info::Array, label::String, gridded_sum::Dict, gridded_count::Dict) = (
+    grid_locf = format_with_date(jld2_f, y);
+    if !isdir(grid_locf) mkpath(grid_locf) end;
+    for info in data_info
+        cur_file = "$(grid_locf)/$(label)_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
+        @info "Saving/growing daily grid for $(info[1])..."
+        cur_data = gridded_sum[info[1]];
+        cur_count = gridded_count[info[1]];
+        if isfile(cur_file)
+            cur_data += load(cur_file, "cur_data")
+            cur_count += load(cur_file, "cur_count")
+        end;
+        jldsave(cur_file; cur_data, cur_count);
+    end;
+)
+
 initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Array) = (
     data_dims = ["lon_bnd_1", "lat_bnd_1", "lon_bnd_2", "lat_bnd_2", "lon_bnd_3", "lat_bnd_3", "lon_bnd_4", "lat_bnd_4"];
     partitioned_data = Array{DataFrame}(undef, n_lon, n_lat);
