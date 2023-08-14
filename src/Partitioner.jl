@@ -32,7 +32,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
     dict_dims = dict["INPUT_DIM_SETS"];
 
     #Compute number of blocks along lon and lat
-    p_reso = dict_outm["SPATIAL_RESO"];
+    p_reso = dict_outm["PARTITION_RESO"];
     n_lon = Int(360/p_reso);
     n_lat = Int(180/p_reso);
 
@@ -123,7 +123,13 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                     if counter == 50
                         save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
                         partitioned_data = deepcopy(partition_template);
+                        @info "Updating log information ..."
+                        for f in successful_files
+                            change_log_condition(log_data, "file_name", f, "partitioned", true);
+                            CSV.write(cur_log, log_data);
+                        end;
                         counter = 0;
+                        successful_files = [];
                     end;
                 end;
             end;
@@ -305,7 +311,7 @@ get_data_from_json(dict::Dict, nodes::Matrix, year::Int) = (
     for var in dict["INPUT_VAR_SETS"]
         push!(var_names, var["DATA_NAME"])
     end;
-    return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["SPATIAL_RESO"]);
+    return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["PARTITION_RESO"]);
 );
 
 
