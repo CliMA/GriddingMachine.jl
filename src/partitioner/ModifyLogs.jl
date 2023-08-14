@@ -30,12 +30,18 @@ Change condition to specified value for a specific row in the dataframe (where s
 """
 function change_log_condition end;
 
-change_log_condition(df::DataFrame, variable::String, match::String, condition::String, new_val::Bool) = (
+change_log_condition(df::DataFrame, variable::String, match::String, conditions::Vector{String}, new_val::Bool) = (
     for row in eachrow(df)
         if (row[variable] == match)
-            row[condition] = new_val
+            for con in conditions
+                row[con] = new_val
+            end;
         end;
     end;
+);
+
+change_log_condition(df::DataFrame, variable::String, match::String, condition::String, new_val::Bool) = (
+    change_log_condition(df, variable, match, [condition], new_val)
 );
 
 #=

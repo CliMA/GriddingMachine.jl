@@ -23,7 +23,7 @@ function partition_from_json end;
 
 partition_from_json(dict::Dict; grid_files::Bool = false) = (
 
-    types = Dict("month" => Int, "iday" => Int, "file_name" => String, "partitioned" => Bool, "day_plot" => Bool, "D" => Bool, "M" => Bool);
+    types = Dict("month" => Int, "iday" => Int, "file_name" => String, "partitioned" => Bool, "gridded" => Bool, "day_plot" => Bool, "D" => Bool, "M" => Bool);
     
     #Define variables for components in JSON dict
     dict_file = dict["INPUT_MAP_SETS"];
@@ -71,7 +71,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
         if !isfile(cur_log)
             @info "Log file does not exist, creating..."
             if !isdir(log_folder) mkpath(log_folder) end;
-            df = DataFrame(month=Int[], iday=Int[], file_name=String[], partitioned=Bool[], day_plot=Bool[], D=Bool[], M=Bool[])
+            df = DataFrame(month=Int[], iday=Int[], file_name=String[], partitioned=Bool[], gridded=Bool[], day_plot=Bool[], D=Bool[], M=Bool[])
             CSV.write(cur_log, df)
         end;
         log_data = CSV.read(cur_log, DataFrame; types=types)
@@ -105,7 +105,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
 
                 for file_name in files
                     if past_latest || !(file_name in log_data[!, "file_name"])
-                        push!(log_data, [m, d+month_days[m], file_name, false, false, false, false])
+                        push!(log_data, [m, d+month_days[m], file_name, false, false, false, false, false])
                     elseif (check_log_for_condition(log_data, "file_name", file_name, "partitioned"))
                         @info "File $(file_name) is already processed, skipping...";
                         continue;
@@ -120,14 +120,19 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                     end;
                     
                     counter += 1;
-                    if counter == 50
+                    if counter == 25
                         save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
                         partitioned_data = deepcopy(partition_template);
+                        if grid_files
+                            add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
+                        end;
+                        
                         @info "Updating log information ..."
                         for f in successful_files
-                            change_log_condition(log_data, "file_name", f, "partitioned", true);
-                            CSV.write(cur_log, log_data);
+                            change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
                         end;
+                        CSV.write(cur_log, log_data);
+                        
                         counter = 0;
                         successful_files = [];
                     end;
@@ -139,11 +144,12 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
             if grid_files
                 add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
             end;
+            
             @info "Updating log information ..."
             for f in successful_files
-                change_log_condition(log_data, "file_name", f, "partitioned", true);
-                CSV.write(cur_log, log_data);
+                change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
             end;
+            CSV.write(cur_log, log_data);
         end;
 
         if grid_files
