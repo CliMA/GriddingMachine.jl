@@ -85,6 +85,13 @@ deploy_from_json(_json::String, rep_locf::String, art_tarf::String, art_urls::Ve
     @info "Artifact deployed";
 );
 
+deploy_from_json(_json::String) = (
+    #Parse JSON file
+    json_dict = JSON.parse(open(_json));
+    deploy_griddingmachine_artifacts!(json_dict);
+    @info "Artifact deployed";
+);
+
 
 """
     combine_files(folder::String, sep_files::Vector{String}, var_name::String, var_attributes::Dict{String,String}, var_dims::Vector{String}, file_name::String)
@@ -165,13 +172,15 @@ reprocess_file(_json::String, rep_locf::String) = (
     end;
 
     #Deploy artifact
-    _msg = "Please input the folder of the compressed data to be stored > ";
+    #=_msg = "Please input the folder of the compressed data to be stored > ";
     art_tarf = verified_input(_msg, _jdg_6);
     _msg = "Please inpt the URLs where the compressed files are to be uploaded, separated by , > ";
     art_urls = convert(Vector{String}, split(verified_input(_msg, _jdg_3), ","));
 
     @info "Deploying reprocessed dataset as artifact...";
-    deploy_from_json(_json, rep_locf, art_tarf, art_urls);
+    deploy_from_json(_json, rep_locf, art_tarf, art_urls);=#
+
+    deploy_from_json(_json);
 
     return true;
 );
