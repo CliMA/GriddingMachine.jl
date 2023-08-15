@@ -16,6 +16,8 @@ mutable struct GeneralWgetData
     portal_url::String
     "Time resolution in days"
     time_res::Int
+    "Start date"
+    start_date::Tuple
 end
 
 
@@ -39,7 +41,7 @@ Fetch data from general website supported by wget, given
 """
 fetch_data!(dt::GeneralWgetData, year::Int) = (
     update_EARTHDATA_password!();
-    fetch_data!(dt.portal_url, dt.local_dir, dt.time_res, year, dt.label, dt.format);
+    fetch_data!(dt.portal_url, dt.local_dir, dt.time_res, year, dt.label, dt.format, dt.start_date);
 
     return nothing
 );
@@ -57,20 +59,28 @@ Download raw product data, given
 - `format` Data format
 
 """
-fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label::String, format::String) =(
+fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label::String, format::String, start_date::Tuple) =(
     if !isdir(data_loc * string(year))
         @info "Directory does not exist, a new directory has been created!";
         mkpath(data_loc * string(year));
     end;
 
-    # number of days per year
+    # number of days per year and when to start
     _nday = isleapyear(year) ? 366 : 365;
+    if year > start_date[1]
+        _1stdoy = 1;
+    elseif year == start_date[1]
+        _mdays = isleapyear(year) ? MDAYS_LEAP : MDAYS;
+        _1stdoy = _mdays[start_date[2]] + start_date[3];
+    else
+        _1stdoy = 366;
+    end;
 
     # fetch file list in each folder
     @info "Fetching file name to download...";
     _list_urls = [];
     _list_locs = [];
-    for _doy in 1:time_res:_nday
+    for _doy in _1stdoy:time_res:_nday
         _folder = doy_to_str(year, _doy) * "/";
         try
             @info "Fetching file list from $(data_url * _folder)";
