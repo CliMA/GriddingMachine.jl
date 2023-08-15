@@ -31,6 +31,7 @@ include("fetcher/era5.jl");
 include("fetcher/gedi.jl");
 include("fetcher/modis.jl");
 include("fetcher/smap.jl");
+include("fetcher/viirs.jl");
 
 
 end # module
