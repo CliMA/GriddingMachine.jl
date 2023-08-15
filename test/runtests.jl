@@ -5,7 +5,6 @@ using GriddingMachine.Indexer
 using GriddingMachine.Requestor
 using GriddingMachine.Processer
 using GriddingMachine.Partitioner
-using NetcdfIO: read_nc
 using Test
 
 
@@ -104,9 +103,9 @@ using Test
     end;
 
     @testset "Partitioner" begin
-        #Partitioner.partition_from_json(dict); @test true;
-        #Partitioner.get_data_from_json(dict, nodes, year); @test true;
-        #Partitioner.clean_files(); @test true;
+        Partitioner.partition_from_json("partitioner_tests/partition_test.json"); @test true;
+        Partitioner.get_data_from_json("partitioner_tests/partition_test.json", [-5.1 -9.8; 7.2 -8.2; 6.3 2.2; -4.7 1.4], 2023); @test true;
+        Partitioner.clean_files("partitioner_tests/partition_test.json", 2023; [1]); @test true;
     end;
 
     @testset "Verification" begin

@@ -13,7 +13,7 @@ docs/src/paper*
 *.tar.gz
 
 test/demo_*.jl
-test/testcase_creation/*
+test/testcase_creation*
 test/test_*.jl
 
 test/nc_files*

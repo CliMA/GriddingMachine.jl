@@ -163,6 +163,12 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
     return nothing
 );
 
+partition_from_json(json_file::String; grid_files::Bool = false) = (
+    dict = parsefile(json_file);
+    partition_from_json(dict; grid_files = grid_files);
+    return nothing;
+);
+
 """
     get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names::Vector{String})
 
@@ -311,6 +317,9 @@ get_data_from_json(dict::Dict, nodes::Matrix, year::Int; months::Vector{Int} = c
     return get_data(dict_outm["FOLDER"], dict_outm["LABEL"], nodes, year, var_names; reso = dict_outm["PARTITION_RESO"], months = months);
 );
 
+get_data_from_json(json_file::String, nodes::Matrix, year::Int; months::Vector{Int} = collect(1:12)) = (
+    return get_data_from_json(parsefile(json_file), nodes, year; months = months);
+);
 
 """
     grid_from_json(json_file::String)
@@ -457,23 +466,33 @@ Clean files of a year
 """
 function clean_files end;
 
-clean_files(folder::String, label::String, reso::Int, year::Int; per_month = false) = (
+clean_files(partition_folder::String, log_file::String, label::String, reso::Int, year::Int; months::Vector{Int} = collect(1:12)) = (
     @info "Cleaning files...";
     for i in range(1, Int(360/reso))
         for j in range(1, Int(180/reso))
-            if !per_month
-                cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0")).nc";
+            for m in months
+                cur_file = "$(partition_folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0"))_$(lpad(m, 2, "0")).nc";
                 rm(cur_file; force = true);
-            else
-                for m in range(1, 12)
-                    cur_file = "$(folder)/$(label)_R$(lpad(reso, 3, "0"))_LON$(lpad(i, 3, "0"))_LAT$(lpad(j, 3, "0"))_$(lpad(year, 4, "0"))_$(lpad(m, 2, "0")).nc";
-                    rm(cur_file; force = true);
-                end;
             end;
         end;
     end;
+    df = DataFrame(month=Int[], iday=Int[], file_name=String[], partitioned=Bool[], gridded=Bool[], day_plot=Bool[], D=Bool[], M=Bool[]);
+    log_data = CSV.read(log_file, DataFrame);
+    for row in log_data
+        if !(row[month] in months) push!(df, row) end;
+    end;
+    CSV.write(log_file, df);
     @info "Process complete";
-    return nothing
+);
+
+clean_files(dict::Dict, year::Int; months::Vector{Int} = collect(1:12)) = (
+    dict_outm = dict["OUTPUT_MAP_SETS"];
+    dict_log = dict["LOG_FILE"];
+    clean_files(format_with_date(dict_outm["FOLDER"], year), format_with_date(dict_log["FOLDER"] * "/" * dict_log["FILE_NAME"], year), dict_outm["LABEL"], dict_outm["RESO"], year; months = months);
+);
+
+clean_files(json_file::String, year::Int; months::Vector{Int} = collect(1:12)) = (
+    clean_files(parsefile(json_file), year; months = months);
 );
 
 end; # module
