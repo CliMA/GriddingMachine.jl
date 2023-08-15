@@ -22,6 +22,13 @@ function griddingmachine_dict()
     _jdg_4(x) = (x != "" && !occursin(" ", x) && x[end:end] in ["H", "D", "M", "Y"]);
     _jdg_5(x) = (isnothing(x) || x isa Vector);
     _jdg_6(x) = (x in ["N", "NO", "Y", "YES"]);
+    _jdg_7(x) = (if isdir(x) return true end;
+                try 
+                    mkpath(x);
+                    return true
+                catch e return false
+                end;
+                );
     _opr_1(x) = (x == "" ? nothing : uppercase(x));
     _opr_2(x) = parse(Int, x);
     _opr_3(x) = (
@@ -50,6 +57,9 @@ function griddingmachine_dict()
     # loop the inputs until satisfied
     _griddingmachine_dict = Dict{String,Any}();
     while true
+        _msg = "    Please input the path to the folder for the dataset > ";
+        _folder = verified_input(_msg, _jdg_7);
+
         _msg = "    Please indicate the level 1 label for the dataset (e.g., GPP as in GPP_VPM_2X_1M_V1) > ";
         _label = verified_input(_msg, uppercase, _jdg_1);
 
@@ -80,6 +90,7 @@ function griddingmachine_dict()
         _try_again = (verified_input(_msg, uppercase, _jdg_6) in ["N", "NO"]);
         if !_try_again
             _griddingmachine_dict = Dict{String,Any}(
+                "FOLDER"        => _folder,
                 "LABEL"         => _label,
                 "EXTRA_LABEL"   => _label_extra,
                 "LAT_LON_RESO"  => _spatial_resolution_nx,

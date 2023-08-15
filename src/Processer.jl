@@ -25,10 +25,11 @@ This method reprocesses the data represented by a given JSON file
 """
 function reprocess_from_json end;
 
-reprocess_from_json(_json::String, rep_locf::String) = (
+reprocess_from_json(_json::String) = (
     #Parse JSON file created
     json_dict = JSON.parse(open(_json));
 
+    rep_locf = json_dict["GRIDDINGMACHINE"]["FOLDER"];
     #Create folder for reprocessed data if it does not exist
     if !isdir(rep_locf) mkpath(rep_locf) end;
 
@@ -136,7 +137,7 @@ This is a helper method that creates a single JSON file based on user input and 
 """
 function reprocess_file end;
 
-reprocess_file(_json::String, rep_locf::String) = (
+reprocess_file(_json::String) = (
     
     #Check if JSON file exists already
     if isfile(_json)
@@ -163,7 +164,7 @@ reprocess_file(_json::String, rep_locf::String) = (
 
     #Reprocess data
     @info "Reprocessing data...";
-    reprocess_from_json(_json, rep_locf);
+    reprocess_from_json(_json);
 
     #Ask user if they want to deploy artifact
     _msg = "Do you want to deploy the reprocessed data as an artifact? Type Y/y or N/n to continue > ";
@@ -211,12 +212,12 @@ reprocess_files() = (
         JSON_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
         _msg = "Please input the file name of the JSON file you want to create (file_name.json) > ";
         JSON_name = verified_input(_msg, _jdg_7); #check if a JSON file name is given
-        _msg = "Please input the folder path of the reprocessed file you want to create > ";
-        rep_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
+        #_msg = "Please input the folder path of the reprocessed file you want to create > ";
+        #rep_locf = verified_input(_msg, _jdg_6); #check if folder exists; if not, one is created
 
         #Process the file and store JSON and reprocessed files in given directories
         _json = "$(JSON_locf)/$(JSON_name)";
-        reprocess_file(_json, rep_locf);
+        reprocess_file(_json);
 
         #Ask user if they want to reprocess another dataset
         _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
@@ -229,7 +230,7 @@ reprocess_files() = (
     
 );
 
-reprocess_files(JSON_locf::String, rep_locf::String) = (
+reprocess_files(JSON_locf::String) = (
     @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
 
     while true
@@ -239,7 +240,7 @@ reprocess_files(JSON_locf::String, rep_locf::String) = (
 
         #Process the file and store JSON and reprocessed files in given directories
         _json = "$(JSON_locf)/$(JSON_name)";
-        reprocess_file(_json, rep_locf);
+        reprocess_file(_json);
 
         #Ask user if they want to reprocess another dataset
         _msg = "Do you want to reprocess another dataset? Type Y/y or N/n to continue > ";
