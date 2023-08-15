@@ -1,0 +1,45 @@
+{
+    "GRIDDINGMACHINE": {
+        "FOLDER": "processer_tests",
+        "LABEL": "TESTDATA_REORDER",
+        "VERSION": 1,
+        "EXTRA_LABEL": null,
+        "LAT_LON_RESO": 1,
+        "YEARS": null,
+        "TEMPORAL_RESO": "1M"
+    },
+    "OUTPUT_VAR_ATTR": {
+        "about": "Random data generated for testing",
+        "unit": "-"
+    },
+    "INPUT_VAR_SETS": [
+        {
+            "INDEX_AXIS_INDEX": 1,
+            "LATITUDE_AXIS_INDEX": 3,
+            "MASKING_FUNCTION": "",
+            "LONGITUDE_AXIS_INDEX": 2,
+            "SCALING_FUNCTION": "",
+            "DATA_NAME": "data"
+        }
+    ],
+    "OUTPUT_REF_ATTR": {
+        "year": "NA",
+        "journal": "NA",
+        "doi": "NA",
+        "title": "NA",
+        "authors": "NA"
+    },
+    "INPUT_MAP_SETS": {
+        "FORMAT": "NETCDF",
+        "PROJECTION": "CYLINDRICAL",
+        "FLIP_LAT": true,
+        "FILE_NAME_PATTERN": "testdata_reorder.nc",
+        "FOLDER": "processer_tests",
+        "FILE_NAME_FUNCTION": "",
+        "COVERAGE": "GLOBAL",
+        "FLIP_LON": true,
+        "IS_CENTER": true,
+        "LAND_ONLY": false
+    }
+}
+

@@ -96,10 +96,11 @@ using Test
     end;
 
     @testset "Processer" begin
-        #@test isequal(Processer.reprocess_from_json(json, rep_locf)[1], read_nc(file, "data"));
-        #@test isequal(Processer.reprocess_from_json(json, rep_locf)[1], read_nc(file, "data"));
-        #rm()
-        #rm()
+        @test isequal(Processer.reprocess_from_json("processer_tests/testdata_correct.json")[1], Processer.reprocess_from_json("processer_tests/testdata_reorder.json")[1]);
+        @test isequal(Processer.reprocess_from_json("processer_tests/testdata_correct.json")[1], Processer.reprocess_from_json("processer_tests/testdata_rescale.json")[1]);
+        rm("processer_tests/TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
+        rm("processer_tests/TESTDATA_REORDER_1X_1M_V1.nc"); @test true;
+        rm("processer_tests/TESTDATA_RESCALE_1X_1M_V1.nc"); @test true;
     end;
 
     @testset "Partitioner" begin
