@@ -1,6 +1,6 @@
 {
     "GRIDDINGMACHINE": {
-        "FOLDER": "processer_tests",
+        "FOLDER": "test/processer_tests",
         "LABEL": "TESTDATA_RESCALE",
         "VERSION": 1,
         "EXTRA_LABEL": null,
@@ -34,7 +34,7 @@
         "PROJECTION": "CYLINDRICAL",
         "FLIP_LAT": false,
         "FILE_NAME_PATTERN": "testdata_rescale.nc",
-        "FOLDER": "processer_tests",
+        "FOLDER": "test/processer_tests",
         "FILE_NAME_FUNCTION": "",
         "COVERAGE": "GLOBAL",
         "FLIP_LON": false,
