@@ -78,9 +78,9 @@ fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label:
 
     # fetch file list in each folder
     @info "Fetching file name to download...";
-    _list_urls = [];
-    _list_locs = [];
     for _doy in _1stdoy:time_res:_nday
+        _list_urls = [];
+        _list_locs = [];
         _folder = doy_to_str(year, _doy) * "/";
         try
             @info "Fetching file list from $(data_url * _folder)";
@@ -100,22 +100,27 @@ fetch_data!(data_url::String, data_loc::String, time_res::Int, year::Int, label:
         catch err
             @warn "Unable to fetch files from $(_folder), skip it...";
         end;
-    end;
 
-    # download files if the file does not exist
-    @info "Downloading files...";
-    @showprogress for _i in eachindex(_list_locs)
-        _url = _list_urls[_i];
-        _loc = _list_locs[_i];
-        if Sys.which("wget") !== nothing
-            if !isfile(_loc)
-                _lst = `-q $(_url) -O $(_loc)`;
-                _psd = `--user $(EARTH_DATA_ID) --password $(EARTH_DATA_PWD)`;
-                run(`wget $(_psd) $(_lst)`);
+        # download files if the file does not exist
+        @showprogress for _i in eachindex(_list_locs)
+            _url = _list_urls[_i];
+            _loc = _list_locs[_i];
+            if Sys.which("wget") !== nothing
+                if !isfile(_loc)
+                    @info "Downloading file $(_loc)...";
+                    _lst = `-q $(_url) -O $(_loc)`;
+                    _psd = `--user $(EARTH_DATA_ID) --password $(EARTH_DATA_PWD)`;
+                    try
+                        run(`wget $(_psd) $(_lst)`);
+                    catch err
+                        @warn "Unable to download file $(_loc), delete the unfinished file...";
+                        rm(_loc; force = true);
+                    end;
+                end;
+            else
+                @warn "wget not found, exit the loop";
+                break;
             end;
-        else
-            @warn "wget not found, exit the loop";
-            break;
         end;
     end;
 
