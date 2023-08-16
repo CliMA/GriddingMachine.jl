@@ -50,6 +50,8 @@ add_to_JLD2(jld2_f::String, y::Int, data_info::Array, label::String, gridded_sum
         end;
         jldsave(cur_file; cur_data, cur_count);
     end;
+    gridded_sum = nothing;
+    gridded_count = nothing;
 )
 
 initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Array) = (
@@ -116,7 +118,9 @@ partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Ar
 
 read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array) = (
     file_path = "$(folder)/$(file_name)";
-    
+    println(file_path);
+    println(dict_dims["LON_NAME"]);
+    println(dict_dims["LAT_NAME"]);
     lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
     lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
     lon_bnds_cur = "LON_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
@@ -126,8 +130,8 @@ read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::
     data = Dict{String, Vector}();
     for info in data_info
         cur_data = read_nc(file_path, info[1]);
-        cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
-        data[info[1]] = isnothing(info[3]) ? cur_data : info[3].(cur_data);
+        cur_data = isnothing(info[2]) ? cur_data : (masking = x -> Base.invokelatest(info[2], x); masking.(cur_data));
+        data[info[1]] = isnothing(info[3]) ? cur_data : (scaling = x -> Base.invokelatest(info[3], x); scaling.(cur_data));
     end;
 
     return lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur, data
@@ -140,8 +144,8 @@ read_MODIS_file(file_name::String, folder::String, dict_dims::Dict, data_info::A
     data = Dict{String, Array}();
     for info in data_info
         cur_data = read_nc(file_path, info[1]);
-        cur_data = isnothing(info[2]) ? cur_data : info[2].(cur_data);
-        cur_data = isnothing(info[3]) ? cur_data : info[3].(cur_data);
+        cur_data = isnothing(info[2]) ? cur_data : (masking = x -> Base.invokelatest(info[2], x); masking.(cur_data));
+        cur_data = isnothing(info[3]) ? cur_data : (scaling = x -> Base.invokelatest(info[3], x); scaling.(cur_data));
         cur_data = cur_data';
         data[info[1]] = vcat(cur_data...);
     end;
