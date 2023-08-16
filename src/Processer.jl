@@ -34,28 +34,29 @@ reprocess_from_json(_json::String) = (
     if !isdir(rep_locf) mkpath(rep_locf) end;
 
     #Get all the functions
-    name_function = (f = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"])); x -> Base.invokelatest(f, x));
-    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
+    name_function = eval(Meta.parse(json_dict["INPUT_MAP_SETS"]["FILE_NAME_FUNCTION"]));
+    data_scaling_f = [_dict["SCALING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
     std_scaling_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
+        [_dict["SCALING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["SCALING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
     else
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;
-    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_VAR_SETS"]];
+    data_masking_f = [_dict["MASKING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_VAR_SETS"]];
     std_masking_f = if "INPUT_STD_SETS" in keys(json_dict)
-        [_dict["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(_dict["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x)) for _dict in json_dict["INPUT_STD_SETS"]];
+        [_dict["MASKING_FUNCTION"] == "" ? nothing : eval(Meta.parse(_dict["MASKING_FUNCTION"])) for _dict in json_dict["INPUT_STD_SETS"]];
     else
         [nothing for _dict in json_dict["INPUT_VAR_SETS"]];
     end;
 
     #Reprocess the data
-    reprocess_data!(rep_locf, json_dict;
+    (_reprocessed_data, _reprocessed_std) = reprocess_data!(rep_locf, json_dict;
                     file_name_function = name_function, 
                     data_scaling_functions = data_scaling_f, 
                     std_scaling_functions = std_scaling_f,
                     data_masking_functions = data_masking_f,
                     std_masking_functions = std_masking_f);
     @info "Process complete";
+    return _reprocessed_data, _reprocessed_std;
 );
 
 

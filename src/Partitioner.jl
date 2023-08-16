@@ -39,8 +39,8 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
     #Parse data name, masking function, and scaling function
     data_info = [];
     for k in eachindex(dict_vars)
-        data_masking_f = dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(dict_vars[k]["MASKING_FUNCTION"])); x -> Base.invokelatest(f, x));
-        data_scaling_f = dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : (f = eval(Meta.parse(dict_vars[k]["SCALING_FUNCTION"])); x -> Base.invokelatest(f, x));
+        data_masking_f = dict_vars[k]["MASKING_FUNCTION"] == "" ? nothing : eval(Meta.parse(dict_vars[k]["MASKING_FUNCTION"]));
+        data_scaling_f = dict_vars[k]["SCALING_FUNCTION"] == "" ? nothing : eval(Meta.parse(dict_vars[k]["SCALING_FUNCTION"]));
         push!(data_info, (dict_vars[k]["DATA_NAME"], data_masking_f, data_scaling_f));
     end;
 
@@ -112,12 +112,12 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                     end;
                     
                     @info "Partitioning $(file_name) ..."
-                    try
+                    #try
                         partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
                                         grid_files = grid_files, gridded_sum = gridded_sum, gridded_count = gridded_count);
                         push!(successful_files, file_name);
-                    catch e @info "File $(file_name) processing unsuccessful";
-                    end;
+                    #catch e @info "File $(file_name) processing unsuccessful";
+                    #end;
                     
                     counter += 1;
                     if counter == 25
@@ -126,6 +126,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                         if grid_files
                             add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
                         end;
+                        gridded_sum, gridded_count = initialize_grid(data_info, month_days)
                         
                         @info "Updating log information ..."
                         for f in successful_files
@@ -180,7 +181,7 @@ Append data within the given polygonal region from a file to DataFrame
 """
 get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names::Vector{String}) = (
     if !isfile(file_path)
-        @warn "File $(file_path) does not exist, skipping...";
+        #@warn "File $(file_path) does not exist, skipping...";
         return nothing;
     end;
     #Read lon, lat, time from file
@@ -478,8 +479,8 @@ clean_files(partition_folder::String, log_file::String, label::String, reso::Int
     end;
     df = DataFrame(month=Int[], iday=Int[], file_name=String[], partitioned=Bool[], gridded=Bool[], day_plot=Bool[], D=Bool[], M=Bool[]);
     log_data = CSV.read(log_file, DataFrame);
-    for row in log_data
-        if !(row[month] in months) push!(df, row) end;
+    for row in eachrow(log_data)
+        if !(row["month"] in months) push!(df, row) end;
     end;
     CSV.write(log_file, df);
     @info "Process complete";
@@ -488,7 +489,7 @@ clean_files(partition_folder::String, log_file::String, label::String, reso::Int
 clean_files(dict::Dict, year::Int; months::Vector{Int} = collect(1:12)) = (
     dict_outm = dict["OUTPUT_MAP_SETS"];
     dict_log = dict["LOG_FILE"];
-    clean_files(format_with_date(dict_outm["FOLDER"], year), format_with_date(dict_log["FOLDER"] * "/" * dict_log["FILE_NAME"], year), dict_outm["LABEL"], dict_outm["RESO"], year; months = months);
+    clean_files(format_with_date(dict_outm["FOLDER"], year), format_with_date(dict_log["FOLDER"] * "/" * dict_log["FILE_NAME"], year), dict_outm["LABEL"], dict_outm["PARTITION_RESO"], year; months = months);
 );
 
 clean_files(json_file::String, year::Int; months::Vector{Int} = collect(1:12)) = (

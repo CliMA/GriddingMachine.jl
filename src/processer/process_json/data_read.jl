@@ -62,10 +62,10 @@ function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox
     _gata = flipping[2] ? _fata[end:-1:1,:] : _fata;
 
     # add a masking function
-    _hata = isnothing(masking_function) ? _gata : masking_function.(_gata);
+    _hata = isnothing(masking_function) ? _gata : (masking = x -> Base.invokelatest(masking_function, x); masking.(_gata));
 
     # add a scaling function
-    _hata = isnothing(scaling_function) ? _hata : scaling_function.(_hata);
+    _hata = isnothing(scaling_function) ? _hata : (scaling = x -> Base.invokelatest(scaling_function, x); scaling.(_hata));
 
     #change from edge to center if needed
     if !is_center
