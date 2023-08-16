@@ -104,9 +104,12 @@ using Test
     end;
 
     @testset "Partitioner" begin
-        Partitioner.partition_from_json("partitioner_tests/partition_test.json"); @test true;
-        Partitioner.get_data_from_json("partitioner_tests/partition_test.json", [-5.1 -9.8; 7.2 -8.2; 6.3 2.2; -4.7 1.4], 2023); @test true;
-        Partitioner.clean_files("partitioner_tests/partition_test.json", 2023; [1]); @test true;
+        Partitioner.partition_from_json("test/partitioner_tests/partition_test_random.json");
+        Partitioner.clean_files("test/partitioner_tests/partition_test_random.json", 2023; months = [1]);
+        Partitioner.partition_from_json("test/partitioner_tests/partition_test_oco2.json");
+        Partitioner.get_data_from_json("test/partitioner_tests/partition_test_oco2.json", [-50.1 -19.8; 70.2 -18.2; 60.3 12.2; -40.7 11.4], 2022);
+        Partitioner.clean_files("test/partitioner_tests/partition_test_oco2.json", 2022; months = [1]);
+        rm("test/partitioner_tests/partitioned_files"; recursive = true)
     end;
 
     @testset "Verification" begin

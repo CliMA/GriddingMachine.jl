@@ -118,9 +118,6 @@ partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Ar
 
 read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array) = (
     file_path = "$(folder)/$(file_name)";
-    println(file_path);
-    println(dict_dims["LON_NAME"]);
-    println(dict_dims["LAT_NAME"]);
     lon_cur = read_nc(file_path, dict_dims["LON_NAME"]);
     lat_cur = read_nc(file_path, dict_dims["LAT_NAME"]);
     lon_bnds_cur = "LON_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
