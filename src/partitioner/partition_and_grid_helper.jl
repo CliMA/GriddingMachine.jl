@@ -74,43 +74,47 @@ initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Ar
     return partitioned_data
 )
 
-initialize_grid(data_info::Array, month_days::Vector) = (
+initialize_grid(data_info::Array, num_days::Int) = (
     gridded_sum = Dict{String, Array}();
     gridded_count = Dict{String, Array}();
     for info in data_info
-        gridded_sum[info[1]] = zeros(360, 180, month_days[end]);
-        gridded_count[info[1]] = zeros(360, 180, month_days[end]);
+        gridded_sum[info[1]] = zeros(360, 180, num_days);
+        gridded_count[info[1]] = zeros(360, 180, num_days);
     end;
     return gridded_sum, gridded_count
 );
 
 partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array, p_reso::Int, m::Int, d::Int, partitioned_data::Array, month_days::Vector, is_MODIS::Bool;
-                grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing) = (
+                partition_files::Bool = true, grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing) = (
+    
+    if !partition_files && !grid_files return gridded_sum, gridded_count end;
+    
     (lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur, data) = is_MODIS ? read_MODIS_file(file_name, folder, dict_dims, data_info) : read_vector_file(file_name, folder, dict_dims, data_info);
-
     for i in range(1, size(lon_cur)[1])
-        _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/p_reso));
-        _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/p_reso));
+        if partition_files
+            _lon_i = max(1, ceil(Int, (lon_cur[i]+180)/p_reso));
+            _lat_i = max(1, ceil(Int, (lat_cur[i]+90)/p_reso));
+            data_row = [m, d+month_days[m], lon_cur[i], lat_cur[i]];
+            if "LON_BNDS" in keys(dict_dims)
+                for j in range(1, 4)
+                    push!(data_row, lon_bnds_cur[i, j]);
+                    push!(data_row, lat_bnds_cur[i, j]);
+                end;
+            end;
+            if "TIME_NAME" in keys(dict_dims) push!(data_row, time_cur[i]); end;
+        end;
         if grid_files
             grid_i = max(ceil(Int, lon_cur[i]+180), 1);
             grid_j = max(ceil(Int, lat_cur[i]+90), 1);
         end;
-        data_row = [m, d+month_days[m], lon_cur[i], lat_cur[i]];
-        if "LON_BNDS" in keys(dict_dims)
-            for j in range(1, 4)
-                push!(data_row, lon_bnds_cur[i, j]);
-                push!(data_row, lat_bnds_cur[i, j]);
-            end;
-        end;
-        if "TIME_NAME" in keys(dict_dims) push!(data_row, time_cur[i]); end;
         for info in data_info
-            push!(data_row, data[info[1]][i]);
+            if partition_files push!(data_row, data[info[1]][i]); end;
             if grid_files
                 gridded_sum[info[1]][grid_i, grid_j, d] += (isnan(data[info[1]][i]) ? 0 : data[info[1]][i]);
                 gridded_count[info[1]][grid_i, grid_j, d] += (isnan(data[info[1]][i]) ? 0 : 1);
             end;
         end;
-        push!(partitioned_data[_lon_i, _lat_i], data_row);
+        if partition_files push!(partitioned_data[_lon_i, _lat_i], data_row); end;
     end;
 
     return gridded_sum, gridded_count

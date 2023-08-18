@@ -79,7 +79,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
         log_data = CSV.read(cur_log, DataFrame; types=types)
         latest_log = nrow(log_data) == 0 ? nothing : log_data[end, :]
 
-        gridded_sum, gridded_count = initialize_grid(data_info, month_days)
+        gridded_sum, gridded_count = initialize_grid(data_info, month_days[end])
 
         #Loop over months
         for m in range(m_s, m_e)
@@ -106,20 +106,25 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                 past_latest = isnothing(latest_log) || latest_log["month"] < m || (latest_log["month"] == m && latest_log["iday"] < month_days[m]+d);
 
                 for file_name in files
+                    do_partition = true; do_grid = grid_files;
                     if past_latest || !(file_name in log_data[!, "file_name"])
-                        push!(log_data, [m, d+month_days[m], file_name, false, false, false, false, false])
-                    elseif (check_log_for_condition(log_data, "file_name", file_name, "partitioned"))
-                        @info "File $(file_name) is already processed, skipping...";
-                        continue;
+                        push!(log_data, [m, d+month_days[m], file_name, false, false, false, false, false]);
+                    elseif check_log_for_condition(log_data, "file_name", file_name, "partitioned")
+                        if !grid_files || check_log_for_condition(log_data, "file_name", file_name, "gridded")
+                            @info "File $(file_name) is already processed, skipping...";
+                            continue;
+                        else do_partition = false;
+                        end;
+                    else do_grid = grid_files && !check_log_for_condition(log_data, "file_name", file_name, "gridded");
                     end;
                     
-                    @info "Partitioning $(file_name)..."
-                    #try
+                    @info "$(do_partition ? "Partitioning" : "")$(do_partition && do_grid ? "/" : "")$(do_grid ? "Gridding" : "") $(file_name)..."
+                    try
                         partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
-                                        grid_files = grid_files, gridded_sum = gridded_sum, gridded_count = gridded_count);
+                                        partition_files = do_partition, grid_files = do_grid, gridded_sum = gridded_sum, gridded_count = gridded_count);
                         push!(successful_files, file_name);
-                    #catch e @info "File $(file_name) processing unsuccessful";
-                    #end;
+                    catch e @info "File $(file_name) processing unsuccessful";
+                    end;
                     
                     counter += 1;
                     if counter == 25
@@ -128,11 +133,12 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                         if grid_files
                             add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
                         end;
-                        gridded_sum, gridded_count = initialize_grid(data_info, month_days)
+                        gridded_sum, gridded_count = initialize_grid(data_info, month_days[end])
                         
                         @info "Updating log information..."
+                        status = grid_files ? ["partitioned", "gridded"] : ["partitioned"]
                         for f in successful_files
-                            change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
+                            change_log_condition(log_data, "file_name", f, status, true);
                         end;
                         CSV.write(cur_log, log_data);
                         
@@ -149,14 +155,11 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
             end;
             
             @info "Updating log information..."
+            status = grid_files ? ["partitioned", "gridded"] : ["partitioned"]
             for f in successful_files
-                change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
+                change_log_condition(log_data, "file_name", f, status, true);
             end;
             CSV.write(cur_log, log_data);
-        end;
-
-        if grid_files
-            add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
         end;
         sort(log_data, ["month", "iday"])
         CSV.write(cur_log, log_data);
@@ -325,14 +328,14 @@ get_data_from_json(json_file::String, nodes::Matrix, year::Int; months::Vector{I
 );
 
 """
-    grid_from_json(json_file::String)
+    grid_to_dataset(json_file::String)
 
 Grid satellite data using information given in JSON file
 - `json_file` Path to the JSON file
 """
-function grid_from_json end;
+function grid_to_dataset end;
 
-grid_from_json(json_file::String) = (
+grid_to_dataset(json_file::String) = (
 
     dict = parsefile(json_file);
     dict_file = dict["INPUT_MAP_SETS"];
