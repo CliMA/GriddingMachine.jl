@@ -96,7 +96,7 @@ using Test
 
     @testset "Processer" begin
         if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
-            folder = "/home/exgu/GriddingMachine.jl/processer_tests/"
+            folder = "/net/fluo/data2/pool/database/GriddingMachine/test/processer_tests/"
             @test isequal(Processer.reprocess_from_json(folder * "testdata_correct.json")[1], Processer.reprocess_from_json(folder * "testdata_reorder.json")[1]);
             rm(folder * "TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
             rm(folder * "TESTDATA_REORDER_1X_1M_V1.nc"); @test true;
@@ -108,7 +108,7 @@ using Test
 
     @testset "Partitioner" begin
         if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
-            folder = "/home/exgu/GriddingMachine.jl/partitioner_tests/"
+            folder = "/net/fluo/data2/pool/database/GriddingMachine/test/partitioner_tests/"
             Partitioner.partition_from_json(folder * "partition_test_random.json"); @test true;
             Partitioner.clean_files(folder * "partition_test_random.json", 2023; months = [1]); @test true;
             Partitioner.partition_from_json(folder * "partition_test_oco2.json"); @test true;

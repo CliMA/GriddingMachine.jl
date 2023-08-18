@@ -113,7 +113,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                         continue;
                     end;
                     
-                    @info "Partitioning $(file_name) ..."
+                    @info "Partitioning $(file_name)..."
                     #try
                         partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
                                         grid_files = grid_files, gridded_sum = gridded_sum, gridded_count = gridded_count);
@@ -130,7 +130,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                         end;
                         gridded_sum, gridded_count = initialize_grid(data_info, month_days)
                         
-                        @info "Updating log information ..."
+                        @info "Updating log information..."
                         for f in successful_files
                             change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
                         end;
@@ -148,7 +148,7 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
                 add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
             end;
             
-            @info "Updating log information ..."
+            @info "Updating log information..."
             for f in successful_files
                 change_log_condition(log_data, "file_name", f, ["partitioned", "gridded"], true);
             end;

@@ -67,7 +67,7 @@ function reprocess_data!(
         _reprocessed_file = "$(folder_path)/$(_tag).nc";
 
         if isfile(_reprocessed_file)
-            @info "File $(_reprocessed_file) exists already";
+            @info "File $(_tag).nc exists already, skipping...";
             continue;
             #=_msg = "Do you still want to reprocess the data? Type Y/y or N/n to continue > ";
             if (verified_input(_msg, uppercase, _jdg_1) in ["N", "NO"])
@@ -75,7 +75,7 @@ function reprocess_data!(
                 continue;
             end;=#
         else
-            @info "File $(_reprocessed_file) does not exist, reprocessing...";
+            @info "File $(_tag).nc does not exist, reprocessing...";
         end;
         
         # read the data
