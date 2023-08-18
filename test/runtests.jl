@@ -95,21 +95,27 @@ using Test
     end;
 
     @testset "Processer" begin
-        @test isequal(Processer.reprocess_from_json("test/processer_tests/testdata_correct.json")[1], Processer.reprocess_from_json("test/processer_tests/testdata_reorder.json")[1]);
-        rm("test/processer_tests/TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
-        rm("test/processer_tests/TESTDATA_REORDER_1X_1M_V1.nc"); @test true;
-        @test isequal(Processer.reprocess_from_json("test/processer_tests/testdata_correct.json")[1], Processer.reprocess_from_json("test/processer_tests/testdata_rescale.json")[1]);
-        rm("test/processer_tests/TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
-        rm("test/processer_tests/TESTDATA_RESCALE_1X_1M_V1.nc"); @test true;
+        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
+            folder = "/home/exgu/GriddingMachine.jl/processer_tests/"
+            @test isequal(Processer.reprocess_from_json(folder * "testdata_correct.json")[1], Processer.reprocess_from_json(folder * "testdata_reorder.json")[1]);
+            rm(folder * "TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
+            rm(folder * "TESTDATA_REORDER_1X_1M_V1.nc"); @test true;
+            @test isequal(Processer.reprocess_from_json(folder * "testdata_correct.json")[1], Processer.reprocess_from_json(folder * "testdata_rescale.json")[1]);
+            rm(folder * "TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
+            rm(folder * "TESTDATA_RESCALE_1X_1M_V1.nc"); @test true;
+        end;
     end;
 
     @testset "Partitioner" begin
-        Partitioner.partition_from_json("test/partitioner_tests/partition_test_random.json");
-        Partitioner.clean_files("test/partitioner_tests/partition_test_random.json", 2023; months = [1]);
-        Partitioner.partition_from_json("test/partitioner_tests/partition_test_oco2.json");
-        Partitioner.get_data_from_json("test/partitioner_tests/partition_test_oco2.json", [-50.1 -19.8; 70.2 -18.2; 60.3 12.2; -40.7 11.4], 2022);
-        Partitioner.clean_files("test/partitioner_tests/partition_test_oco2.json", 2022; months = [1]);
-        rm("test/partitioner_tests/partitioned_files"; recursive = true)
+        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
+            folder = "/home/exgu/GriddingMachine.jl/partitioner_tests/"
+            Partitioner.partition_from_json(folder * "partition_test_random.json"); @test true;
+            Partitioner.clean_files(folder * "partition_test_random.json", 2023; months = [1]); @test true;
+            Partitioner.partition_from_json(folder * "partition_test_oco2.json"); @test true;
+            Partitioner.get_data_from_json(folder * "partition_test_oco2.json", [-50.1 -19.8; 70.2 -18.2; 60.3 12.2; -40.7 11.4], 2022); @test true;
+            Partitioner.clean_files(folder * "partition_test_oco2.json", 2022; months = [1]); @test true;
+            rm(folder * "partitioned_files"; recursive = true); @test true;
+        end;
     end;
 
     @testset "Verification" begin

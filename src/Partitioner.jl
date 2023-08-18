@@ -50,10 +50,12 @@ partition_from_json(dict::Dict; grid_files::Bool = false) = (
     d_step = dict_file["DAY_STEP"];
 
     #Ensure that hdf4 is supported ******************** To be altered ********************
-    if isfile("$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so")
-        switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so");
-    elseif isfile("$(homedir())/.julia/conda/3/lib/libnetcdf.so")
-        switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/lib/libnetcdf.so");
+    if(dict_file["IS_HDF4"])
+        if isfile("$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so")
+            switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so");
+        elseif isfile("$(homedir())/.julia/conda/3/lib/libnetcdf.so")
+            switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/lib/libnetcdf.so");
+        end;
     end;
     
     #Loop over years
