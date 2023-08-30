@@ -36,11 +36,11 @@ save_partitioned_files(y::Int, m::Int, n_lon::Int, n_lat::Int, out_locf::String,
     partitioned_data = nothing;
 )
 
-add_to_JLD2(jld2_f::String, y::Int, data_info::Array, label::String, gridded_sum::Dict, gridded_count::Dict) = (
+add_to_JLD2(jld2_f::String, y::Int, data_info::Array, label::String, gridded_sum::Dict, gridded_count::Dict, g_reso::Int) = (
     grid_locf = format_with_date(jld2_f, y);
     if !isdir(grid_locf) mkpath(grid_locf) end;
     for info in data_info
-        cur_file = "$(grid_locf)/$(label)_$(info[1])_$(lpad(y, 4, "0"))_daily_grid.jld2";
+        cur_file = "$(grid_locf)/$(label)_$(info[1])_$(lpad(y, 4, "0"))_daily_grid_$(g_reso)X.jld2";
         @info "Saving/growing daily grid for $(info[1])..."
         cur_data = gridded_sum[info[1]];
         cur_count = gridded_count[info[1]];

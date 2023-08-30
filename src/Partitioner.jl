@@ -48,7 +48,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
     (y_start, m_start, d_start) = parse_date(Date(dict_file["START_DATE"]));
     (y_end, m_end, d_end) = parse_date(dict_file["END_DATE"] == "" ? today() : Date(dict_file["END_DATE"]));
     d_step = dict_file["DAY_STEP"];
-
+    
     #Ensure that hdf4 is supported ******************** To be altered ********************
     if dict_file["IS_HDF4"]
         if isfile("$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so")
@@ -131,7 +131,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
                         save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
                         partitioned_data = deepcopy(partition_template);
                         if grid_files
-                            add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
+                            add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count, dict_outm["GRID_RESO"])
                         end;
                         gridded_sum, gridded_count = initialize_grid(data_info, month_days[end], dict_outm["GRID_RESO"])
                         
@@ -151,7 +151,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
             #Save file for the month
             save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
             if grid_files
-                add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count)
+                add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count, dict_outm["GRID_RESO"])
             end;
             
             @info "Updating log information..."
