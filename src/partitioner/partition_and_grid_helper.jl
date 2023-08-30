@@ -74,18 +74,18 @@ initialize_partition_grid(dict_dims::Dict, n_lon::Int, n_lat::Int, data_info::Ar
     return partitioned_data
 )
 
-initialize_grid(data_info::Array, num_days::Int) = (
+initialize_grid(data_info::Array, num_days::Int, g_reso::Int) = (
     gridded_sum = Dict{String, Array}();
     gridded_count = Dict{String, Array}();
     for info in data_info
-        gridded_sum[info[1]] = zeros(360, 180, num_days);
-        gridded_count[info[1]] = zeros(360, 180, num_days);
+        gridded_sum[info[1]] = zeros(360*g_reso, 180*g_reso, num_days);
+        gridded_count[info[1]] = zeros(360*g_reso, 180*g_reso, num_days);
     end;
     return gridded_sum, gridded_count
 );
 
 partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array, p_reso::Int, m::Int, d::Int, partitioned_data::Array, month_days::Vector, is_MODIS::Bool;
-                partition_files::Bool = true, grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing) = (
+                partition_files::Bool = true, grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing, g_reso::Int = 1) = (
     
     if !partition_files && !grid_files return gridded_sum, gridded_count end;
     
@@ -104,8 +104,8 @@ partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Ar
             if "TIME_NAME" in keys(dict_dims) push!(data_row, time_cur[i]); end;
         end;
         if grid_files
-            grid_i = max(ceil(Int, lon_cur[i]+180), 1);
-            grid_j = max(ceil(Int, lat_cur[i]+90), 1);
+            grid_i = max(1, ceil(Int, (lon_cur[i]+180)*g_reso));
+            grid_j = max(1, ceil(Int, (lat_cur[i]+90)*g_reso));
         end;
         for info in data_info
             if partition_files push!(data_row, data[info[1]][i]); end;
