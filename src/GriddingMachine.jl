@@ -17,9 +17,6 @@ module GriddingMachine
 export Blender, Collector, Fetcher, Indexer, Partitioner, Requestor
 
 
-# include types
-include("types.jl")
-
 # include submodules
 include("Blender.jl");
 include("Collector.jl");
