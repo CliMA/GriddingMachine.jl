@@ -38,7 +38,7 @@ request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8);
 request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true);
 ```
 """
-request_LUT(artname::String, lat::Number, lon::Number, cyc::Int = 0; user::String="Anonymous", interpolation::Bool = false, server::String = "https://tropo.gps.caltech.edu", port::Int = 44301) = (
+request_LUT(artname::String, lat::Number, lon::Number, cyc::Int = 0; user::String="Anonymous", interpolation::Bool = false, server::String = "http://tropo.gps.caltech.edu", port::Int = 5055) = (
     # make sure the artifact is within our collection
     _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
     _artns = [_name for (_name,_) in _metas];
