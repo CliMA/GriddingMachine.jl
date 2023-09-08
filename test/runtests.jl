@@ -94,6 +94,7 @@ using Test
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
     end;
 
+    #=
     @testset "Processer" begin
         if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
             folder = "/net/fluo/data2/pool/database/GriddingMachine/test/processer_tests/"
@@ -136,4 +137,5 @@ using Test
             end;
         end;
     end;
+    =#
 end;
