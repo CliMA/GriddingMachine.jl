@@ -6,6 +6,8 @@ using LazyArtifacts
 
 import Base: show
 
+export clean_collections!, query_collection, sync_collections!
+
 
 # collection types
 """
