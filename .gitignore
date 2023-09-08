@@ -5,10 +5,18 @@ docs/src/generated/*
 docs/src/paper*
 
 *.gif
+*.txt
 *.html
 *.jpg
-*.nc
-*.nc4
 *.pdf
 *.png
 *.tar.gz
+*.nc*
+*.json
+*.csv
+
+test/demo_*.jl
+test/testcase_creation*
+test/test_*.jl
+
+testcase_creation*

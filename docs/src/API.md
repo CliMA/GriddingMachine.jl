@@ -37,24 +37,16 @@ Collector.wood_density_collection
 ### Query gridded datasets
 ```@docs
 Collector.query_collection
-Collector.query_collection(artname::String)
-Collector.query_collection(ds::Collector.GriddedCollection, version::String)
-Collector.query_collection(ds::Collector.GriddedCollection)
 ```
 
 ### Clean up collections
 ```@docs
 Collector.clean_collections!
-Collector.clean_collections!(selection::String)
-Collector.clean_collections!(selection::Vector{String})
-Collector.clean_collections!(selection::Collector.GriddedCollection)
 ```
 
 ### Sync collections
 ```@docs
 Collector.sync_collections!
-Collector.sync_collections!(gc::Collector.GriddedCollection)
-Collector.sync_collections!()
 ```
 
 
