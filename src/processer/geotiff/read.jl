@@ -1,3 +1,4 @@
+#=
 """
 
     read_tif(file::String, band_number::String)
@@ -25,3 +26,4 @@ read_tif(file::String, band_number::String) = (
 );
 
 read_tif(T, file::String, var_name::String) = T.(read_tif(file, var_name));
+=#

@@ -363,6 +363,7 @@ ERA5 Single Level hourly data from 1981 to present: cds.climate.copernicus.eu/cd
 struct ERA5SingleLevelsHourly end;
 
 
+#=
 """
     fetch_data!(dt::ERA5LandHourly, year::Int; vars::Array{String,1} = ERA5_LAND_SELECTION, folder::String = "")
 
@@ -460,3 +461,4 @@ fetch_data!(dt::ERA5SingleLevelsHourly, year::Int; vars::Array{String,1} = ERA5_
 
     return nothing
 );
+=#

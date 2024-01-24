@@ -1,10 +1,8 @@
 module Fetcher
 
-using Conda: add
 using Dates: isleapyear
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS, METHODLIST
 using ProgressMeter: @showprogress
-using PyCall: pyimport
 
 export GeneralWgetData
 export fetch_data!

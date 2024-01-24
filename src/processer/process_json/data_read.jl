@@ -1,3 +1,4 @@
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to this function
@@ -22,10 +23,10 @@ Return formatted 2D data, given
 - `is_center` Whether the data is at center
 
 """
-function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox::Int; 
+function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox::Int;
                         coverage::Union{String,Vector} = "GLOBAL",
-                        scaling_function::Union{Function,Nothing} = nothing, 
-                        masking_function::Union{Function,Nothing} = nothing, 
+                        scaling_function::Union{Function,Nothing} = nothing,
+                        masking_function::Union{Function,Nothing} = nothing,
                         is_center::Bool = true)
 
     # read the layer based on the index orders
@@ -92,7 +93,7 @@ function read_data_2d(data::Array, ind::Int, dict::Dict, flipping::Vector, resox
     _ilats = (coverage[1] .<= _lats .<= coverage[2]);
     _ilons = (coverage[3] .<= _lons .<= coverage[4]);
     _data[_ilons,_ilats] .= _hata;
-    
+
     return _data
 end
 
@@ -122,9 +123,9 @@ Return the formatted data, given
 
 """
 function read_data(filename::String, dict::Dict, type::String, flipping::Vector, resox::Int;
-                    coverage::Union{String,Vector} = "GLOBAL", 
-                    scaling_function::Union{Function,Nothing} = nothing, 
-                    masking_function::Union{Function,Nothing} = nothing, 
+                    coverage::Union{String,Vector} = "GLOBAL",
+                    scaling_function::Union{Function,Nothing} = nothing,
+                    masking_function::Union{Function,Nothing} = nothing,
                     is_center::Bool = true)
 
     if type == "NETCDF"
@@ -136,20 +137,21 @@ function read_data(filename::String, dict::Dict, type::String, flipping::Vector,
     # rotate the data if necessary
     if isnothing(dict["INDEX_AXIS_INDEX"])
         return read_data_2d(_data, 1, dict, flipping, resox;
-                            coverage = coverage, 
-                            scaling_function = scaling_function, 
+                            coverage = coverage,
+                            scaling_function = scaling_function,
                             masking_function = masking_function,
                             is_center = is_center)
     else
         _eata = zeros(Float64, resox * 360, resox * 180, size(_data, dict["INDEX_AXIS_INDEX"]));
         for _ind in axes(_data, dict["INDEX_AXIS_INDEX"])
             _eata[:,:,_ind] .= read_data_2d(_data, _ind, dict, flipping, resox;
-                                            coverage = coverage, 
-                                            scaling_function = scaling_function, 
+                                            coverage = coverage,
+                                            scaling_function = scaling_function,
                                             masking_function = masking_function,
                                             is_center = is_center);
         end;
-        
+
         return _eata
     end;
 end
+=#

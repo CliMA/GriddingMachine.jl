@@ -1,3 +1,4 @@
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to this function
@@ -36,8 +37,8 @@ function map_info_dict()
     );
     _jdg_5(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_6(x) = (isdir(x));
-    _jdg_7(x) = ((length(x) >= 3 && x[end-2:end] == ".nc") 
-                || (length(x) >= 4 && x[end-3:end] == ".tif") 
+    _jdg_7(x) = ((length(x) >= 3 && x[end-2:end] == ".nc")
+                || (length(x) >= 4 && x[end-3:end] == ".tif")
                 || (length(x) >= 5 && x[end-4:end] == ".tiff"));
     _opr_1(x) = (
         if uppercase(x) in ["G", "GEOTIFF", "TIFF"]
@@ -133,7 +134,7 @@ function map_info_dict()
             "LAND_ONLY"          => _land_only
         )
         @show _map_info_dict
-        
+
         # ask if the Dict looks okay, if so break
         _msg = "Is the generated dict okay? If not, type <N/n or No> to redo the inputs > ";
         _try_again = (verified_input(_msg, uppercase, _jdg_5) in ["N", "NO"]);
@@ -144,3 +145,4 @@ function map_info_dict()
 
     return _map_info_dict
 end
+=#

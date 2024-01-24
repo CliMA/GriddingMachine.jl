@@ -14,7 +14,7 @@
 #######################################################################################################################################################################################################
 module GriddingMachine
 
-export Blender, Collector, Fetcher, Indexer, Partitioner, Requestor
+export Blender, Collector, Fetcher, Indexer, Requestor
 
 
 # include submodules
@@ -22,9 +22,7 @@ include("Blender.jl");
 include("Collector.jl");
 include("Fetcher.jl");
 include("Indexer.jl");
-include("Partitioner.jl");
 include("Requestor.jl");
-include("Processer.jl");
 
 
 end # module

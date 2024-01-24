@@ -1,5 +1,4 @@
 using JSON
-using ArchGDAL: read, getband
 
 GRIDDING_MACHINE_HOME = "$(homedir())/GriddingMachine";
 ARTIFACT_TOML         = "$(GRIDDING_MACHINE_HOME)/Artifacts.toml";
