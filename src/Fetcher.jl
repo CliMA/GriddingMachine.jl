@@ -8,10 +8,7 @@ export GeneralWgetData
 export fetch_data!
 
 
-# ERA5 related information
-CDSAPI_PORTAL  = "https://cds.climate.copernicus.eu/api/v2";
-CDSAPI_KEY     = "";
-CDSAPI_CLIENT  = nothing;
+# EarthData related information
 EARTH_DATA_ID  = "";
 EARTH_DATA_PWD = "";
 
@@ -25,7 +22,6 @@ include("fetcher/general.jl");
 include("fetcher/password.jl");
 
 include("fetcher/carbontracker.jl");
-include("fetcher/era5.jl");
 include("fetcher/gedi.jl");
 include("fetcher/modis.jl");
 include("fetcher/smap.jl");

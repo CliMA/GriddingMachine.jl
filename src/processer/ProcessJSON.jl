@@ -1,3 +1,4 @@
+#=
 using JSON
 
 GRIDDING_MACHINE_HOME = "$(homedir())/GriddingMachine";
@@ -16,3 +17,4 @@ include("process_json/json_map.jl")
 include("process_json/json_save.jl")
 
 include("geotiff/read.jl")
+=#
