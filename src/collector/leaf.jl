@@ -206,6 +206,8 @@ sla_collection() = GriddedCollection("SLA", ["2X_1Y_V1", "2X_1Y_V2", "12X_1Y_V3"
 Method to create a general dataset collection for Vcmax. Supported datasets are (click to view bibtex items)
 - `2X_1Y_V1` [(Smith et al., 2019)](https://doi.org/10.1111/ele.13210)
 - `2X_1Y_V2` [(Luo et al., 2019)](https://doi.org/10.1038/s41467-021-25163-9)
+- `CESM_1X_1M_V3` CESM model output
+- `CESM_LUNA_1X_1M_V3` CESM model output (LUNA model)
 </summary>
 
 ```
@@ -233,4 +235,4 @@ Method to create a general dataset collection for Vcmax. Supported datasets are 
 </details>
 
 """
-vcmax_collection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
+vcmax_collection() = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2", "CESM_1X_1M_V3", "CESM_LUNA_1X_1M_V3"], "2X_1Y_V2");

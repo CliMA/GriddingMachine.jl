@@ -3926,6 +3926,22 @@ lazy = true
     sha256 = "f2721677acb9f59c496d977fe791845a68f4fbd673a3e32b0394dc9b88f62af2"
     url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCMAX_2X_1Y_V2.tar.gz"
 
+[VCMAX_CESM_1X_1M_V3]
+git-tree-sha1 = "b9fb966710ea5c6bea9a199aeba9ae6ec5e5f5ec"
+lazy = true
+
+    [[VCMAX_CESM_1X_1M_V3.download]]
+    sha256 = "9a3e74ac7fffe41e1f28ccdb5fb8a4e32924cd38eb45553355dcd823af485abe"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCMAX_CESM_1X_1M_V3.tar.gz"
+
+[VCMAX_CESM_LUNA_1X_1M_V3]
+git-tree-sha1 = "b614687f228f2b0ce24dd95cfbe937ad91463dc5"
+lazy = true
+
+    [[VCMAX_CESM_LUNA_1X_1M_V3.download]]
+    sha256 = "5b0af275aad1a9be0b55620878c7ea536734ddd7605a9a3e00f78196982363ec"
+    url = "ftp://fluo.gps.caltech.edu/XYZT_GRIDDING_MACHINE/artifacts/VCMAX_CESM_LUNA_1X_1M_V3.tar.gz"
+
 [WD_2X_1Y_V1]
 git-tree-sha1 = "72dc41b21595c6c5802c6867846d1258bc1c2e27"
 lazy = true
