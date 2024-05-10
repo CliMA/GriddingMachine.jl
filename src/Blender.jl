@@ -78,14 +78,13 @@ function regrid end
 
     regrid(data::Matrix{FT}, division::Int = 1) where {FT<:AbstractFloat}
     regrid(data::Array{FT,3}, division::Int = 1) where {FT<:AbstractFloat}
-    regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat}
-    regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat}
+    regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}) where {FT<:AbstractFloat}
+    regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}) where {FT<:AbstractFloat}
 
 Return the regridded dataset, given
 - `data` Input dataset, 2D or 3D
 - `division` Spatial resolution is `1/division` degree (integer truncation or expansion)
 - `newsize` Target 2D size of the map (not limited to integer truncation or expansion)
-- `expansion` Data will be expanded before truncation (psudo super sampling, default is nothing)
 
 ---
 # Examples
@@ -139,8 +138,12 @@ regrid(data::Array{FT,3}, division::Int = 1) where {FT<:AbstractFloat} = (
     return _regridded
 );
 
-regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat} = (
-    _raw = isnothing(expansion) ? data : expand(data, expansion);
+regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}) where {FT<:AbstractFloat} = (
+    # expand the data when necessary
+    ex1 = Int(lcm(size(data,1), newsize[1]) / size(data,1));
+    ex2 = Int(lcm(size(data,2), newsize[2]) / size(data,2));
+    _raw = expand(data, lcm(ex1,ex2));
+
     _res_ini = 360 / size(_raw,1);
     _res_inj = 180 / size(_raw,2);
     _inn_lon = collect((_res_ini/2):_res_ini:360) .- 180;
@@ -159,10 +162,10 @@ regrid(data::Matrix{FT}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} 
     return _regridded
 );
 
-regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}; expansion::Union{Int,Nothing} = nothing) where {FT<:AbstractFloat} = (
+regrid(data::Array{FT,3}, newsize::Tuple{Int,Int}) where {FT<:AbstractFloat} = (
     _regridded = ones(FT, newsize[1], newsize[2], size(data,3));
     for _i in axes(data,3)
-        _regridded[:,:,_i] = regrid(data[:,:,_i], newsize; expansion = expansion);
+        _regridded[:,:,_i] = regrid(data[:,:,_i], newsize);
     end;
 
     return _regridded
