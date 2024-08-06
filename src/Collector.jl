@@ -1,20 +1,31 @@
 module Collector
 
-using Artifacts: @artifact_str, load_artifacts_toml
+using Artifacts: load_artifacts_toml
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using LazyArtifacts
+using Pkg.PlatformEngines: download_verify_unpack
 
 import Base: show
 
 export clean_collections!, query_collection, sync_collections!
 
 
-# collection types
+# Global variables
+META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
+GM_DIR = "$(homedir())/GriddingMachine/";
+
+
+#######################################################################################################################################################################################################
+#
+# Changes to the struct
+# General
+#
+#######################################################################################################################################################################################################
 """
 
 $(TYPEDEF)
 
-Structure for general gridded dataset collection.
+Structure for general gridded dataset collection (this is meant for documentation purpose).
 
 # Fields
 
@@ -34,7 +45,7 @@ struct GriddedCollection
     SUPPORTED_COMBOS::Vector{String}
     "Default combination"
     DEFAULT_COMBO::String
-end
+end;
 
 
 # constructors for GriddedCollection
@@ -59,11 +70,11 @@ show(io::IO, col::GriddedCollection) = (
     # display the supported combos
     printstyled(io, "    SUPPORTED_COMBOS", color=:light_magenta);
     print(io," ⇨ [\n");
-    for _i in eachindex(col.SUPPORTED_COMBOS)
-        if _i < length(col.SUPPORTED_COMBOS)
-            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\",\n");
+    for i in eachindex(col.SUPPORTED_COMBOS)
+        if i < length(col.SUPPORTED_COMBOS)
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[i] * "\",\n");
         else
-            print(io, "                        \"" * col.SUPPORTED_COMBOS[_i] * "\"\n");
+            print(io, "                        \"" * col.SUPPORTED_COMBOS[i] * "\"\n");
         end;
     end;
     print(io, "                       ]\n");
@@ -76,7 +87,13 @@ show(io::IO, col::GriddedCollection) = (
 );
 
 
-
+#######################################################################################################################################################################################################
+#
+# Changes to the struct
+# General
+#     2024-Aug-06: redo doanload to local folder rather than Julia artifact folder
+#
+#######################################################################################################################################################################################################
 """
 
     query_collection(ds::GriddedCollection)
@@ -105,20 +122,50 @@ query_collection(ds::GriddedCollection, version::String) = (
     @assert version in ds.SUPPORTED_COMBOS "$(version)";
 
     # determine file name from label and supported version
-    _fn = "$(ds.LABEL)_$(version)";
+    arttag = "$(ds.LABEL)_$(version)";
 
-    return query_collection(_fn)
+    return query_collection(arttag)
 );
 
-query_collection(artname::String) = (
-    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-    _artns = [_name for (_name,_) in _metas];
-    @assert artname in _artns artname;
+query_collection(arttag::String) = (
+    arttags = [keyname for (keyname,_) in META_INFO];
+    @assert arttag in arttags "$(arttag) not found in Artifacts.toml";
 
-    return @artifact_str(artname) * "/$(artname).nc"
+    # determine if the file exists already
+    meta = META_INFO[arttag];
+    hashtag = meta["git-tree-sha1"];
+    art_nc = "$(GM_DIR)/published/$(hashtag)/$(arttag).nc";
+
+    # if file already exist return the file location
+    if isfile(art_nc)
+        return art_nc
+    end;
+
+    # otherwise, download the artifact
+    @info "Artifact $(arttag) not found, downloading...";
+    for entry in meta["download"]
+        url = entry["url"];
+        tarball_hash = entry["sha256"];
+        try
+            download_verify_unpack(url, tarball_hash, "$(GM_DIR)/published/$(hashtag)"; ignore_existence = true, quiet_download = true);
+            return art_nc
+        catch e
+            @warn "Failed to download artifact" arttag url;
+        end;
+    end;
+
+    # if nothing returned above, return error
+    return error("Failed to download artifact: $arttag")
 );
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to the struct
+# General
+#     2024-Aug-06: redo function to clean local folder rather than Julia artifact folder
+#
+#######################################################################################################################################################################################################
 """
 
     clean_collections!(selection::String="old")
@@ -148,20 +195,17 @@ function clean_collections! end
 
 clean_collections!(selection::String="old") = (
     # read the SHA1 identifications in Artifacts.toml
-    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-    _hashs = [_meta["git-tree-sha1"] for (_,_meta) in _metas];
+    hashs = [meta["git-tree-sha1"] for (_,meta) in META_INFO];
 
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
-    _artifact_dirs = readdir("$(homedir())/.julia/artifacts");
-    for _dir in _artifact_dirs
-        if isdir("$(homedir())/.julia/artifacts/$(_dir)")
-            if isfile("$(homedir())/.julia/artifacts/$(_dir)/GRIDDINGMACHINE")
-                if selection == "all"
-                    rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
-                else
-                    if !(_dir in _hashs)
-                        rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
-                    end;
+    artifact_dirs = readdir("$(GM_DIR)/published");
+    for artdir in artifact_dirs
+        if isdir("$(GM_DIR)/published/$artdir")
+            if selection == "all"
+                rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
+            else
+                if !(artdir in hashs)
+                    rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
                 end;
             end;
         end;
@@ -172,12 +216,11 @@ clean_collections!(selection::String="old") = (
 
 clean_collections!(selection::Vector{String}) = (
     # read the SHA1 identifications in Artifacts.toml
-    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-    _hashs = [_metas[_artn]["git-tree-sha1"] for _artn in selection];
+    hashs = [META_INFO[arttag]["git-tree-sha1"] for arttag in selection];
 
     # iterate the artifact hashs to remove corresponding folder
-    for _dir in _hashs
-        rm("$(homedir())/.julia/artifacts/$(_dir)"; recursive=true, force=true);
+    for artdir in hashs
+        rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
     end;
 
     return nothing
@@ -190,6 +233,12 @@ clean_collections!(selection::GriddedCollection) = (
 );
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to the struct
+# General
+#
+#######################################################################################################################################################################################################
 """
 
     sync_collections!()
@@ -202,8 +251,8 @@ Sync collection datasets to local drive, given
 function sync_collections! end
 
 sync_collections!(gc::GriddedCollection) = (
-    for _version in gc.SUPPORTED_COMBOS
-        query_collection(gc, _version);
+    for tagver in gc.SUPPORTED_COMBOS
+        query_collection(gc, tagver);
     end;
 
     return nothing

@@ -1,7 +1,7 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 authors = ["Yujie Wang"]
-version = "0.2.10"
+version = "0.2.11"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
