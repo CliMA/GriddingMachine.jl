@@ -1,18 +1,13 @@
 module Collector
 
-using Artifacts: load_artifacts_toml
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
-using LazyArtifacts
 using Pkg.PlatformEngines: download_verify_unpack
 
 import Base: show
 
+using ..GriddingMachine: GM_DIR, META_HASH, META_INFO, META_TAGS
+
 export clean_collections!, query_collection, sync_collections!
-
-
-# Global variables
-META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-GM_DIR = "$(homedir())/GriddingMachine/";
 
 
 #######################################################################################################################################################################################################
@@ -128,8 +123,7 @@ query_collection(ds::GriddedCollection, version::String) = (
 );
 
 query_collection(arttag::String) = (
-    arttags = [keyname for (keyname,_) in META_INFO];
-    @assert arttag in arttags "$(arttag) not found in Artifacts.toml";
+    @assert arttag in META_TAGS "$(arttag) not found in Artifacts.toml";
 
     # determine if the file exists already
     meta = META_INFO[arttag];
@@ -194,18 +188,15 @@ clean_collections!(pft_collection());
 function clean_collections! end
 
 clean_collections!(selection::String="old") = (
-    # read the SHA1 identifications in Artifacts.toml
-    hashs = [meta["git-tree-sha1"] for (_,meta) in META_INFO];
-
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
     artifact_dirs = readdir("$(GM_DIR)/published");
-    for artdir in artifact_dirs
-        if isdir("$(GM_DIR)/published/$artdir")
+    for arthash in artifact_dirs
+        if isdir("$(GM_DIR)/published/$(arthash)")
             if selection == "all"
-                rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
+                rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
             else
-                if !(artdir in hashs)
-                    rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
+                if !(arthash in META_HASH)
+                    rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
                 end;
             end;
         end;
@@ -215,12 +206,9 @@ clean_collections!(selection::String="old") = (
 );
 
 clean_collections!(selection::Vector{String}) = (
-    # read the SHA1 identifications in Artifacts.toml
-    hashs = [META_INFO[arttag]["git-tree-sha1"] for arttag in selection];
-
     # iterate the artifact hashs to remove corresponding folder
-    for artdir in hashs
-        rm("$(GM_DIR)/published/$artdir"; recursive=true, force=true);
+    for arthash in META_HASH
+        rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
     end;
 
     return nothing

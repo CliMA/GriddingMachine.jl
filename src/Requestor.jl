@@ -1,33 +1,43 @@
 module Requestor
 
 using Artifacts: load_artifacts_toml
-using DocStringExtensions: METHODLIST
 using HTTP: get
 using JSON: parse
+
+using ..GriddingMachine: GM_DIR, META_INFO, META_TAGS
 
 export request_LUT
 
 
+#######################################################################################################################################################################################################
+#
+# Changes to the function
+# General
+#     2024-Aug-06: add include_std option
+#
+#######################################################################################################################################################################################################
 """
-This function requests data from our server for supported datasets (only latest datasets supported). Supported methods are
 
-$(METHODLIST)
-"""
-function request_LUT end;
-
-
-"""
-    request_LUT(artname::String, lat::Number, lon::Number, cyc::Int = 0; user::String="Anonymous", interpolation::Bool = false, server::String = "https://tropo.gps.caltech.edu", port::Int = 44301)
+    request_LUT(artname::String,
+                lat::Number,
+                lon::Number,
+                cyc::Int = 0;
+                include_std::Bool = false,
+                interpolation::Bool = false,
+                port::Int = 5055,
+                server::String = "http://tropo.gps.caltech.edu",
+                user::String="Anonymous")
 
 Request data from the server, given
 - `artname` Artifact full name such as `LAI_MODIS_2X_8D_2017_V1`
 - `lat` Latitude
 - `lon` Longitude
 - `cyc` Cycle index, default is 0 (read entire time series)
-- `user` User name (non-registered users need to wait for 5 seconds before the server processes the request)
+- `include_std` If true, include the standard deviation
 - `interpolation` If true, interpolate the data linearly
-- `server` Server address such as `https://tropo.gps.caltech.edu`
 - `port` Port number for the GriddingMachine server
+- `server` Server address such as `https://tropo.gps.caltech.edu`
+- `user` User name (non-registered users need to wait for 5 seconds before the server processes the request)
 
 ---
 # Examples
@@ -37,42 +47,55 @@ request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true);
 request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8);
 request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true);
 ```
+
 """
-request_LUT(artname::String, lat::Number, lon::Number, cyc::Int = 0; user::String="Anonymous", interpolation::Bool = false, server::String = "http://tropo.gps.caltech.edu", port::Int = 5055) = (
-    # make sure the artifact is within our collection
-    _metas = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-    _artns = [_name for (_name,_) in _metas];
-    @assert artname in _artns;
+function request_LUT(
+            artname::String,
+            lat::Number,
+            lon::Number,
+            cyc::Int = 0;
+            include_std::Bool = false,
+            interpolation::Bool = false,
+            port::Int = 5055,
+            server::String = "http://tropo.gps.caltech.edu",
+            user::String="Anonymous")
+    @assert artname in META_TAGS "$(artname) not found in Artifacts.toml";
 
     # send a request to our webserver at tropo.gps.caltech.edu:44301 and translate it back to Dictionary
-    _response = get("$(server):$(port)/request.json?user=$(user)&artifact=$(artname)&lat=$(lat)&lon=$(lon)&cyc=$(cyc)&interpolate=$(interpolation)"; require_ssl_verification = false);
-    _json_str = String(_response.body);
-    _results  = parse(_json_str);
+    web_url = "$(server):$(port)/request.json?user=$(user)&artifact=$(artname)&lat=$(lat)&lon=$(lon)&cyc=$(cyc)&interpolate=$(interpolation)&include_std=$(include_std)";
+    web_response = get(web_url; require_ssl_verification = false);
+    json_str = String(web_response.body);
+    json_dict = parse(json_str);
 
     # if there is no result item in the Dictionary
-    if !haskey(_results, "Result")
-        @show _results;
+    if !haskey(json_dict, "Result")
+        @show json_dict;
         @error "There is something wrong with the request, please check the details about it!";
     end;
 
-    # replace -9999 to NaN
-    _data = _results["Result"];
-    _std = _results["Error"];
-    if typeof(_data) <: Array
-        _data[_data .== -9999] .= NaN;
-        _std[_std .== -9999] .= NaN;
+    # replace -9999 with NaN
+    data = json_dict["Result"];
+    if typeof(data) <: Array
+        data[data .== -9999] .= NaN;
     else
-        if _data == -9999 _data = NaN; end;
-        if _std == -9999 _std = NaN; end;
+        if data == -9999 data = NaN; end;
+    end;
+    if include_std
+        std = json_dict["Error"];
+        if typeof(data) <: Array
+            std[std .== -9999] .= NaN;
+        else
+            if std == -9999 std = NaN; end;
+        end;
     end;
 
     # if length of data is 1 return a Number, else return a Vector
-    if length(_data) > 1
-        return Float32.(_data), Float32.(_data)
+    if length(data) > 1
+        return include_std ? (Float32.(data), Float32.(std)) : Float32.(data)
+    else
+        return include_std ? (Float32(data[1]), Float32(std[1])) : Float32(data[1])
     end;
-
-    return Float32(_data[1]), Float32(_std[1])
-);
+end;
 
 
-end
+end; # module

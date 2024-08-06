@@ -14,7 +14,17 @@
 #######################################################################################################################################################################################################
 module GriddingMachine
 
+using Artifacts: load_artifacts_toml
+
 export Blender, Collector, Fetcher, Indexer, Requestor
+
+
+# Global variables
+GM_DIR = "$(homedir())/GriddingMachine/";
+
+META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
+META_TAGS = [keyname for (keyname,_) in META_INFO];
+META_HASH = [meta["git-tree-sha1"] for (_,meta) in META_INFO];
 
 
 # include submodules
