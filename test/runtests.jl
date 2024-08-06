@@ -3,8 +3,6 @@ using GriddingMachine.Collector
 using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
-using GriddingMachine.Processer
-using GriddingMachine.Partitioner
 using Test
 
 
