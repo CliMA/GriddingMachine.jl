@@ -1,7 +1,7 @@
 module Fetcher
 
 using Dates: isleapyear
-using DocStringExtensions: TYPEDEF, TYPEDFIELDS, METHODLIST
+using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using ProgressMeter: @showprogress
 
 export GeneralWgetData

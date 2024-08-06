@@ -207,7 +207,8 @@ clean_collections!(selection::String="old") = (
 
 clean_collections!(selection::Vector{String}) = (
     # iterate the artifact hashs to remove corresponding folder
-    for arthash in META_HASH
+    for arttag in selection
+        arthash = META_INFO[arttag]["git-tree-sha1"];
         rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
     end;
 
@@ -215,7 +216,7 @@ clean_collections!(selection::Vector{String}) = (
 );
 
 clean_collections!(selection::GriddedCollection) = (
-    clean_collections!(["$(selection.LABEL)_$(_ver)" for _ver in selection.SUPPORTED_COMBOS]);
+    clean_collections!(["$(selection.LABEL)_$(tagver)" for tagver in selection.SUPPORTED_COMBOS]);
 
     return nothing
 );
