@@ -197,7 +197,7 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number, FT::DataType = Float
     end;
 
     # interpolate the standard deviation
-    std_i = similar(val_i);
+    std_i = NaN;
     if include_std
         std_s = dlon_w ./ res .* read_nc(FT, fn, "std", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(FT, fn, "std", ilon_w, ilat_s);
         std_n = dlon_w ./ res .* read_nc(FT, fn, "std", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(FT, fn, "std", ilon_w, ilat_n);
