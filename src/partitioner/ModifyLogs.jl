@@ -1,3 +1,4 @@
+#=
 """
     check_log_for_condition(df::DataFrame, variable::String, match::String, condition::String)
 
@@ -44,7 +45,7 @@ change_log_condition(df::DataFrame, variable::String, match::String, condition::
     change_log_condition(df, variable, match, [condition], new_val)
 );
 
-#=
+
 """
     append_to_log(file_path::String, message::String)
 
@@ -81,4 +82,5 @@ write_to_log(file_path::String, message::String) = (
         append_to_log(file_path, message);
     end;
     return nothing;
-)=#
+)
+=#

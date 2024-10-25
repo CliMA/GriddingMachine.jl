@@ -1,3 +1,4 @@
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to this function
@@ -50,8 +51,8 @@ function reprocess_data!(
         push!(_files, _dict_file["FOLDER"] * "/" * _dict_file["FILE_NAME_PATTERN"]);
     else
         for _year in _years
-            push!(_files, _dict_file["FOLDER"] * "/" * 
-                (file_name_function  == "" || file_name_function === nothing ? _dict_file["FILE_NAME_PATTERN"] : 
+            push!(_files, _dict_file["FOLDER"] * "/" *
+                (file_name_function  == "" || file_name_function === nothing ? _dict_file["FILE_NAME_PATTERN"] :
                 replace(_dict_file["FILE_NAME_PATTERN"], "XXXXXXXX" => file_name_function(_year))));
         end;
     end;
@@ -77,7 +78,7 @@ function reprocess_data!(
         else
             @info "File $(_tag).nc does not exist, reprocessing...";
         end;
-        
+
         # read the data
         _file = _files[_i_year]
         if length(_dict_vars) == 1
@@ -211,3 +212,4 @@ function check_land_mask(data::Array{FT,N}; division::Int = 1, threshold::Number
 
     return true;
 end
+=#

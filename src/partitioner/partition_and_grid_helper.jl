@@ -1,4 +1,4 @@
-
+#=
 format_with_date(path::String, y::Int; m::Int = 1, d::Int = 1, month_days::Vector = isleapyear(y) ? MDAYS_LEAP : MDAYS) = (
     return replace(path, "year" => lpad(y, 4, "0"), "month" => lpad(m, 2, "0"), "day" => lpad(d, 2, "0"), "date" => lpad(d + month_days[m], 3, "0"), "yyyy" => lpad(mod(y, 1000), 2, "0"));
 );
@@ -86,9 +86,9 @@ initialize_grid(data_info::Array, num_days::Int, g_reso::Int) = (
 
 partition_file(file_name::String, folder::String, dict_dims::Dict, data_info::Array, p_reso::Int, m::Int, d::Int, partitioned_data::Array, month_days::Vector, is_MODIS::Bool;
                 partition_files::Bool = true, grid_files::Bool = false, gridded_sum::Dict = nothing, gridded_count::Dict = nothing, g_reso::Int = 1) = (
-    
+
     if !partition_files && !grid_files return gridded_sum, gridded_count end;
-    
+
     (lon_cur, lat_cur, lon_bnds_cur, lat_bnds_cur, time_cur, data) = is_MODIS ? read_MODIS_file(file_name, folder, dict_dims, data_info) : read_vector_file(file_name, folder, dict_dims, data_info);
     for i in range(1, size(lon_cur)[1])
         if partition_files
@@ -127,7 +127,7 @@ read_vector_file(file_name::String, folder::String, dict_dims::Dict, data_info::
     lon_bnds_cur = "LON_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LON_BNDS"])' : read_nc(file_path, dict_dims["LON_BNDS"]) : nothing;
     lat_bnds_cur = "LAT_BNDS" in keys(dict_dims) ? dict_dims["FLIP_BNDS"] ? read_nc(file_path, dict_dims["LAT_BNDS"])' : read_nc(file_path, dict_dims["LAT_BNDS"]) : nothing;
     time_cur = "TIME_NAME" in keys(dict_dims) ? read_nc(file_path, dict_dims["TIME_NAME"]; transform = false) : nothing;
-    
+
     data = Dict{String, Vector}();
     for info in data_info
         cur_data = read_nc(file_path, info[1]);
@@ -158,7 +158,7 @@ read_MODIS_file(file_name::String, folder::String, dict_dims::Dict, data_info::A
 
     lon_cur = vcat(read_nc(dict_dims["LON_LAT_MAP"], "longitude", [cur_h+1, cur_v+1, :, :])...);
     lat_cur = vcat(read_nc(dict_dims["LON_LAT_MAP"], "latitude", [cur_h+1, cur_v+1, :, :])...);
-    
+
     return lon_cur, lat_cur, nothing, nothing, nothing, data
 );
 
@@ -192,3 +192,4 @@ grid_for_temporal_reso(data::Array, std::Array, count::Array, t_reso::Int, type:
 
     return cur_data, cur_std, cur_count;
 )
+=#

@@ -1,3 +1,4 @@
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to this function
@@ -31,11 +32,11 @@ function variable_dict(_has_std::Bool)
     # loop the inputs until satisfied
     _data_dict = Dict{String,Any}();
     _std_dict = Dict{String,Any}();
-    
+
     for type in info
 
         if (type == "error" && !_has_std) continue end;
-        
+
         while true
             _msg = "        Please input $(type) label or band number > ";
             _name = verified_input(_msg, _jdg_1);
@@ -83,7 +84,7 @@ function variable_dict(_has_std::Bool)
                 break;
             end;
         end;
-        
+
     end;
 
     return _data_dict, _std_dict;
@@ -122,7 +123,7 @@ function variable_dicts()
     _msg = "    How many variables/bands do you want to save as DATA (e.g., combine data1 and data2 in one netcdf file) > ";
     _data_count = parse(Int, verified_input(_msg, _jdg_1));
     _data_dicts = Dict{String,Any}[];
-    
+
     _msg = "    Do you have error/standard deviation to input for the variables? > ";
     _has_std = (verified_input(_msg, uppercase, _jdg_3) in ["Y", "YES"]);
     _std_dicts = Dict{String,Any}[];
@@ -137,3 +138,4 @@ function variable_dicts()
 
     return _data_dicts, _std_dicts
 end
+=#

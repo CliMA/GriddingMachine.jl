@@ -1,3 +1,4 @@
+#=
 module Processer
 
 using ..Indexer: read_LUT
@@ -17,7 +18,7 @@ include("borrowed/Terminal.jl")
 """
     reprocess_from_json(_json::String, rep_locf::String)
 
-This method reprocesses the data represented by a given JSON file 
+This method reprocesses the data represented by a given JSON file
 
 - `_json` Path of JSON file to be parsed
 - `rep_locf` Path of folder where the reprocessed dataset will be stored
@@ -50,8 +51,8 @@ reprocess_from_json(_json::String) = (
 
     #Reprocess the data
     (_reprocessed_data, _reprocessed_std) = reprocess_data!(rep_locf, json_dict;
-                    file_name_function = name_function, 
-                    data_scaling_functions = data_scaling_f, 
+                    file_name_function = name_function,
+                    data_scaling_functions = data_scaling_f,
                     std_scaling_functions = std_scaling_f,
                     data_masking_functions = data_masking_f,
                     std_masking_functions = std_masking_f);
@@ -109,14 +110,14 @@ Combine files in same folder that are of the same format (same variables, units,
 """
 function combine_files end;
 
-combine_files(folder::String, sep_files::Vector{String}, var_name::String, 
+combine_files(folder::String, sep_files::Vector{String}, var_name::String,
         var_attributes::Dict{String,String}, var_dims::Vector{String}, file_name::String) = (
-    
+
     @info "Combining files $(sep_files)";
     combined_var = [];
 
     if (length(file_name) < 3 || file_name[end-2:end] != ".nc") file_name = file_name * ".nc" end;
-    
+
     for _file in sep_files
         cur_var = read_nc("$(folder)/$(String(_file))", var_name);
         combined_var = (combined_var == [] ? cur_var : cat(combined_var, cur_var, dims=indexin(["ind"], var_dims)[1]));
@@ -130,7 +131,7 @@ combine_files(folder::String, sep_files::Vector{String}, var_name::String,
 """
     reprocess_file(_json::String, rep_locf::String)
 
-This is a helper method that creates a single JSON file based on user input and reprocesses the data represented by the JSON file 
+This is a helper method that creates a single JSON file based on user input and reprocesses the data represented by the JSON file
 
 - `_json` Path of JSON file to be created
 - `rep_locf` Path of folder where the reprocessed dataset will be stored
@@ -139,7 +140,7 @@ This is a helper method that creates a single JSON file based on user input and 
 function reprocess_file end;
 
 reprocess_file(_json::String) = (
-    
+
     #Check if JSON file exists already
     if isfile(_json)
         @info "File $(_json) exists already";
@@ -206,7 +207,7 @@ function reprocess_files end
 
 reprocess_files() = (
     @info "Please follow the instructions to create a JSON file for your dataset(s) and reprocess your dataset(s)";
-    
+
     while true
         #Get user input for directories
         _msg = "Please input the folder path of the JSON file you want to create > ";
@@ -226,9 +227,9 @@ reprocess_files() = (
             return nothing;
         end;
     end;
-    
+
     return nothing;
-    
+
 );
 
 reprocess_files(JSON_locf::String) = (
@@ -255,3 +256,4 @@ reprocess_files(JSON_locf::String) = (
 );
 
 end; #module
+=#

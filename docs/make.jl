@@ -30,8 +30,9 @@ format = Documenter.HTML(
 # build the docs
 makedocs(
     sitename = "GriddingMachine",
-    format = format,
+    checkdocs = :none,
     clean = false,
+    format = format,
     modules = [GriddingMachine],
     pages = pages,
 );

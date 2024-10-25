@@ -14,20 +14,27 @@
 #######################################################################################################################################################################################################
 module GriddingMachine
 
-export Blender, Collector, Fetcher, Indexer, Partitioner, Requestor
+using Artifacts: load_artifacts_toml
+
+export Blender, Collector, Fetcher, Indexer, Requestor
 
 
-# include types
-include("types.jl")
+# Global variables
+# make sure the directory exists
+GM_DIR = "$(homedir())/GriddingMachine/";
+mkpath("$(GM_DIR)/published");
+
+META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
+META_TAGS = [keyname for (keyname,_) in META_INFO];
+META_HASH = [meta["git-tree-sha1"] for (_,meta) in META_INFO];
+
 
 # include submodules
 include("Blender.jl");
 include("Collector.jl");
 include("Fetcher.jl");
 include("Indexer.jl");
-include("Partitioner.jl");
 include("Requestor.jl");
-include("Processer.jl");
 
 
 end # module

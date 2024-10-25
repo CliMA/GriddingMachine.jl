@@ -28,12 +28,3 @@ using GriddingMachine.Indexer: read_LUT;
 data = read_LUT(file);
 @show data;
 ```
-
-Here is a preview of the data.
-
-```@example preview
-using Plots;
-ENV["GKSwstype"] = "100";
-
-heatmap(data[1]')
-```

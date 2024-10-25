@@ -58,13 +58,13 @@ fetch_data!(dt::CarbonTracker1M, year::Int) = (
     end;
 
     # iterate through the months
-    for _month in 1:12
-        _url = dt.portal_url * dt.label * "_$(year)-" * lpad(_month,2,"0") * ".nc";
-        _lcf = dt.local_dir * dt.label * "_$(year)-" * lpad(_month,2,"0") * ".nc";
+    for imonth in 1:12
+        url = dt.portal_url * dt.label * "_$(year)-" * lpad(imonth,2,"0") * ".nc";
+        lcf = dt.local_dir * dt.label * "_$(year)-" * lpad(imonth,2,"0") * ".nc";
         if Sys.which("wget") !== nothing
-            if !isfile(_lcf)
-                @info "Downloading $(_url), please wait as the server is slow...";
-                run(`wget -q $(_url) -O $(_lcf)`);
+            if !isfile(lcf)
+                @info "Downloading $(url), please wait as the server is slow...";
+                run(`wget -q $(url) -O $(lcf)`);
             end;
         else
             @warn "wget not found, exit the loop";

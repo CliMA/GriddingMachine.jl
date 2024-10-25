@@ -1,3 +1,4 @@
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to this function
@@ -23,7 +24,7 @@ function griddingmachine_dict()
     _jdg_5(x) = (isnothing(x) || x isa Vector);
     _jdg_6(x) = (x in ["N", "NO", "Y", "YES"]);
     _jdg_7(x) = (if isdir(x) return true end;
-                try 
+                try
                     mkpath(x);
                     return true
                 catch e return false
@@ -141,3 +142,4 @@ function griddingmachine_tag(dict::Dict, year::Int = 0)
 
     return _tag
 end
+=#

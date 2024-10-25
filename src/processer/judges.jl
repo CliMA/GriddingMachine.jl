@@ -1,4 +1,4 @@
-
+#=
 #Y/N response
 _jdg_1(x) = (x in ["N", "NO", "Y", "YES"]);
 
@@ -20,7 +20,7 @@ _jdg_3(x) = (
 #Check/create directory
 _jdg_6(x) = (
     if isdir(x) return true end;
-    try 
+    try
         mkpath(x);
         return true
     catch e
@@ -30,3 +30,4 @@ _jdg_6(x) = (
 
 #Check if JSON file name given
 _jdg_7(x) = (length(x) >= 5 && x[end-4:end] == ".json");
+=#

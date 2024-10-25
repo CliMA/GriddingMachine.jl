@@ -1,6 +1,5 @@
+#=
 module Partitioner
-
-#import ..GriddingMachine: TropomiL2SIF
 
 using DataFrames: DataFrame, push!, nrow, sort
 using JSON: parsefile
@@ -8,9 +7,11 @@ using NetcdfIO: read_nc, save_nc!, grow_nc!, append_nc!, switch_netcdf_lib!
 using PolygonInbounds: inpoly2
 using JLD2, FileIO, CSV, Dates
 
+
 include("borrowed/EmeraldUtility.jl")
 include("partitioner/ModifyLogs.jl")
 include("partitioner/partition_and_grid_helper.jl")
+
 
 """
     partition_from_json(dict::Dict, date_start::String, date_end::String; grid_files = false, grid_locf::String = "")
@@ -24,7 +25,7 @@ function partition_data! end;
 partition_data!(dict::Dict; grid_files::Bool = false) = (
 
     types = Dict("month" => Int, "iday" => Int, "file_name" => String, "partitioned" => Bool, "gridded" => Bool, "day_plot" => Bool, "D" => Bool, "M" => Bool);
-    
+
     #Define variables for components in JSON dict
     dict_file = dict["INPUT_MAP_SETS"];
     dict_outm = dict["OUTPUT_MAP_SETS"];
@@ -48,7 +49,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
     (y_start, m_start, d_start) = parse_date(Date(dict_file["START_DATE"]));
     (y_end, m_end, d_end) = parse_date(dict_file["END_DATE"] == "" ? today() : Date(dict_file["END_DATE"]));
     d_step = dict_file["DAY_STEP"];
-    
+
     #Ensure that hdf4 is supported ******************** To be altered ********************
     if dict_file["IS_HDF4"]
         if isfile("$(homedir())/.julia/conda/3/x86_64/lib/libnetcdf.so")
@@ -57,7 +58,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
             switch_netcdf_lib!(use_default = false, user_defined = "$(homedir())/.julia/conda/3/lib/libnetcdf.so");
         end;
     end;
-    
+
     #Loop over years
     for y in range(y_start, y_end)
 
@@ -65,7 +66,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
         m_s = y == y_start ? m_start : 1;
         m_e = y == y_end ? m_end : 12;
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS; #cumulative number of days after each month
-        
+
         #Get current log data
         log_folder = format_with_date(dict["LOG_FILE"]["FOLDER"], y)
         log_file_name = format_with_date(dict["LOG_FILE"]["FILE_NAME"], y)
@@ -87,7 +88,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
             #Ensure output location is valid
             out_locf = format_with_date(dict_outm["FOLDER"], y; m = m);
             if !isdir(out_locf) mkpath(out_locf) end;
-            
+
             #Initialize array to store data
             partitioned_data = initialize_partition_grid(dict_dims, n_lon, n_lat, data_info);
             partition_template = deepcopy(partitioned_data);
@@ -117,7 +118,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
                         end;
                     else do_grid = grid_files && !check_log_for_condition(log_data, "file_name", file_name, "gridded");
                     end;
-                    
+
                     @info "$(do_part ? "Partitioning" : "")$(do_part && do_grid ? "/" : "")$(do_grid ? "Gridding" : "") $(file_name)..."
                     try
                         partition_file(file_name, folder, dict_dims, data_info, p_reso, m, d, partitioned_data, month_days, dict_file["SATELLITE_NAME"] == "MODIS";
@@ -125,7 +126,7 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
                         push!(successful_files, file_name);
                     catch e @info "File $(file_name) processing unsuccessful";
                     end;
-                    
+
                     counter += 1;
                     if counter == 25
                         save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
@@ -134,26 +135,26 @@ partition_data!(dict::Dict; grid_files::Bool = false) = (
                             add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count, dict_outm["GRID_RESO"])
                         end;
                         gridded_sum, gridded_count = initialize_grid(data_info, month_days[end], dict_outm["GRID_RESO"])
-                        
+
                         @info "Updating log information..."
                         status = grid_files ? ["partitioned", "gridded"] : ["partitioned"]
                         for f in successful_files
                             change_log_condition(log_data, "file_name", f, status, true);
                         end;
                         CSV.write(cur_log, log_data);
-                        
+
                         counter = 0;
                         successful_files = [];
                     end;
                 end;
             end;
-            
+
             #Save file for the month
             save_partitioned_files(y, m, n_lon, n_lat, out_locf, dict_outm["LABEL"], p_reso, partitioned_data);
             if grid_files
                 add_to_JLD2(dict_outm["JLD2_FOLDER"], y, data_info, dict_outm["LABEL"], gridded_sum, gridded_count, dict_outm["GRID_RESO"])
             end;
-            
+
             @info "Updating log information..."
             status = grid_files ? ["partitioned", "gridded"] : ["partitioned"]
             for f in successful_files
@@ -176,7 +177,7 @@ partition_data!(json_file::String; grid_files::Bool = false) = (
 """
     get_data_from_file!(data::DataFrame, file_path::String, nodes::Matrix, var_names::Vector{String})
 
-Append data within the given polygonal region from a file to DataFrame 
+Append data within the given polygonal region from a file to DataFrame
 - `data` DataFrame storing data cumulatively
 - `file_path` Path to the file containing the desired data
 - `nodes` Matrix of coordinates corresponding to the corners of the polygon (in counterclockwise order)
@@ -239,7 +240,7 @@ Get data as dictionary mapping from year to DataFrame for each listed year and m
 function get_data end;
 
 get_data(folder::String, label::String, nodes::Matrix, year::Int, var_names::Vector{String}; reso::Int = 5, months::Vector{Int} = collect(1:12)) = (
-    
+
     data = DataFrame(month=Int[], iday=Int[], lon=Float32[], lat=Float32[]);
     for var_name in var_names
         data[!, var_name] = Float32[];
@@ -342,9 +343,9 @@ grid_to_dataset(json_file::String) = (
     dict_refs = dict["OUTPUT_REF_ATTR"];
 
     gridded_locf = dict_grid["FOLDER"];
-    
+
     reso = dict_grid["LAT_LON_RESO"];
-    
+
     for y in dict_grid["YEARS"]
         @info "Gridding file for year $(lpad(y, 4, "0"))..."
         month_days = isleapyear(y) ? MDAYS_LEAP : MDAYS;
@@ -373,7 +374,7 @@ grid_to_dataset(json_file::String) = (
                 end;
             end;
         end;
-        
+
         _var_attr::Dict{String,String} = merge(dict_outv,dict_refs);
         _labeling = isnothing(dict_grid["EXTRA_LABEL"]) ? dict_grid["LABEL"] : dict_grid["LABEL"] * "_" *dict_grid["EXTRA_LABEL"];
         cur_locf = format_with_date(gridded_locf, y)
@@ -500,3 +501,4 @@ clean_files(json_file::String, year::Int; months::Vector{Int} = collect(1:12)) =
 );
 
 end; # module
+=#
