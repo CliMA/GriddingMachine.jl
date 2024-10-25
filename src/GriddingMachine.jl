@@ -20,7 +20,9 @@ export Blender, Collector, Fetcher, Indexer, Requestor
 
 
 # Global variables
+# make sure the directory exists
 GM_DIR = "$(homedir())/GriddingMachine/";
+mkpath("$(GM_DIR)/published");
 
 META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
 META_TAGS = [keyname for (keyname,_) in META_INFO];
