@@ -74,6 +74,7 @@ end
 # Changes to the function
 # General
 #     2024-Aug-06: Add include_std option
+#     2024-Oct-25: Make include_std option does not call variables within a if statement
 #
 #######################################################################################################################################################################################################
 """
@@ -148,9 +149,7 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number, FT::DataType = Float
     ilat = lat_ind(lat; res = res);
     ilon = lon_ind(lon; res = res);
     raw_dat = read_nc(FT, fn, "data", ilon, ilat);
-    if include_std
-        raw_std = read_nc(FT, fn, "std" , ilon, ilat);
-    end;
+    raw_std = include_std ? read_nc(FT, fn, "std" , ilon, ilat) : nothing;
 
     # if not at interpolation mode
     if !interpolation
@@ -198,6 +197,7 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number, FT::DataType = Float
     end;
 
     # interpolate the standard deviation
+    std_i = similar(val_i);
     if include_std
         std_s = dlon_w ./ res .* read_nc(FT, fn, "std", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(FT, fn, "std", ilon_w, ilat_s);
         std_n = dlon_w ./ res .* read_nc(FT, fn, "std", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(FT, fn, "std", ilon_w, ilat_n);
@@ -236,9 +236,7 @@ read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number, FT::DataTy
     ilat = lat_ind(lat; res=res);
     ilon = lon_ind(lon; res=res);
     raw_dat = read_nc(FT, fn, "data", ilon, ilat, cyc);
-    if include_std
-        raw_std = read_nc(FT, fn, "std" , ilon, ilat, cyc);
-    end;
+    raw_std = include_std ? read_nc(FT, fn, "std" , ilon, ilat, cyc) : nothing;
 
     if !interpolation
         return include_std ? (raw_dat, raw_std) : raw_dat
