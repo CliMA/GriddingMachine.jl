@@ -39,6 +39,7 @@ if !isfile(YAML_FILE)
     download_yaml_file();
 end;
 YAML_DATABASE = YAML.load_file(YAML_FILE);
+YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
 YAML_TAGS = [k for k in keys(YAML_DATABASE)];
 
 

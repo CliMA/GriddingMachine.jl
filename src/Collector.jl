@@ -3,11 +3,13 @@ module Collector
 using Downloads
 using HTTP
 using JSON
+using YAML
 
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using Pkg.PlatformEngines: unpack
 
-using ..GriddingMachine: GRIDDINGMACHINE_HOME, YAML_DATABASE, YAML_FILE, YAML_TAGS, YAML_URL
+using ..GriddingMachine: GRIDDINGMACHINE_HOME, YAML_FILE, YAML_URL
+import ..GriddingMachine: YAML_DATABASE, YAML_SHAS, YAML_TAGS
 
 export query_collection
 
@@ -17,7 +19,7 @@ export query_collection
 # Changes to the function
 # General
 #     2024-Oct-25: add function to update the database
-#     2024-Oct-25: make sure tarball folder exists before downloading
+#     2024-Oct-28: make sure tarball folder exists before downloading
 #
 #######################################################################################################################################################################################################
 """
@@ -32,6 +34,11 @@ function update_database!()
         Downloads.download(YAML_URL, YAML_FILE);
     end;
     download_yaml_file();
+
+    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
+    YAML_DATABASE = YAML.load_file(YAML_FILE);
+    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
+    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
 
     return nothing
 end;
@@ -96,19 +103,17 @@ download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.ed
 query_collection = download_artifact!;
 
 
-#=
 #######################################################################################################################################################################################################
 #
 # Changes to the function
 # General
 #     2024-Aug-06: redo function to clean local folder rather than Julia artifact folder
+#     2024-Oct-28: remove the method that use outdated GriddedCollection structure
 #
 #######################################################################################################################################################################################################
 """
 
     clean_collections!(selection::String="old")
-    clean_collections!(selection::Vector{String})
-    clean_collections!(selection::GriddedCollection)
 
 This method cleans up all selected artifacts of GriddingMachine.jl (through identify the `GRIDDINGMACHINE` file in the artifacts), given
 - `selection`
@@ -116,7 +121,6 @@ This method cleans up all selected artifacts of GriddingMachine.jl (through iden
         - `old` Artifacts from an old version of GriddingMachine.jl (default)
         - `all` All Artifacts from GriddingMachine.jl
     - A vector of artifact names
-    - A [`GriddedCollection`](@ref) type collection
 
 ---
 # Examples
@@ -125,47 +129,47 @@ clean_collections!();
 clean_collections!("old");
 clean_collections!("all");
 clean_collections!(["PFT_2X_1Y_V1"]);
-clean_collections!(pft_collection());
 ```
 
 """
 function clean_collections! end
 
-clean_collections!(selection::String="old") = (
+clean_collections!(selection::String = "old") = (
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
-    artifact_dirs = readdir("$(GM_DIR)/published");
+    artifact_dirs = readdir("$(GRIDDINGMACHINE_HOME)/public");
+
+    # if remove all artifacts
+    if selection == "all"
+        for arthash in artifact_dirs
+            rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
+        end;
+
+        return nothing
+    end;
+
+    # otherwise, remove the old artifacts (update database first)
+    update_database!();
     for arthash in artifact_dirs
-        if isdir("$(GM_DIR)/published/$(arthash)")
-            if selection == "all"
-                rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
-            else
-                if !(arthash in META_HASH)
-                    rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
-                end;
-            end;
+        if !(arthash in YAML_SHAS)
+            rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
         end;
     end;
 
     return nothing
 );
 
-clean_collections!(selection::Vector{String}) = (
+clean_collections!(arttags::Vector{String}) = (
     # iterate the artifact hashs to remove corresponding folder
-    for arttag in selection
-        arthash = META_INFO[arttag]["git-tree-sha1"];
-        rm("$(GM_DIR)/published/$(arthash)"; recursive=true, force=true);
+    for arttag in arttags
+        arthash = YAML_DATABASE[arttag]["SHA"];
+        rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
     end;
 
     return nothing
 );
 
-clean_collections!(selection::GriddedCollection) = (
-    clean_collections!(["$(selection.LABEL)_$(tagver)" for tagver in selection.SUPPORTED_COMBOS]);
 
-    return nothing
-);
-
-
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to the function
