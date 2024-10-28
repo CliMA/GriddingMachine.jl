@@ -7,53 +7,12 @@ using Test
 
 
 @testset verbose = true "GriddingMachine" begin
-    collections = [Collector.biomass_collection(),
-                   Collector.canopy_height_collection(),
-                   Collector.clumping_index_collection(),
-                   Collector.elevation_collection(),
-                   Collector.gpp_collection(),
-                   Collector.lai_collection(),
-                   Collector.land_mask_collection(),
-                   Collector.latent_heat_collection(),
-                   Collector.leaf_chlorophyll_collection(),
-                   Collector.leaf_drymass_collection(),
-                   Collector.leaf_nitrogen_collection(),
-                   Collector.leaf_phosphorus_collection(),
-                   Collector.pft_collection(),
-                   Collector.sif_collection(),
-                   Collector.sil_collection(),
-                   Collector.sla_collection(),
-                   Collector.soil_color_collection(),
-                   Collector.soil_hydraulics_collection(),
-                   Collector.soil_texture_collection(),
-                   Collector.surface_area_collection(),
-                   Collector.tree_density_collection(),
-                   Collector.vcmax_collection(),
-                   Collector.vegetation_cover_fraction(),
-                   Collector.wood_density_collection()];
-
-    @testset "Library" begin
-        # test the collection functions
-        for collection in collections
-            @test true;
-        end;
-
-        # test the @show function
-        @show Collector.wood_density_collection(); @test true;
-    end;
-
     @testset "Collector" begin
         # test query_collection function
-        Collector.query_collection(Collector.pft_collection()); @test true;
-        Collector.query_collection(Collector.sla_collection()); @test true;
         Collector.query_collection("PFT_2X_1Y_V1"); @test true;
-
-        # sync collection
-        Collector.sync_collections!(Collector.sla_collection());
 
         # clean up artifacts
         Collector.clean_collections!("old"); @test true;
-        Collector.clean_collections!(Collector.pft_collection()); @test true;
     end;
 
     @testset "Blender" begin

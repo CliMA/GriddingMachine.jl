@@ -1,158 +1,99 @@
 module Collector
 
+using Downloads
+using HTTP
+using JSON
+
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
-using Pkg.PlatformEngines: download_verify_unpack
+using Pkg.PlatformEngines: unpack
 
-import Base: show
+using ..GriddingMachine: GRIDDINGMACHINE_HOME, YAML_DATABASE, YAML_FILE, YAML_TAGS, YAML_URL
 
-using ..GriddingMachine: GM_DIR, META_HASH, META_INFO, META_TAGS
-
-export clean_collections!, query_collection, sync_collections!
-
-
-#######################################################################################################################################################################################################
-#
-# Changes to the struct
-# General
-#
-#######################################################################################################################################################################################################
-"""
-
-$(TYPEDEF)
-
-Structure for general gridded dataset collection (this is meant for documentation purpose).
-
-# Fields
-
-$(TYPEDFIELDS)
-
----
-# Examples
-```julia
-vcmax_collection = GriddedCollection("VCMAX", ["2X_1Y_V1", "2X_1Y_V2"], "2X_1Y_V2");
-```
-
-"""
-struct GriddedCollection
-    "Artifact label name"
-    LABEL::String
-    "Supported combinations"
-    SUPPORTED_COMBOS::Vector{String}
-    "Default combination"
-    DEFAULT_COMBO::String
-end;
-
-
-# constructors for GriddedCollection
-include("collector/biomass.jl")
-include("collector/canopy.jl")
-include("collector/gpp.jl")
-include("collector/lai.jl")
-include("collector/land.jl")
-include("collector/le.jl")
-include("collector/leaf.jl")
-include("collector/pft.jl")
-include("collector/sif.jl")
-include("collector/soil.jl")
-
-
-show(io::IO, col::GriddedCollection) = (
-    # display the label
-    print(io, "\n");
-    printstyled(io, "    LABEL           ", color=:light_magenta);
-    print(io, " ⇨ \""* col.LABEL* "\"\n");
-
-    # display the supported combos
-    printstyled(io, "    SUPPORTED_COMBOS", color=:light_magenta);
-    print(io," ⇨ [\n");
-    for i in eachindex(col.SUPPORTED_COMBOS)
-        if i < length(col.SUPPORTED_COMBOS)
-            print(io, "                        \"" * col.SUPPORTED_COMBOS[i] * "\",\n");
-        else
-            print(io, "                        \"" * col.SUPPORTED_COMBOS[i] * "\"\n");
-        end;
-    end;
-    print(io, "                       ]\n");
-
-    # display the default combo
-    printstyled(io, "    DEFAULT_COMBO   ", color=:light_magenta);
-    print(io, " ⇨ \"" * col.DEFAULT_COMBO * "\"\n");
-
-    return nothing
-);
+export query_collection
 
 
 #######################################################################################################################################################################################################
 #
 # Changes to the function
 # General
-#     2024-Aug-06: redo doanload to local folder rather than Julia artifact folder
+#     2024-Oct-25: add function to update the database
 #
 #######################################################################################################################################################################################################
 """
 
-    query_collection(ds::GriddedCollection)
-    query_collection(ds::GriddedCollection, version::String)
-    query_collection(artname::String)
+    update_database!()
 
-This method queries the local data path from collection for the default data, given
-- `ds` [`GriddedCollection`](@ref) type collection
-- `version` Queried dataset version (must be in `ds.SUPPORTED_COMBOS`)
-- `artname` Artifact name
-
----
-# Examples
-```julia
-dat_file = query_collection(canopy_height_collection());
-dat_file = query_collection(canopy_height_collection(), "20X_1Y_V1");
-```
+Update the database of GriddingMachine.jl
 
 """
-function query_collection end
+function update_database!()
+    download_yaml_file = retry(delays = fill(1.0, 3)) do
+        Downloads.download(YAML_URL, YAML_FILE);
+    end;
+    download_yaml_file();
 
-query_collection(ds::GriddedCollection) = query_collection(ds, ds.DEFAULT_COMBO);
+    return nothing
+end;
 
-query_collection(ds::GriddedCollection, version::String) = (
-    # make sure requested version is in the
-    @assert version in ds.SUPPORTED_COMBOS "$(version)";
 
-    # determine file name from label and supported version
-    arttag = "$(ds.LABEL)_$(version)";
+function download_artifact! end;
 
-    return query_collection(arttag)
-);
-
-query_collection(arttag::String) = (
-    @assert arttag in META_TAGS "$(arttag) not found in Artifacts.toml";
-
-    # determine if the file exists already
-    meta = META_INFO[arttag];
-    hashtag = meta["git-tree-sha1"];
-    art_nc = "$(GM_DIR)/published/$(hashtag)/$(arttag).nc";
-
-    # if file already exist return the file location
-    if isfile(art_nc)
-        return art_nc
+download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055) = (
+    # warning if the artifact is not in current database
+    if !(arttag in YAML_TAGS)
+        printstyled("Warning: Artifact $arttag is not in current database, possible reasons are:\n", color = :yellow);
+        printstyled("    1. The Artifact.yaml file is not up-to-date, please run `Collector.update_database!()`!\n", color = :yellow);
+        printstyled("    2. The artifact is not available on the server, please check the website for the available artifacts!\n", color = :yellow);
     end;
 
-    # otherwise, download the artifact
-    @info "Artifact $(arttag) not found, downloading...";
-    for entry in meta["download"]
-        url = entry["url"];
-        tarball_hash = entry["sha256"];
-        try
-            download_verify_unpack(url, tarball_hash, "$(GM_DIR)/published/$(hashtag)"; ignore_existence = true, quiet_download = true);
-            return art_nc
-        catch e
-            @warn "Failed to download artifact" arttag url;
-        end;
+    # get the SHA and folder of the artifact
+    sha = YAML_DATABASE[arttag]["SHA"];
+    art_folder = joinpath(GRIDDINGMACHINE_HOME, "public", sha);
+    art_file = joinpath(art_folder, "$arttag.nc");
+    gmt_file = joinpath(art_folder, "GRIDDINGMACHINE");
+
+    # if the artifact already exists, return the netCDF location
+    if arttag in YAML_TAGS && isdir(art_folder) && isfile(art_file) && isfile(gmt_file)
+        @info "Artifact $arttag already exists locally, returning the netCDF file location";
+        return art_file
     end;
 
-    # if nothing returned above, return error
-    return error("Failed to download artifact: $arttag")
+    # make a request to the server to ask for the url of the artifact
+    web_url = "$(server):$(port)/artifact.json?artifact=$(arttag)";
+    web_response = HTTP.get(web_url; require_ssl_verification = false);
+    json_str = String(web_response.body);
+    json_dict = JSON.parse(json_str);
+
+    # if there is no url in the Dictionary, return error
+    if haskey(json_dict, "error")
+        return error("Artifact $arttag does not exist on the server, please check the website for the available artifacts!")
+    end;
+
+    # determine if the file exists already. If not, download the artifact
+    tarball_path = joinpath(GRIDDINGMACHINE_HOME, "tarballs", json_dict["folder"], "$arttag.tar.gz");
+    if !isfile(tarball_path)
+        @info "Downloading the tarball for artifact $arttag...";
+        cache_file = joinpath(GRIDDINGMACHINE_HOME, "cache", "$arttag.tar.gz");
+        Downloads.download(json_dict["url"], cache_file);
+        mv(cache_file, tarball_path);
+    end;
+
+    # unpack the tarball
+    @info "Unpacking the tarball for artifact $arttag..." art_file art_folder tarball_path gmt_file;
+    try
+        unpack(tarball_path, art_folder);
+    catch e
+        rm(art_folder; recursive=true, force=true);
+        return error("Failed to unpack the tarball for artifact $arttag")
+    end;
+
+    return art_file
 );
 
+query_collection = download_artifact!;
 
+
+#=
 #######################################################################################################################################################################################################
 #
 # Changes to the function
@@ -249,15 +190,10 @@ sync_collections!(gc::GriddedCollection) = (
 
 sync_collections!() = (
     # loop through all datasets
-    _functions = Function[biomass_collection, canopy_height_collection, clumping_index_collection, elevation_collection, gpp_collection, lai_collection, land_mask_collection,
-                          leaf_chlorophyll_collection, leaf_nitrogen_collection, leaf_phosphorus_collection, pft_collection, sif_collection, sil_collection, soil_color_collection,
-                          soil_hydraulics_collection, soil_texture_collection, sla_collection, surface_area_collection, tree_density_collection, vcmax_collection, wood_density_collection];
-    for _f in _functions
-        sync_collections!(_f());
-    end;
 
     return nothing
 );
+=#
 
 
 end # module
