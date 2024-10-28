@@ -17,6 +17,7 @@ export query_collection
 # Changes to the function
 # General
 #     2024-Oct-25: add function to update the database
+#     2024-Oct-25: make sure tarball folder exists before downloading
 #
 #######################################################################################################################################################################################################
 """
@@ -70,18 +71,20 @@ download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.ed
     end;
 
     # determine if the file exists already. If not, download the artifact
-    tarball_path = joinpath(GRIDDINGMACHINE_HOME, "tarballs", json_dict["folder"], "$arttag.tar.gz");
-    if !isfile(tarball_path)
+    tarball_folder = joinpath(GRIDDINGMACHINE_HOME, "tarballs", json_dict["folder"]);
+    mkpath(tarball_folder);
+    tarball_file = joinpath(tarball_folder, "$arttag.tar.gz");
+    if !isfile(tarball_file)
         @info "Downloading the tarball for artifact $arttag...";
         cache_file = joinpath(GRIDDINGMACHINE_HOME, "cache", "$arttag.tar.gz");
         Downloads.download(json_dict["url"], cache_file);
-        mv(cache_file, tarball_path);
+        mv(cache_file, tarball_file);
     end;
 
     # unpack the tarball
-    @info "Unpacking the tarball for artifact $arttag..." art_file art_folder tarball_path gmt_file;
+    @info "Unpacking the tarball for artifact $arttag..." art_file art_folder tarball_file gmt_file;
     try
-        unpack(tarball_path, art_folder);
+        unpack(tarball_file, art_folder);
     catch e
         rm(art_folder; recursive=true, force=true);
         return error("Failed to unpack the tarball for artifact $arttag")
