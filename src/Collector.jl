@@ -6,7 +6,7 @@ using JSON
 
 using Pkg.PlatformEngines: unpack
 
-using ..GriddingMachine: artifact_downloaded, artifact_exists, artifact_file, artifact_folder, cache_folder, public_folder, tarball_folder, update_database!
+using ..GriddingMachine: artifact_downloaded, artifact_exists, artifact_file, artifact_folder, artifact_tags, cache_folder, public_folder, tarball_file, tarball_folder, update_database!
 
 
 #######################################################################################################################################################################################################
@@ -80,8 +80,6 @@ function download_artifact!(arttag::String; server::String = "http://tropo.gps.c
     return art_file
 end;
 
-query_collection = download_artifact!;
-
 
 #######################################################################################################################################################################################################
 #
@@ -93,7 +91,7 @@ query_collection = download_artifact!;
 #######################################################################################################################################################################################################
 """
 
-    clean_collections!(selection::String="old")
+    clean_database!(selection::String="old")
 
 This method cleans up all selected artifacts of GriddingMachine.jl (through identify the `GRIDDINGMACHINE` file in the artifacts), given
 - `selection`
@@ -105,29 +103,34 @@ This method cleans up all selected artifacts of GriddingMachine.jl (through iden
 ---
 # Examples
 ```julia
-clean_collections!();
-clean_collections!("old");
-clean_collections!("all");
-clean_collections!(["PFT_2X_1Y_V1"]);
+clean_database!();
+clean_database!("old");
+clean_database!("all");
+clean_database!(["PFT_2X_1Y_V1"]);
 ```
 
 """
-function clean_collections! end
+function clean_database! end
 
-clean_collections!(selection::String = "old") = (
+clean_database!(selection::String = "old") = (
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
     public_dirs = readdir(public_folder());
+    tarball_dirs = readdir(tarball_folder());
 
     # if remove all artifacts
     if selection == "all"
-        for arthash in public_dirs
-            rm(joinpath(public_folder(), arthash); recursive=true, force=true);
+        for fn in public_dirs
+            rm(joinpath(public_folder(), fn); recursive=true, force=true);
+        end;
+        for fn in tarball_dirs
+            rm(joinpath(tarball_folder(), fn); recursive=true, force=true);
         end;
 
         return nothing
     end;
 
     # otherwise, remove the old artifacts (update database first)
+    # TODO: loop through the folder and remove the old artifacts
     update_database!();
     for arthash in public_dirs
         if !artifact_exists(arthash)
@@ -138,48 +141,36 @@ clean_collections!(selection::String = "old") = (
     return nothing
 );
 
-clean_collections!(arttags::Vector{String}) = (
+clean_database!(arttags::Vector{String}) = (
     # iterate the artifact hashs to remove corresponding folder
     for arttag in arttags
-        rm(artifact_folder(arttag); recursive=true, force=true);
+        rm(artifact_folder(arttag); recursive = true, force = true);
+        rm(tarball_file(arttag); recursive = true, force = true);
     end;
 
     return nothing
 );
 
 
-#=
 #######################################################################################################################################################################################################
 #
 # Changes to the function
 # General
+#     2024-Oct-28: redesign the function to sync the database
 #
 #######################################################################################################################################################################################################
-"""
+function sync_database!()
+    # update the database
+    update_database!();
 
-    sync_collections!()
-    sync_collections!(gcs::GriddedCollection)
-
-Sync collection datasets to local drive, given
-- `gc` [`GriddedCollection`](@ref) type collection
-
-"""
-function sync_collections! end
-
-sync_collections!(gc::GriddedCollection) = (
-    for tagver in gc.SUPPORTED_COMBOS
-        query_collection(gc, tagver);
+    # loop through the database and download the artifacts (sleep 1 second between each download)
+    for arttag in artifact_tags()
+        download_artifact!(arttag);
+        sleep(1);
     end;
 
     return nothing
-);
-
-sync_collections!() = (
-    # loop through all datasets
-
-    return nothing
-);
-=#
+end;
 
 
 end # module

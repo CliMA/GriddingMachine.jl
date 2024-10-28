@@ -3,6 +3,8 @@
 # Changes to the functions
 # General
 #     2024-Oct-28: add functions to get the path or folder of the artifact
+#     2024-Oct-28: add function to return all the tags in the database
+#     2024-Oct-28: add function to return the tarball file path
 #
 #######################################################################################################################################################################################################
 """
@@ -46,6 +48,18 @@ end;
 
 """
 
+    artifact_tags()
+
+Returns the tags of the artifacts
+
+"""
+function artifact_tags()
+    return YAML_TAGS
+end;
+
+
+"""
+
     cache_folder()
 
 Returns the path of the cache folder
@@ -70,12 +84,31 @@ end;
 
 """
 
+    tarball_folder()
     tarball_folder(dict::Dict)
 
 Returns the path of the tarball folder, given
-- `dict` A dictionary of the artifact
+- `dict` A dictionary of the artifact (if not given, return the tarball folder)
 
 """
-function tarball_folder(dict::Dict)
-    return joinpath(GRIDDINGMACHINE_HOME, "tarballs", dict["folder"])
+function tarball_folder end;
+
+tarball_folder() = joinpath(GRIDDINGMACHINE_HOME, "tarballs");
+
+tarball_folder(arttag::String) =
+    artifact_exists(arttag) ? tarball_folder(YAML_DATABASE[arttag]) : error("Artifact $arttag does not exist in the database, please check the website for the available artifacts!");
+
+tarball_folder(dict::Dict) = joinpath(tarball_folder(), dict["folder"]);
+
+
+"""
+
+    tarball_file(arttag::String)
+
+Returns the path of the tarball file, given
+- `arttag` GriddingMachine artifact tag
+
+"""
+function tarball_file(arttag::String)
+    return joinpath(tarball_folder(arttag), "$arttag.tar.gz")
 end;
