@@ -3,15 +3,10 @@ module Collector
 using Downloads
 using HTTP
 using JSON
-using YAML
 
-using DocStringExtensions: TYPEDEF, TYPEDFIELDS
 using Pkg.PlatformEngines: unpack
 
-using ..GriddingMachine: GRIDDINGMACHINE_HOME, YAML_FILE, YAML_URL
-import ..GriddingMachine: YAML_DATABASE, YAML_SHAS, YAML_TAGS
-
-export query_collection
+using ..GriddingMachine: artifact_downloaded, artifact_exists, artifact_file, artifact_folder, cache_folder, public_folder, tarball_folder, update_database!
 
 
 #######################################################################################################################################################################################################
@@ -20,53 +15,39 @@ export query_collection
 # General
 #     2024-Oct-25: add function to update the database
 #     2024-Oct-28: make sure tarball folder exists before downloading
+#     2024-Oct-28: use GriddingMachine database functions to determine if the artifact exists
 #
 #######################################################################################################################################################################################################
 """
 
-    update_database!()
+    download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055)
 
-Update the database of GriddingMachine.jl
+Download and unpack the artifact from the server (if file does not exist) and return the file path, given
+- `arttag` GriddingMachine artifact tag
+- `server` Server address (default: "http://tropo.gps.caltech.edu")
+- `port` Server port (default: 5055)
 
 """
-function update_database!()
-    download_yaml_file = retry(delays = fill(1.0, 3)) do
-        Downloads.download(YAML_URL, YAML_FILE);
-    end;
-    download_yaml_file();
-
-    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
-    YAML_DATABASE = YAML.load_file(YAML_FILE);
-    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
-    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
-
-    return nothing
-end;
-
-
-function download_artifact! end;
-
-download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055) = (
-    # warning if the artifact is not in current database
-    if !(arttag in YAML_TAGS)
-        printstyled("Warning: Artifact $arttag is not in current database, possible reasons are:\n", color = :yellow);
-        printstyled("    1. The Artifact.yaml file is not up-to-date, please run `Collector.update_database!()`!\n", color = :yellow);
-        printstyled("    2. The artifact is not available on the server, please check the website for the available artifacts!\n", color = :yellow);
+function download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055)
+    # determine if the artifact already exists in the database. If not, update the database
+    # if the artifact still does not exist, return error
+    if !artifact_exists(arttag)
+        update_database!();
+        if !artifact_exists(arttag)
+            return error("Artifact $arttag does not exist in the database, please check the website for the available artifacts!")
+        end;
     end;
 
     # get the SHA and folder of the artifact
-    sha = YAML_DATABASE[arttag]["SHA"];
-    art_folder = joinpath(GRIDDINGMACHINE_HOME, "public", sha);
-    art_file = joinpath(art_folder, "$arttag.nc");
+    # if the artifact already downloaded, return the netCDF location
+    art_folder = artifact_folder(arttag);
+    art_file = artifact_file(arttag);
     gmt_file = joinpath(art_folder, "GRIDDINGMACHINE");
-
-    # if the artifact already exists, return the netCDF location
-    if arttag in YAML_TAGS && isdir(art_folder) && isfile(art_file) && isfile(gmt_file)
-        @info "Artifact $arttag already exists locally, returning the netCDF file location";
+    if artifact_downloaded(arttag) && isdir(art_folder) && isfile(art_file) && isfile(gmt_file)
         return art_file
     end;
 
-    # make a request to the server to ask for the url of the artifact
+    # if the artifact is not yet downloaded, make a request to the server to ask for the url of the artifact
     web_url = "$(server):$(port)/artifact.json?artifact=$(arttag)";
     web_response = HTTP.get(web_url; require_ssl_verification = false);
     json_str = String(web_response.body);
@@ -78,12 +59,12 @@ download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.ed
     end;
 
     # determine if the file exists already. If not, download the artifact
-    tarball_folder = joinpath(GRIDDINGMACHINE_HOME, "tarballs", json_dict["folder"]);
+    tarball_folder = tarball_folder(json_dict);
     mkpath(tarball_folder);
     tarball_file = joinpath(tarball_folder, "$arttag.tar.gz");
     if !isfile(tarball_file)
         @info "Downloading the tarball for artifact $arttag...";
-        cache_file = joinpath(GRIDDINGMACHINE_HOME, "cache", "$arttag.tar.gz");
+        cache_file = joinpath(cache_folder(), "$arttag.tar.gz");
         Downloads.download(json_dict["url"], cache_file);
         mv(cache_file, tarball_file);
     end;
@@ -98,7 +79,7 @@ download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.ed
     end;
 
     return art_file
-);
+end;
 
 query_collection = download_artifact!;
 
@@ -136,12 +117,12 @@ function clean_collections! end
 
 clean_collections!(selection::String = "old") = (
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
-    artifact_dirs = readdir("$(GRIDDINGMACHINE_HOME)/public");
+    public_dirs = readdir(public_folder());
 
     # if remove all artifacts
     if selection == "all"
-        for arthash in artifact_dirs
-            rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
+        for arthash in public_dirs
+            rm(joinpath(public_folder(), arthash); recursive=true, force=true);
         end;
 
         return nothing
@@ -149,9 +130,9 @@ clean_collections!(selection::String = "old") = (
 
     # otherwise, remove the old artifacts (update database first)
     update_database!();
-    for arthash in artifact_dirs
-        if !(arthash in YAML_SHAS)
-            rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
+    for arthash in public_dirs
+        if !artifact_exists(arthash)
+            rm(joinpath(public_folder(), arthash); recursive=true, force=true);
         end;
     end;
 
@@ -161,8 +142,7 @@ clean_collections!(selection::String = "old") = (
 clean_collections!(arttags::Vector{String}) = (
     # iterate the artifact hashs to remove corresponding folder
     for arttag in arttags
-        arthash = YAML_DATABASE[arttag]["SHA"];
-        rm("$(GRIDDINGMACHINE_HOME)/public/$(arthash)"; recursive=true, force=true);
+        rm(artifact_folder(arttag); recursive=true, force=true);
     end;
 
     return nothing
