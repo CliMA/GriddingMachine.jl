@@ -32,15 +32,16 @@ mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
 # download the Artifacts.yaml file (if not exists)
 YAML_URL = "https://raw.githubusercontent.com/silicormosia/GriddingMachineDatasets/refs/heads/wyujie/Artifacts.yaml";
 YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
-if !isfile(YAML_FILE)
-    download_yaml_file = retry(delays = fill(1.0, 3)) do
-        Downloads.download(YAML_URL, YAML_FILE);
-    end;
-    download_yaml_file();
-end;
-YAML_DATABASE = YAML.load_file(YAML_FILE);
-YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
-YAML_TAGS = [k for k in keys(YAML_DATABASE)];
+YAML_DATABASE = nothing;
+YAML_SHAS = nothing;
+YAML_TAGS = nothing;
+
+
+# database related functions
+include("database/index.jl");
+include("database/judge.jl");
+include("database/update.jl");
+update_database!();
 
 
 # include submodules
