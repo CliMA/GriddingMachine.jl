@@ -98,7 +98,7 @@ tarball_folder() = joinpath(GRIDDINGMACHINE_HOME, "tarballs");
 tarball_folder(arttag::String) =
     artifact_exists(arttag) ? tarball_folder(YAML_DATABASE[arttag]) : error("Artifact $arttag does not exist in the database, please check the website for the available artifacts!");
 
-tarball_folder(dict::Dict) = joinpath(tarball_folder(), dict["folder"]);
+tarball_folder(dict::Dict) = haskey(dict, "FOLDER") ? joinpath(tarball_folder(), dict["FOLDER"]) : joinpath(tarball_folder(), dict["folder"]);
 
 
 """

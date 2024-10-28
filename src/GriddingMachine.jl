@@ -41,7 +41,15 @@ YAML_TAGS = nothing;
 include("database/index.jl");
 include("database/judge.jl");
 include("database/update.jl");
-update_database!();
+
+if isfile(YAML_FILE)
+    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
+    YAML_DATABASE = YAML.load_file(YAML_FILE);
+    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
+    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
+else
+    update_database!();
+end;
 
 
 # include submodules

@@ -159,6 +159,13 @@ clean_database!(arttags::Vector{String}) = (
 #     2024-Oct-28: redesign the function to sync the database
 #
 #######################################################################################################################################################################################################
+"""
+
+    sync_database!()
+
+Synchronizes the local database with the GriddingMachine database.
+
+"""
 function sync_database!()
     # update the database
     update_database!();

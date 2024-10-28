@@ -1,3 +1,4 @@
+using GriddingMachine
 using GriddingMachine.Blender
 using GriddingMachine.Collector
 using GriddingMachine.Fetcher
@@ -7,12 +8,44 @@ using Test
 
 
 @testset verbose = true "GriddingMachine" begin
+    @testset "Database" begin
+        # the update functions
+        GriddingMachine.update_database!(); @test true;
+
+        # the judge functions
+        GriddingMachine.artifact_exists("CH_2X_1Y_V2"); @test true;
+        GriddingMachine.artifact_exists("031f34db3ce1921a723d8e4151ee6c6fe5566714"); @test true;
+        GriddingMachine.artifact_downloaded("CH_2X_1Y_V2"); @test true;
+
+        # the index functions
+        GriddingMachine.artifact_file("CH_2X_1Y_V2"); @test true;
+        GriddingMachine.artifact_folder("CH_2X_1Y_V2"); @test true;
+        GriddingMachine.artifact_sha("CH_2X_1Y_V2"); @test true;
+        GriddingMachine.artifact_tags(); @test true;
+        GriddingMachine.cache_folder(); @test true;
+        GriddingMachine.public_folder(); @test true;
+        GriddingMachine.tarball_folder(); @test true;
+        GriddingMachine.tarball_folder("CH_2X_1Y_V2"); @test true;
+        GriddingMachine.tarball_file("CH_2X_1Y_V2"); @test true;
+    end;
+
     @testset "Collector" begin
-        # test query_collection function
-        Collector.query_collection("PFT_2X_1Y_V1"); @test true;
+        # test download_artifact! function
+        Collector.download_artifact!("CH_2X_1Y_V2"); @test true;
+        Collector.download_artifact!("PFT_2X_1Y_V1"); @test true;
 
         # clean up artifacts
-        Collector.clean_collections!("old"); @test true;
+        Collector.clean_database!("old"); @test true;
+    end;
+
+    @testset "Indexer" begin
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1Y_V1"));  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"));  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 8);  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116);  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116; interpolation = true);  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116, 8);  @test true;
+        Indexer.read_LUT(Collector.download_artifact!("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1"), 30, 116, 8);  @test true;
     end;
 
     @testset "Blender" begin
@@ -24,26 +57,6 @@ using Test
         Blender.regrid(rand(360,180,2), (144,96)); @test true;
     end;
 
-    @testset "Indexer" begin
-        # read the full dataset
-        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection())); @test true;
-
-        # read the global map at a given cycle index
-        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 8); @test true;
-
-        # read the data at given lat and lon
-        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116, 0.5); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116; interpolation=true); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.vcmax_collection()), 30, 116, 0.5; interpolation=true); @test true;
-
-        # read the data at given lat, lon, and cycle index
-        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8, 0.5); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8; interpolation=true); @test true;
-        Indexer.read_LUT(Collector.query_collection(Collector.gpp_collection()), 30, 116, 8, 0.5; interpolation=true); @test true;
-    end;
-
     @testset "Requestor" begin
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
         Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
@@ -52,18 +65,6 @@ using Test
     end;
 
     #=
-    @testset "Processer" begin
-        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
-            folder = "/net/fluo/data2/pool/database/GriddingMachine/test/processer_tests/"
-            @test isequal(Processer.reprocess_from_json(folder * "testdata_correct.json")[1], Processer.reprocess_from_json(folder * "testdata_reorder.json")[1]);
-            rm(folder * "TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
-            rm(folder * "TESTDATA_REORDER_1X_1M_V1.nc"); @test true;
-            @test isequal(Processer.reprocess_from_json(folder * "testdata_correct.json")[1], Processer.reprocess_from_json(folder * "testdata_rescale.json")[1]);
-            rm(folder * "TESTDATA_CORRECT_1X_1M_V1.nc"); @test true;
-            rm(folder * "TESTDATA_RESCALE_1X_1M_V1.nc"); @test true;
-        end;
-    end;
-
     @testset "Partitioner" begin
         if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
             folder = "/net/fluo/data2/pool/database/GriddingMachine/test/partitioner_tests/"
@@ -73,25 +74,6 @@ using Test
             Partitioner.get_data_from_json(folder * "partition_test_oco2.json", [-50.1 -19.8; 70.2 -18.2; 60.3 12.2; -40.7 11.4], 2022); @test true;
             Partitioner.clean_files(folder * "partition_test_oco2.json", 2022; months = [1]); @test true;
             rm(folder * "partitioned_files"; recursive = true); @test true;
-        end;
-    end;
-
-    @testset "Verification" begin
-        # only for high memory and storage cases, e.g., server
-        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64 && homedir() == "/home/wyujie"
-            for collection in collections
-                for tag in collection.SUPPORTED_COMBOS
-                    fn = Collector.query_collection(collection, tag);
-                    vars = Indexer.varname_nc(fn);
-                    @test 4 <= length(vars) <= 5;
-                    if length(vars) == 4
-                        @test sort(vars) == ["data", "lat", "lon", "std"];
-                    end;
-                    if length(vars) == 5
-                        @test sort(vars) == ["data", "ind", "lat", "lon", "std"];
-                    end;
-                end;
-            end;
         end;
     end;
     =#

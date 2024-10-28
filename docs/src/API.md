@@ -5,25 +5,10 @@ CurrentModule = GriddingMachine
 
 
 ## Collector
-
-### Gridded datasets
 ```@docs
-Collector.GriddedCollection
-```
-
-### Query gridded datasets
-```@docs
-Collector.query_collection
-```
-
-### Clean up collections
-```@docs
-Collector.clean_collections!
-```
-
-### Sync collections
-```@docs
-Collector.sync_collections!
+Collector.download_artifact!
+Collector.clean_database!
+Collector.sync_database!
 ```
 
 
