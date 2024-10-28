@@ -39,13 +39,13 @@ using Test
     end;
 
     @testset "Indexer" begin
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1Y_V1"));  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"));  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 8);  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116);  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116; interpolation = true);  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116, 8);  @test true;
-        Indexer.read_LUT(Collector.download_artifact!("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1"), 30, 116, 8);  @test true;
+        Indexer.read_LUT("CI_2X_1Y_V1"); @test true;
+        Indexer.read_LUT("CI_2X_1M_V3"); @test true;
+        Indexer.read_LUT("CI_2X_1M_V3", 8); @test true;
+        Indexer.read_LUT("CI_2X_1M_V3", 30, 116); @test true;
+        Indexer.read_LUT("CI_2X_1M_V3", 30, 116; interpolation = true); @test true;
+        Indexer.read_LUT("CI_2X_1M_V3", 30, 116, 8); @test true;
+        Indexer.read_LUT("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1", 30, 116, 8); @test true;
     end;
 
     @testset "Blender" begin

@@ -2,6 +2,8 @@ module Indexer
 
 using NetcdfIO: read_nc, size_nc, varname_nc
 
+using ..Collector: download_artifact!
+
 
 #######################################################################################################################################################################################################
 #
@@ -76,6 +78,7 @@ end
 #     2024-Aug-06: Add include_std option
 #     2024-Oct-25: Make include_std option does not call variables within a if statement
 #     2024-Oct-28: Add an option to allow for the case of no "std" variable in the file (was forcing NaN before, which is not necessary)
+#     2024-Oct-28: Allow fn to be tag name or path to the file (was only allowing path to the file before)
 #
 #######################################################################################################################################################################################################
 """
@@ -86,7 +89,7 @@ end
     read_LUT(fn::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true, interpolation::Bool = false)
 
 Read the entire look-up-table from collection, given
-- `fn` Path to the target file
+- `fn` Tag name or Path to the target file
 - `lat` Latitude in `°`
 - `lon` Longitude in `°`
 - `cyc` Cycle number, such as 8 for data in Augest in 1 `1M` resolution dataset
@@ -96,71 +99,71 @@ Read the entire look-up-table from collection, given
 ---
 # Examples
 ```julia
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1Y_V1"));
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"));
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 8);
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116);
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116; interpolation = true);
-Indexer.read_LUT(Collector.download_artifact!("CI_2X_1M_V3"), 30, 116, 8);
-Indexer.read_LUT(Collector.download_artifact!("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1"), 30, 116, 8);
+Indexer.read_LUT("CI_2X_1Y_V1");
+Indexer.read_LUT("CI_2X_1M_V3");
+Indexer.read_LUT("CI_2X_1M_V3", 8);
+Indexer.read_LUT("CI_2X_1M_V3", 30, 116);
+Indexer.read_LUT("CI_2X_1M_V3", 30, 116; interpolation = true);
+Indexer.read_LUT("CI_2X_1M_V3", 30, 116, 8);
+Indexer.read_LUT("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1", 30, 116, 8);
 ```
 
 """
 function read_LUT end;
 
 read_LUT(fn::String; include_std::Bool = true) = (
-    @assert isfile(fn);
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
 
     # if include_std is false
     if !include_std
-        return read_nc(fn, "data")
+        return read_nc(fpath, "data")
     end;
 
     # if include_std is true, but the file does not have std variable
-    if !("std" in varname_nc(fn))
-        return read_nc(fn, "data"), nothing
+    if !("std" in varname_nc(fpath))
+        return read_nc(fpath, "data"), nothing
     end;
 
     # if include_std is true, and the file has std variable
-    return read_nc(fn, "data"), read_nc(fn, "std")
+    return read_nc(fpath, "data"), read_nc(fpath, "std")
 );
 
 
 read_LUT(fn::String, cyc::Int; include_std::Bool = true) = (
-    @assert isfile(fn);
-    @assert size_nc(fn, "data")[1] == 3;
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
+    @assert size_nc(fpath, "data")[1] == 3;
 
     # if include_std is false
     if !include_std
-        return read_nc(fn, "data", cyc)
+        return read_nc(fpath, "data", cyc)
     end;
 
     # if include_std is true, but the file does not have std variable
-    if !("std" in varname_nc(fn))
-        return read_nc(fn, "data", cyc), nothing
+    if !("std" in varname_nc(fpath))
+        return read_nc(fpath, "data", cyc), nothing
     end;
 
     # if include_std is true, and the file has std variable
-    return read_nc(fn, "data", cyc), read_nc(fn, "std", cyc)
+    return read_nc(fpath, "data", cyc), read_nc(fpath, "std", cyc)
 );
 
 read_LUT(fn::String, lat::Number, lon::Number; include_std::Bool = true, interpolation::Bool = false) = (
-    @assert isfile(fn);
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
 
-    (_,sizes) = size_nc(fn, "lat");
+    (_,sizes) = size_nc(fpath, "lat");
     res = 180 / sizes[1];
 
-    return read_LUT(fn, lat, lon, res; include_std = include_std, interpolation = interpolation)
+    return read_LUT(fpath, lat, lon, res; include_std = include_std, interpolation = interpolation)
 );
 
 read_LUT(fn::String, lat::Number, lon::Number, res::Number; include_std::Bool = true, interpolation::Bool = false) = (
-    @assert isfile(fn);
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
 
     # if not at interpolation mode
     ilat = lat_ind(lat; res = res);
     ilon = lon_ind(lon; res = res);
-    raw_dat = read_nc(fn, "data", ilon, ilat);
-    raw_std = include_std ? ("std" in varname_nc(fn) ? read_nc(fn, "std" , ilon, ilat) : nothing) : nothing;
+    raw_dat = read_nc(fpath, "data", ilon, ilat);
+    raw_std = include_std ? ("std" in varname_nc(fpath) ? read_nc(fpath, "std" , ilon, ilat) : nothing) : nothing;
 
     # if not at interpolation mode
     if !interpolation
@@ -190,8 +193,8 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number; include_std::Bool = 
     if ilon_e > nlon ilon_e = 1 end;
 
     # interpolate the value
-    val_s = dlon_w ./ res .* read_nc(fn, "data", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(fn, "data", ilon_w, ilat_s);
-    val_n = dlon_w ./ res .* read_nc(fn, "data", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(fn, "data", ilon_w, ilat_n);
+    val_s = dlon_w ./ res .* read_nc(fpath, "data", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(fpath, "data", ilon_w, ilat_s);
+    val_n = dlon_w ./ res .* read_nc(fpath, "data", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(fpath, "data", ilon_w, ilat_n);
     val_i = dlat_s ./ res .* val_n .+ dlat_n ./ res .* val_s;
 
     # use non-interpolated value if the interpolated one is NaN
@@ -209,9 +212,9 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number; include_std::Bool = 
 
     # interpolate the standard deviation
     std_i = nothing;
-    if include_std && ("std" in varname_nc(fn))
-        std_s = dlon_w ./ res .* read_nc(fn, "std", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(fn, "std", ilon_w, ilat_s);
-        std_n = dlon_w ./ res .* read_nc(fn, "std", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(fn, "std", ilon_w, ilat_n);
+    if include_std && ("std" in varname_nc(fpath))
+        std_s = dlon_w ./ res .* read_nc(fpath, "std", ilon_e, ilat_s) .+ dlon_e ./ res .* read_nc(fpath, "std", ilon_w, ilat_s);
+        std_n = dlon_w ./ res .* read_nc(fpath, "std", ilon_e, ilat_n) .+ dlon_e ./ res .* read_nc(fpath, "std", ilon_w, ilat_n);
         std_i = dlat_s ./ res .* std_n .+ dlat_n ./ res .* std_s;
 
         # use non-interpolated value if the interpolated one is NaN
@@ -232,22 +235,22 @@ read_LUT(fn::String, lat::Number, lon::Number, res::Number; include_std::Bool = 
 );
 
 read_LUT(fn::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true, interpolation::Bool = false) = (
-    @assert isfile(fn);
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
 
-    (_,sizes) = size_nc(fn, "lat");
+    (_,sizes) = size_nc(fpath, "lat");
     res = 180 / sizes[1];
 
-    return read_LUT(fn, lat, lon, cyc, res; include_std = include_std, interpolation = interpolation)
+    return read_LUT(fpath, lat, lon, cyc, res; include_std = include_std, interpolation = interpolation)
 );
 
 read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number; include_std::Bool = true, interpolation::Bool = false) = (
-    @assert isfile(fn);
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
 
     # if not at interpolation mode
     ilat = lat_ind(lat; res=res);
     ilon = lon_ind(lon; res=res);
-    raw_dat = read_nc(fn, "data", ilon, ilat, cyc);
-    raw_std = include_std ? ("std" in varname_nc(fn) ? read_nc(fn, "std" , ilon, ilat, cyc) : nothing) : nothing;
+    raw_dat = read_nc(fpath, "data", ilon, ilat, cyc);
+    raw_std = include_std ? ("std" in varname_nc(fpath) ? read_nc(fpath, "std" , ilon, ilat, cyc) : nothing) : nothing;
 
     if !interpolation
         return include_std ? (raw_dat, raw_std) : raw_dat
@@ -276,8 +279,8 @@ read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number; include_st
     if ilon_e > nlon ilon_e = 1 end;
 
     # interpolate the value
-    val_s = dlon_w / res * read_nc(fn, "data", ilon_e, ilat_s, cyc) + dlon_e / res * read_nc(fn, "data", ilon_w, ilat_s, cyc);
-    val_n = dlon_w / res * read_nc(fn, "data", ilon_e, ilat_n, cyc) + dlon_e / res * read_nc(fn, "data", ilon_w, ilat_n, cyc);
+    val_s = dlon_w / res * read_nc(fpath, "data", ilon_e, ilat_s, cyc) + dlon_e / res * read_nc(fpath, "data", ilon_w, ilat_s, cyc);
+    val_n = dlon_w / res * read_nc(fpath, "data", ilon_e, ilat_n, cyc) + dlon_e / res * read_nc(fpath, "data", ilon_w, ilat_n, cyc);
     val_i = dlat_s / res * val_n + dlat_n / res * val_s;
 
     # use non-interpolated value if the interpolated one is NaN
@@ -287,9 +290,9 @@ read_LUT(fn::String, lat::Number, lon::Number, cyc::Int, res::Number; include_st
 
     # interpolate the standard deviation
     std_i = nothing;
-    if include_std && ("std" in varname_nc(fn))
-        std_s = dlon_w / res * read_nc(fn, "std", ilon_e, ilat_s, cyc) + dlon_e / res * read_nc(fn, "std", ilon_w, ilat_s, cyc);
-        std_n = dlon_w / res * read_nc(fn, "std", ilon_e, ilat_n, cyc) + dlon_e / res * read_nc(fn, "std", ilon_w, ilat_n, cyc);
+    if include_std && ("std" in varname_nc(fpath))
+        std_s = dlon_w / res * read_nc(fpath, "std", ilon_e, ilat_s, cyc) + dlon_e / res * read_nc(fpath, "std", ilon_w, ilat_s, cyc);
+        std_n = dlon_w / res * read_nc(fpath, "std", ilon_e, ilat_n, cyc) + dlon_e / res * read_nc(fpath, "std", ilon_w, ilat_n, cyc);
         std_i = dlat_s / res * std_n + dlat_n / res * std_s;
 
         # use non-interpolated value if the interpolated one is NaN
