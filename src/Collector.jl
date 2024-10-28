@@ -59,9 +59,8 @@ function download_artifact!(arttag::String; server::String = "http://tropo.gps.c
     end;
 
     # determine if the file exists already. If not, download the artifact
-    tarball_folder = tarball_folder(json_dict);
-    mkpath(tarball_folder);
-    tarball_file = joinpath(tarball_folder, "$arttag.tar.gz");
+    mkpath(tarball_folder(json_dict));
+    tarball_file = joinpath(tarball_folder(json_dict), "$arttag.tar.gz");
     if !isfile(tarball_file)
         @info "Downloading the tarball for artifact $arttag...";
         cache_file = joinpath(cache_folder(), "$arttag.tar.gz");
