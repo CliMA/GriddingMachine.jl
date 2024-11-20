@@ -69,7 +69,7 @@ function download_artifact!(arttag::String; server::String = "http://tropo.gps.c
     end;
 
     # unpack the tarball
-    @info "Unpacking the tarball for artifact $arttag..." art_file art_folder tarball_file gmt_file;
+    @info "Unpacking the tarball for artifact $arttag..." tarball_file art_folder gmt_file art_file;
     try
         unpack(tarball_file, art_folder);
     catch e
@@ -170,10 +170,13 @@ function sync_database!()
     # update the database
     update_database!();
 
-    # loop through the database and download the artifacts (sleep 1 second between each download)
+    # loop through the database and download the artifacts (sleep 1 second between each new download)
     for arttag in artifact_tags()
-        download_artifact!(arttag);
-        sleep(1);
+        if !artifact_downloaded(arttag)
+            @info "Downloading artifact $arttag...";
+            download_artifact!(arttag);
+            sleep(1);
+        end;
     end;
 
     return nothing

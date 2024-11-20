@@ -106,6 +106,8 @@ Indexer.read_LUT("CI_2X_1M_V3", 30, 116);
 Indexer.read_LUT("CI_2X_1M_V3", 30, 116; interpolation = true);
 Indexer.read_LUT("CI_2X_1M_V3", 30, 116, 8);
 Indexer.read_LUT("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1", 30, 116, 8);
+Indexer.read_LUT("CI_240X_1Y_V1", [-10,10], [-10,10]);
+Indexer.read_LUT("CI_2X_1M_V3", [-10,10], [-10,10]; include_std = false);
 ```
 
 """
@@ -145,6 +147,54 @@ read_LUT(fn::String, cyc::Int; include_std::Bool = true) = (
 
     # if include_std is true, and the file has std variable
     return read_nc(fpath, "data", cyc), read_nc(fpath, "std", cyc)
+);
+
+read_LUT(fn::String, lats::Vector, lons::Vector; include_std::Bool = true) = (
+    # make sure the lats and lons are within the range
+    @assert -90 <= lats[1] < lats[2] <= 90 "Latitude range is not valid";
+    @assert -180 <= lons[1] < lons[2] <= 180 "Longitude range is not valid";
+
+    # dertermine the resolution
+    fpath = isfile(fn) ? fn : download_artifact!(fn);
+    (_,sizes) = size_nc(fpath, "data");
+    res_lon = 360 / sizes[1];
+    res_lat = 180 / sizes[2];
+
+    # determine the indices
+    ilons = [lon_ind(lon; res = res_lon) for lon in lons];
+    ilats = [lat_ind(lat; res = res_lat) for lat in lats];
+    ind_lon = ilons[1]:ilons[2];
+    ind_lat = ilats[1]:ilats[2];
+
+    # read the actual lat/lon
+    @show ind_lat ind_lon ilats ilons;
+    vec_lat = read_nc(fpath, "lat", [ind_lat]);
+    vec_lon = read_nc(fpath, "lon", [ind_lon]);
+
+    # if include_std is false
+    if !include_std
+        return if length(sizes) < 3
+            vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat])
+        else
+            vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat,:])
+        end;
+    end;
+
+    # if include_std is true, but the file does not have std variable
+    if !("std" in varname_nc(fpath))
+        return if length(sizes) < 3
+            vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat]), nothing
+        else
+            vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat,:]), nothing
+        end;
+    end;
+
+    # if include_std is true, and the file has std variable
+    return if length(sizes) < 3
+        vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat]), read_nc(fpath, "std", [ind_lon,ind_lat])
+    else
+        vec_lon, vec_lat, read_nc(fpath, "data", [ind_lon,ind_lat,:]), read_nc(fpath, "std", [ind_lon,ind_lat,:])
+    end;
 );
 
 read_LUT(fn::String, lat::Number, lon::Number; include_std::Bool = true, interpolation::Bool = false) = (
