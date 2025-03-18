@@ -48,8 +48,6 @@ function request_LUT(
             port::Int = 5055,
             server::String = "http://tropo.gps.caltech.edu",
             user::String="Anonymous")
-    @assert artname in META_TAGS "$(artname) not found in Artifacts.toml";
-
     # send a request to our webserver at tropo.gps.caltech.edu:44301 and translate it back to Dictionary
     web_url = "$(server):$(port)/request.json?user=$(user)&artifact=$(artname)&lat=$(lat)&lon=$(lon)&cyc=$(cyc)&interpolate=$(interpolation)&include_std=$(include_std)";
     web_response = get(web_url; require_ssl_verification = false);

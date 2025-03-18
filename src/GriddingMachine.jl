@@ -14,19 +14,42 @@
 #######################################################################################################################################################################################################
 module GriddingMachine
 
-using Artifacts: load_artifacts_toml
+using Dates
+using Downloads
+using YAML
 
 export Blender, Collector, Fetcher, Indexer, Requestor
 
 
-# Global variables
-# make sure the directory exists
-GM_DIR = "$(homedir())/GriddingMachine/";
-mkpath("$(GM_DIR)/published");
+# make sure the GriddingMachine directory exists
+GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
+mkpath(GRIDDINGMACHINE_HOME);
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "tarballs"));
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
 
-META_INFO = load_artifacts_toml(joinpath(@__DIR__, "../Artifacts.toml"));
-META_TAGS = [keyname for (keyname,_) in META_INFO];
-META_HASH = [meta["git-tree-sha1"] for (_,meta) in META_INFO];
+
+# download the Artifacts.yaml file (if not exists)
+YAML_URL = "https://raw.githubusercontent.com/silicormosia/GriddingMachineDatasets/refs/heads/wyujie/Artifacts.yaml";
+YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
+YAML_DATABASE = nothing;
+YAML_SHAS = nothing;
+YAML_TAGS = nothing;
+
+
+# database related functions
+include("database/index.jl");
+include("database/judge.jl");
+include("database/update.jl");
+
+if isfile(YAML_FILE)
+    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
+    YAML_DATABASE = YAML.load_file(YAML_FILE);
+    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
+    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
+else
+    update_database!();
+end;
 
 
 # include submodules

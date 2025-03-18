@@ -2,7 +2,7 @@
 module Processer
 
 using ..Indexer: read_LUT
-using ..Collector: query_collection
+using ..Collector: download_artifact!
 using ..Blender: regrid
 
 using NetcdfIO: read_nc, save_nc!, append_nc!
