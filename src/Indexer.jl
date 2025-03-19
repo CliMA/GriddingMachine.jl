@@ -87,6 +87,7 @@ end
     read_LUT(fn::String, cyc::Int; include_std::Bool = true)
     read_LUT(fn::String, lat::Number, lon::Number; include_std::Bool = true, interpolation::Bool = false)
     read_LUT(fn::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true, interpolation::Bool = false)
+    read_LUT(fn::String, lats::Vector, lons::Vector; include_std::Bool = true)
 
 Read the entire look-up-table from collection, given
 - `fn` Tag name or Path to the target file
@@ -95,6 +96,8 @@ Read the entire look-up-table from collection, given
 - `cyc` Cycle number, such as 8 for data in Augest in 1 `1M` resolution dataset
 - `include_std` If true, read the standard deviation as well (default is true)
 - `interpolation` If true, interpolate the dataset
+- `lats` Latitude range (a vector of two elements)
+- `lons` Longitude range (a vector of two elements)
 
 ---
 # Examples
@@ -167,7 +170,6 @@ read_LUT(fn::String, lats::Vector, lons::Vector; include_std::Bool = true) = (
     ind_lat = ilats[1]:ilats[2];
 
     # read the actual lat/lon
-    @show ind_lat ind_lon ilats ilons;
     vec_lat = read_nc(fpath, "lat", [ind_lat]);
     vec_lon = read_nc(fpath, "lon", [ind_lon]);
 
