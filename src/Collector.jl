@@ -20,15 +20,15 @@ using ..GriddingMachine: artifact_downloaded, artifact_exists, artifact_file, ar
 #######################################################################################################################################################################################################
 """
 
-    download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055)
+    download_artifact!(arttag::String; server::String = "http://222.195.83.136", port::Int = 5055)
 
 Download and unpack the artifact from the server (if file does not exist) and return the file path, given
 - `arttag` GriddingMachine artifact tag
-- `server` Server address (default: "http://tropo.gps.caltech.edu")
+- `server` Server address (default: "http://222.195.83.136")
 - `port` Server port (default: 5055)
 
 """
-function download_artifact!(arttag::String; server::String = "http://tropo.gps.caltech.edu", port::Int = 5055)
+function download_artifact!(arttag::String; server::String = "http://222.195.83.136", port::Int = 5055)
     # determine if the artifact already exists in the database. If not, update the database
     # if the artifact still does not exist, return error
     if !artifact_exists(arttag)
