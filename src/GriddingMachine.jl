@@ -35,6 +35,8 @@ YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
 YAML_DATABASE = nothing;
 YAML_SHAS = nothing;
 YAML_TAGS = nothing;
+ZENODO_FILE = joinpath(homedir(), "GriddingMachine", "Zenodo");
+ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
 
 
 # database related functions
