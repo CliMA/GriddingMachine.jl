@@ -13,7 +13,7 @@
                 lat::Number,
                 lon::Number;
                 port::Int = 5055,
-                server::String = "http://tropo.gps.caltech.edu",
+                server::String = "http://222.195.83.136",
                 user::String="Anonymous")
 
 Request Emerald data from the server, given
@@ -22,7 +22,7 @@ Request Emerald data from the server, given
 - `lat` Latitude
 - `lon` Longitude
 - `port` Port number for the GriddingMachine server
-- `server` Server address such as `https://tropo.gps.caltech.edu`
+- `server` Server address such as `http://222.195.83.136`
 - `user` User name (non-registered users need to wait for 5 seconds before the server processes the request)
 
 ---
@@ -38,9 +38,9 @@ function request_GMDICT(
             lat::Number,
             lon::Number;
             port::Int = 5055,
-            server::String = "http://tropo.gps.caltech.edu",
+            server::String = "http://222.195.83.136",
             user::String="Anonymous")
-    # send a request to our webserver at tropo.gps.caltech.edu:44301 and translate it back to Dictionary
+    # send a request to our webserver at http://222.195.83.136:5055 and translate it back to Dictionary
     web_url = "$(server):$(port)/gmdict.json?user=$(user)&gmversion=$(gmversion)&year=$(year)&lat=$(lat)&lon=$(lon)";
     web_response = get(web_url; require_ssl_verification = false);
     json_str = String(web_response.body);

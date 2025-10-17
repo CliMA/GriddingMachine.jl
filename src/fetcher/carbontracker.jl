@@ -28,7 +28,7 @@ end
 CT2022MoleFfractions() = (
     return CarbonTracker1M(
                 "CT2022.molefrac_glb3x2",
-                "/home/wyujie/DATASERVER/model/CARBONTRACKER/CT2022/monthly/",
+                joinpath(homedir(), "DATASERVER/model/CARBONTRACKER/CT2022/monthly/"),
                 "https://gml.noaa.gov/aftp/products/carbontracker/co2/CT2022/molefractions/co2_total_monthly/",
                 collect(2000:2020)
     )
