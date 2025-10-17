@@ -29,7 +29,6 @@ function update_database!()
     latest_record_id = latest_record[is_start[end]+1:is_stop[1]-1];
 
     # if the id is the same as the last one, do nothing
-    @info "information" ZENODO_RECORD latest_record_id latest_record_id == ZENODO_RECORD;
     if latest_record_id == ZENODO_RECORD
         @info "The Artifacts.yaml file is already up to date (record $(latest_record_id))!";
 
