@@ -29,12 +29,14 @@ mkpath(joinpath(GRIDDINGMACHINE_HOME, "tarballs"));
 mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
 
 
-# download the Artifacts.yaml file (if not exists)
-YAML_URL = "https://raw.githubusercontent.com/silicormosia/GriddingMachineDatasets/refs/heads/wyujie/Artifacts.yaml";
+# download the Artifacts.yaml file from Zenodo and then decode it
+YAML_URL = "https://zenodo.org/records/15622411";
 YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
 YAML_DATABASE = nothing;
 YAML_SHAS = nothing;
 YAML_TAGS = nothing;
+ZENODO_FILE = joinpath(homedir(), "GriddingMachine", "Zenodo");
+ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
 
 
 # database related functions

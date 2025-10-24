@@ -14,7 +14,7 @@
                 include_std::Bool = false,
                 interpolation::Bool = false,
                 port::Int = 5055,
-                server::String = "http://tropo.gps.caltech.edu",
+                server::String = "http://222.195.83.136",
                 user::String="Anonymous")
 
 Request data from the server, given
@@ -25,7 +25,7 @@ Request data from the server, given
 - `include_std` If true, include the standard deviation
 - `interpolation` If true, interpolate the data linearly
 - `port` Port number for the GriddingMachine server
-- `server` Server address such as `https://tropo.gps.caltech.edu`
+- `server` Server address such as `http://222.195.83.136`
 - `user` User name (non-registered users need to wait for 5 seconds before the server processes the request)
 
 ---
@@ -46,9 +46,9 @@ function request_LUT(
             include_std::Bool = false,
             interpolation::Bool = false,
             port::Int = 5055,
-            server::String = "http://tropo.gps.caltech.edu",
+            server::String = "http://222.195.83.136",
             user::String="Anonymous")
-    # send a request to our webserver at tropo.gps.caltech.edu:44301 and translate it back to Dictionary
+    # send a request to our webserver at http://222.195.83.136:5055 and translate it back to Dictionary
     web_url = "$(server):$(port)/request.json?user=$(user)&artifact=$(artname)&lat=$(lat)&lon=$(lon)&cyc=$(cyc)&interpolate=$(interpolation)&include_std=$(include_std)";
     web_response = get(web_url; require_ssl_verification = false);
     json_str = String(web_response.body);
