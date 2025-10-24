@@ -20,11 +20,11 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
 [compat]
-DataFrames = "1.8.1"
+DataFrames = "1.8.0"
 DocStringExtensions = "0.8.5, 0.9.0"
 HTTP = "0.9.14, 1.0.5"
 JSON = "1.2.0"
 NetcdfIO = "0.2.6"
 ProgressMeter = "1.7.1"
 YAML = "0.4.12"
-julia = "1.7"
+julia = "1.10"
