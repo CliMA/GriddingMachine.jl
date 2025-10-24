@@ -1,10 +1,11 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
-authors = ["Yujie Wang"]
-version = "0.3.0"
+authors = ["Yujie Wang", "Hao Jiang"]
+version = "0.3.1"
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
@@ -19,10 +20,12 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
 [compat]
+DataFrames = "1.8.1"
 DocStringExtensions = "0.8.5, 0.9.0"
 HTTP = "0.9.14, 1.0.5"
-JSON = "0.21.2"
+JSON = "1.2.0"
 NetcdfIO = "0.2.6"
 ProgressMeter = "1.7.1"
+Statistics = "1.11.1"
 YAML = "0.4.12"
 julia = "1.7"
