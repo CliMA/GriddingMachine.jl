@@ -16,6 +16,7 @@ module GriddingMachine
 
 using Dates
 using Downloads
+using JSON
 using YAML
 
 export Blender, Collector, Fetcher, Indexer, Requestor

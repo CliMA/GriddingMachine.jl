@@ -5,6 +5,7 @@
 #     2024-Oct-28: add functions to get the path or folder of the artifact
 #     2024-Oct-28: add function to return all the tags in the database
 #     2024-Oct-28: add function to return the tarball file path
+#     2025-Oct-24: add support to JSON.Object in tarball_folder function
 #
 #######################################################################################################################################################################################################
 """
@@ -99,6 +100,8 @@ tarball_folder(arttag::String) =
     artifact_exists(arttag) ? tarball_folder(YAML_DATABASE[arttag]) : error("Artifact $arttag does not exist in the database, please check the website for the available artifacts!");
 
 tarball_folder(dict::Dict) = haskey(dict, "FOLDER") ? joinpath(tarball_folder(), dict["FOLDER"]) : joinpath(tarball_folder(), dict["folder"]);
+
+tarball_folder(dict::JSON.Object) = haskey(dict, "FOLDER") ? joinpath(tarball_folder(), dict["FOLDER"]) : joinpath(tarball_folder(), dict["folder"]);
 
 
 """
