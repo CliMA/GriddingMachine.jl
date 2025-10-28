@@ -22,5 +22,5 @@ Indexer.read_LUT
 
 ## Requestor
 ```@docs
-Requestor.request_LUT
+Requestor.request_site_data
 ```

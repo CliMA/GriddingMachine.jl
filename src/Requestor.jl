@@ -5,7 +5,7 @@ using DataFrames: DataFrame
 using HTTP: get
 using JSON: parse
 
-export request_LUT
+export request_site_data
 
 
 include("requestor/gm_artifact.jl");

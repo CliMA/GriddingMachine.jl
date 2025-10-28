@@ -7,7 +7,7 @@
 #######################################################################################################################################################################################################
 """
 
-    request_LUT(artname::String,
+    request_site_data(artname::String,
                 lat::Number,
                 lon::Number,
                 cyc::Int = 0;
@@ -31,14 +31,14 @@ Request data from the server, given
 ---
 # Examples
 ```julia
-request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5);
-request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true);
-request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8);
-request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true);
+request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5);
+request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true);
+request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8);
+request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true);
 ```
 
 """
-function request_LUT(
+function request_site_data(
             artname::String,
             lat::Number,
             lon::Number,

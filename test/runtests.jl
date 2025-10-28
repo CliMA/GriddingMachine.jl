@@ -58,10 +58,10 @@ using Test
     end;
 
     @testset "Requestor" begin
-        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
-        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
-        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
-        Requestor.request_LUT("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
+        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
+        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
+        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
+        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
     end;
 
     #=
