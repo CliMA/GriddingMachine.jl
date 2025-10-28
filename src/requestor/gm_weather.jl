@@ -6,7 +6,7 @@
 #######################################################################################################################################################################################################
 """
 
-    request_weather(
+    request_site_weather(
                 gmversion::String,
                 wdversion::String,
                 year::Int,
@@ -27,7 +27,7 @@ Request weather data from the server, given
 - `user` User name
 
 """
-function request_weather(
+function request_site_weather(
             gmversion::String,
             wdversion::String,
             year::Int,
@@ -47,14 +47,14 @@ function request_weather(
         return error("There is something wrong with the request, please check the details about it!");
     end;
 
-    # 从JSON字典中提取天气数据
+    # Extract weather data from JSON dictionary
     weather_data = json_dict["Weather Data"];
 
-    # 初始化一个空DataFrame
+    # Initialize an empty DataFrame
     df = DataFrame();
-    # 遍历weather_data的每个键值对，将其作为一列添加到DataFrame中
+    # Traverse each key value pair of weather_data and add it as a column to the DataFrame
     for (col_name, data_vec) in weather_data
-        # 向DataFrame中添加一列：列名为col_name，数据为data_vec
+        # Add a column to the DataFrame with column name col_name and data data-vec
         df[!, col_name] = data_vec;
     end
 

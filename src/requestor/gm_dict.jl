@@ -2,12 +2,12 @@
 #
 # Changes to the function
 # General
-#     2024-Aug-06: add function request_GMDICT
+#     2024-Aug-06: add function request_site_dict
 #
 #######################################################################################################################################################################################################
 """
 
-    request_GMDICT(
+    request_site_dict(
                 gmversion::String,
                 year::Int,
                 lat::Number,
@@ -28,11 +28,11 @@ Request Emerald data from the server, given
 ---
 # Examples
 ```julia
-gmdict = request_GMDICT("gm2", 2019, 30.5, 115.5);
+gmdict = request_site_dict("gm2", 2019, 30.5, 115.5);
 ```
 
 """
-function request_GMDICT(
+function request_site_dict(
             gmversion::String,
             year::Int,
             lat::Number,

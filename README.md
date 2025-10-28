@@ -63,8 +63,8 @@ julia> file_path = Collector.download_artifact!("VCMAX_2X_1Y_V1");
 To request a partial dataset from the server without download the entire dataset, use
 ```julia
 julia> using GriddingMachine.Requestor;
-julia> dat,std = Requestor.request_LUT("VCMAX_2X_1Y_V1", 35.1, 115.2);
-julia> dat,std = Requestor.request_LUT("VCMAX_2X_1Y_V1", 35.1, 115.2; interpolation=true);
+julia> dat,std = Requestor.request_site_data("VCMAX_2X_1Y_V1", 35.1, 115.2);
+julia> dat,std = Requestor.request_site_data("VCMAX_2X_1Y_V1", 35.1, 115.2; interpolation=true);
 ```
 
 
