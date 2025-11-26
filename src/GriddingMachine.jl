@@ -1,66 +1,42 @@
-#######################################################################################################################################################################################################
-#
-# Style Guide
-# 1. Types and modules start with upper case letters for each word, such as LeafBiophysics
-# 2. Functions are lower case words connected using _, such as leaf_biophysics
-# 3. Constants are defined using all upper cases, such as LEAF_BIOPHYSICS
-# 4. Variables are defined using all lower cases, such as leaf_bio_para
-# 5. Temporary variables are defined to start with _, such as _leaf
-# 6. Maximum length of each line is 200 letters (including space)
-# 7. There should be 2 lines of  empty lines between different components, such as two functions and methods
-# 8. Bug fixes or new changes should be documented in the comments above the struct, function, or method, such as this Style Guide above Smaragdus.jl
-# 9. Function parameter list that spans multiple lines need to be spaced with 12 spaces (3 tabs)
-#
-#######################################################################################################################################################################################################
 module GriddingMachine
 
-using Dates
-using Downloads
-using JSON
-using YAML
 
-export Blender, Collector, Fetcher, Indexer, Requestor
-
-
-# make sure the GriddingMachine directory exists
+# # make sure the GriddingMachine directory exists
 GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
 mkpath(GRIDDINGMACHINE_HOME);
-mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
-mkpath(joinpath(GRIDDINGMACHINE_HOME, "tarballs"));
 mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
 
 
-# download the Artifacts.yaml file from Zenodo and then decode it
-YAML_URL = "https://zenodo.org/records/15622411";
-YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
-YAML_DATABASE = nothing;
-YAML_SHAS = nothing;
-YAML_TAGS = nothing;
-ZENODO_FILE = joinpath(homedir(), "GriddingMachine", "Zenodo");
-ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
+# include the modules
+include("Collector/Collector.jl");
 
 
-# database related functions
-include("database/index.jl");
-include("database/judge.jl");
-include("database/update.jl");
-
-if isfile(YAML_FILE)
-    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
-    YAML_DATABASE = YAML.load_file(YAML_FILE);
-    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
-    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
-else
-    update_database!();
-end;
+# export Collector, Fetcher, Indexer, Requestor
+#
+#
+# mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
+# mkpath(joinpath(GRIDDINGMACHINE_HOME, "tarballs"));
+#
+#
+# # database related functions
+# include("database/index.jl");
+# include("database/judge.jl");
+#
+# if isfile(YAML_FILE)
+#     global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
+#     YAML_DATABASE = YAML.load_file(YAML_FILE);
+#     YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
+#     YAML_TAGS = [k for k in keys(YAML_DATABASE)];
+# else
+#     update_database!();
+# end;
 
 
 # include submodules
-include("Blender.jl");
-include("Collector.jl");
-include("Fetcher.jl");
-include("Indexer.jl");
-include("Requestor.jl");
+# include("Fetcher.jl");
+# include("Indexer.jl");
+# include("Requestor.jl");
 
 
 end # module

@@ -1,20 +1,5 @@
-#######################################################################################################################################################################################################
-#
-# Changes to the function
-# General
-#     2024-Oct-28: add function to update the database
-#     2025-Jun-09: use Zenodo to download the Artifacts.yaml file
-#     2025-Jun-10: make a judgement of whether the database is up to date
-#
-#######################################################################################################################################################################################################
-"""
-
-    update_database!()
-
-Update the database of GriddingMachine.jl
-
-"""
-function update_database!()
+""" Download the database of GriddingMachine.jl """
+function download_database!()
     # download the HTML file from Zenodo and then decode it
     html_lines = readlines(Downloads.download(YAML_URL));
 
@@ -29,7 +14,7 @@ function update_database!()
     latest_record_id = latest_record[is_start[end]+1:is_stop[1]-1];
 
     # if the id is the same as the last one, do nothing
-    if latest_record_id == ZENODO_RECORD
+    if (latest_record_id == ZENODO_RECORD) && isfile(YAML_FILE) && isfile(ZENODO_FILE)
         @info "The Artifacts.yaml file is already up to date (record $(latest_record_id))!";
 
         return nothing;
@@ -49,11 +34,6 @@ function update_database!()
         @info "Downloaded the Artifacts.yaml (record $(ZENODO_RECORD)) file successfully!";
     end;
     download_yaml_file();
-
-    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
-    YAML_DATABASE = YAML.load_file(YAML_FILE);
-    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
-    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
 
     return nothing
 end;
