@@ -20,3 +20,5 @@ test/testcase_creation*
 test/test_*.jl
 
 testcase_creation*
+
+!/data/*

@@ -1,7 +1,7 @@
 name = "GriddingMachine"
 uuid = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 version = "0.5.0"
-authors = ["Yujie Wang", "Hao Jiang"]
+authors = ["Yujie Wang", "Emily Gu", "Hao Jiang"]
 
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
@@ -29,7 +29,7 @@ Genie = "5.33.18"
 HTTP = "0.9.14, 1.0.5"
 JSON = "1.2.0"
 NetcdfIO = "0.2.6"
-PkgUtility = "0.3.0"
+PkgUtility = "0.3.1"
 ProgressMeter = "1.7.1"
 Revise = "3.12.2"
 YAML = "0.4.12"
