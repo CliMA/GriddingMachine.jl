@@ -1,5 +1,7 @@
 module GriddingMachine
 
+using Revise
+
 
 # # make sure the GriddingMachine directory exists
 GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
@@ -11,12 +13,8 @@ mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
 # include the modules
 include("Collector/Collector.jl");
 include("Indexer/Indexer.jl");
-
-
-# include submodules
-# include("Fetcher.jl");
-# include("Indexer.jl");
-# include("Requestor.jl");
+include("Requestor/Requestor.jl");
+include("Server/Server.jl");
 
 
 end # module

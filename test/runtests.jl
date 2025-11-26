@@ -1,12 +1,29 @@
 using GriddingMachine
-using GriddingMachine.Blender
 using GriddingMachine.Collector
-using GriddingMachine.Fetcher
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
+using GriddingMachine.Server
 using Test
 
 
+@testset verbose = true "GriddingMachine" begin
+    @testset "Server & Requestor" begin
+        # up the server
+        Server.setup_url_input_routes!(["testuser"]);
+        Server.up_servers!(5055);
+        @test true;
+
+        # test the request_site_data function
+        (data,stdv) = Requestor.request_site_data("http://localhost:5055", "testuser", "LM_4X_1Y_V1", 30.5, 115.5, 0);
+        @test !isnan(data);
+        @test isnan(stdv) || isnothing(stdv);
+
+        # down the server
+        Server.down_servers!();
+        @test true;
+    end;
+end;
+#=
 @testset verbose = true "GriddingMachine" begin
     @testset "Database" begin
         # the update functions
@@ -78,3 +95,4 @@ using Test
     end;
     =#
 end;
+=#
