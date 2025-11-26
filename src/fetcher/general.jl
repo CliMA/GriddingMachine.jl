@@ -142,7 +142,7 @@ Convert doy to string like "YYYY.MM.DD", given
 """
 function doy_to_str(year::Int, doy::Int)
     # convert the year and doy to timestamp
-    imonth = month_ind(year, doy);
+    imonth = which_month(year, doy);
     iday   = doy - (isleapyear(year) ? MDAYS_LEAP[imonth] : MDAYS[imonth]);
 
     return lpad(year, 4, "0") * "." * lpad(imonth, 2, "0") * "." * lpad(iday, 2, "0")
