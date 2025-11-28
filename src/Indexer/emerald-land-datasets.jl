@@ -46,10 +46,10 @@ Constructor of LandDatasetLabels, given
 
 """
 LandDatasetLabels(gm_tag::String, year::Int) = (
-    @assert gm_tag in ["gm1", "gm2"] "Parameterization tag $(gm_tag) is not supported!";
+    @assert gm_tag in ["gm1", "gm2"] "Land parameter collection tag $(gm_tag) is not supported!";
 
     if gm_tag == "gm1"
-        dtl = LandDatasetLabels(
+        return LandDatasetLabels(
                     gm_tag    = gm_tag,
                     year      = year,
                     nx        = 1,
@@ -67,8 +67,10 @@ LandDatasetLabels(gm_tag::String, year::Int) = (
                     tag_t_ele = "ELEV_4X_1Y_V1",
                     tag_t_lm  = "LM_4X_1Y_V1",
                     tag_t_pft = "PFT_2X_1Y_V1")
-    elseif gm_tag == "gm2"
-        dtl = LandDatasetLabels(
+    end;
+
+    if gm_tag == "gm2"
+        return LandDatasetLabels(
                     gm_tag    = gm_tag,
                     year      = year,
                     nx        = 1,
@@ -86,11 +88,9 @@ LandDatasetLabels(gm_tag::String, year::Int) = (
                     tag_t_ele = "ELEV_4X_1Y_V1",
                     tag_t_lm  = "LM_4X_1Y_V1",
                     tag_t_pft = "PFT_2X_1Y_V1")
-    else
-        error("Tag $(gm_tag) is not supported!");
     end;
 
-    return dtl
+    return error("Tag $(gm_tag) is not supported!");
 );
 
 

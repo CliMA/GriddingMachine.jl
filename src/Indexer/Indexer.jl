@@ -13,12 +13,14 @@ CCS_1Y = read_csv("$(@__DIR__)/../../data/CO2-1Y.csv");
 CCS_1M = read_csv("$(@__DIR__)/../../data/CO2-1M.csv");
 
 
+include("dataset-index.jl");
 include("dataset-read.jl");
-include("emerald-clm.jl");
+
 include("emerald-co2.jl");
-include("emerald-dataset.jl");
+include("emerald-clm.jl");
+include("emerald-land-datasets.jl");
+include("emerald-weather-drivers.jl");
 include("emerald-grid-dict.jl");
-include("lat-lon-index.jl");
 
 
 end; # module
