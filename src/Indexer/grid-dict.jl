@@ -64,7 +64,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                     "τ_NIR_C4"      => 0,
                     "τ_PAR_C3"      => 0,
                     "τ_PAR_C4"      => 0);
-        verification ? verify_grid_dict!(gm_dict) : nothing;
+        verification ? verify_dict!(gm_dict) : nothing;
 
         return gm_dict
     end;
@@ -157,7 +157,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                 "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
                 "τ_PAR_C4"      => τ_par_c4);
-    verification ? verify_grid_dict!(gm_dict) : nothing;
+    verification ? verify_dict!(gm_dict) : nothing;
 
     return gm_dict
 );
@@ -271,63 +271,7 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
                 "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
                 "τ_PAR_C4"      => τ_par_c4);
-    verification ? verify_grid_dict!(gm_dict) : nothing;
+    verification ? verify_dict!(gm_dict) : nothing;
 
     return gm_dict
 );
-
-
-"""
-
-    grid_dict_mat(dts::LandDatasets{FT}; vegetation_only::Bool = true) where {FT}
-
-Prepare a matrix of GriddingMachine data to feed SPAC, given
-- `dts` `LandDatasets` type data struct
-- `vegetation_only` Return the matrix with only the vegetated grids (other grids are filled with `nothing`)
-
-"""
-function grid_dict_mat(dts::LandDatasets{FT}; vegetation_only::Bool = true) where {FT}
-    # create a matrix of GriddingMachine data
-    # TODO: add a step to verify the input datasets
-    pretty_display!("Preparing a matrix of GriddingMachine data to work on...", "tinfo");
-    mat_gm = Matrix{Union{Nothing,Dict{String,Any}}}(nothing, size(dts.t_lm));
-    for ilon in axes(dts.t_lm,1), ilat in axes(dts.t_lm,2)
-        if vegetation_only
-            if dts.mask_spac[ilon,ilat]
-                mat_gm[ilon,ilat] = grid_dict(dts, ilat, ilon);
-            end;
-        else
-            if dts.mask_spac[ilon,ilat] || dts.mask_soil[ilon,ilat]
-                mat_gm[ilon,ilat] = grid_dict(dts, ilat, ilon);
-            end;
-        end;
-    end;
-
-    return mat_gm
-end;
-
-
-"""
-
-    verify_grid_dict!(gm_dict::Dict{String,Any})
-
-Verify the dictionary per key and value to make sure there is not NaN, given
-- `gm_dict` GriddingMachine data dictionary
-
-"""
-function verify_grid_dict!(gm_dict::Dict{String,Any})
-    # verify the GriddingMachine data dictionary per key and value to make sure there is not NaN
-    for (key, value) in gm_dict
-        if typeof(value) <: Number
-            if isnan(value)
-                return error("Key $key is NaN!");
-            end;
-        elseif typeof(value) <: AbstractArray
-            if any(isnan.(value))
-                return error("Key $key contains NaN!");
-            end;
-        end;
-    end;
-
-    return nothing
-end;

@@ -21,7 +21,7 @@ Base.@kwdef mutable struct WeatherDriverLabels
     "GriddingMachine.jl tag for vapor pressure deficit"
     tag_vpd::String
     "GriddingMachine.jl tag for wind speed"
-    tag_rad_wind::String
+    tag_wind::String
 end;
 
 """
@@ -38,17 +38,17 @@ WeatherDriverLabels(wd_tag::String, year::Int) = (
 
     if wd_tag == "wd1"
         return WeatherDriverLabels(
-                    wd_tag       = wd_tag,
-                    year         = year,
-                    nx           = 1,
-                    tag_patm     = "PATM_ERA5_1X_1H_$(year)_V1",
-                    tag_ppt      = "PPT_ERA5_1X_1H_$(year)_V1",
-                    tag_rad_dif  = "RAD_SW_DIF_ERA5_1X_1H_$(year)_V1",
-                    tag_rad_dir  = "RAD_SW_DIR_ERA5_1X_1H_$(year)_V1",
-                    tag_rad_lw   = "RAD_LW_ERA5_1X_1H_$(year)_V1",
-                    tag_t_air    = "TAIR_ERA5_1X_1H_$(year)_V1",
-                    tag_vpd      = "VPD_ERA5_1X_1H_$(year)_V1",
-                    tag_rad_wind = "WIND_ERA5_1X_1H_$(year)_V1")
+                    wd_tag      = wd_tag,
+                    year        = year,
+                    nx          = 1,
+                    tag_patm    = "PATM_ERA5_1X_1H_$(year)_V1",
+                    tag_ppt     = "PPT_ERA5_1X_1H_$(year)_V1",
+                    tag_rad_dif = "RAD_SW_DIF_ERA5_1X_1H_$(year)_V1",
+                    tag_rad_dir = "RAD_SW_DIR_ERA5_1X_1H_$(year)_V1",
+                    tag_rad_lw  = "RAD_LW_ERA5_1X_1H_$(year)_V1",
+                    tag_t_air   = "TAIR_ERA5_1X_1H_$(year)_V1",
+                    tag_vpd     = "VPD_ERA5_1X_1H_$(year)_V1",
+                    tag_wind    = "WIND_ERA5_1X_1H_$(year)_V1")
     end;
 
     return error("Tag $(wd_tag) is not supported!")
@@ -77,7 +77,7 @@ Base.@kwdef mutable struct WeatherDrivers{FT<:AbstractFloat}
     "Vapor pressure deficit"
     vpd::Array{FT} = regrid(read_dataset(LABELS.tag_vpd), LABELS.nx);
     "Wind speed"
-    rad_wind::Array{FT} = regrid(read_dataset(LABELS.tag_rad_wind), LABELS.nx);
+    wind::Array{FT} = regrid(read_dataset(LABELS.tag_wind), LABELS.nx);
 end;
 
 """

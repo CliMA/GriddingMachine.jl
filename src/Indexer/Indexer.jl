@@ -20,7 +20,10 @@ include("emerald-co2.jl");
 include("emerald-clm.jl");
 include("emerald-land-datasets.jl");
 include("emerald-weather-drivers.jl");
-include("emerald-grid-dict.jl");
+
+include("grid-dict.jl");
+include("grid-verification.jl");
+include("grid-weather.jl");
 
 
 end; # module
