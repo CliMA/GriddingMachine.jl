@@ -27,8 +27,15 @@ grid_weather(wds::WeatherDrivers{FT}, ilat::Int, ilon::Int; verification::Bool =
     vpd     = wds.vpd[ilon,ilat,:];
     wind    = wds.wind[ilon,ilat,:];
 
+    # compute the doy as a float based on the lon
+    reso = FT(360) / size(wds.patm, 1);
+    lon  = (ilon - FT(0.5)) * reso - 180;
+    ftz  = lon / FT(15);
+    fdoy = (collect(eachindex(patm)) .- FT(0.5) .+ ftz) ./ 24;
+
     # create a dictionary to store the weather drivers (and verify it if needed)
     wd_dict = Dict{String,Any}(
+                "FDOY"       => fdoy,
                 "PATM"       => patm,
                 "PPT"        => ppt,
                 "RAD_SW_DIF" => rad_dif,
@@ -53,8 +60,13 @@ grid_dict(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = Flo
     vpd     = FT.(read_dataset(wdl.tag_vpd    , lat, lon));
     wind    = FT.(read_dataset(wdl.tag_wind   , lat, lon));
 
+    # compute the doy as a float based on the lon
+    ftz  = lon / FT(15);
+    fdoy = (collect(eachindex(patm)) .- FT(0.5) .+ ftz) ./ 24;
+
     # create a dictionary to store the weather drivers (and verify it if needed)
     wd_dict = Dict{String,Any}(
+                "FDOY"       => fdoy,
                 "PATM"       => patm,
                 "PPT"        => ppt,
                 "RAD_SW_DIF" => rad_dif,
