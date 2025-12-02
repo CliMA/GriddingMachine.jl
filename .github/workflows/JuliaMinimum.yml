@@ -3,21 +3,18 @@ on:
   push:
     branches:
       - main
-      - staging
-      - trying
   pull_request:
 
 jobs:
   version-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Actions
-        uses: actions/checkout@v1
-      - name: Set up Julia
-        uses: julia-actions/setup-julia@v1
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
         with:
           version: "1.10"
+      - uses: julia-actions/cache@v2
       - name: Install Dependencies
-        run: julia --project -e 'ENV["PYTHON"]=""; using Pkg; Pkg.instantiate();'
+        run: julia --project -e 'using Pkg; Pkg.instantiate();'
       - name: Run Tests
         uses: julia-actions/julia-runtest@latest
