@@ -1,9 +1,10 @@
 module Indexer
 
 using NetcdfIO: read_nc, size_nc, varname_nc
+using PkgUtility.DataIO: read_csv
 using PkgUtility.MathTools: gapfill_data!, nanmax, nanmean, regrid
 using PkgUtility.PrettyDisplay: pretty_display!
-using PkgUtility.TextIO: read_csv
+using PkgUtility.RecursiveTools: NaN_test
 
 using ..Collector: download_dataset!
 
@@ -22,7 +23,6 @@ include("emerald-land-datasets.jl");
 include("emerald-weather-drivers.jl");
 
 include("grid-dict.jl");
-include("grid-verification.jl");
 include("grid-weather.jl");
 
 

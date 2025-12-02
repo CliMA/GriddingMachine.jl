@@ -44,7 +44,7 @@ grid_weather(wds::WeatherDrivers{FT}, ilat::Int, ilon::Int; verification::Bool =
                 "TAIR"       => t_air,
                 "VPD"        => vpd,
                 "WIND"       => wind);
-    verification ? verify_dict!(wd_dict) : nothing;
+    verification ? (@assert NaN_test(wd_dict) "wd_dict contains NaN values") : nothing;
 
     return wd_dict
 );
@@ -75,7 +75,7 @@ grid_dict(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = Flo
                 "TAIR"       => t_air,
                 "VPD"        => vpd,
                 "WIND"       => wind);
-    verification ? verify_dict!(wd_dict) : nothing;
+    verification ? (@assert NaN_test(wd_dict) "wd_dict contains NaN values") : nothing;
 
     return wd_dict
 );

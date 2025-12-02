@@ -1,7 +1,6 @@
 module Collector
 
 using Downloads
-using HTTP
 using PkgUtility.ArtifactTools: read_library
 
 using ..GriddingMachine: GRIDDINGMACHINE_HOME

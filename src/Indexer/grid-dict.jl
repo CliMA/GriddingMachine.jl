@@ -64,7 +64,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                     "τ_NIR_C4"      => 0,
                     "τ_PAR_C3"      => 0,
                     "τ_PAR_C4"      => 0);
-        verification ? verify_dict!(gm_dict) : nothing;
+        verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
         return gm_dict
     end;
@@ -157,7 +157,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                 "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
                 "τ_PAR_C4"      => τ_par_c4);
-    verification ? verify_dict!(gm_dict) : nothing;
+    verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
     return gm_dict
 );
@@ -271,7 +271,7 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
                 "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
                 "τ_PAR_C4"      => τ_par_c4);
-    verification ? verify_dict!(gm_dict) : nothing;
+    verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
     return gm_dict
 );
