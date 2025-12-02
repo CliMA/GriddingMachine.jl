@@ -2,7 +2,7 @@ module Indexer
 
 using NetcdfIO: read_nc, size_nc, varname_nc
 using PkgUtility.DataIO: read_csv
-using PkgUtility.MathTools: gapfill_data!, nanmax, nanmean, regrid
+using PkgUtility.MathTools: gapfill_data!, nanmax, nanmean, regrid, resample
 using PkgUtility.PrettyDisplay: pretty_display!
 using PkgUtility.RecursiveTools: NaN_test
 
