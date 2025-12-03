@@ -49,7 +49,7 @@ grid_weather(wds::WeatherDrivers{FT}, ilat::Int, ilon::Int; verification::Bool =
     return wd_dict
 );
 
-grid_dict(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = Float64, verification::Bool = true) = (
+grid_weather(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = Float64, verification::Bool = true) = (
     # read the land dataset for a specific grid (lat, lon)
     patm    = FT.(read_dataset(wdl.tag_patm   , lat, lon));
     ppt     = FT.(read_dataset(wdl.tag_ppt    , lat, lon));
