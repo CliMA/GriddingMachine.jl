@@ -1,9 +1,7 @@
 module GriddingMachine
 
-using Revise
 
-
-# # make sure the GriddingMachine directory exists
+# make sure the GriddingMachine directory exists
 GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
 mkpath(GRIDDINGMACHINE_HOME);
 mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));

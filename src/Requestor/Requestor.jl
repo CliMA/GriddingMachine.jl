@@ -4,8 +4,6 @@ import HTTP
 import JSON
 
 
-# using Artifacts: load_artifacts_toml
-# using DataFrames: DataFrame
 #
 # export request_site_data
 #

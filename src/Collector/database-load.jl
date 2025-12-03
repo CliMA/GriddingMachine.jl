@@ -6,10 +6,9 @@ function load_database!()
     end;
 
     # load the database from the library file
-    global YAML_DATABASE, YAML_SHAS, YAML_TAGS;
-    YAML_DATABASE = read_library(YAML_FILE);
-    YAML_SHAS = [v["SHA"] for v in values(YAML_DATABASE)];
-    YAML_TAGS = [k for k in keys(YAML_DATABASE)];
+    db = read_library(YAML_FILE);
+    shas = [v["SHA"] for v in values(db)];
+    tags = [k for k in keys(db)];
 
-    return nothing
+    return db, shas, tags
 end;

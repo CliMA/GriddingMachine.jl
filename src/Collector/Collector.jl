@@ -9,9 +9,6 @@ using ..GriddingMachine: GRIDDINGMACHINE_HOME
 # download the Artifacts.yaml file from Zenodo and then decode it
 YAML_URL = "https://zenodo.org/records/15622411";
 YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
-YAML_DATABASE = nothing;
-YAML_SHAS = nothing;
-YAML_TAGS = nothing;
 ZENODO_FILE = joinpath(homedir(), "GriddingMachine", "Zenodo");
 ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
 
@@ -29,7 +26,7 @@ include("dataset-info.jl");
 
 
 # load the database at the first time
-load_database!();
+YAML_DATABASE, YAML_SHAS, YAML_TAGS = load_database!();
 
 
 end # module
