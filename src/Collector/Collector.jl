@@ -3,7 +3,12 @@ module Collector
 using Downloads
 using PkgUtility.ArtifactTools: read_library
 
-using ..GriddingMachine: GRIDDINGMACHINE_HOME
+
+# make sure the GriddingMachine directory exists
+GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
+mkpath(GRIDDINGMACHINE_HOME);
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
 
 
 # download the Artifacts.yaml file from Zenodo and then decode it
