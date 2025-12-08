@@ -30,6 +30,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
     # return the grid dictionary if the grid is masked as soil
     if dts.mask_soil[ilon,ilat]
         gm_dict = Dict{String,Any}(
+                    "B6F"           => resample(0, "1D", dts.LABELS.year),
                     "CANOPY_HEIGHT" => 0,
                     "CHLOROPHYLL"   => resample(0, "1D", dts.LABELS.year),
                     "CLUMPING"      => resample(1, "1D", dts.LABELS.year),
@@ -37,6 +38,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                     "ELEVATION"     => dts.t_ele[ilon,ilat],
                     "G1_MEDLYN_C3"  => 0,
                     "G1_MEDLYN_C4"  => 0,
+                    "JMAX25"        => resample(0, "1D", dts.LABELS.year),
                     "LAI"           => resample(0, "1D", dts.LABELS.year),
                     "LAND_MASK"     => lmsk,
                     "LATITUDE"      => (ilat - 0.5) * reso - 90,
@@ -117,6 +119,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
     τ_nir_c4 = CLM5_τNIR[ind_c4];
 
     gm_dict = Dict{String,Any}(
+                "B6F"           => resample(vcmax .* 0.0066, "1D", dts.LABELS.year),
                 "CANOPY_HEIGHT" => max(0.1, zc),
                 "CHLOROPHYLL"   => resample(chls, "1D", dts.LABELS.year),
                 "CLUMPING"      => resample(cis, "1D", dts.LABELS.year),
@@ -124,6 +127,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                 "ELEVATION"     => dts.t_ele[ilon,ilat],
                 "G1_MEDLYN_C3"  => g1_c3_medlyn,
                 "G1_MEDLYN_C4"  => g1_c4_medlyn,
+                "JMAX25"        => resample(vcmax .* 1.64, "1D", dts.LABELS.year),
                 "LAI"           => resample(lais, "1D", dts.LABELS.year),
                 "LAND_MASK"     => lmsk,
                 "LATITUDE"      => (ilat - 0.5) * reso - 90,
@@ -229,6 +233,7 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
     τ_nir_c4 = CLM5_τNIR[ind_c4];
 
     gm_dict = Dict{String,Any}(
+                "B6F"           => resample(vcmax .* 0.0066, "1D", dtl.year),
                 "CANOPY_HEIGHT" => max(0.1, zc),
                 "CHLOROPHYLL"   => resample(chls, "1D", dtl.year),
                 "CLUMPING"      => resample(cis, "1D", dtl.year),
@@ -236,6 +241,7 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
                 "ELEVATION"     => read_dataset(dtl.tag_t_ele, lat, lon),
                 "G1_MEDLYN_C3"  => g1_c3_medlyn,
                 "G1_MEDLYN_C4"  => g1_c4_medlyn,
+                "JMAX25"        => resample(vcmax .* 1.64, "1D", dtl.year),
                 "LAI"           => resample(lais, "1D", dtl.year),
                 "LAND_MASK"     => lmsk,
                 "LATITUDE"      => lat,
