@@ -1,4 +1,13 @@
+"""
 
+    clean_database!(selection::String = "old")
+    clean_database!(arttags::Vector{String})
+
+Cleans up the local database of datasets by removing old or specified datasets, given
+- `selection` old (default) or all
+- `arttags` a Vector of tags
+
+"""
 function clean_database! end
 
 clean_database!(selection::String = "old") = (

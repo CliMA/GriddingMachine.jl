@@ -6,9 +6,9 @@ CurrentModule = GriddingMachine
 
 ## Collector
 ```@docs
-Collector.download_artifact!
 Collector.clean_database!
 Collector.sync_database!
+Collector.download_dataset!
 ```
 
 
