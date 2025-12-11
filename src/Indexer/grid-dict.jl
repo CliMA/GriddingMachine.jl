@@ -162,7 +162,7 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
     return gm_dict
 );
 
-grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float64, verification::Bool = true) = (
+grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; verification::Bool = true) = (
     lmsk = read_dataset(dtl.tag_t_lm, lat, lon);
     if !(lmsk > 0)
         return error("The target grid does not contain land!");
@@ -275,3 +275,5 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
 
     return gm_dict
 );
+
+grid_dict(gmt::String, year::Int, lat::Number, lon::Number; args...) = grid_dict(LandDatasetLabels(gmt, year), lat, lon; args...);

@@ -32,13 +32,13 @@ function download_dataset!(arttag::String)
     # download from the fastest server available
     for i in eachindex(sorted_pings)
         if sorted_pings[i] == Inf
-            break
+            error("All download servers are unreachable. Please check your internet connection.");
         end;
         try
             Downloads.download(sorted_urls[i], cache_file);
             break;
         catch e
-            @warn "Failed to download from $(sorted_urls[i])"
+            @warn "Failed to download from $(sorted_urls[i])";
             continue;
         end;
     end;

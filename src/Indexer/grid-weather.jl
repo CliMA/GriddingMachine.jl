@@ -79,3 +79,5 @@ grid_weather(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = 
 
     return wd_dict
 );
+
+grid_weather(wdt::String, year::Int, lat::Number, lon::Number; args...) = grid_weather(WeatherDriverLabels(wdt, year), lat, lon; args...);
