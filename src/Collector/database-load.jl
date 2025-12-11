@@ -7,8 +7,7 @@ function load_database!()
 
     # load the database from the library file
     db = read_library(YAML_FILE);
-    shas = [v["SHA"] for v in values(db)];
     tags = [k for k in keys(db)];
 
-    return db, shas, tags
+    return db, tags
 end;

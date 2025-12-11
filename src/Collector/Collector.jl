@@ -31,7 +31,7 @@ include("dataset-info.jl");
 
 
 # load the database at the first time
-YAML_DATABASE, YAML_SHAS, YAML_TAGS = load_database!();
+YAML_DATABASE, YAML_TAGS = load_database!();
 
 
 end # module

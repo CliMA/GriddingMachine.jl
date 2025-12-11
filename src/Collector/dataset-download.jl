@@ -17,7 +17,16 @@ function download_dataset!(arttag::String)
     # download the dataset directly from the URL of the associated dataset
     @info "Downloading dataset for $arttag from $(dataset_url(arttag))...";
     cache_file = dataset_cache(arttag);
-    Downloads.download(dataset_url(arttag), cache_file);
+    urls = dataset_url(arttag);
+    for url in urls
+        try
+            Downloads.download(url, cache_file);
+            break;
+        catch e
+            @warn "Failed to download from $url"
+            continue;
+        end;
+    end;
     mkpath(dataset_dir(arttag));
     mv(cache_file, dataset_file);
 
