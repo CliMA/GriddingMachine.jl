@@ -34,7 +34,7 @@ grid_weather(wds::WeatherDrivers{FT}, ilat::Int, ilon::Int; verification::Bool =
     fdoy = FT.(collect(eachindex(patm)) .- FT(0.5) .+ ftz) ./ 24;
 
     # create a dictionary to store the weather drivers (and verify it if needed)
-    wd_dict = Dict{String,Vector{FT}}(
+    wd_dict = OrderedDict{String,Vector{FT}}(
                 "FDOY"       => fdoy,
                 "PATM"       => patm,
                 "PPT"        => ppt,
@@ -65,7 +65,7 @@ grid_weather(wdl::WeatherDriverLabels, lat::Number, lon::Number; FT::DataType = 
     fdoy = FT.(collect(eachindex(patm)) .- FT(0.5) .+ ftz) ./ 24;
 
     # create a dictionary to store the weather drivers (and verify it if needed)
-    wd_dict = Dict{String,Vector{FT}}(
+    wd_dict = OrderedDict{String,Vector{FT}}(
                 "FDOY"       => fdoy,
                 "PATM"       => patm,
                 "PPT"        => ppt,
