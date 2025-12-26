@@ -1,7 +1,7 @@
 """
 
-    clean_database!(selection::String = "old")
-    clean_database!(arttags::Vector{String})
+    clean_database!(selection::String = "old") :: Nothing
+    clean_database!(arttags::Vector{String}) :: Nothing
 
 Cleans up the local database of datasets by removing old or specified datasets, given
 - `selection` old (default) or all
@@ -10,7 +10,7 @@ Cleans up the local database of datasets by removing old or specified datasets, 
 """
 function clean_database! end
 
-clean_database!(selection::String = "old") = (
+clean_database!(selection::String = "old") :: Nothing = (
     # iterate through the artifacts and remove the old one that is not in current Artifacts.toml or remove all artifacts within GriddingMachine.jl
     public_dir = joinpath(GRIDDINGMACHINE_HOME, "public");
     sub_dirs = readdir(public_dir);
@@ -38,7 +38,7 @@ clean_database!(selection::String = "old") = (
     return nothing
 );
 
-clean_database!(arttags::Vector{String}) = (
+clean_database!(arttags::Vector{String}) :: Nothing = (
     # iterate the artifact hashs to remove corresponding folder
     for arttag in arttags
         rm(dataset_cache(arttag); recursive = true, force = true);

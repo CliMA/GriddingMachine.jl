@@ -21,6 +21,7 @@ ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
 # function to update the database
 include("database-clean.jl");
 include("database-download.jl");
+include("database-initialize.jl");
 include("database-load.jl");
 include("database-sync.jl");
 include("database-tree.jl");
