@@ -66,7 +66,6 @@ function artifact_json(user::String, arttag::String, lat::Number, lon::Number, c
                 "Longitude"       => lon,
                 "Cycle"           => cyc,
                 "Result"          => data,
-                "GriddingMachine" => VERS
             );
             if include_std
                 # Add std to response (could be nothing if not available in dataset)
@@ -85,7 +84,6 @@ function artifact_json(user::String, arttag::String, lat::Number, lon::Number, c
         "Latitude"        => lat,
         "Longitude"       => lon,
         "Cycle"           => cyc,
-        "GriddingMachine" => VERS
     );
 
     return GRJSON.json(json_warn)

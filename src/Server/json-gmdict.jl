@@ -33,7 +33,6 @@ function gmdict_json(user::String, gmversion::String, year::Int, lat::Number, lo
             "Latitude"        => lat,
             "Longitude"       => lon,
             "GM Dict"         => gm_dict,
-            "GriddingMachine" => VERS
         );
 
         return GRJSON.json(json_dict)
@@ -49,7 +48,6 @@ function gmdict_json(user::String, gmversion::String, year::Int, lat::Number, lo
             "Latitude"        => lat,
             "Longitude"       => lon,
             "Error Message"   => string(e),
-            "GriddingMachine" => VERS
         );
 
         return GRJSON.json(json_warn)

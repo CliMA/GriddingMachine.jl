@@ -129,7 +129,6 @@ WEATHER_FORM = GRHTML.form(
         GRHTML.h1("Request for Weather Data from GriddingMachine.jl"),
         HEADER,
         WDV_LABEL, WDV_SELECT,
-        GMV_LABEL, GMV_SELECT,
         YEAR_LABEL, YEAR_INPUT,
         LAT_LABEL, LAT_INPUT,
         LON_LABEL, LON_INPUT,
@@ -389,15 +388,6 @@ UNIFIED_FORM = """
                 <select name="wdv" id="wdv">
                     <option>--Choose WD Version--</option>
                     <option selected>wd1</option>
-                </select>
-
-                <label for="gmv_weather">GM Version</label>
-                <select name="gmv" id="gmv_weather">
-                    <option>--Choose a Version--</option>
-                    <option>gm1</option>
-                    <option selected>gm2</option>
-                    <option>gm3</option>
-                    <option>gm4</option>
                 </select>
 
                 <label for="year_weather">Year</label>
