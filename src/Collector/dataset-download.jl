@@ -17,9 +17,43 @@ function download_dataset!(arttag::String)
     # download the dataset directly from the URL of the associated dataset
     @info "Downloading dataset for $arttag from $(dataset_url(arttag))...";
     cache_file = dataset_cache(arttag);
-    Downloads.download(dataset_url(arttag), cache_file);
+    urls = dataset_url(arttag);
+    pings = Float64[];
+    for url in urls
+        server_add = replace(match(r"://([^/]+)/", url).captures[1], r":.*" => "");
+        push!(pings, ip_address_ping(server_add));
+    end;
+
+    # sort the urls based on the ping results
+    sorted_indices = sortperm(pings);
+    sorted_urls = urls[sorted_indices];
+    sorted_pings = pings[sorted_indices];
+
+    # download from the fastest server available
+    for i in eachindex(sorted_pings)
+        if sorted_pings[i] == Inf
+            error("All download servers are unreachable. Please check your internet connection.");
+        end;
+        try
+            Downloads.download(sorted_urls[i], cache_file);
+            break;
+        catch e
+            @warn "Failed to download from $(sorted_urls[i])";
+            continue;
+        end;
+    end;
     mkpath(dataset_dir(arttag));
     mv(cache_file, dataset_file);
 
     return dataset_file
+end;
+
+
+function ip_address_ping(ipadd::String)
+    return try
+        pinginfo = read(`ping -c 1 -W 2 $(ipadd)`, String);
+        parse(Float64, match(r"time=(\d+\.?\d*) ms", pinginfo)[1])
+    catch
+        Inf
+    end;
 end;

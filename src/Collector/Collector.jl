@@ -3,7 +3,12 @@ module Collector
 using Downloads
 using PkgUtility.ArtifactTools: read_library
 
-using ..GriddingMachine: GRIDDINGMACHINE_HOME
+
+# make sure the GriddingMachine directory exists
+GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
+mkpath(GRIDDINGMACHINE_HOME);
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
+mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
 
 
 # download the Artifacts.yaml file from Zenodo and then decode it
@@ -16,6 +21,7 @@ ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
 # function to update the database
 include("database-clean.jl");
 include("database-download.jl");
+include("database-initialize.jl");
 include("database-load.jl");
 include("database-sync.jl");
 include("database-tree.jl");
@@ -26,7 +32,7 @@ include("dataset-info.jl");
 
 
 # load the database at the first time
-YAML_DATABASE, YAML_SHAS, YAML_TAGS = load_database!();
+YAML_DATABASE, YAML_TAGS = load_database!();
 
 
 end # module

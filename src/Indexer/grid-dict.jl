@@ -29,33 +29,37 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
 
     # return the grid dictionary if the grid is masked as soil
     if dts.mask_soil[ilon,ilat]
-        gm_dict = Dict{String,Any}(
-                    "CANOPY_HEIGHT" => 0,
-                    "CHLOROPHYLL"   => resample(0, "1D", dts.LABELS.year),
-                    "CLUMPING"      => resample(1, "1D", dts.LABELS.year),
-                    "CO2"           => co2,
-                    "ELEVATION"     => dts.t_ele[ilon,ilat],
-                    "FT"            => FT,
-                    "G1_MEDLYN_C3"  => 0,
-                    "G1_MEDLYN_C4"  => 0,
-                    "LAI"           => resample(0, "1D", dts.LABELS.year),
-                    "LAND_MASK"     => lmsk,
+        gm_dict = OrderedDict{String,Any}(
+                    # general information
                     "LATITUDE"      => (ilat - 0.5) * reso - 90,
-                    "LAT_INDEX"     => ilat,
-                    "LMA"           => 0,
                     "LONGITUDE"     => (ilon - 0.5) * reso - 180,
-                    "LON_INDEX"     => ilon,
-                    "MESSAGE_LEVEL" => 0,
-                    "PFT_FRACTIONS" => [0],
+                    "ELEVATION"     => dts.t_ele[ilon,ilat],
                     "RESO_SPACE"    => dts.LABELS.nx,
-                    "SAI"           => 0,
+                    "LAT_INDEX"     => ilat,
+                    "LON_INDEX"     => ilon,
+                    "YEAR"          => dts.LABELS.year,
+
+                    # environmental parameters
+                    "LAND_MASK"     => lmsk,
+                    "PFT_FRACTIONS" => [0],
+                    "CO2"           => co2,
+
+                    # soil parameters
                     "SOIL_COLOR"    => scolor,
                     "SOIL_N"        => s_n,
                     "SOIL_α"        => s_α,
                     "SOIL_ΘR"       => s_Θr,
                     "SOIL_ΘS"       => s_Θs,
-                    "VCMAX25"       => resample(0, "1D", dts.LABELS.year),
-                    "YEAR"          => dts.LABELS.year,
+
+                    # canopy parameters
+                    "CANOPY_HEIGHT" => 0,
+                    "CLUMPING"      => resample(1, "1D", dts.LABELS.year),
+                    "LAI"           => resample(0, "1D", dts.LABELS.year),
+                    "SAI"           => 0,
+
+                    # leaf parameters (biophysics)
+                    "CHLOROPHYLL"   => resample(0, "1D", dts.LABELS.year),
+                    "LMA"           => 0,
                     "ρ_NIR_C3"      => 0,
                     "ρ_NIR_C4"      => 0,
                     "ρ_PAR_C3"      => 0,
@@ -63,7 +67,15 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                     "τ_NIR_C3"      => 0,
                     "τ_NIR_C4"      => 0,
                     "τ_PAR_C3"      => 0,
-                    "τ_PAR_C4"      => 0);
+                    "τ_PAR_C4"      => 0,
+
+                    # leaf parameters (photosynthesis)
+                    "G1_MEDLYN_C3"  => 0,
+                    "G1_MEDLYN_C4"  => 0,
+                    "VCMAX25"       => resample(0, "1D", dts.LABELS.year),
+                    "JMAX25"        => resample(0, "1D", dts.LABELS.year),
+                    "B6F"           => resample(0, "1D", dts.LABELS.year),
+        );
         verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
         return gm_dict
@@ -119,50 +131,58 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
     τ_nir_c4 = CLM5_τNIR[ind_c4];
 
     gm_dict = Dict{String,Any}(
-                "CANOPY_HEIGHT" => max(0.1, zc),
-                "CHLOROPHYLL"   => resample(chls, "1D", dts.LABELS.year),
-                "CLUMPING"      => resample(cis, "1D", dts.LABELS.year),
-                "CO2"           => co2,
-                "ELEVATION"     => dts.t_ele[ilon,ilat],
-                "FT"            => FT,
-                "G1_MEDLYN_C3"  => g1_c3_medlyn,
-                "G1_MEDLYN_C4"  => g1_c4_medlyn,
-                "LAI"           => resample(lais, "1D", dts.LABELS.year),
-                "LAND_MASK"     => lmsk,
+                # general information
                 "LATITUDE"      => (ilat - 0.5) * reso - 90,
-                "LAT_INDEX"     => ilat,
-                "LMA"           => lma,
                 "LONGITUDE"     => (ilon - 0.5) * reso - 180,
-                "LON_INDEX"     => ilon,
-                "MESSAGE_LEVEL" => 0,
-                "PFT_FRACTIONS" => pfts,
+                "ELEVATION"     => dts.t_ele[ilon,ilat],
                 "RESO_SPACE"    => dts.LABELS.nx,
-                "SAI"           => nanmax(lais) / 10,
+                "LAT_INDEX"     => ilat,
+                "LON_INDEX"     => ilon,
+                "YEAR"          => dts.LABELS.year,
+
+                # environmental parameters
+                "LAND_MASK"     => lmsk,
+                "PFT_FRACTIONS" => pfts,
+                "CO2"           => co2,
+
+                # soil parameters
                 "SOIL_COLOR"    => scolor,
                 "SOIL_N"        => s_n,
                 "SOIL_α"        => s_α,
                 "SOIL_ΘR"       => s_Θr,
                 "SOIL_ΘS"       => s_Θs,
-                "VCMAX25"       => resample(vcmax, "1D", dts.LABELS.year),
-                "YEAR"          => dts.LABELS.year,
-                "ρ_NIR"         => ρ_nir,
+
+                # canopy parameters
+                "CANOPY_HEIGHT" => max(0.1, zc),
+                "CLUMPING"      => resample(cis, "1D", dts.LABELS.year),
+                "LAI"           => resample(lais, "1D", dts.LABELS.year),
+                "SAI"           => 0,
+
+                # leaf parameters (biophysics)
+                "CHLOROPHYLL"   => resample(chls, "1D", dts.LABELS.year),
+                "LMA"           => lma,
                 "ρ_NIR_C3"      => ρ_nir_c3,
                 "ρ_NIR_C4"      => ρ_nir_c4,
-                "ρ_PAR"         => ρ_par,
                 "ρ_PAR_C3"      => ρ_par_c3,
                 "ρ_PAR_C4"      => ρ_par_c4,
-                "τ_NIR"         => τ_nir,
                 "τ_NIR_C3"      => τ_nir_c3,
                 "τ_NIR_C4"      => τ_nir_c4,
-                "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
-                "τ_PAR_C4"      => τ_par_c4);
+                "τ_PAR_C4"      => τ_par_c4,
+
+                # leaf parameters (photosynthesis)
+                "G1_MEDLYN_C3"  => g1_c3_medlyn,
+                "G1_MEDLYN_C4"  => g1_c4_medlyn,
+                "VCMAX25"       => resample(vcmax, "1D", dts.LABELS.year),
+                "JMAX25"        => resample(vcmax .* 1.73, "1D", dts.LABELS.year),
+                "B6F"           => resample(vcmax .* 0.0089, "1D", dts.LABELS.year),
+    );
     verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
     return gm_dict
 );
 
-grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float64, verification::Bool = true) = (
+grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; verification::Bool = true) = (
     lmsk = read_dataset(dtl.tag_t_lm, lat, lon);
     if !(lmsk > 0)
         return error("The target grid does not contain land!");
@@ -232,46 +252,56 @@ grid_dict(dtl::LandDatasetLabels, lat::Number, lon::Number; FT::DataType = Float
     ρ_nir_c4 = CLM5_ρNIR[ind_c4];
     τ_nir_c4 = CLM5_τNIR[ind_c4];
 
-    gm_dict = Dict{String,Any}(
-                "CANOPY_HEIGHT" => max(0.1, zc),
-                "CHLOROPHYLL"   => resample(chls, "1D", dtl.year),
-                "CLUMPING"      => resample(cis, "1D", dtl.year),
-                "CO2"           => co2,
-                "ELEVATION"     => read_dataset(dtl.tag_t_ele, lat, lon),
-                "FT"            => FT,
-                "G1_MEDLYN_C3"  => g1_c3_medlyn,
-                "G1_MEDLYN_C4"  => g1_c4_medlyn,
-                "LAI"           => resample(lais, "1D", dtl.year),
-                "LAND_MASK"     => lmsk,
+    gm_dict = OrderedDict{String,Any}(
+                # general information
                 "LATITUDE"      => lat,
-                "LAT_INDEX"     => lat_ind(lat, 1/dtl.nx),
-                "LMA"           => lma,
                 "LONGITUDE"     => lon,
-                "LON_INDEX"     => lon_ind(lon, 1/dtl.nx),
-                "MESSAGE_LEVEL" => 0,
+                "ELEVATION"     => read_dataset(dtl.tag_t_ele, lat, lon),
                 "RESO_SPACE"    => dtl.nx,
+                "LAT_INDEX"     => lat_ind(lat, 1/dtl.nx),
+                "LON_INDEX"     => lon_ind(lon, 1/dtl.nx),
+                "YEAR"          => dtl.year,
+
+                # environmental parameters
+                "LAND_MASK"     => lmsk,
                 "PFT_FRACTIONS" => pfts,
-                "SAI"           => nanmax(lais) / 10,
+                "CO2"           => co2,
+
+                # soil parameters
                 "SOIL_COLOR"    => scolor,
                 "SOIL_N"        => s_n,
                 "SOIL_α"        => s_α,
                 "SOIL_ΘR"       => s_Θr,
                 "SOIL_ΘS"       => s_Θs,
-                "VCMAX25"       => resample(vcmax, "1D", dtl.year),
-                "YEAR"          => dtl.year,
-                "ρ_NIR"         => ρ_nir,
+
+                # canopy parameters
+                "CANOPY_HEIGHT" => max(0.1, zc),
+                "CLUMPING"      => resample(cis, "1D", dtl.year),
+                "LAI"           => resample(lais, "1D", dtl.year),
+                "SAI"           => 0,
+
+                # leaf parameters (biophysics)
+                "CHLOROPHYLL"   => resample(chls, "1D", dtl.year),
+                "LMA"           => lma,
                 "ρ_NIR_C3"      => ρ_nir_c3,
                 "ρ_NIR_C4"      => ρ_nir_c4,
-                "ρ_PAR"         => ρ_par,
                 "ρ_PAR_C3"      => ρ_par_c3,
                 "ρ_PAR_C4"      => ρ_par_c4,
-                "τ_NIR"         => τ_nir,
                 "τ_NIR_C3"      => τ_nir_c3,
                 "τ_NIR_C4"      => τ_nir_c4,
-                "τ_PAR"         => τ_par,
                 "τ_PAR_C3"      => τ_par_c3,
-                "τ_PAR_C4"      => τ_par_c4);
+                "τ_PAR_C4"      => τ_par_c4,
+
+                # leaf parameters (photosynthesis)
+                "G1_MEDLYN_C3"  => g1_c3_medlyn,
+                "G1_MEDLYN_C4"  => g1_c4_medlyn,
+                "VCMAX25"       => resample(vcmax, "1D", dtl.year),
+                "JMAX25"        => resample(vcmax .* 1.73, "1D", dtl.year),
+                "B6F"           => resample(vcmax .* 0.0089, "1D", dtl.year),
+    );
     verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
     return gm_dict
 );
+
+grid_dict(gmt::String, year::Int, lat::Number, lon::Number; args...) = grid_dict(LandDatasetLabels(gmt, year), lat, lon; args...);
