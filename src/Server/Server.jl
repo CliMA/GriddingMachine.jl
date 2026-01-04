@@ -1,23 +1,50 @@
 module Server
 
 import Genie.Renderer.Json as GRJSON
+import Genie.Renderer.Html as GRHTML
 
+using Dates: format, now, seconds
 using Genie: down, params, route, up
+using Genie.Requests: postpayload
+using OrderedCollections: OrderedDict
+using Pkg: dependencies
 
-using ..Collector: YAML_TAGS, download_dataset!, update_database!
-using ..Indexer: read_dataset
+using ..Collector: YAML_DATABASE, YAML_TAGS, download_dataset!, update_database!
+using ..Indexer: LandDatasetLabels, grid_dict, read_dataset
+# using Emerald.EmeraldData.GlobalDatasets: LandDatasetLabels, grid_dict
+using Emerald.EmeraldData.WeatherDrivers: grid_weather_driver
+# using ..Indexer: grid_weather
 
 
+# download the Artifacts.yaml file to local GriddingMachine folder
+GriddingMachine.update_database!();
+YAML_FILE_TIME = now();
+
+# Determine GriddingMachine version
+VERS = nothing;
+DEPS = dependencies();
+for (_uuid, _dep) in DEPS
+    global VERS;
+    if _dep.name == "GriddingMachine"
+        VERS = _dep.version;
+        break;
+    end;
+end;
+
+
+# Include feature implementations
 include("json-site-data.jl");
+include("json-artifact.jl");
+include("json-artifact-url.jl");
+include("json-gmdict.jl");
+include("json-weather.jl");
+
+# Include web form templates
+include("web-forms.jl");
+
+# Include route configurations
 include("route-setup.jl");
-include("route-up-down.jl");
-
-
-# import Genie.Renderer.Html as GRHTML
-#
-# using Dates: format, now, seconds
-# using Genie.Requests: postpayload
-# using Pkg: dependencies
+include("route-up-down.jl")
 
 
 
@@ -27,16 +54,6 @@ include("route-up-down.jl");
 # GM.update_database!();
 
 
-# determine the GriddingMachine version
-# DEPS = dependencies();
-# VERS = nothing;
-# for (_uuid, _dep) in DEPS
-#     global VERS;
-#     if _dep.name == "GriddingMachine"
-#         VERS = _dep.version;
-#         break;
-#     end;
-# end;
 
 
 # the features meant for different servers
