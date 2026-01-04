@@ -7,35 +7,14 @@ using Dates: format, now, seconds
 using Genie: down, params, route, up
 using Genie.Requests: postpayload
 using OrderedCollections: OrderedDict
-using Pkg: dependencies
 
 using ..Collector: YAML_DATABASE, YAML_TAGS, download_dataset!, update_database!
 using ..Indexer: LandDatasetLabels, grid_dict, read_dataset
-# using Emerald.EmeraldData.GlobalDatasets: LandDatasetLabels, grid_dict
-using Emerald.EmeraldData.WeatherDrivers: grid_weather_driver
-# using ..Indexer: grid_weather
-
-
-# download the Artifacts.yaml file to local GriddingMachine folder
-GriddingMachine.update_database!();
-YAML_FILE_TIME = now();
-
-# Determine GriddingMachine version
-VERS = nothing;
-DEPS = dependencies();
-for (_uuid, _dep) in DEPS
-    global VERS;
-    if _dep.name == "GriddingMachine"
-        VERS = _dep.version;
-        break;
-    end;
-end;
-
+using ..Indexer: grid_weather
 
 # Include feature implementations
 include("json-site-data.jl");
 include("json-artifact.jl");
-include("json-artifact-url.jl");
 include("json-gmdict.jl");
 include("json-weather.jl");
 
