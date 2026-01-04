@@ -19,6 +19,7 @@ include("json-gmdict.jl");
 include("json-weather.jl");
 
 # Include web form templates
+include("unified-form.jl");
 include("web-forms.jl");
 
 # Include route configurations
