@@ -19,7 +19,6 @@ Available routes:
 """
 function setup_url_input_routes!(allowed_users::Vector{String})
     # Display the allowed users for this local server
-    # TODO:强制用户校验
     println("The url-input server is meant for users: ", join(allowed_users, ", "));
 
     # Legacy route for sitedata request (backward compatibility)
@@ -39,41 +38,6 @@ function setup_url_input_routes!(allowed_users::Vector{String})
         return GRJSON.json(Dict("Error" => "This website is not meant for public use!"))
     end;
 
-
-    return nothing
-end;
-
-
-"""
-
-    setup_public_routes!()
-
-Set up public routes accessible without authentication. These routes provide the main API for GriddingMachine data access.
-
-Available API routes:
-- `/request.json` - Request artifact data with interpolation and std options
-- `/artifact.json` - Alias for /request.json
-- `/url.json` - Get download URL for an artifact
-- `/gmdict.json` - Request GriddingMachine dictionary data
-- `/weather.json` - Request weather driver data (requires Emerald)
-
-Available web interface routes:
-- `/` - Unified form selector (homepage)
-- `/gm_artifact_form` - Artifact data request form
-- `/gm_dict_form` - GM dictionary request form
-- `/gm_weather_form` - Weather data request form
-- `/gm_artifact_result` - Process artifact form submission
-- `/gm_dict_result` - Process GM dictionary form submission
-- `/gm_weather_result` - Process weather form submission
-
-"""
-function setup_public_routes!()
-    println("Setting up public routes for GriddingMachine server...");
-
-    # ===================================================================================
-    # API Routes (JSON responses)
-    # ===================================================================================
-
     # Main artifact data request route
     route("/request.json") do
         user = params(:user, "Anonymous");
@@ -85,7 +49,11 @@ function setup_public_routes!()
 
         @info "Received a direct URL request from $(user) for $(arttag) at lat: $(lat), lon: $(lon)!";
 
-        return artifact_json(user, arttag, lat, lon, cyc; include_std = include_std)
+        if user in allowed_users
+            return artifact_json(user, arttag, lat, lon, cyc; include_std = include_std)
+        end;
+
+        return GRJSON.json(Dict("Error" => "This website is not meant for public use!"))
     end;
 
     # Alias for request.json
@@ -99,16 +67,11 @@ function setup_public_routes!()
 
         @info "Received an artifact request from $(user) for $(arttag) at lat: $(lat), lon: $(lon)!";
 
-        return artifact_json(user, arttag, lat, lon, cyc; include_std = include_std)
-    end;
+        if user in allowed_users
+            return artifact_json(user, arttag, lat, lon, cyc; include_std = include_std)
+        end;
 
-    # Artifact URL route (get download URL)
-    route("/url.json") do
-        arttag = params(:artifact, "Missing");
-
-        @info "Received a URL request for artifact: $(arttag)";
-
-        return artifact_url_json(arttag)
+        return GRJSON.json(Dict("Error" => "This website is not meant for public use!"))
     end;
 
     # GM Dictionary route
@@ -120,22 +83,27 @@ function setup_public_routes!()
         lon = parse(Float64, params(:lon, "115.5"));
 
         @info "Received a gmdict request from $(user) for $(gmversion) year $(year) at lat: $(lat), lon: $(lon)!";
+        if user in allowed_users
+            return gmdict_json(user, gmversion, year, lat, lon)
+        end;
 
-        return gmdict_json(user, gmversion, year, lat, lon)
+        return GRJSON.json(Dict("Error" => "This website is not meant for public use!"))
     end;
 
     # Weather data route
     route("/weather.json") do
         user = params(:user, "Anonymous");
         wdversion = params(:wdversion, "wd1");
-        gmversion = params(:gmversion, "gm2");
         year = parse(Int, params(:year, "2019"));
         lat = parse(Float64, params(:lat, "35.5"));
         lon = parse(Float64, params(:lon, "115.5"));
 
-        @info "Received a weather request from $(user) for $(wdversion)/$(gmversion) year $(year) at lat: $(lat), lon: $(lon)!";
+        @info "Received a weather request from $(user) for $(wdversion) year $(year) at lat: $(lat), lon: $(lon)!";
+        if user in allowed_users
+            return weather_json(user, wdversion, year, lat, lon)
+        end;
 
-        return weather_json(user, wdversion, gmversion, year, lat, lon)
+        return GRJSON.json(Dict("Error" => "This website is not meant for public use!"))
     end;
 
     # ===================================================================================
@@ -182,8 +150,9 @@ function setup_public_routes!()
         include_std = :include_std in postkeys;
 
         @info "Received a WEB request for $(arttag) at lat: $(lat), lon: $(lon)!";
-
+        
         return artifact_json("Anonymous", arttag, lat, lon, cyc; include_std = include_std)
+
     end;
 
     route("/gm_dict_result", method = "POST") do
@@ -193,20 +162,19 @@ function setup_public_routes!()
         lon = parse(Float64, postpayload(:lon));
 
         @info "Received a WEB gmdict request for $(gmversion) year $(year) at lat: $(lat), lon: $(lon)!";
-
+        
         return gmdict_json("Anonymous", gmversion, year, lat, lon)
     end;
 
     route("/gm_weather_result", method = "POST") do
         wdversion = postpayload(:wdv);
-        gmversion = postpayload(:gmv);
         year = parse(Int, postpayload(:year));
         lat = parse(Float64, postpayload(:lat));
         lon = parse(Float64, postpayload(:lon));
 
-        @info "Received a WEB weather request for $(wdversion)/$(gmversion) year $(year) at lat: $(lat), lon: $(lon)!";
-
-        return weather_json("Anonymous", wdversion, gmversion, year, lat, lon)
+        @info "Received a WEB weather request for $(wdversion) year $(year) at lat: $(lat), lon: $(lon)!";
+        
+        return weather_json("Anonymous", wdversion, year, lat, lon)
     end;
 
     return nothing
