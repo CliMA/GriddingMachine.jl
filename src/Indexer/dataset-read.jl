@@ -20,11 +20,11 @@ read_dataset(tf::String; raw_data::Bool = false, read_std::Bool = false) = (
 
     # read std mode
     if read_std
-        return ("std" in varname_nc(fpath)) ? read_nc(fpath, "std") : nothing
+        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std") : nothing
     end;
 
     # read raw data mode
-    if raw_data && ("raw_data" in varname_nc(fpath))
+    if raw_data && ("raw_data" in read_varnames(fpath))
         return read_nc(fpath, "raw_data")
     end;
 
@@ -51,11 +51,11 @@ read_dataset(tf::String, cyc::Int; raw_data::Bool = false, read_std::Bool = fals
 
     # read std mode
     if read_std
-        return ("std" in varname_nc(fpath)) ? read_nc(fpath, "std", cyc) : nothing
+        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", cyc) : nothing
     end;
 
     # read raw data mode
-    if raw_data && ("raw_data" in varname_nc(fpath))
+    if raw_data && ("raw_data" in read_varnames(fpath))
         return read_nc(fpath, "raw_data", cyc)
     end;
 
@@ -82,7 +82,7 @@ read_dataset(tf::String, lat::Number, lon::Number; raw_data::Bool = false, read_
     end;
 
     # determine the resolution
-    (_,sizes) = size_nc(fpath, "lat");
+    (_,sizes) = read_dims(fpath, "lat");
     res = 180 / sizes[1];
 
     # get the index of lat and lon
@@ -91,11 +91,11 @@ read_dataset(tf::String, lat::Number, lon::Number; raw_data::Bool = false, read_
 
     # read std mode
     if read_std
-        return ("std" in varname_nc(fpath)) ? read_nc(fpath, "std", ilon, ilat) : nothing
+        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", ilon, ilat) : nothing
     end;
 
     # read raw data mode
-    if raw_data && ("raw_data" in varname_nc(fpath))
+    if raw_data && ("raw_data" in read_varnames(fpath))
         return read_nc(fpath, "raw_data", ilon, ilat)
     end;
 
@@ -123,7 +123,7 @@ read_dataset(tf::String, lat::Number, lon::Number, cyc::Int; raw_data::Bool = fa
     end;
 
     # determine the resolution
-    (_,sizes) = size_nc(fpath, "lat");
+    (_,sizes) = read_dims(fpath, "lat");
     res = 180 / sizes[1];
 
     # get the index of lat and lon
@@ -132,11 +132,11 @@ read_dataset(tf::String, lat::Number, lon::Number, cyc::Int; raw_data::Bool = fa
 
     # read std mode
     if read_std
-        return ("std" in varname_nc(fpath)) ? read_nc(fpath, "std", ilon, ilat, cyc) : nothing
+        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", ilon, ilat, cyc) : nothing
     end;
 
     # read raw data mode
-    if raw_data && ("raw_data" in varname_nc(fpath))
+    if raw_data && ("raw_data" in read_varnames(fpath))
         return read_nc(fpath, "raw_data", ilon, ilat, cyc)
     end;
 

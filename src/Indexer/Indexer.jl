@@ -1,6 +1,6 @@
 module Indexer
 
-using NetcdfIO: read_nc, size_nc, varname_nc
+using NetcdfIO: read_nc, read_dims, read_varnames
 using OrderedCollections: OrderedDict
 using PkgUtility.DataIO: read_csv
 using PkgUtility.MathTools: gapfill_data!, nanmax, nanmean, regrid, resample
