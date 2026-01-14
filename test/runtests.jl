@@ -6,6 +6,11 @@ using GriddingMachine.Server
 using Test
 
 
+GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
+YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
+test_tag = "CH_2X_1Y_V2"
+
+
 @testset verbose = true "GriddingMachine" begin
     @testset "Server & Requestor" begin
         # up the server
@@ -22,6 +27,100 @@ using Test
         Server.down_servers!();
         @test true;
     end;
+    
+    @testset "Collector" verbose = true begin
+
+        # 1. Test the database management function
+        # corresponding file: database-initialize.jl, database-download.jl, database-load.jl, database-update.jl
+        @testset "Database Management" begin
+            # Test initialization: Check if the folder has been created
+            Collector.initialize_database!();
+            @test isdir(GRIDDINGMACHINE_HOME);
+            @test isdir(joinpath(GRIDDINGMACHINE_HOME, "cache"));
+            @test isdir(joinpath(GRIDDINGMACHINE_HOME, "public"));
+
+            # Test Download Database: Check if Artifacts.yaml exists
+            Collector.download_database!();
+            @test isfile(YAML_FILE);
+
+            # Test loading database: check if the return value is correct
+            (db, tags) = Collector.load_database!();
+            @test isa(db, Dict);
+            @test isa(tags, Vector{String});
+            @test !isempty(tags);
+
+            # Test the overall update process
+            Collector.update_database!();
+            @test true;
+        end;
+
+        # 2. Test dataset metadata query
+        # corresponding file: dataset-info.jl
+        @testset "Dataset Info" begin
+            
+            # Ensure that the tag exists in the database
+            if Collector.dataset_found(test_tag)
+                # Test path generation functions
+                @test Collector.dataset_found(test_tag);
+                @test !isempty(Collector.dataset_url(test_tag));
+                
+                # Check if the generated path format ends in .nc
+                @test endswith(Collector.dataset_path(test_tag), ".nc");
+                @test endswith(Collector.dataset_cache(test_tag), ".nc");
+                
+                # Check if the directory path is valid
+                dir_path = Collector.dataset_dir(test_tag);
+                @test isdir(dir_path);
+            else
+                @warn "Test tag $test_tag not found in database."
+            end
+        end;
+
+        # 3. Test dataset download
+        # corresponding file: dataset-download.jl
+        @testset "Dataset Download" begin
+            test_tag = "CH_2X_1Y_V2";
+            
+            if Collector.dataset_found(test_tag)
+                # Execute download (this will generate a network request)
+                path = Collector.download_dataset!(test_tag);
+                
+                # Check if the downloaded file exists
+                @test isfile(path);
+                
+                # Verify that the returned path matches the expected dataset path
+                @test Collector.download_dataset!(test_tag) == path;
+            end
+        end;
+
+        # 4. Test local file tree query
+        # corresponding file: database-tree.jl
+        @testset "Database Tree" begin
+            # Obtain a list of all the latest data paths in theory
+            latest = Collector.latest_datasets();
+            @test isa(latest, Vector{String});
+            
+            # Retrieve the list of files that actually exist locally
+            local_files = Collector.local_datasets();
+            @test isa(local_files, Vector{String});
+            
+            # Because we just downloaded CH2X_1YV2, the local list should not be empty
+            @test !isempty(local_files);
+        end;
+
+        # 5. Test database cleaning
+        # corresponding file: database-clean.jl
+        @testset "Clean Database" begin
+            # Test cleaning expired files (old)
+            Collector.clean_database!("old");
+            @test true;
+
+            # Test cleaning specified files (optional test: clean the test file just downloaded, restore environment)
+            Collector.clean_database!([test_tag]);
+            @test !isfile(Collector.dataset_path(test_tag));
+        end;
+    end;
+        
 end;
 #=
 @testset verbose = true "GriddingMachine" begin
