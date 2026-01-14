@@ -34,7 +34,8 @@ clean_database!(selection::String = "old") :: Nothing = (
             rm(p; recursive=true, force=true);
         end;
     end;
-
+    # clean up empty folders
+    remove_empty_folders!(public_dir);
     return nothing
 );
 
