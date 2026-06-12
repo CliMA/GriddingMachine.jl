@@ -3,8 +3,15 @@
 CurrentModule = GriddingMachine
 ```
 
+GriddingMachine contains three major submodules: ...
 
 ## Collector
+The Collector module is meant to...
+The first step is to update the database library using the `update_database!()`:
+```@docs
+update_database!
+```
+
 ```@docs
 Collector.clean_database!
 Collector.sync_database!

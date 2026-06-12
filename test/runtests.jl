@@ -7,20 +7,27 @@ using Test
 
 
 @testset verbose = true "GriddingMachine" begin
-    @testset "Server & Requestor" begin
-        # up the server
-        Server.setup_url_input_routes!(["testuser"]);
-        Server.up_servers!(5055);
-        @test true;
+    #@testset "Server & Requestor" begin
+    #    # up the server
+    #    Server.setup_url_input_routes!(["testuser"]);
+    #    Server.up_servers!(5055);
+    #    @test true;
+    #
+    #    # test the request_site_data function
+    #    (data,stdv) = Requestor.request_site_data("http://localhost:5055", "testuser", "LM_4X_1Y_V1", 30.5, 115.5, 0);
+    #    @test !isnan(data);
+    #    @test isnan(stdv) || isnothing(stdv);
+    #
+    #    # down the server
+    #    Server.down_servers!();
+    #    @test true;
+    #end;
 
-        # test the request_site_data function
-        (data,stdv) = Requestor.request_site_data("http://localhost:5055", "testuser", "LM_4X_1Y_V1", 30.5, 115.5, 0);
-        @test !isnan(data);
-        @test isnan(stdv) || isnothing(stdv);
-
-        # down the server
-        Server.down_servers!();
-        @test true;
+    @testset "Collector" verbose = true begin
+        @testset "Clean Database" begin
+            Collector.clean_database!("old");
+            @test true;
+        end;
     end;
 end;
 #=

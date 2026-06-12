@@ -27,11 +27,12 @@ clean_database!(selection::String = "old") :: Nothing = (
     # otherwise, remove the old artifacts (update database first)
     if selection == "old"
         update_database!();
-        lastest_dataset_paths = latest_datasets();
+        latest_dataset_paths = latest_datasets();
         local_dataset_paths = local_datasets();
-        outdated_paths = setdiff(local_dataset_paths, lastest_dataset_paths);
+        outdated_paths = setdiff(local_dataset_paths, latest_dataset_paths);
         for p in outdated_paths
-            rm(p; recursive=true, force=true);
+            @show p;
+            # rm(p; recursive=true, force=true);
         end;
     end;
 
