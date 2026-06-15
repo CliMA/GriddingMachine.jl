@@ -50,10 +50,17 @@ end;
 
 
 function ip_address_ping(ipadd::String)
-    return try
-        pinginfo = read(`ping -c 1 -W 2 $(ipadd)`, String);
-        parse(Float64, match(r"time=(\d+\.?\d*) ms", pinginfo)[1])
-    catch
-        Inf
+    pinginfo = read(`ping -c 1 -W 2 $(ipadd)`, String);
+
+    # the case in Mac
+    if occursin("round-trip min/avg/max/stddev", pinginfo)
+        return parse(Float64, match(r"round-trip min/avg/max/stddev = \d+\.?\d*/(\d+\.?\d*)/\d+\.?\d*/\w+ ms", pinginfo).captures[1])
+    # the case in Linux
+    elseif occursin("time=", pinginfo)
+        return parse(Float64, match(r"time=(\d+\.?\d*) ms", pinginfo)[1])
+    # unsupported strings
+    else
+        @error "Unexpected ping output format, cannot parse ping time. Output: $pinginfo";
+        return Inf
     end;
 end;
