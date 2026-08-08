@@ -12,9 +12,9 @@ weather = Indexer.WeatherDrivers{Float64}(
     weather_values .+ 1,
 )
 weather_dict = Indexer.grid_weather(weather, 2, 1)
-@test collect(keys(weather_dict)) == [
+@test Set(keys(weather_dict)) == Set([
     "FDOY", "PATM", "PPT", "RAD_SW_DIF", "RAD_SW_DIR", "RAD_LW", "TAIR", "VPD", "WIND",
-]
+])
 @test weather_dict["PATM"] == vec(weather.patm[1, 2, :])
 @test weather_dict["TAIR"] == vec(weather.t_air[1, 2, :])
 @test weather_dict["FDOY"] == (Float64.(collect(1:4)) .- 0.5 .- 6) ./ 24
