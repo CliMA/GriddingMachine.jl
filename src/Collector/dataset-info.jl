@@ -28,6 +28,7 @@ function dataset_url(arttag::String)
     return copy(_entry(arttag)["URL"])
 end
 
+"""Return a copy of the validated catalog metadata for one dataset tag."""
 function dataset_info(arttag::String)
     return copy(_entry(arttag))
 end

@@ -1,36 +1,20 @@
-"""
-
-    lat_ind(lat::Number, res::Number)
-
-Compute the latitude index from -90 to 90 degrees, given
-- `lat`: latitude in degrees
-- `res`: resolution in degrees (per grid)
-
-"""
+"""Return the 1-based latitude-cell index for a regular global grid."""
 function lat_ind(lat::Number, res::Number)
-    @assert -90 <= lat <= 90;
+    @assert -90 <= lat <= 90
+    @assert res > 0 && 180 / res >= 1
+    n_lat = round(Int, 180 / res)
+    return clamp(Int(fld(lat + 90, res)) + 1, 1, n_lat)
+end
 
-    return Int(fld(lat + 90, res)) + 1
-end;
-
-
-"""
-
-    lon_ind(lon::Number, res::Number)
-
-Compute the longitude index from -180 to 180 degrees, given
-- `lon`: longitude in degrees (if >180, it will be converted to -180 to 180)
-- `res`: resolution in degrees (per grid)
-
-"""
+"""Return the 1-based longitude-cell index, wrapping longitudes outside `[-180, 180]`."""
 function lon_ind(lon::Number, res::Number)
-    newlon = if lon > 180
-        @warn "Longitude exceeds 180°, subtracting 360° to make it within -180° to 180° range";
-        lon - 360
-    else
+    @assert res > 0 && 360 / res >= 1
+    newlon = if -180 <= lon <= 180
         lon
-    end;
-    @assert -180 <= newlon <= 180;
-
-    return Int(fld(newlon + 180, res)) + 1
-end;
+    else
+        @warn "Longitude is outside [-180, 180] degrees; wrapping it to this interval"
+        mod(lon + 180, 360) - 180
+    end
+    n_lon = round(Int, 360 / res)
+    return clamp(Int(fld(newlon + 180, res)) + 1, 1, n_lon)
+end

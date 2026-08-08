@@ -1,5 +1,7 @@
 module Indexer
 
+export grid_dict, grid_weather, lat_ind, lon_ind, read_dataset, read_LUT
+
 using NetcdfIO: read_nc, read_dims, read_varnames
 using OrderedCollections: OrderedDict
 using PkgUtility.DataIO: read_csv

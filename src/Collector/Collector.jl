@@ -17,6 +17,7 @@ YAML_FILE = ""
 const YAML_DATABASE = Dict{String,Any}()
 const YAML_TAGS = String[]
 
+"""Configure the local data root and external catalog without performing network I/O."""
 function configure!(;
         home::AbstractString = get(ENV, "GRIDDING_MACHINE_HOME", joinpath(homedir(), "GriddingMachine")),
         catalog_url::AbstractString = get(ENV, "GRIDDING_MACHINE_CATALOG_URL", "https://zenodo.org/records/15622411"),

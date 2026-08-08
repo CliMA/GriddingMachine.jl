@@ -1,5 +1,7 @@
 using GriddingMachine
 using GriddingMachine.Collector
+using GriddingMachine.Indexer
+using NetcdfIO: append_nc!, save_nc!
 using SHA
 using Test
 using YAML
@@ -153,5 +155,9 @@ end
             Collector.clean_database!("all")
             @test isempty(Collector.local_datasets())
         end
+    end
+
+    @testset "Indexer read_dataset" begin
+        include("indexer-read.jl")
     end
 end

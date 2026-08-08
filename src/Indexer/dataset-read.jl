@@ -1,148 +1,58 @@
+function read_dataset end
 
-function read_dataset end;
+function _dataset_file(tf::String)
+    isfile(tf) && return tf
+    endswith(lowercase(tf), ".nc") && error("The local dataset file $tf does not exist")
+    downloaded = download_dataset!(tf)
+    isfile(downloaded) || error("The dataset file $downloaded does not exist")
+    return downloaded
+end
 
-"""
+function _dataset_variable(fpath::String; raw_data::Bool = false, read_std::Bool = false)
+    variables = read_varnames(fpath)
+    read_std && return "std" in variables ? "std" : nothing
+    return raw_data && "raw_data" in variables ? "raw_data" : "data"
+end
 
-    read_dataset(tf::String; raw_data::Bool = false, read_std::Bool = false)
+function _site_indices(fpath::String, lat::Number, lon::Number)
+    (_, sizes) = read_dims(fpath, "lat")
+    resolution = 180 / sizes[1]
+    return lon_ind(lon, resolution), lat_ind(lat, resolution)
+end
 
-Read the entire dataset from the given file name or tag name, given
-- `tf` local file name (ending with `.nc`) or remote tag name
-- `raw_data` if true, read the `raw_data` variable from the dataset file (if exists, otherwise read `data` variable)
-- `read_std` if true, read the `std` variable from the dataset file (if exists, otherwise return `nothing`)
+"""Read an entire local NetCDF file or a catalog dataset tag."""
+function read_dataset(tf::String; raw_data::Bool = false, read_std::Bool = false)
+    fpath = _dataset_file(tf)
+    variable = _dataset_variable(fpath; raw_data, read_std)
+    isnothing(variable) && return nothing
+    return read_nc(fpath, variable)
+end
 
-"""
-read_dataset(tf::String; raw_data::Bool = false, read_std::Bool = false) = (
-    # if the file end with .nc, it is a local file
-    fpath = endswith(tf, ".nc") ? tf : download_dataset!(tf);
-    if !isfile(fpath)
-        error("The dataset file $fpath does not exist!");
-    end;
+"""Read one 1-based cycle from a local NetCDF file or catalog dataset tag."""
+function read_dataset(tf::String, cyc::Int; raw_data::Bool = false, read_std::Bool = false)
+    fpath = _dataset_file(tf)
+    variable = _dataset_variable(fpath; raw_data, read_std)
+    isnothing(variable) && return nothing
+    return read_nc(fpath, variable, cyc)
+end
 
-    # read std mode
-    if read_std
-        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std") : nothing
-    end;
+"""Read all cycles at the grid cell containing `(lat, lon)`."""
+function read_dataset(tf::String, lat::Number, lon::Number; raw_data::Bool = false, read_std::Bool = false)
+    fpath = _dataset_file(tf)
+    variable = _dataset_variable(fpath; raw_data, read_std)
+    isnothing(variable) && return nothing
+    ilon, ilat = _site_indices(fpath, lat, lon)
+    return read_nc(fpath, variable, ilon, ilat)
+end
 
-    # read raw data mode
-    if raw_data && ("raw_data" in read_varnames(fpath))
-        return read_nc(fpath, "raw_data")
-    end;
+"""Read one cycle at the grid cell containing `(lat, lon)`."""
+function read_dataset(tf::String, lat::Number, lon::Number, cyc::Int; raw_data::Bool = false, read_std::Bool = false)
+    fpath = _dataset_file(tf)
+    variable = _dataset_variable(fpath; raw_data, read_std)
+    isnothing(variable) && return nothing
+    ilon, ilat = _site_indices(fpath, lat, lon)
+    return read_nc(fpath, variable, ilon, ilat, cyc)
+end
 
-    return read_nc(fpath, "data");
-);
-
-"""
-
-    read_dataset(tf::String, cyc::Int; raw_data::Bool = false, read_std::Bool = false)
-
-Read the dataset at the given cycle, given
-- `tf` local file name (ending with `.nc`) or remote tag name
-- `cyc` cycle index (1-based)
-- `raw_data` if true, read the `raw_data` variable from the dataset file (if exists, otherwise read `data` variable)
-- `read_std` if true, read the `std` variable from the dataset file (if exists, otherwise return `nothing`)
-
-"""
-read_dataset(tf::String, cyc::Int; raw_data::Bool = false, read_std::Bool = false) = (
-    # if the file end with .nc, it is a local file
-    fpath = endswith(tf, ".nc") ? tf : download_dataset!(tf);
-    if !isfile(fpath)
-        error("The dataset file $fpath does not exist!");
-    end;
-
-    # read std mode
-    if read_std
-        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", cyc) : nothing
-    end;
-
-    # read raw data mode
-    if raw_data && ("raw_data" in read_varnames(fpath))
-        return read_nc(fpath, "raw_data", cyc)
-    end;
-
-    return read_nc(fpath, "data", cyc);
-);
-
-"""
-
-    read_dataset(tf::String, lat::Number, lon::Number; raw_data::Bool = false, read_std::Bool = false)
-
-Read the dataset value at the site level, given
-- `tf` local file name (ending with `.nc`) or remote tag name
-- `lat` latitude of the site
-- `lon` longitude of the site
-- `raw_data` if true, read the `raw_data` variable from the dataset file (if exists, otherwise read `data` variable)
-- `read_std` if true, read the `std` variable from the dataset file (if exists, otherwise return `nothing`)
-
-"""
-read_dataset(tf::String, lat::Number, lon::Number; raw_data::Bool = false, read_std::Bool = false) = (
-    # if the file end with .nc, it is a local file
-    fpath = isfile(tf) ? tf : download_dataset!(tf);
-    if !isfile(fpath)
-        error("The dataset file $fpath does not exist!");
-    end;
-
-    # determine the resolution
-    (_,sizes) = read_dims(fpath, "lat");
-    res = 180 / sizes[1];
-
-    # get the index of lat and lon
-    ilat = lat_ind(lat, res);
-    ilon = lon_ind(lon, res);
-
-    # read std mode
-    if read_std
-        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", ilon, ilat) : nothing
-    end;
-
-    # read raw data mode
-    if raw_data && ("raw_data" in read_varnames(fpath))
-        return read_nc(fpath, "raw_data", ilon, ilat)
-    end;
-
-    return read_nc(fpath, "data", ilon, ilat)
-);
-
-"""
-
-    read_dataset(tf::String, lat::Number, lon::Number, cyc::Int; raw_data::Bool = false, read_std::Bool = false)
-
-Read the dataset value at the site level and given cycle, given
-- `tf` local file name (ending with `.nc`) or remote tag name
-- `lat` latitude of the site
-- `lon` longitude of the site
-- `cyc` cycle index (for example, 1:12 for January to December, users need to know the dimensions a priori)
-- `raw_data` if true, read the `raw_data` variable from the dataset file (if exists, otherwise read `data` variable)
-- `read_std` if true, read the `std` variable from the dataset file (if exists, otherwise return `nothing`)
-
-"""
-read_dataset(tf::String, lat::Number, lon::Number, cyc::Int; raw_data::Bool = false, read_std::Bool = false) = (
-    # if the file end with .nc, it is a local file
-    fpath = isfile(tf) ? tf : download_dataset!(tf);
-    if !isfile(fpath)
-        error("The dataset file $fpath does not exist!");
-    end;
-
-    # determine the resolution
-    (_,sizes) = read_dims(fpath, "lat");
-    res = 180 / sizes[1];
-
-    # get the index of lat and lon
-    ilat = lat_ind(lat, res);
-    ilon = lon_ind(lon, res);
-
-    # read std mode
-    if read_std
-        return ("std" in read_varnames(fpath)) ? read_nc(fpath, "std", ilon, ilat, cyc) : nothing
-    end;
-
-    # read raw data mode
-    if raw_data && ("raw_data" in read_varnames(fpath))
-        return read_nc(fpath, "raw_data", ilon, ilat, cyc)
-    end;
-
-    return read_nc(fpath, "data", ilon, ilat, cyc)
-);
-
-
-""" read_LUT() is an alias of read_dataset() """
-read_LUT = read_dataset;
+"""Compatibility alias retained for code written against GriddingMachine 0.4."""
+const read_LUT = read_dataset

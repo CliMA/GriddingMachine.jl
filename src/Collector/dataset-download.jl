@@ -4,6 +4,7 @@ function _sha256_file(path::AbstractString)
     end
 end
 
+"""Check an existing file against the optional SIZE and SHA256 catalog fields."""
 function verify_dataset_file(path::AbstractString, arttag::String; require_integrity::Bool = false)
     isfile(path) || return false
     expected_size, expected_sha256 = _expected_integrity(arttag)
