@@ -160,4 +160,8 @@ end
     @testset "Indexer read_dataset" begin
         include("indexer-read.jl")
     end
+
+    @testset "Model input dictionaries" begin
+        include("model-inputs.jl")
+    end
 end

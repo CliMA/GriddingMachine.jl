@@ -29,6 +29,8 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
 
     # return the grid dictionary if the grid is masked as soil
     if dts.mask_soil[ilon,ilat]
+        daily_zero = resample(fill(FT(0), 12), "1D", dts.LABELS.year);
+        daily_one = resample(fill(FT(1), 12), "1D", dts.LABELS.year);
         gm_dict = OrderedDict{String,Any}(
                     # general information
                     "LATITUDE"      => (ilat - 0.5) * reso - 90,
@@ -53,12 +55,12 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
 
                     # canopy parameters
                     "CANOPY_HEIGHT" => 0,
-                    "CLUMPING"      => resample(1, "1D", dts.LABELS.year),
-                    "LAI"           => resample(0, "1D", dts.LABELS.year),
+                    "CLUMPING"      => daily_one,
+                    "LAI"           => copy(daily_zero),
                     "SAI"           => 0,
 
                     # leaf parameters (biophysics)
-                    "CHLOROPHYLL"   => resample(0, "1D", dts.LABELS.year),
+                    "CHLOROPHYLL"   => copy(daily_zero),
                     "LMA"           => 0,
                     "ρ_NIR_C3"      => 0,
                     "ρ_NIR_C4"      => 0,
@@ -72,9 +74,9 @@ grid_dict(dts::LandDatasets{FT}, ilat::Int, ilon::Int; verification::Bool = true
                     # leaf parameters (photosynthesis)
                     "G1_MEDLYN_C3"  => 0,
                     "G1_MEDLYN_C4"  => 0,
-                    "VCMAX25"       => resample(0, "1D", dts.LABELS.year),
-                    "JMAX25"        => resample(0, "1D", dts.LABELS.year),
-                    "B6F"           => resample(0, "1D", dts.LABELS.year),
+                    "VCMAX25"       => copy(daily_zero),
+                    "JMAX25"        => copy(daily_zero),
+                    "B6F"           => copy(daily_zero),
         );
         verification ? (@assert NaN_test(gm_dict) "gm_dict contains NaN values") : nothing;
 
