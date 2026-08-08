@@ -1,49 +1,38 @@
-""" Return the cache dataset file path for a given artifact tag """
+function _entry(arttag::AbstractString)
+    _ensure_database_loaded!()
+    haskey(YAML_DATABASE, arttag) || error("Dataset $arttag does not exist in the catalog")
+    return YAML_DATABASE[String(arttag)]
+end
+
+"""Return the stable cache path kept for compatibility; downloads use unique `.part` files."""
 function dataset_cache(arttag::String)
-    if !dataset_found(arttag)
-        return error("Dataset $arttag does not exist in the database, please check the website for the available datasets!")
-    end;
-
+    _entry(arttag)
     return joinpath(GRIDDINGMACHINE_HOME, "cache", "$(arttag).nc")
-end;
+end
 
-
-""" Return the dataset directory for a given artifact tag """
 function dataset_dir(arttag::String)
-    if !dataset_found(arttag)
-        return error("Dataset $arttag does not exist in the database, please check the website for the available datasets!")
-    end;
+    entry = _entry(arttag)
+    return joinpath(GRIDDINGMACHINE_HOME, entry["PATH"])
+end
 
-    art_dir = joinpath(GRIDDINGMACHINE_HOME, YAML_DATABASE[arttag]["PATH"]);
-    if !ispath(art_dir)
-        mkpath(art_dir);
-    end;
-
-    return art_dir
-end;
-
-
-""" Return whether the dataset exists in the database """
 function dataset_found(arttag::String)
-    return arttag in YAML_TAGS
-end;
+    _ensure_database_loaded!()
+    return haskey(YAML_DATABASE, arttag)
+end
 
-
-""" Return the dataset file path for a given artifact tag """
 function dataset_path(arttag::String)
-    if !dataset_found(arttag)
-        return error("Dataset $arttag does not exist in the database, please check the website for the available datasets!")
-    end;
+    return joinpath(dataset_dir(arttag), "$(arttag).nc")
+end
 
-    return joinpath(GRIDDINGMACHINE_HOME, YAML_DATABASE[arttag]["PATH"], "$(arttag).nc")
-end;
-
-
-""" Return the dataset download URL for a given artifact tag """
 function dataset_url(arttag::String)
-    if !dataset_found(arttag)
-        return error("Dataset $arttag does not exist in the database, please check the website for the available datasets!")
-    end;
+    return copy(_entry(arttag)["URL"])
+end
 
-    return YAML_DATABASE[arttag]["URL"]
-end;
+function dataset_info(arttag::String)
+    return copy(_entry(arttag))
+end
+
+function _expected_integrity(arttag::String)
+    entry = _entry(arttag)
+    return get(entry, "SIZE", nothing), get(entry, "SHA256", nothing)
+end

@@ -1,105 +1,157 @@
 using GriddingMachine
 using GriddingMachine.Collector
-using GriddingMachine.Indexer
-using GriddingMachine.Requestor
-using GriddingMachine.Server
+using SHA
 using Test
+using YAML
 
+sha256_hex(data::Vector{UInt8}) = bytes2hex(SHA.sha256(data))
+
+function write_catalog(path, database)
+    mkpath(dirname(path))
+    write(path, YAML.write(database))
+    return path
+end
+
+function catalog_entry(urls, data::Vector{UInt8}; path = "public/v0", integrity = true)
+    entry = Dict{String,Any}("PATH" => path, "URL" => urls)
+    if integrity
+        entry["SIZE"] = length(data)
+        entry["SHA256"] = sha256_hex(data)
+    end
+    return entry
+end
 
 @testset verbose = true "GriddingMachine" begin
-    #@testset "Server & Requestor" begin
-    #    # up the server
-    #    Server.setup_url_input_routes!(["testuser"]);
-    #    Server.up_servers!(5055);
-    #    @test true;
-    #
-    #    # test the request_site_data function
-    #    (data,stdv) = Requestor.request_site_data("http://localhost:5055", "testuser", "LM_4X_1Y_V1", 30.5, 115.5, 0);
-    #    @test !isnan(data);
-    #    @test isnan(stdv) || isnothing(stdv);
-    #
-    #    # down the server
-    #    Server.down_servers!();
-    #    @test true;
-    #end;
+    mktempdir() do root
+        home = joinpath(root, "gm-home")
+        catalog_file = joinpath(home, "Artifacts.yaml")
+        good_a = collect(codeunits("synthetic-netcdf-a"))
+        good_b = collect(codeunits("synthetic-netcdf-b"))
+        database = Dict(
+            "A_1X_1Y_V1" => catalog_entry(["https://bad.invalid/A", "https://good.invalid/A"], good_a),
+            "B_1X_1Y_V1" => catalog_entry(["https://good.invalid/B"], good_b),
+            "LEGACY_1X_1Y_V1" => catalog_entry(["https://good.invalid/legacy"], good_a; integrity = false),
+        )
+        write_catalog(catalog_file, database)
 
-    @testset "Collector" verbose = true begin
-        @testset "Clean Database" begin
-            Collector.clean_database!("old");
-            @test true;
-        end;
-    end;
-end;
-#=
-@testset verbose = true "GriddingMachine" begin
-    @testset "Database" begin
-        # the update functions
-        GriddingMachine.update_database!(); @test true;
+        Collector.configure!(; home, catalog_file, catalog_url = "https://catalog.invalid/catalog")
+        @test !isdir(joinpath(home, "cache"))
 
-        # the judge functions
-        GriddingMachine.artifact_exists("CH_2X_1Y_V2"); @test true;
-        GriddingMachine.artifact_exists("031f34db3ce1921a723d8e4151ee6c6fe5566714"); @test true;
-        GriddingMachine.artifact_downloaded("CH_2X_1Y_V2"); @test true;
+        @testset "Catalog initialization and schema" begin
+            loaded, tags = Collector.load_database!(; download_if_missing = false)
+            @test Set(tags) == Set(keys(database))
+            @test loaded["A_1X_1Y_V1"]["SIZE"] == length(good_a)
+            @test isdir(joinpath(home, "cache"))
+            @test isdir(joinpath(home, "public"))
+            @test_throws Collector.CatalogValidationError Collector.validate_catalog(
+                Dict("BAD" => Dict("PATH" => "../outside", "URL" => String[])),
+            )
+        end
 
-        # the index functions
-        GriddingMachine.artifact_file("CH_2X_1Y_V2"); @test true;
-        GriddingMachine.artifact_folder("CH_2X_1Y_V2"); @test true;
-        GriddingMachine.artifact_sha("CH_2X_1Y_V2"); @test true;
-        GriddingMachine.artifact_tags(); @test true;
-        GriddingMachine.cache_folder(); @test true;
-        GriddingMachine.public_folder(); @test true;
-        GriddingMachine.tarball_folder(); @test true;
-        GriddingMachine.tarball_folder("CH_2X_1Y_V2"); @test true;
-        GriddingMachine.tarball_file("CH_2X_1Y_V2"); @test true;
-    end;
+        @testset "Transactional catalog update" begin
+            original_catalog = read(catalog_file)
+            invalid_remote = write_catalog(
+                joinpath(root, "invalid.yaml"),
+                Dict("BAD" => Dict("PATH" => "../outside", "URL" => ["https://bad.invalid/data"])),
+            )
+            copier = (source, destination) -> cp(source, destination; force = true)
+            @test_throws Collector.CatalogValidationError Collector.update_database!(;
+                source = invalid_remote,
+                downloader = copier,
+                resolve_source = false,
+            )
+            @test read(catalog_file) == original_catalog
+            @test Collector.dataset_found("A_1X_1Y_V1")
 
-    @testset "Collector" begin
-        # test download_artifact! function
-        Collector.download_artifact!("CH_2X_1Y_V2"); @test true;
-        Collector.download_artifact!("PFT_2X_1Y_V1"); @test true;
+            updated = deepcopy(database)
+            updated["C_1X_1Y_V1"] = catalog_entry(["https://good.invalid/C"], good_a)
+            valid_remote = write_catalog(joinpath(root, "valid.yaml"), updated)
+            @test isnothing(Collector.update_database!(;
+                source = valid_remote,
+                downloader = copier,
+                resolve_source = false,
+            ))
+            @test Collector.dataset_found("C_1X_1Y_V1")
+            @test isfile(joinpath(home, "Artifacts.previous.yaml"))
+        end
 
-        # clean up artifacts
-        Collector.clean_database!("old"); @test true;
-    end;
+        @testset "Mirror fallback, cache isolation, and integrity" begin
+            attempts = String[]
+            function fixture_downloader(url, destination)
+                push!(attempts, url)
+                if occursin("bad", url)
+                    write(destination, "not-netcdf")
+                elseif endswith(url, "/A") || endswith(url, "/C") || endswith(url, "/legacy")
+                    write(destination, good_a)
+                elseif endswith(url, "/B")
+                    write(destination, good_b)
+                else
+                    error("unavailable fixture URL")
+                end
+                return destination
+            end
+            probe = url -> occursin("bad", url) ? 0.0 : 1.0
 
-    @testset "Indexer" begin
-        Indexer.read_LUT("CI_2X_1Y_V1"); @test true;
-        Indexer.read_LUT("CI_2X_1M_V3"); @test true;
-        Indexer.read_LUT("CI_2X_1M_V3", 8); @test true;
-        Indexer.read_LUT("CI_2X_1M_V3", 30, 116); @test true;
-        Indexer.read_LUT("CI_2X_1M_V3", 30, 116; interpolation = true); @test true;
-        Indexer.read_LUT("CI_2X_1M_V3", 30, 116, 8); @test true;
-        Indexer.read_LUT("REFLECTANCE_MCD43A4_B1_1X_1M_2000_V1", 30, 116, 8); @test true;
-    end;
+            stale_cache = Collector.dataset_cache("A_1X_1Y_V1")
+            write(stale_cache, "stale-cache")
+            downloaded = Collector.download_dataset!(
+                "A_1X_1Y_V1";
+                downloader = fixture_downloader,
+                probe,
+                require_integrity = true,
+            )
+            @test read(downloaded) == good_a
+            @test attempts == ["https://bad.invalid/A", "https://good.invalid/A"]
+            @test read(stale_cache, String) == "stale-cache"
+            @test Collector.verify_dataset_file(downloaded, "A_1X_1Y_V1"; require_integrity = true)
 
-    @testset "Blender" begin
-        Blender.regrid(rand(720,360), 1); @test true;
-        Blender.regrid(rand(720,360,2), 1); @test true;
-        Blender.regrid(rand(360,180), 2); @test true;
-        Blender.regrid(rand(360,180,2), 2); @test true;
-        Blender.regrid(rand(360,180), (144,96)); @test true;
-        Blender.regrid(rand(360,180,2), (144,96)); @test true;
-    end;
+            write(downloaded, "previous-formal-file")
+            always_fail = (url, destination) -> error("forced failure")
+            @test_throws ErrorException Collector.download_dataset!(
+                "A_1X_1Y_V1";
+                downloader = always_fail,
+                probe = _ -> Inf,
+                require_integrity = true,
+            )
+            @test read(downloaded, String) == "previous-formal-file"
+            @test isempty(filter(name -> endswith(name, ".part"), readdir(joinpath(home, "cache"))))
 
-    @testset "Requestor" begin
-        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5); @test true;
-        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5; interpolation=true); @test true;
-        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8); @test true;
-        Requestor.request_site_data("LAI_MODIS_2X_8D_2017_V1", 30.5, 115.5, 8; interpolation=true); @test true;
-    end;
+            @test_throws Collector.CatalogValidationError Collector.download_dataset!(
+                "LEGACY_1X_1Y_V1";
+                downloader = fixture_downloader,
+                probe,
+                require_integrity = true,
+            )
+        end
 
-    #=
-    @testset "Partitioner" begin
-        if Sys.islinux() && (Sys.total_memory() / 2^30) > 64
-            folder = "/net/fluo/data2/pool/database/GriddingMachine/test/partitioner_tests/"
-            Partitioner.partition_from_json(folder * "partition_test_random.json"); @test true;
-            Partitioner.clean_files(folder * "partition_test_random.json", 2023; months = [1]); @test true;
-            Partitioner.partition_from_json(folder * "partition_test_oco2.json"); @test true;
-            Partitioner.get_data_from_json(folder * "partition_test_oco2.json", [-50.1 -19.8; 70.2 -18.2; 60.3 12.2; -40.7 11.4], 2022); @test true;
-            Partitioner.clean_files(folder * "partition_test_oco2.json", 2022; months = [1]); @test true;
-            rm(folder * "partitioned_files"; recursive = true); @test true;
-        end;
-    end;
-    =#
-end;
-=#
+        @testset "Sync, information, tree, and cleanup" begin
+            fixture_downloader = function(url, destination)
+                write(destination, endswith(url, "/B") ? good_b : good_a)
+                return destination
+            end
+            @test isnothing(Collector.sync_database!(;
+                tags = ["B_1X_1Y_V1", "C_1X_1Y_V1"],
+                update = false,
+                download_kwargs = (
+                    downloader = fixture_downloader,
+                    probe = _ -> 0.0,
+                    require_integrity = true,
+                ),
+            ))
+            @test Collector.dataset_info("B_1X_1Y_V1")["SHA256"] == sha256_hex(good_b)
+            @test Collector.dataset_url("B_1X_1Y_V1") == ["https://good.invalid/B"]
+            @test all(isfile, [Collector.dataset_path("B_1X_1Y_V1"), Collector.dataset_path("C_1X_1Y_V1")])
+
+            orphan = joinpath(home, "public", "orphan.nc")
+            write(orphan, "orphan")
+            Collector.clean_database!("old"; update = false)
+            @test !isfile(orphan)
+            @test isfile(Collector.dataset_path("B_1X_1Y_V1"))
+
+            Collector.clean_database!(["B_1X_1Y_V1"])
+            @test !isfile(Collector.dataset_path("B_1X_1Y_V1"))
+            Collector.clean_database!("all")
+            @test isempty(Collector.local_datasets())
+        end
+    end
+end

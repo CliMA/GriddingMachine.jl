@@ -1,39 +1,50 @@
-""" Download the database of GriddingMachine.jl """
-function download_database!()
-    # download the HTML file from Zenodo and then decode it
-    html_lines = readlines(Downloads.download(YAML_URL));
+function _catalog_download_url(source::AbstractString)
+    occursin(r"/files/.*\.ya?ml(?:\?|$)"i, source) && return String(source)
 
-    # find the first line that contains "Artifacts.yaml?download=1"
-    iline_record = findfirst(line -> occursin("Artifacts.yaml?download=1", line), html_lines);
-    latest_record = html_lines[iline_record];
+    response = HTTP.get(source; status_exception = false)
+    200 <= response.status < 400 || error("Catalog landing page returned HTTP $(response.status): $source")
+    html = String(response.body)
+    matched = match(r"https?://[^\"']+/records/\d+/files/Artifacts\.ya?ml(?:\?download=1)?"i, html)
+    if !isnothing(matched)
+        return matched.match
+    end
+    matched = match(r"/records/\d+/files/Artifacts\.ya?ml(?:\?download=1)?"i, html)
+    isnothing(matched) && error("Could not locate Artifacts.yaml on catalog landing page: $source")
+    return "https://zenodo.org$(matched.match)"
+end
 
-    # find the record id from records/15622412/files/Artifacts.yaml?download=1
-    is_start = findfirst("records/", latest_record);
-    is_stop= findfirst("/files/Artifacts.yaml", latest_record);
-    latest_record_url = "https://zenodo.org/$(latest_record[is_start[1]:is_stop[end]])";
-    latest_record_id = latest_record[is_start[end]+1:is_stop[1]-1];
+"""Download, validate, and transactionally replace the external YAML catalog."""
+function download_database!(;
+        source::AbstractString = YAML_URL,
+        catalog_file::AbstractString = YAML_FILE,
+        downloader = Downloads.download,
+        resolve_source::Bool = true,
+    )
+    initialize_database!()
+    catalog_dir = dirname(catalog_file)
+    mkpath(catalog_dir)
+    temporary_file = joinpath(catalog_dir, ".$((basename(catalog_file))).$(getpid()).tmp.yaml")
+    backup_file = joinpath(catalog_dir, "Artifacts.previous.yaml")
+    rm(temporary_file; force = true)
 
-    # if the id is the same as the last one, do nothing
-    if (latest_record_id == ZENODO_RECORD) && isfile(YAML_FILE) && isfile(ZENODO_FILE)
-        @info "The Artifacts.yaml file is already up to date (record $(latest_record_id))!";
+    try
+        download_url = resolve_source ? _catalog_download_url(source) : String(source)
+        downloader(download_url, temporary_file)
+        raw_database = read_library(temporary_file)
+        raw_database isa AbstractDict || throw(CatalogValidationError(["catalog root must be a mapping"]))
+        validate_catalog(raw_database)
 
-        return nothing;
-    end;
-
-    # download the Artifacts.yaml file
-    @info "Downloading the latest Artifacts.yaml (record $(latest_record_id)) from: $latest_record_url";
-    download_yaml_file = retry(delays = fill(1.0, 3)) do
-        Downloads.download(latest_record_url, YAML_FILE);
-
-        # write the latest record id to the Zenodo file
-        fileio = open(ZENODO_FILE, "w");
-        write(fileio, latest_record_id);
-        close(fileio);
-        global ZENODO_RECORD;
-        ZENODO_RECORD = latest_record_id;
-        @info "Downloaded the Artifacts.yaml (record $(ZENODO_RECORD)) file successfully!";
-    end;
-    download_yaml_file();
-
-    return nothing
-end;
+        had_catalog = isfile(catalog_file)
+        had_catalog && cp(catalog_file, backup_file; force = true)
+        try
+            mv(temporary_file, catalog_file; force = true)
+        catch
+            had_catalog && isfile(backup_file) && cp(backup_file, catalog_file; force = true)
+            rethrow()
+        end
+        return catalog_file
+    catch
+        rm(temporary_file; force = true)
+        rethrow()
+    end
+end

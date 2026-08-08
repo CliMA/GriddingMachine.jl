@@ -1,25 +1,46 @@
 module Collector
 
 using Downloads
+using HTTP
+using SHA
 using PkgUtility.ArtifactTools: read_library
 
+export CatalogValidationError, clean_database!, configure!, dataset_cache, dataset_dir,
+    dataset_found, dataset_info, dataset_path, dataset_url, download_database!,
+    download_dataset!, initialize_database!, latest_datasets, load_database!,
+    local_datasets, sync_database!, update_database!, validate_catalog,
+    verify_dataset_file
 
-# make sure the GriddingMachine directory exists
-GRIDDINGMACHINE_HOME = joinpath(homedir(), "GriddingMachine");
-mkpath(GRIDDINGMACHINE_HOME);
-mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
-mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
+GRIDDINGMACHINE_HOME = ""
+YAML_URL = ""
+YAML_FILE = ""
+const YAML_DATABASE = Dict{String,Any}()
+const YAML_TAGS = String[]
 
+function configure!(;
+        home::AbstractString = get(ENV, "GRIDDING_MACHINE_HOME", joinpath(homedir(), "GriddingMachine")),
+        catalog_url::AbstractString = get(ENV, "GRIDDING_MACHINE_CATALOG_URL", "https://zenodo.org/records/15622411"),
+        catalog_file::AbstractString = get(ENV, "GRIDDING_MACHINE_CATALOG_FILE", joinpath(home, "Artifacts.yaml")),
+        clear::Bool = true,
+    )
+    global GRIDDINGMACHINE_HOME = abspath(home)
+    global YAML_URL = String(catalog_url)
+    global YAML_FILE = abspath(catalog_file)
+    if clear
+        empty!(YAML_DATABASE)
+        empty!(YAML_TAGS)
+    end
+    return nothing
+end
 
-# download the Artifacts.yaml file from Zenodo and then decode it
-YAML_URL = "https://zenodo.org/records/15622411";
-YAML_FILE = joinpath(homedir(), "GriddingMachine", "Artifacts.yaml");
-ZENODO_FILE = joinpath(homedir(), "GriddingMachine", "Zenodo");
-ZENODO_RECORD = isfile(ZENODO_FILE) ? readline(ZENODO_FILE) : nothing;
+function __init__()
+    configure!()
+end
 
 
 # function to update the database
 include("database-clean.jl");
+include("database-schema.jl");
 include("database-download.jl");
 include("database-initialize.jl");
 include("database-load.jl");
@@ -29,10 +50,6 @@ include("database-update.jl");
 
 include("dataset-download.jl");
 include("dataset-info.jl");
-
-
-# load the database at the first time
-YAML_DATABASE, YAML_TAGS = load_database!();
 
 
 end # module

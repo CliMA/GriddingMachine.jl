@@ -1,14 +1,11 @@
-""" Update the database of GriddingMachine.jl """
-function update_database!()
-    # make sure the GriddingMachine directory exists
-    mkpath(GRIDDINGMACHINE_HOME);
-    mkpath(joinpath(GRIDDINGMACHINE_HOME, "cache"));
-    mkpath(joinpath(GRIDDINGMACHINE_HOME, "public"));
-
-    # download the latest database and reload it
-    download_database!();
-    global YAML_DATABASE, YAML_TAGS;
-    (YAML_DATABASE, YAML_TAGS) = load_database!();
-
+"""Download a validated catalog and atomically make it the active in-memory state."""
+function update_database!(;
+        source::AbstractString = YAML_URL,
+        catalog_file::AbstractString = YAML_FILE,
+        downloader = Downloads.download,
+        resolve_source::Bool = true,
+    )
+    download_database!(; source, catalog_file, downloader, resolve_source)
+    load_database!(; catalog_file, download_if_missing = false)
     return nothing
-end;
+end

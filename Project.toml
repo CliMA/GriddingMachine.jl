@@ -13,6 +13,7 @@ NetcdfIO = "6a36f34d-89cf-423a-87c4-84549e82f670"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 PkgUtility = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
