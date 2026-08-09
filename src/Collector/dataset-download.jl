@@ -16,22 +16,29 @@ function verify_dataset_file(path::AbstractString, arttag::String; require_integ
     return true
 end
 
-function probe_url(url::AbstractString; timeout::Real = 5)
-    startswith(lowercase(url), "http://") || startswith(lowercase(url), "https://") || return Inf
-    started = time_ns()
+function _ping_latency(output::AbstractString)
+    samples = Float64[]
+    for matched in eachmatch(r"([=<])\s*(\d+(?:\.\d+)?)\s*ms\s+TTL="i, output)
+        value = parse(Float64, matched.captures[2])
+        push!(samples, matched.captures[1] == "<" ? value / 2 : value)
+    end
+    return isempty(samples) ? Inf : sum(samples) / length(samples)
+end
+
+function ip_address_ping(host::AbstractString; timeout::Real = 2)
+    Sys.iswindows() || return Inf
+    timeout_ms = max(1, round(Int, timeout * 1000))
     try
-        response = HTTP.request(
-            "HEAD",
-            url;
-            status_exception = false,
-            connect_timeout = timeout,
-            readtimeout = timeout,
-        )
-        response.status < 500 || return Inf
-        return (time_ns() - started) / 1.0e9
+        return _ping_latency(read(`ping -n 2 -w $timeout_ms $host`, String))
     catch
         return Inf
     end
+end
+
+function probe_url(url::AbstractString; timeout::Real = 2)
+    matched = match(r"^[A-Za-z][A-Za-z0-9+.-]*://([^/:]+)", url)
+    isnothing(matched) && return Inf
+    return ip_address_ping(matched.captures[1]; timeout)
 end
 
 function _ordered_urls(urls::Vector{String}, probe)
@@ -96,6 +103,3 @@ function download_dataset!(
     rm(part_file; force = true)
     error("All mirrors failed for $arttag:\n - $(join(failures, "\n - "))")
 end
-
-# Kept as a compatibility shim. Protocol probing replaces platform-specific ICMP parsing.
-ip_address_ping(::String) = Inf

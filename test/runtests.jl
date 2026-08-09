@@ -78,6 +78,10 @@ end
         end
 
         @testset "Mirror fallback, cache isolation, and integrity" begin
+            @test Collector._ping_latency(
+                "Reply: time=12ms TTL=128\nReply: time<1ms TTL=128") == 6.25
+            @test isinf(Collector._ping_latency("Request timed out."))
+
             attempts = String[]
             function fixture_downloader(url, destination)
                 push!(attempts, url)
