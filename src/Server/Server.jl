@@ -12,6 +12,7 @@ using ..Indexer: LandDatasetLabels, WeatherDriverLabels, grid_dict, grid_weather
 include("responses.jl");
 include("json-site-data.jl");
 include("json-grid-dict.jl");
+include("json-grid-weather.jl");
 include("route-setup.jl");
 include("route-up-down.jl");
 

@@ -108,4 +108,39 @@ mktempdir() do root
         # 恢复完整夹具供后续测试使用
         stage_datasets!(root, merge(land_arrays, weather_arrays))
     end
+
+    @testset "weather 成功载荷" begin
+        parsed = payload(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
+        @test parsed["User"] == "tester"
+        @test parsed["WDVersion"] == "wd1"
+        @test parsed["Year"] == 2020
+        drivers = parsed["WeatherDrivers"]
+        @test Set(keys(drivers)) == Set([
+            "FDOY", "PATM", "PPT", "RAD_SW_DIF", "RAD_SW_DIR", "RAD_LW", "TAIR", "VPD", "WIND",
+        ])
+        @test all(value ≈ 101_325 for value in drivers["PATM"])
+        @test length(drivers["FDOY"]) == 4
+        @test !haskey(parsed, "Warning")
+    end
+
+    @testset "weather 失败分支" begin
+        unsupported = payload(Server.weather_json("tester", "wd9", 2020, veg_lat, veg_lon))
+        @test unsupported["Reason"] == Server.REASON_UNSUPPORTED
+        @test !haskey(unsupported, "WeatherDrivers")
+    end
+
+    @testset "weather 数据缺失" begin
+        # 论文记录：2020 年 wd1 的 8 个 ERA5 条目只登记机构 FTP、校外不可达。
+        # 这里模拟同样的状态：目录里只有陆面 tag，没有任何气象 tag。
+        weather_absent_root = mktempdir()
+        stage_datasets!(weather_absent_root, land_arrays)
+
+        absent = payload(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
+        @test absent["Warning"] == "Required datasets are not available"
+        @test Set(absent["MissingTags"]) == Set(Server.required_tags(weather_labels))
+        @test length(absent["MissingTags"]) == 8
+        @test !occursin("Stacktrace", body(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon)))
+
+        stage_datasets!(root, merge(land_arrays, weather_arrays))
+    end
 end
