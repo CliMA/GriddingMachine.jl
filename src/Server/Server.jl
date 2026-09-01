@@ -13,6 +13,7 @@ include("responses.jl");
 include("json-site-data.jl");
 include("json-grid-dict.jl");
 include("json-grid-weather.jl");
+include("web-page.jl");
 include("route-setup.jl");
 include("route-up-down.jl");
 
