@@ -1,63 +1,50 @@
 """
 
-    sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int)
+    sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true)
 
-Return an HTTP response whose body is the JSON-encoded artifact data for the given location, given
-- `arttag` the artifact tag (e.g., "CH_2X_1Y_V2")
+Return an HTTP response whose body is the JSON-encoded dataset value at one grid cell, given
+- `arttag` the dataset tag (e.g., "CH_2X_1Y_V2")
 - `lat` the target latitude
 - `lon` the target longitude
-- `cyc` the data cycle number (0 for all cycles)
+- `cyc` the cycle number (0 reads every cycle)
+- `include_std` whether to report the error variable (default `true`)
 
-Missing values are encoded as -9999 because JSON has no NaN literal; `Requestor.request_site_data`
-converts them back to NaN.
+Missing values are encoded as -9999 because JSON has no NaN literal;
+`Requestor.request_site_data` converts them back to NaN.
 
+When `include_std` is `false` the `Stdv` key is set to `null` rather than removed, because
+`Requestor.request_site_data` reads that key unconditionally.
 """
-function sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int)
-    # if the arttag does not exist in current database, update the database
+function sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true)
+    # refresh the catalog once if the tag is unknown, in case it was published upstream
     if !(arttag in YAML_TAGS)
         update_database!();
     end;
 
-    # read the data if artifact name is within the libarary
     if arttag in YAML_TAGS
-        # downlad the dataset
         fpath = download_dataset!(arttag);
         if isfile(fpath)
-            # if cyc = 0, read all cycles, convert NaN to -9999
             if cyc == 0
                 data = read_dataset(fpath, lat, lon);
-                stdv = read_dataset(fpath, lat, lon; read_std = true);
-                if typeof(data) <: Number
-                    data = isnan(data) ? -9999 : data;
-                    stdv = isnan(stdv) ? -9999 : stdv;
-                else
-                    data = replace(data, NaN => -9999);
-                    stdv = replace(stdv, NaN => -9999);
-                end;
+                stdv = include_std ? read_dataset(fpath, lat, lon; read_std = true) : nothing;
             else
                 data = read_dataset(fpath, lat, lon, cyc);
-                stdv = read_dataset(fpath, lat, lon, cyc; read_std = true);
-                data = isnan(data) ? -9999 : data;
-                stdv = isnan(stdv) ? -9999 : stdv;
+                stdv = include_std ? read_dataset(fpath, lat, lon, cyc; read_std = true) : nothing;
             end;
 
-            # prepare the dict
-            json_dict = Dict{String,Any}(
+            json_dict = OrderedDict{String,Any}(
                 "Latitude"  => lat,
                 "Longitude" => lon,
                 "Cycle"     => cyc,
-                "Data"      => data,
-                "Stdv"      => stdv,
-                "Nothing"   => nothing,
+                "Data"      => encode_missing(data),
+                "Stdv"      => encode_missing(stdv),
             );
 
-            # return a JSON string
             return GRJSON.json(json_dict)
         end;
     end;
 
-    # if not in collection, return an warning
-    json_warn = Dict{String,Any}(
+    json_warn = OrderedDict{String,Any}(
         "Warning"   => "Your request cannot be completed, please check your settings",
         "Latitude"  => lat,
         "Longitude" => lon,

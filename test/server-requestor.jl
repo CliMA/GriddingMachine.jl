@@ -51,7 +51,8 @@ mktempdir() do root
         @test parsed["Cycle"] == 0
         @test parsed["Data"] == Float64.(vec(data_3d[1, 1, :]))
         @test parsed["Stdv"] == Float64.(vec(data_3d[1, 1, :] .+ 1))
-        @test isnothing(parsed["Nothing"])
+        # 遗留调试字段 "Nothing" 已移除
+        @test !haskey(parsed, "Nothing")
 
         # a specific cycle returns a scalar
         single = payload(tag_3d, -45, -135, 3)
@@ -73,6 +74,16 @@ mktempdir() do root
         @test unknown["Latitude"] == 10
         # the refresh really ran and kept the catalog usable
         @test Collector.dataset_found(tag_2d)
+
+        # include_std 默认为 true，行为与旧版一致
+        @test payload(tag_3d, -45, -135, 0)["Stdv"] == Float64.(vec(data_3d[1, 1, :] .+ 1))
+
+        # include_std=false 时 Stdv 置为 null 而不是删键：Requestor 会无条件读取该键
+        without_std = JSON.parse(String(
+            Server.sitedata_json(tag_3d, -45, -135, 0; include_std = false).body))
+        @test haskey(without_std, "Stdv")
+        @test isnothing(without_std["Stdv"])
+        @test without_std["Data"] == Float64.(vec(data_3d[1, 1, :]))
     end
 
     @testset "Requestor against a stub server" begin
