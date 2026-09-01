@@ -199,9 +199,13 @@ mktempdir() do root
         @test all(isfile, [Collector.dataset_path("B_1X_1Y_V1"), Collector.dataset_path("C_1X_1Y_V1")])
         @test Collector.dataset_dir("B_1X_1Y_V1") == dirname(Collector.dataset_path("B_1X_1Y_V1"))
         @test !isempty(Collector.local_datasets())
+        # Compare normalised paths: catalog entries carry a forward-slash PATH, while
+        # local_datasets walks the tree with readdir, so on Windows the two spellings of
+        # the same file differ (public/v0 vs public\v0).
+        expected = normpath(Collector.dataset_path("B_1X_1Y_V1"))
         # latest_datasets returns catalog-derived paths, not tags
-        @test Collector.dataset_path("B_1X_1Y_V1") in Collector.latest_datasets()
-        @test Collector.dataset_path("B_1X_1Y_V1") in Collector.local_datasets()
+        @test expected in normpath.(Collector.latest_datasets())
+        @test expected in normpath.(Collector.local_datasets())
 
         orphan = joinpath(home, "public", "orphan.nc")
         write(orphan, "orphan")
