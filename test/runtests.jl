@@ -40,6 +40,10 @@ include("fixtures.jl")
         include("server-responses.jl")
     end
 
+    @testset verbose = true "Server endpoints" begin
+        include("server-endpoints.jl")
+    end
+
     @testset verbose = true "Server and Requestor" begin
         include("server-requestor.jl")
     end
