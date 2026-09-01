@@ -20,6 +20,7 @@ Collector.clean_database!
 Collector.sync_database!
 Collector.download_dataset!
 Collector.dataset_info
+Collector.remove_empty_folders!
 Collector.verify_dataset_file
 ```
 
@@ -36,4 +37,16 @@ Indexer.read_LUT
 ## Requestor
 ```@docs
 Requestor.request_site_data
+```
+
+
+## Server
+```@docs
+Server.sitedata_json
+Server.gmdict_json
+Server.weather_json
+Server.query_page
+Server.setup_url_input_routes!
+Server.up_servers!
+Server.down_servers!
 ```

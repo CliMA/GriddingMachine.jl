@@ -143,4 +143,21 @@ mktempdir() do root
 
         stage_datasets!(root, merge(land_arrays, weather_arrays))
     end
+
+    @testset "weather 读取失败" begin
+        # tag 已登记在目录里（所以不走 MissingTags 分支），但磁盘上的文件被删，
+        # 回源下载指向不可达的 fixture.invalid → grid_weather 抛异常 → 进 catch 分支。
+        rm(Collector.dataset_path(weather_labels.tag_t_air))
+
+        failed = payload(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
+        @test failed["Reason"] == Server.REASON_INTERNAL
+        @test !haskey(failed, "WeatherDrivers")
+        # 异常只进日志，不得随响应体泄露
+        failed_body = body(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
+        @test !occursin("Stacktrace", failed_body)
+        @test !occursin(root, failed_body)
+        @test !occursin("fixture.invalid", failed_body)
+
+        stage_datasets!(root, merge(land_arrays, weather_arrays))
+    end
 end

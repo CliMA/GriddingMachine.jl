@@ -45,7 +45,7 @@ GriddingMachine has the following sub-modules:
 | Collector   | Maintain the catalog and download gridded datasets   | v0.5         |
 | Indexer     | Read gridded datasets and organize model inputs      | v0.5         |
 | Requestor   | Request site-level data from a GriddingMachine server | Experimental |
-| Server      | Serve site-level data over HTTP                      | Experimental |
+| Server      | Serve site-level data and a query page over HTTP      | v0.5         |
 
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
 
@@ -70,6 +70,37 @@ julia> using GriddingMachine.Requestor;
 julia> dat,std = Requestor.request_site_data("http://localhost:8000", "user", "VCMAX_2X_1Y_V1", 35.1, 115.2);
 ```
 
+
+## Query server
+
+`GriddingMachine.Server` serves a small query page and three JSON endpoints:
+
+```julia
+julia> using GriddingMachine.Collector, GriddingMachine.Server;
+julia> Collector.update_database!();
+julia> Server.setup_url_input_routes!();
+julia> Server.up_servers!(5055);
+```
+
+Then open `http://localhost:5055/`, or call the endpoints directly:
+
+| Endpoint | Query parameters |
+|:---------|:-----------------|
+| `/sitedata.json` | `tag`, `lat`, `lon`, `cycle`, `include_std`, `user` |
+| `/gmdict.json` | `gmversion` (`gm1`/`gm2`), `year`, `lat`, `lon`, `user` |
+| `/weather.json` | `wdversion` (`wd1`), `year`, `lat`, `lon`, `user` |
+
+Stop the server with `Server.down_servers!()`.
+
+**This server is meant for a local or trusted intranet network.** It binds `0.0.0.0` and has
+no access control: the `user` parameter is a label written to the request log, not a
+credential, and any caller can set it to any value. `/gmdict.json` and `/weather.json`
+download whole dataset collections on first use, which can mean hundreds of megabytes per
+request. Do not expose this server to an untrusted network.
+
+Missing values are encoded as `-9999` in every response, because JSON has no NaN literal.
+When a query needs datasets that are not registered in the local catalog, the response names
+them under `MissingTags` instead of failing.
 
 ## Migrating from v0.4 to v0.5
 v0.5 reorganizes the package around dataset distribution, reading, and model-input preparation. The changes that affect user code are:

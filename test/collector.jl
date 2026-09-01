@@ -239,5 +239,36 @@ mktempdir() do root
 
         # 不存在的目录是无操作，而不是错误
         @test isnothing(Collector.remove_empty_folders!(joinpath(root, "absent-dir")))
+
+        # 权限错误只是“此处无需清理”，不得中断整个遍历。
+        # rm/readdir 抛的是 Base.IOError（uv 封装）而不是 SystemError。
+        guarded = joinpath(root, "guarded")
+        locked = joinpath(guarded, "locked")
+        mkpath(locked)
+        chmod(guarded, 0o500)   # 可读可进入但不可写 → rm 子目录应 EACCES
+        try
+            # 权限位在 Windows 与 root 下不生效，实证探测而不猜
+            probe = joinpath(guarded, "probe")
+            restricted = try
+                touch(probe)
+                rm(probe)
+                false
+            catch
+                true
+            end
+
+            # 无论能不能写，都不得抛异常
+            @test isnothing(Collector.remove_empty_folders!(guarded))
+            # 真的受限时，子目录删不掉但进程仍正常返回
+            restricted && @test isdir(locked)
+        finally
+            chmod(guarded, 0o700)
+        end
+
+        # 非预期的异常仍需被记录（而不是静默吞掉）
+        @test isnothing(Collector._report_unless_benign(ErrorException("unexpected"), "somewhere"))
+        # 良性的 IO 错误不记录
+        @test isnothing(Collector._report_unless_benign(
+            Base.IOError("denied", Base.UV_EACCES), "somewhere"))
     end
 end
