@@ -8,6 +8,7 @@ caller may supply any value. This server is meant for a local or trusted intrane
 
 """Stable, machine-readable reasons returned to clients."""
 const REASON_UNSUPPORTED = "unsupported version"
+const REASON_MISSING_COORDINATES = "missing coordinates"
 const REASON_NO_LAND = "no land at target grid"
 const REASON_NOT_VEGETATED = "grid is not vegetated"
 const REASON_INTERNAL = "internal error"
@@ -21,14 +22,6 @@ function encode_missing end
 encode_missing(value) = value
 encode_missing(value::Number) = isnan(value) ? MISSING_CODE : value
 encode_missing(value::AbstractArray) = replace(value, NaN => MISSING_CODE)
-
-"""Parse `raw` as `Float64`, falling back to `default` when empty or malformed."""
-function parse_float(raw, default::Real)
-    text = strip(String(raw))
-    isempty(text) && return Float64(default)
-    parsed = tryparse(Float64, text)
-    return isnothing(parsed) ? Float64(default) : parsed
-end
 
 """Parse `raw` as `Int`, falling back to `default` when empty or malformed."""
 function parse_int(raw, default::Int)
@@ -52,6 +45,18 @@ function parse_bool(raw, default::Bool)
     text in TRUTHY_TEXT && return true
     text in FALSY_TEXT && return false
     return default
+end
+
+"""Parse `raw` as a coordinate, or `nothing` when it is absent or malformed.
+
+Unlike the optional flags, coordinates are never defaulted. They decide which grid cell is
+being reported, so quietly substituting a fallback would hand the caller data for a different
+place than the one they asked about.
+"""
+function parse_coordinate(raw)
+    text = strip(String(raw))
+    isempty(text) && return nothing
+    return tryparse(Float64, text)
 end
 
 function _payload(head::AbstractDict, fields::AbstractDict)

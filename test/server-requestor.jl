@@ -25,12 +25,14 @@ mktempdir() do root
         tag_nan => data_nan,
     ))
 
-    # `sitedata_json` refreshes the catalog whenever it sees an unknown tag. Serve the
-    # staged catalog from localhost under a path that `_catalog_download_url` accepts
-    # verbatim, so that refresh path is exercised without any external request.
+    # A counter on a local catalog server lets the tests prove that answering a request never
+    # re-downloads the catalog. Serve it under a path that `_catalog_download_url` accepts
+    # verbatim, so nothing reaches an external host even if a refresh did happen.
+    catalog_requests = Ref(0)
     catalog_port = free_port()
     catalog_body = read(joinpath(root, "gm-home", "Artifacts.yaml"), String)
     catalog_server = HTTP.serve!(Sockets.localhost, catalog_port; verbose = false) do request
+        catalog_requests[] += 1
         return HTTP.Response(200, catalog_body)
     end
     Collector.configure!(;
@@ -67,12 +69,15 @@ mktempdir() do root
         missing_scalar = payload(tag_nan, -45, -135, 0)
         @test missing_scalar["Data"] == -9999
 
-        # an unknown tag triggers a catalog refresh and then yields a warning payload
+        # An unknown tag yields a warning without re-downloading the catalog: a typo against a
+        # catalog with over a thousand entries must not trigger a full refresh.
+        before = catalog_requests[]
         unknown = payload("NOT_A_TAG_1X_1Y_V1", 10, 20, 0)
         @test haskey(unknown, "Warning")
         @test !haskey(unknown, "Data")
         @test unknown["Latitude"] == 10
-        # the refresh really ran and kept the catalog usable
+        @test catalog_requests[] == before
+        # the catalog stayed usable
         @test Collector.dataset_found(tag_2d)
 
         # include_std 默认为 true，行为与旧版一致
@@ -190,6 +195,34 @@ mktempdir() do root
                                retry = false, readtimeout = 10)
             @test lenient.status == 200
             @test !isnothing(JSON.parse(String(lenient.body))["Stdv"])
+
+            # 缺坐标时必须拒答，不得默认到另一个地点。
+            # 可选开关（include_std/cycle）容错是对的，但坐标决定查的是哪里，
+            # 静默替换会让调用方拿到不同地点的数据而不自知。
+            for query in ("/sitedata.json?tag=$tag_2d&lat=&lon=",
+                          "/sitedata.json?tag=$tag_2d&lon=-135",
+                          "/sitedata.json?tag=$tag_2d&lat=north&lon=-135",
+                          "/gmdict.json?gmversion=gm2&year=2020",
+                          "/weather.json?wdversion=wd1&year=2020&lat=40")
+                refused = HTTP.get("http://localhost:$port" * query; retry = false, readtimeout = 10)
+                @test refused.status == 200
+                refused_body = JSON.parse(String(refused.body))
+                @test refused_body["Reason"] == Server.REASON_MISSING_COORDINATES
+                @test !haskey(refused_body, "Data")
+                @test !haskey(refused_body, "GridDict")
+                @test !haskey(refused_body, "WeatherDrivers")
+                @test haskey(refused_body, "Hint")
+            end
+
+            # 坐标齐备时 /weather.json 也要走到底：本夹具没登记气象 tag，
+            # 因此预期是 MissingTags 而不是缺坐标
+            weather = HTTP.get("http://localhost:$port/weather.json?wdversion=wd1&year=2020&lat=40&lon=-105";
+                               retry = false, readtimeout = 10)
+            @test weather.status == 200
+            weather_body = JSON.parse(String(weather.body))
+            @test weather_body["Warning"] == "Required datasets are not available"
+            @test length(weather_body["MissingTags"]) == 8
+            @test weather_body["Latitude"] == 40
         finally
             @test isnothing(Server.down_servers!())
         end

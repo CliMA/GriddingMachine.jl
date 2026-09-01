@@ -172,6 +172,12 @@ mktempdir() do root
             # a root-relative link is completed against zenodo.org
             @test Collector._catalog_download_url("$base/relative") ==
                   "https://zenodo.org/records/424242/files/Artifacts.yaml"
+            # Every branch must yield a String, not a SubString: Downloads.download passes the
+            # url straight to libcurl, which cannot convert a SubString to Cstring. `==` alone
+            # does not catch this, because a String equals the SubString with the same content.
+            for probe in (direct, "$base/absolute", "$base/relative")
+                @test Collector._catalog_download_url(probe) isa String
+            end
             # a page without any catalog link, and a page that is simply gone
             @test_throws ErrorException Collector._catalog_download_url("$base/missing")
             @test_throws ErrorException Collector._catalog_download_url("$base/broken")

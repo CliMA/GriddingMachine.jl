@@ -5,7 +5,7 @@ import Genie.Renderer.Json as GRJSON
 using Genie: down, params, route, up
 using OrderedCollections: OrderedDict
 
-using ..Collector: YAML_TAGS, dataset_found, download_dataset!, update_database!
+using ..Collector: YAML_TAGS, dataset_found, download_dataset!
 using ..Indexer: LandDatasetLabels, WeatherDriverLabels, grid_dict, grid_weather, read_dataset
 
 

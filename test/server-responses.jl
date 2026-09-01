@@ -16,13 +16,7 @@
 end
 
 @testset "宽松参数解析" begin
-    @test Server.parse_float("35.5", 0.0) == 35.5
-    @test Server.parse_float("-135", 0.0) == -135.0
-    # 缺省、空白、无法解析时退回默认值而不是抛异常
-    @test Server.parse_float("", 30.5) == 30.5
-    @test Server.parse_float("  ", 30.5) == 30.5
-    @test Server.parse_float("not-a-number", 30.5) == 30.5
-
+    # 可选项缺省、空白、无法解析时退回默认值而不是抛异常
     @test Server.parse_int("3", 0) == 3
     @test Server.parse_int("", 0) == 0
     @test Server.parse_int("3.7", 0) == 0
@@ -39,6 +33,18 @@ end
     @test Server.parse_bool("", true)
     @test Server.parse_bool("maybe", true)
     @test !Server.parse_bool("maybe", false)
+end
+
+@testset "坐标不得默认填充" begin
+    # 坐标决定查的是哪里，缺失时必须报 nothing；
+    # 默认成另一个地点比拒答更糟。
+    @test Server.parse_coordinate("40.03") == 40.03
+    @test Server.parse_coordinate("-105.55") == -105.55
+    @test Server.parse_coordinate(" 12 ") == 12.0
+    @test Server.parse_coordinate("0") == 0.0
+    @test isnothing(Server.parse_coordinate(""))
+    @test isnothing(Server.parse_coordinate("   "))
+    @test isnothing(Server.parse_coordinate("north"))
 end
 
 @testset "载荷构造" begin

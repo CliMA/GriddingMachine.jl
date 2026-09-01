@@ -14,14 +14,14 @@ Missing values are encoded as -9999 because JSON has no NaN literal;
 
 When `include_std` is `false` the `Stdv` key is set to `null` rather than removed, because
 `Requestor.request_site_data` reads that key unconditionally.
+
+An unknown tag is reported as a warning without refreshing the catalog. Refreshing on every
+unknown tag means a single typo against a catalog of over a thousand entries re-downloads the
+whole catalog before answering; use `Collector.update_database!` to pick up new publications.
 """
 function sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true)
-    # refresh the catalog once if the tag is unknown, in case it was published upstream
-    if !(arttag in YAML_TAGS)
-        update_database!();
-    end;
-
-    if arttag in YAML_TAGS
+    # dataset_found loads the catalog if this process has not read it yet
+    if dataset_found(arttag)
         fpath = download_dataset!(arttag);
         if isfile(fpath)
             if cyc == 0

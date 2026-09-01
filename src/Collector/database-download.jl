@@ -6,7 +6,8 @@ function _catalog_download_url(source::AbstractString)
     html = String(response.body)
     matched = match(r"https?://[^\"']+/records/\d+/files/Artifacts\.ya?ml(?:\?download=1)?"i, html)
     if !isnothing(matched)
-        return matched.match
+        # RegexMatch.match is a SubString, which Downloads.download cannot convert to Cstring
+        return String(matched.match)
     end
     matched = match(r"/records/\d+/files/Artifacts\.ya?ml(?:\?download=1)?"i, html)
     isnothing(matched) && error("Could not locate Artifacts.yaml on catalog landing page: $source")

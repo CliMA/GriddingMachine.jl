@@ -90,6 +90,10 @@ Then open `http://localhost:5055/`, or call the endpoints directly:
 | `/gmdict.json` | `gmversion` (`gm1`/`gm2`), `year`, `lat`, `lon`, `user` |
 | `/weather.json` | `wdversion` (`wd1`), `year`, `lat`, `lon`, `user` |
 
+`lat` and `lon` are required. Optional settings such as `cycle` or `include_std` fall back to a
+default when they are missing or malformed, but coordinates never do: reporting a different
+grid cell than the one asked about would be worse than refusing the request.
+
 Stop the server with `Server.down_servers!()`.
 
 **This server is meant for a local or trusted intranet network.** It binds `0.0.0.0` and has
@@ -100,7 +104,8 @@ request. Do not expose this server to an untrusted network.
 
 Missing values are encoded as `-9999` in every response, because JSON has no NaN literal.
 When a query needs datasets that are not registered in the local catalog, the response names
-them under `MissingTags` instead of failing.
+them under `MissingTags` instead of failing. An unknown tag is reported as a warning without
+refreshing the catalog; call `Collector.update_database!()` to pick up new publications.
 
 ## Migrating from v0.4 to v0.5
 v0.5 reorganizes the package around dataset distribution, reading, and model-input preparation. The changes that affect user code are:

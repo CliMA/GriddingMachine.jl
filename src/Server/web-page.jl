@@ -52,9 +52,9 @@ const PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="field"><label for="sd-tag">Dataset tag</label>
     <input id="sd-tag" name="tag" list="gm-tags" placeholder="type to filter, e.g. ELEV"></div>
   <div class="field"><label for="sd-lat">Latitude</label>
-    <input id="sd-lat" name="lat" type="number" step="any" value="40.03"></div>
+    <input id="sd-lat" name="lat" type="number" step="any" required data-required value="40.03"></div>
   <div class="field"><label for="sd-lon">Longitude</label>
-    <input id="sd-lon" name="lon" type="number" step="any" value="-105.55"></div>
+    <input id="sd-lon" name="lon" type="number" step="any" required data-required value="-105.55"></div>
   <div class="field"><label for="sd-cycle">Cycle (0 = all)</label>
     <input id="sd-cycle" name="cycle" type="number" step="1" value="0"></div>
   <div class="field"><label for="sd-std">Include error variable</label>
@@ -73,9 +73,9 @@ const PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="field"><label for="gd-year">Year</label>
     <input id="gd-year" name="year" type="number" step="1" value="2020"></div>
   <div class="field"><label for="gd-lat">Latitude</label>
-    <input id="gd-lat" name="lat" type="number" step="any" value="40.03"></div>
+    <input id="gd-lat" name="lat" type="number" step="any" required data-required value="40.03"></div>
   <div class="field"><label for="gd-lon">Longitude</label>
-    <input id="gd-lon" name="lon" type="number" step="any" value="-105.55"></div>
+    <input id="gd-lon" name="lon" type="number" step="any" required data-required value="-105.55"></div>
   <div class="field"><label for="gd-user">User label</label>
     <input id="gd-user" name="user" value="anonymous"></div>
   <button class="run">Query</button>
@@ -89,9 +89,9 @@ const PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="field"><label for="wd-year">Year</label>
     <input id="wd-year" name="year" type="number" step="1" value="2020"></div>
   <div class="field"><label for="wd-lat">Latitude</label>
-    <input id="wd-lat" name="lat" type="number" step="any" value="40.03"></div>
+    <input id="wd-lat" name="lat" type="number" step="any" required data-required value="40.03"></div>
   <div class="field"><label for="wd-lon">Longitude</label>
-    <input id="wd-lon" name="lon" type="number" step="any" value="-105.55"></div>
+    <input id="wd-lon" name="lon" type="number" step="any" required data-required value="-105.55"></div>
   <div class="field"><label for="wd-user">User label</label>
     <input id="wd-user" name="user" value="anonymous"></div>
   <button class="run">Query</button>
@@ -145,6 +145,16 @@ function render() {
 function run(panel) {
   var status = document.getElementById('status');
   status.className = '';
+
+  var required = panel.querySelectorAll('[data-required]');
+  for (var r = 0; r < required.length; r++) {
+    if (required[r].value.trim() === '') {
+      status.className = 'error';
+      status.textContent = 'Latitude and longitude are required.';
+      return;
+    }
+  }
+
   status.textContent = 'Requesting... the first land parameter query downloads datasets and may take several minutes.';
 
   var query = [];

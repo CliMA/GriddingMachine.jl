@@ -46,6 +46,14 @@ mktempdir() do root
         @test occursin("value=\"wd1\"", html)
     end
 
+    @testset "经纬度标为必填" begin
+        # 三个页签各一对 lat/lon，共 6 个必填框。
+        # 页面用 JS 拦截点击而不是表单提交，所以靠 data-required 而不是浏览器原生校验。
+        @test count("required data-required", html) == 6
+        # 前端提示语存在，但服务端仍然自己校验（不能只靠客户端）
+        @test occursin("Latitude and longitude are required", html)
+    end
+
     @testset "目录为空时页面仍可渲染" begin
         empty_root = mktempdir()
         stage_datasets!(empty_root, Dict{String,Any}())
