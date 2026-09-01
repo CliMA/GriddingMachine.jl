@@ -10,9 +10,6 @@
 [st-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/JuliaStable/badge.svg?branch=main
 [st-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"JuliaStable"
 
-[min-img]: https://github.com/CliMA/GriddingMachine.jl/workflows/Julia-1.7/badge.svg?branch=main
-[min-url]: https://github.com/CliMA/GriddingMachine.jl/actions?query=branch%3A"main"++workflow%3A"Julia-1.7"
-
 [cov-img]: https://codecov.io/gh/CliMA/GriddingMachine.jl/branch/main/graph/badge.svg
 [cov-url]: https://codecov.io/gh/CliMA/GriddingMachine.jl
 
@@ -27,11 +24,11 @@ Please cite our paper(s) when you use GriddingMachine:
 
 
 ## About
-[`GriddingMachine.jl`][gm-url] includes a collection of global canopy propertie. To best utilize `Pkg.Artifacts` and FTP storage, [`GriddingMachine.jl`][gm-url] only supports julia 1.7 and above.
+[`GriddingMachine.jl`][gm-url] distributes and reads a curated collection of global gridded datasets, and organizes them into inputs for land and Earth system models. It requires julia 1.10 and above.
 
-| Documentation           | CI Status             | Compatibility           | Code Coverage           |
-|:------------------------|:----------------------|:------------------------|:------------------------|
-| [![][dev-img]][dev-url] | [![][st-img]][st-url] | [![][min-img]][min-url] | [![][cov-img]][cov-url] |
+| Documentation           | CI Status             | Code Coverage           |
+|:------------------------|:----------------------|:------------------------|
+| [![][dev-img]][dev-url] | [![][st-img]][st-url] | [![][cov-img]][cov-url] |
 
 
 ## Installation
@@ -42,30 +39,56 @@ julia> Pkg.add("GriddingMachine");
 
 
 ## API
-GriddingMachine has the following sub-modules, some of which are in development. The sub-modules are
-| Sub-module  | Functionality                   | Ready to use |
-|:------------|:--------------------------------|:-------------|
-| Blender     | Regrid the gridded datasets     | Testing      |
-| Collector   | Distribute the gridded datasets | v0.2         |
-| Fetcher     | Download ungridded datasets     | Testing      |
-| Indexer     | Read the gridded datasets       | v0.2         |
-| Partitioner | Sort the ungridded datasets     | Testing      |
-| Requestor   | Request gridded datasets        | v0.2         |
+GriddingMachine has the following sub-modules:
+| Sub-module  | Functionality                                        | Ready to use |
+|:------------|:-----------------------------------------------------|:-------------|
+| Collector   | Maintain the catalog and download gridded datasets   | v0.5         |
+| Indexer     | Read gridded datasets and organize model inputs      | v0.5         |
+| Requestor   | Request site-level data from a GriddingMachine server | Experimental |
+| Server      | Serve site-level data over HTTP                      | Experimental |
 
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
 
-To automatically download and query the file path of the dataset, use
+To update the local catalog and download a dataset by its tag, use
 ```julia
 julia> using GriddingMachine.Collector;
-julia> file_path = Collector.download_artifact!("VCMAX_2X_1Y_V1");
+julia> Collector.update_database!();
+julia> file_path = Collector.download_dataset!("VCMAX_2X_1Y_V1");
 ```
 
-To request a partial dataset from the server without download the entire dataset, use
+To read a whole dataset, a single grid cell, or one cycle of a 3D dataset, use
+```julia
+julia> using GriddingMachine.Indexer;
+julia> data = Indexer.read_dataset("VCMAX_2X_1Y_V1");
+julia> data = Indexer.read_dataset("VCMAX_2X_1Y_V1", 35.1, 115.2);
+julia> data = Indexer.read_dataset("LAI_MODIS_2X_8D_2020_V1", 35.1, 115.2, 3);
+```
+
+To request a partial dataset from a running server without downloading the entire dataset, use
 ```julia
 julia> using GriddingMachine.Requestor;
-julia> dat,std = Requestor.request_site_data("VCMAX_2X_1Y_V1", 35.1, 115.2);
-julia> dat,std = Requestor.request_site_data("VCMAX_2X_1Y_V1", 35.1, 115.2; interpolation=true);
+julia> dat,std = Requestor.request_site_data("http://localhost:8000", "user", "VCMAX_2X_1Y_V1", 35.1, 115.2);
 ```
+
+
+## Migrating from v0.4 to v0.5
+v0.5 reorganizes the package around dataset distribution, reading, and model-input preparation. The changes that affect user code are:
+
+| v0.4                                        | v0.5                                                        |
+|:--------------------------------------------|:------------------------------------------------------------|
+| `Collector.download_artifact!(tag)`         | `Collector.download_dataset!(tag)`                          |
+| `Collector.query_collection(tag)`           | `Collector.dataset_path(tag)` / `Collector.dataset_info(tag)` |
+| `Indexer.read_LUT(...)`                     | `Indexer.read_dataset(...)` (`read_LUT` kept as an alias)    |
+| `Requestor.request_site_data(tag, lat, lon)` | `Requestor.request_site_data(server, user, tag, lat, lon)`  |
+| `Blender.regrid(...)`                       | `using PkgUtility.MathTools: regrid`                        |
+| `Fetcher` (download raw ungridded data)     | moved to [GriddingMachineDatasets](https://github.com/jhOo1/GriddingMachineDatasets) |
+
+Other notes:
+- `Blender`, `Fetcher`, `Partitioner`, and `Processer` are no longer part of the package. `Partitioner` and `Processer` were never enabled in v0.4. The remaining sources are kept under `deprecated/` for reference only.
+- Catalog entries now carry `SIZE` and `SHA256`. Downloads are written to a cache first and only promoted to the public directory after the size and hash match, so an interrupted or corrupted download never replaces a valid file.
+- One tag may list several mirror URLs; unreachable mirrors are skipped and the next candidate is tried.
+- `using GriddingMachine` no longer creates directories or downloads the catalog as an import side effect. Call `Collector.initialize_database!()` or `Collector.update_database!()` explicitly.
+- `Indexer` no longer interpolates between grid cells.
 
 
 ## Other language supports
