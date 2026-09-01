@@ -162,10 +162,34 @@ mktempdir() do root
             @test data == Float64(data_2d[1, 1])
             @test stdv == Float64(data_2d[1, 1] + 1)
 
-            # an unlisted user is refused, and the Requestor reports the missing Data key
-            @test_throws ErrorException Requestor.request_site_data(
+            # `user` 是日志标签而不是凭据：任何取值都能拿到数据。
+            # 旧实现用 `user in allowed_users` 做“鉴权”，但该值来自查询参数，
+            # 任何调用方都能伪造，因此本版本不再假装它是权限控制。
+            other_data, other_std = Requestor.request_site_data(
                 "http://localhost:$port", "stranger", tag_2d, -45, -135,
             )
+            @test other_data == Float64(data_2d[1, 1])
+            @test other_std == Float64(data_2d[1, 1] + 1)
+
+            # 查询页可访问，且含已登记的 tag
+            page = HTTP.get("http://localhost:$port/"; retry = false, readtimeout = 10)
+            @test page.status == 200
+            @test occursin(tag_2d, String(page.body))
+
+            # 新端点经真实 HTTP 可达；本夹具未登记陆面 tag，
+            # 因此预期得到“数据不可用”载荷而不是异常
+            gmdict = HTTP.get("http://localhost:$port/gmdict.json?gmversion=gm2&year=2020&lat=40&lon=-105";
+                              retry = false, readtimeout = 10)
+            @test gmdict.status == 200
+            gmdict_body = JSON.parse(String(gmdict.body))
+            @test gmdict_body["Warning"] == "Required datasets are not available"
+            @test length(gmdict_body["MissingTags"]) == 14
+
+            # 宽松布尔解析：include_std=1 不应使请求崩溃
+            lenient = HTTP.get("http://localhost:$port/sitedata.json?tag=$tag_2d&lat=-45&lon=-135&cycle=0&include_std=1";
+                               retry = false, readtimeout = 10)
+            @test lenient.status == 200
+            @test !isnothing(JSON.parse(String(lenient.body))["Stdv"])
         finally
             @test isnothing(Server.down_servers!())
         end
