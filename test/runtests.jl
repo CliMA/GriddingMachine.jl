@@ -36,6 +36,10 @@ include("fixtures.jl")
         include("grid-from-tags.jl")
     end
 
+    @testset verbose = true "Server responses" begin
+        include("server-responses.jl")
+    end
+
     @testset verbose = true "Server and Requestor" begin
         include("server-requestor.jl")
     end
