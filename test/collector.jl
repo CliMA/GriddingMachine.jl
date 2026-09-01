@@ -218,4 +218,26 @@ mktempdir() do root
         Collector.clean_database!("all")
         @test isempty(Collector.local_datasets())
     end
+
+    @testset "移除空目录" begin
+        nest = joinpath(root, "nest")
+        # 自底向上：删掉最内层后父目录变空，也应被删除
+        deep = joinpath(nest, "a", "b", "c")
+        mkpath(deep)
+        # 含文件的目录必须保留
+        kept = joinpath(nest, "keep")
+        mkpath(kept)
+        write(joinpath(kept, "data.nc"), "payload")
+
+        @test isnothing(Collector.remove_empty_folders!(nest))
+        @test !isdir(deep)
+        @test !isdir(joinpath(nest, "a"))
+        @test isdir(kept)
+        @test isfile(joinpath(kept, "data.nc"))
+        # 目标目录自身保留，即使它现在只剩 keep
+        @test isdir(nest)
+
+        # 不存在的目录是无操作，而不是错误
+        @test isnothing(Collector.remove_empty_folders!(joinpath(root, "absent-dir")))
+    end
 end

@@ -8,8 +8,8 @@ using PkgUtility.ArtifactTools: read_library
 export CatalogValidationError, clean_database!, configure!, dataset_cache, dataset_dir,
     dataset_found, dataset_info, dataset_path, dataset_url, download_database!,
     download_dataset!, initialize_database!, latest_datasets, load_database!,
-    local_datasets, sync_database!, update_database!, validate_catalog,
-    verify_dataset_file
+    local_datasets, remove_empty_folders!, sync_database!, update_database!,
+    validate_catalog, verify_dataset_file
 
 GRIDDINGMACHINE_HOME = ""
 YAML_URL = ""
@@ -45,6 +45,7 @@ include("database-schema.jl");
 include("database-download.jl");
 include("database-initialize.jl");
 include("database-load.jl");
+include("database-remove-folder.jl");
 include("database-sync.jl");
 include("database-tree.jl");
 include("database-update.jl");
