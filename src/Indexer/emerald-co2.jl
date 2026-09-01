@@ -14,7 +14,7 @@ function CO₂_ppm end;
 
 CO₂_ppm(yy::Int) = CCS_1Y.MEAN[findfirst(CCS_1Y.YEAR .== yy)];
 
-CO₂_ppm(yy::Int, mm::Int) = CCS_1M.MEAN[findfirst(CCS_1M.YEAR .== yy && CCS_1M.MONTH .== mm)];
+CO₂_ppm(yy::Int, mm::Int) = CCS_1M.MEAN[findfirst((CCS_1M.YEAR .== yy) .&& (CCS_1M.MONTH .== mm))];
 
 CO₂_ppm(yy::Int, ::Bool) = (
     filtered = CCS_1M.MEAN[CCS_1M.YEAR .== yy];

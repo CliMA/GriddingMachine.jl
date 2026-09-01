@@ -1,5 +1,8 @@
 Manifest.toml
 
+*.cov
+lcov.info
+
 docs/build/*
 docs/src/generated/*
 docs/src/paper*

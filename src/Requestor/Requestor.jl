@@ -4,12 +4,8 @@ import HTTP
 import JSON
 
 
-#
-# export request_site_data
-#
-#
-# include("requestor/gm_dict.jl");
-# include("requestor/gm_weather.jl");
+# request_site_dict and request_site_weather are not part of 0.5; their sources are kept
+# under deprecated/requestor/ for reference.
 include("site-data.jl");
 
 

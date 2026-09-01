@@ -2,11 +2,14 @@
 
     sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int)
 
-Return a JSON string containing the specified artifact data for the given location, given
+Return an HTTP response whose body is the JSON-encoded artifact data for the given location, given
 - `arttag` the artifact tag (e.g., "CH_2X_1Y_V2")
 - `lat` the target latitude
 - `lon` the target longitude
 - `cyc` the data cycle number (0 for all cycles)
+
+Missing values are encoded as -9999 because JSON has no NaN literal; `Requestor.request_site_data`
+converts them back to NaN.
 
 """
 function sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int)
