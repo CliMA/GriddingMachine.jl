@@ -109,7 +109,9 @@ src/Server/
  "User": "anonymous", "Latitude": 40.03, "Longitude": -105.55}
 ```
 
-`Reason` 取值限定为：`unsupported version`、`no land at target grid`、`grid is not vegetated`、`datasets unavailable`、`internal error`。
+`Reason` 取值限定为：`unsupported version`、`missing coordinates`、`dataset unavailable`、`no land at target grid`、`grid is not vegetated`、`internal error`。
+
+> 实现期修订：本节初稿列的是 5 个类别、且写作 `datasets unavailable`（复数）。实际实现为 6 个：一次请求只查一个 tag，故改为单数 `dataset unavailable`；并新增 `missing coordinates`——初稿把坐标缺失也归入宽松解析、用默认值补齐，实测发现这会让调用方拿到另一个格点的数据而不自知，故改为必填并单列类别。
 
 **数据不可用要说清缺什么**：当所需 tag 未登记在本地目录中时：
 
