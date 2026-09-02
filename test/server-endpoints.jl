@@ -150,13 +150,37 @@ mktempdir() do root
         rm(Collector.dataset_path(weather_labels.tag_t_air))
 
         failed = payload(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
-        @test failed["Reason"] == Server.REASON_INTERNAL
+        # 镜像耗尽有自己的类别，不再笼统归为 internal error
+        @test failed["Reason"] == Server.REASON_UNAVAILABLE
         @test !haskey(failed, "WeatherDrivers")
         # 异常只进日志，不得随响应体泄露
         failed_body = body(Server.weather_json("tester", "wd1", 2020, veg_lat, veg_lon))
         @test !occursin("Stacktrace", failed_body)
         @test !occursin(root, failed_body)
         @test !occursin("fixture.invalid", failed_body)
+
+        stage_datasets!(root, merge(land_arrays, weather_arrays))
+    end
+
+    @testset "sitedata 下载失败不得泄露内部信息" begin
+        # tag 已登记但磁盘文件被删，回源镜像不可达。
+        # 修复前这里会抛异常 → Genie 返回 HTTP 500 + 完整 Julia 堆栈，
+        # 里面含源码路径与每个尝试过的镜像 URL。
+        doomed = labels.tag_t_ele
+        rm(Collector.dataset_path(doomed))
+
+        response = Server.sitedata_json(doomed, veg_lat, veg_lon, 0)
+        @test response.status == 200
+        parsed = payload(response)
+        @test parsed["Reason"] == Server.REASON_UNAVAILABLE
+        @test !haskey(parsed, "Data")
+        @test parsed["Latitude"] == veg_lat
+
+        failed_body = body(response)
+        @test !occursin("Stacktrace", failed_body)
+        @test !occursin("fixture.invalid", failed_body)
+        @test !occursin(root, failed_body)
+        @test !occursin("src/Collector", failed_body)
 
         stage_datasets!(root, merge(land_arrays, weather_arrays))
     end

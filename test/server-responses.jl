@@ -69,6 +69,12 @@ end
           Server.REASON_NO_LAND
     @test Server.classify_error(ErrorException("The target grid is not vegetated!")) ==
           Server.REASON_NOT_VEGETATED
+    # Collector 用同样方式报告镜像耗尽与目录缺项
+    @test Server.classify_error(ErrorException(
+        "All mirrors failed for X_1X_1Y_V1:\n - ftp://10.0.0.1/x.nc => RequestError")) ==
+          Server.REASON_UNAVAILABLE
+    @test Server.classify_error(ErrorException("Dataset X does not exist in the catalog")) ==
+          Server.REASON_UNAVAILABLE
     # 其余一律归为 internal error，且不把原始消息带出去
     @test Server.classify_error(ErrorException("/tmp/secret/path exploded")) ==
           Server.REASON_INTERNAL

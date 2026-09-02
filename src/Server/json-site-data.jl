@@ -18,30 +18,39 @@ When `include_std` is `false` the `Stdv` key is set to `null` rather than remove
 An unknown tag is reported as a warning without refreshing the catalog. Refreshing on every
 unknown tag means a single typo against a catalog of over a thousand entries re-downloads the
 whole catalog before answering; use `Collector.update_database!` to pick up new publications.
+
+A dataset that cannot be downloaded is reported as a warning carrying a stable `Reason`. The
+exception is logged and never returned, because an exhausted mirror list names every url that
+was tried and a stacktrace names local source paths.
 """
 function sitedata_json(arttag::String, lat::Number, lon::Number, cyc::Int; include_std::Bool = true)
+    context = OrderedDict{String,Any}(
+        "Latitude"  => lat,
+        "Longitude" => lon,
+        "Cycle"     => cyc,
+    );
+
     # dataset_found loads the catalog if this process has not read it yet
     if dataset_found(arttag)
-        fpath = download_dataset!(arttag);
-        if isfile(fpath)
+        data, stdv = try
+            fpath = download_dataset!(arttag);
             if cyc == 0
-                data = read_dataset(fpath, lat, lon);
-                stdv = include_std ? read_dataset(fpath, lat, lon; read_std = true) : nothing;
+                (read_dataset(fpath, lat, lon),
+                 include_std ? read_dataset(fpath, lat, lon; read_std = true) : nothing)
             else
-                data = read_dataset(fpath, lat, lon, cyc);
-                stdv = include_std ? read_dataset(fpath, lat, lon, cyc; read_std = true) : nothing;
+                (read_dataset(fpath, lat, lon, cyc),
+                 include_std ? read_dataset(fpath, lat, lon, cyc; read_std = true) : nothing)
             end;
-
-            json_dict = OrderedDict{String,Any}(
-                "Latitude"  => lat,
-                "Longitude" => lon,
-                "Cycle"     => cyc,
-                "Data"      => encode_missing(data),
-                "Stdv"      => encode_missing(stdv),
-            );
-
-            return GRJSON.json(json_dict)
+        catch exception
+            @error "sitedata request failed" arttag lat lon cyc exception;
+            return GRJSON.json(warning_payload(classify_error(exception), context))
         end;
+
+        json_dict = OrderedDict{String,Any}(context);
+        json_dict["Data"] = encode_missing(data);
+        json_dict["Stdv"] = encode_missing(stdv);
+
+        return GRJSON.json(json_dict)
     end;
 
     json_warn = OrderedDict{String,Any}(

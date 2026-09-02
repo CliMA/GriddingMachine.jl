@@ -9,6 +9,7 @@ caller may supply any value. This server is meant for a local or trusted intrane
 """Stable, machine-readable reasons returned to clients."""
 const REASON_UNSUPPORTED = "unsupported version"
 const REASON_MISSING_COORDINATES = "missing coordinates"
+const REASON_UNAVAILABLE = "dataset unavailable"
 const REASON_NO_LAND = "no land at target grid"
 const REASON_NOT_VEGETATED = "grid is not vegetated"
 const REASON_INTERNAL = "internal error"
@@ -88,16 +89,21 @@ end
 
 """Map an exception to a stable reason, keeping its message out of the response.
 
-`grid_dict` signals its entry conditions through `ErrorException` messages, so this matches
-on the message text. That is a deliberate trade-off: re-implementing the land-mask and LAI
-checks here would create a second copy of logic that lives in `Indexer`. The tests pin both
-mappings, so an upstream wording change fails the suite instead of silently degrading to
-`internal error`.
+`grid_dict` signals its entry conditions through `ErrorException` messages, and `Collector`
+reports an exhausted mirror list the same way, so this matches on the message text. That is a
+deliberate trade-off: re-implementing the land-mask and LAI checks here would create a second
+copy of logic that lives in `Indexer`. The tests pin every mapping, so an upstream wording
+change fails the suite instead of silently degrading to `internal error`.
+
+The message itself is never returned to the caller: an exhausted mirror list names every url it
+tried, and a stacktrace names local source paths.
 """
 function classify_error(exception)
     message = sprint(showerror, exception)
     occursin("does not contain land", message) && return REASON_NO_LAND
     occursin("not vegetated", message) && return REASON_NOT_VEGETATED
+    occursin("All mirrors failed", message) && return REASON_UNAVAILABLE
+    occursin("does not exist in the catalog", message) && return REASON_UNAVAILABLE
     return REASON_INTERNAL
 end
 

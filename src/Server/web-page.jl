@@ -167,7 +167,18 @@ function run(panel) {
 
   var started = Date.now();
   fetch(panel.dataset.endpoint + '?' + query.join('&'))
-    .then(function (response) { return response.json(); })
+    .then(function (response) {
+      // A failing endpoint answers with plain text, so parsing it as JSON would report a
+      // syntax error instead of what actually went wrong.
+      return response.text().then(function (text) {
+        try {
+          return JSON.parse(text);
+        } catch (parseError) {
+          throw new Error('HTTP ' + response.status + ' ' + response.statusText +
+            ' (the server did not return JSON)');
+        }
+      });
+    })
     .then(function (payload) {
       var elapsed = ((Date.now() - started) / 1000).toFixed(2);
       lastPayload = payload;
