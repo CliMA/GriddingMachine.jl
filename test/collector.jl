@@ -221,8 +221,39 @@ mktempdir() do root
 
         Collector.clean_database!(["B_1X_1Y_V1"])
         @test !isfile(Collector.dataset_path("B_1X_1Y_V1"))
+        # C 仍在 public/v0 里，所以该目录本该保留；
+        # “清理后不留空目录”那组单独验证目录真的变空时会被删
+        @test isfile(Collector.dataset_path("C_1X_1Y_V1"))
+        @test isdir(dirname(Collector.dataset_path("C_1X_1Y_V1")))
         Collector.clean_database!("all")
         @test isempty(Collector.local_datasets())
+    end
+
+    @testset "清理后不留空目录" begin
+        # clean_database! 只删文件，目录会空置在那里。
+        # 两个会留下空目录的入口都要验："old" 与 tag 列表重载。
+        arrays = Dict("B_1X_1Y_V1" => fill(Float32(1), 4, 2))
+        staged = stage_datasets!(root, arrays)
+        home = staged.home
+        nested = dirname(Collector.dataset_path("B_1X_1Y_V1"))
+        @test isdir(nested)
+
+        Collector.clean_database!(["B_1X_1Y_V1"])
+        @test !isdir(nested)
+        # 管理根与 public 本身必须保留
+        @test isdir(joinpath(home, "public"))
+
+        # "old" 分支：预置一个不在目录里的孤儿文件及其所在空目录
+        stage_datasets!(root, arrays)
+        stale_dir = joinpath(home, "public", "v_stale")
+        mkpath(stale_dir)
+        write(joinpath(stale_dir, "orphan.nc"), "orphan")
+
+        Collector.clean_database!("old"; update = false)
+        @test !isdir(stale_dir)
+        # 目录里登记的数据集不受影响
+        @test isfile(Collector.dataset_path("B_1X_1Y_V1"))
+        @test isdir(joinpath(home, "public"))
     end
 
     @testset "移除空目录" begin

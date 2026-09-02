@@ -183,6 +183,11 @@ src/Server/
 
 `origin/jianghao` 中还有一个 main 缺失的 Collector 功能：`src/Collector/database-remove-folder.jl` 提供 `remove_empty_folders!(target_dir)`（32 行），用于清理空目录。既然本次目标是把各分支代码归并到 main，一并纳入：移植该文件、在 `Collector.jl` 中 include、加入导出列表，并补测试（空目录被删除、非空目录保留、清理范围限定在临时根目录内）。
 
+> 实现期修订（两处）：
+>
+> 1. **本节初稿写明「不接进 `clean_database!`」**，理由是 main 的 `clean_database!` 带 `_assert_managed_path` 安全校验、改它超出范围。后经全分支归并核对，这是 jianghao 唯一未被覆盖的功能差异，故补上：`clean_database!("old")` 与 `clean_database!(::Vector)` 结束时各调一次 `remove_empty_folders!(public_dir)`。`"all"` 分支不需要——它对每个子项 `rm(...; recursive=true)`，不留空目录。`public_dir` 位于 `GRIDDINGMACHINE_HOME` 内，不触碰安全边界。
+> 2. **移植时修了两个上游缺陷**：原实现判 `caught isa SystemError && caught.errnum in (...)`，但 `rm`/`readdir` 抛的是 `Base.IOError`（libuv 封装，错误码在 `code` 字段且为负值），该判断永远为假；且 `walkdir` 默认 `onerror=throw`，遇到不可读子目录时异常在迭代器内部抛出、绕过函数自身的 try/catch，整个清理中断。现改为捕 `Base.IOError` 并按 uv 错误码判定，且给 `walkdir` 传 `onerror` 以跳过该子树继续遍历。
+
 ## 10. 兼容性与风险
 
 **不破坏现有行为：**
