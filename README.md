@@ -24,7 +24,7 @@ Please cite our paper(s) when you use GriddingMachine:
 
 
 ## About
-[`GriddingMachine.jl`][gm-url] distributes and reads a curated collection of global gridded datasets, and organizes them into inputs for land and Earth system models. It requires julia 1.10 and above.
+[`GriddingMachine.jl`][gm-url] distributes and reads a curated collection of global gridded datasets, and organizes them into inputs for land and Earth system models. It requires julia 1.12 and above, because `PkgUtility` 0.3 does.
 
 | Documentation           | CI Status             | Code Coverage           |
 |:------------------------|:----------------------|:------------------------|
