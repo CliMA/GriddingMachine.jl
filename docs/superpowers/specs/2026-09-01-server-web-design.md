@@ -65,7 +65,7 @@ src/Server/
 
 `include_std=false` 时返回 `"Stdv": null`，**不删除该键**。原因：`Requestor.request_site_data` 无条件访问 `json_dict["Stdv"]`，删键会导致 `KeyError`；返回 `null` 时 `Requestor` 已能正确透传（现有测试覆盖 `null_stdv` 分支）。默认 `true` 时数值行为与当前完全一致。
 
-**移除 `"Nothing": null` 字段**。现有响应体中含一个名为 `"Nothing"`、值永为 `null` 的字段，系遗留调试字段，无任何语义。`Requestor` 不读取它。本次一并移除，并同步调整现有测试中对它的断言。该端点在 README 中标为 `Experimental`，0.5.0 是清理它的合适时机。
+**移除 `"Nothing": null` 字段**。现有响应体中含一个名为 `"Nothing"`、值永为 `null` 的字段，系遗留调试字段，无任何语义。`Requestor` 不读取它。本次一并移除，并同步调整现有测试中对它的断言。0.5.0 是清理它的合适时机。
 
 **目录刷新行为保持不变**：该端点现有逻辑在 tag 不在 `YAML_TAGS` 中时会调用 `update_database!()` 刷新目录，这一行为不改动。新增的两个端点**不**做目录刷新（见 5.6 节）。
 
@@ -199,7 +199,9 @@ src/Server/
 
 **本设计自身引入的一处脆弱点**：错误分类依赖上游错误消息的子串匹配（已在 5.6 节如实记录为自觉取舍）。缓解手段：测试同时钉住两条映射，上游消息一变即报错。
 
-**无鉴权且绑 `0.0.0.0` 的安全前提**：README 中写明面向可信内网，并注明 `gmdict` 端点可触发大流量下载；`user` 参数在代码注释与文档中明确标注为日志标签、不是权限控制；Server / Requestor 在 README 中保持 `Experimental` 标注。
+**无鉴权且绑 `0.0.0.0` 的安全前提**：README 中写明面向可信内网，并注明 `gmdict` 端点可触发大流量下载；`user` 参数在代码注释与文档中明确标注为日志标签、不是权限控制。
+
+> 实现期修订：初稿写「Server / Requestor 在 README 中保持 `Experimental` 标注」。实际改为两者均标 `v0.5`——二者现在都是 100% 测试覆盖，成熟度一致，而论文本身不涉及 Server，`Experimental` 标记与论文验证范围无关。
 
 ## 11. 交付
 

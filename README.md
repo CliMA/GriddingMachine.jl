@@ -44,7 +44,7 @@ GriddingMachine has the following sub-modules:
 |:------------|:-----------------------------------------------------|:-------------|
 | Collector   | Maintain the catalog and download gridded datasets   | v0.5         |
 | Indexer     | Read gridded datasets and organize model inputs      | v0.5         |
-| Requestor   | Request site-level data from a GriddingMachine server | Experimental |
+| Requestor   | Request site-level data from a GriddingMachine server | v0.5         |
 | Server      | Serve site-level data and a query page over HTTP      | v0.5         |
 
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
