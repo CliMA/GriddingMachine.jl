@@ -1,7 +1,5 @@
 module GriddingMachine
 
-using Revise
-
 
 # include the modules
 include("Collector/Collector.jl");
