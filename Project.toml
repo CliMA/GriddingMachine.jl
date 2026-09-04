@@ -4,25 +4,19 @@ version = "0.5.0"
 authors = ["Yujie Wang", "Emily Gu", "Hao Jiang"]
 
 [deps]
-Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
-Genie = "c43c736e-a2d1-11e8-161f-af95117fbd1e"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 NetcdfIO = "6a36f34d-89cf-423a-87c4-84549e82f670"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 PkgUtility = "0d262f2c-28e9-492c-8e19-d7a5c4f11611"
 SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
-Sockets = "6462fe0b-24de-5631-8697-dd941f90decc"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
 [compat]
-Genie = "5.33.18"
-HTTP = "0.9.14, 1.0.5"
-JSON = "1.2.0"
+HTTP = "0.9.14, 1.0.5, 2.6.7"
+JSON = "1.2.0, 2.0.1"
 NetcdfIO = "0.3.0"
 OrderedCollections = "1.8.1"
 PkgUtility = "0.3.1"
-YAML = "0.4.12"
 julia = "1.12"
