@@ -1,7 +1,5 @@
 module Indexer
 
-export grid_dict, grid_weather, lat_ind, lon_ind, read_dataset, read_LUT
-
 using NetcdfIO: read_nc, read_dims, read_varnames
 using OrderedCollections: OrderedDict
 using PkgUtility.DataIO: read_csv
@@ -10,6 +8,8 @@ using PkgUtility.PrettyDisplay: pretty_display!
 using PkgUtility.RecursiveTools: NaN_test
 
 using ..Collector: download_dataset!
+
+export grid_dict, grid_weather, lat_ind, lon_ind, read_dataset, read_LUT
 
 
 # load the CO2 datasets

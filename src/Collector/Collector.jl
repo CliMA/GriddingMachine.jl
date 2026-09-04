@@ -5,17 +5,15 @@ using HTTP
 using SHA
 using PkgUtility.ArtifactTools: read_library
 
-export CatalogValidationError, clean_database!, configure!, dataset_cache, dataset_dir,
-    dataset_found, dataset_info, dataset_path, dataset_url, download_database!,
-    download_dataset!, initialize_database!, latest_datasets, load_database!,
-    local_datasets, remove_empty_folders!, sync_database!, update_database!,
-    validate_catalog, verify_dataset_file
+export download_dataset!, update_database!
+
 
 GRIDDINGMACHINE_HOME = ""
 YAML_URL = ""
 YAML_FILE = ""
 const YAML_DATABASE = Dict{String,Any}()
 const YAML_TAGS = String[]
+
 
 """Configure the local data root and external catalog without performing network I/O."""
 function configure!(;
@@ -24,19 +22,20 @@ function configure!(;
         catalog_file::AbstractString = get(ENV, "GRIDDING_MACHINE_CATALOG_FILE", joinpath(home, "Artifacts.yaml")),
         clear::Bool = true,
     )
-    global GRIDDINGMACHINE_HOME = abspath(home)
-    global YAML_URL = String(catalog_url)
-    global YAML_FILE = abspath(catalog_file)
+    global GRIDDINGMACHINE_HOME = abspath(home);
+    global YAML_URL = String(catalog_url);
+    global YAML_FILE = abspath(catalog_file);
     if clear
-        empty!(YAML_DATABASE)
-        empty!(YAML_TAGS)
+        empty!(YAML_DATABASE);
+        empty!(YAML_TAGS);
     end
+
     return nothing
-end
+end;
 
 function __init__()
-    configure!()
-end
+    configure!();
+end;
 
 
 # function to update the database
