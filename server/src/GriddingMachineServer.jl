@@ -1,4 +1,4 @@
-module Server
+module GriddingMachineServer
 
 import Genie.Renderer.Json as GRJSON
 

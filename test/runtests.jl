@@ -2,16 +2,13 @@ using GriddingMachine
 using GriddingMachine.Collector
 using GriddingMachine.Indexer
 using GriddingMachine.Requestor
-using GriddingMachine.Server
 
 using HTTP
 using JSON
 using NetcdfIO: append_nc!, save_nc!
 using OrderedCollections: OrderedDict
 using SHA
-using Sockets
 using Test
-using YAML
 
 include("fixtures.jl")
 
@@ -34,21 +31,5 @@ include("fixtures.jl")
 
     @testset verbose = true "Grid dictionaries from tags" begin
         include("grid-from-tags.jl")
-    end
-
-    @testset verbose = true "Server responses" begin
-        include("server-responses.jl")
-    end
-
-    @testset verbose = true "Server endpoints" begin
-        include("server-endpoints.jl")
-    end
-
-    @testset verbose = true "Server page" begin
-        include("server-page.jl")
-    end
-
-    @testset verbose = true "Server and Requestor" begin
-        include("server-requestor.jl")
     end
 end
