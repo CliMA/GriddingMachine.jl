@@ -5,9 +5,10 @@ import Genie.Renderer.Json as GRJSON
 using Genie: down, params, route, up
 using OrderedCollections: OrderedDict
 
-using ..Collector: YAML_TAGS, dataset_found, download_dataset!
-using ..Indexer: LandDatasetLabels, WeatherDriverLabels, grid_dict, grid_weather, read_dataset
+using GriddingMachine.Collector: YAML_TAGS, dataset_found, download_dataset!
+using GriddingMachine.Indexer: LandDatasetLabels, WeatherDriverLabels, grid_dict, grid_weather, read_dataset
 
+export setup_url_input_routes, down_servers!, up_servers!
 
 include("responses.jl");
 include("json-site-data.jl");

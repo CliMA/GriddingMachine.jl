@@ -40,61 +40,70 @@ julia> Pkg.add("GriddingMachine");
 
 ## API
 GriddingMachine has the following sub-modules:
-| Sub-module  | Functionality                                        | Ready to use |
-|:------------|:-----------------------------------------------------|:-------------|
-| Collector   | Maintain the catalog and download gridded datasets   | v0.5         |
-| Indexer     | Read gridded datasets and organize model inputs      | v0.5         |
+| Sub-module  | Functionality                                         | Ready to use |
+|:------------|:------------------------------------------------------|:-------------|
+| Collector   | Maintain the catalog and download gridded datasets    | v0.5         |
+| Indexer     | Read gridded datasets and organize model inputs       | v0.5         |
 | Requestor   | Request site-level data from a GriddingMachine server | v0.5         |
-| Server      | Serve site-level data and a query page over HTTP      | v0.5         |
 
 See [`API`][gm-api] for more detailed information about how to use [`GriddingMachine.jl`][gm-url].
 
 To update the local catalog and download a dataset by its tag, use
 ```julia
 julia> using GriddingMachine.Collector;
-julia> Collector.update_database!();
-julia> file_path = Collector.download_dataset!("VCMAX_2X_1Y_V1");
+julia> update_database!();
+julia> file_path = download_dataset!("VCMAX_2X_1Y_V1");
 ```
 
 To read a whole dataset, a single grid cell, or one cycle of a 3D dataset, use
 ```julia
 julia> using GriddingMachine.Indexer;
-julia> data = Indexer.read_dataset("VCMAX_2X_1Y_V1");
-julia> data = Indexer.read_dataset("VCMAX_2X_1Y_V1", 35.1, 115.2);
-julia> data = Indexer.read_dataset("LAI_MODIS_2X_8D_2020_V1", 35.1, 115.2, 3);
+julia> data = read_dataset("VCMAX_2X_1Y_V1");
+julia> data = read_dataset("VCMAX_2X_1Y_V1", 35.1, 115.2);
+julia> data = read_dataset("LAI_MODIS_2X_8D_2020_V1", 35.1, 115.2, 3);
 ```
 
-To request a partial dataset from a running server without downloading the entire dataset, use
+To request a partial dataset from a running server without downloading the entire dataset. Note here that you need to run the localhost server first (see the next section). Example:
 ```julia
 julia> using GriddingMachine.Requestor;
-julia> dat,std = Requestor.request_site_data("http://localhost:8000", "user", "VCMAX_2X_1Y_V1", 35.1, 115.2);
+julia> dat,std = request_site_data("http://localhost:5055", "user", "VCMAX_2X_1Y_V1", 35.1, 115.2);
 ```
 
 
-## Query server
 
-`GriddingMachine.Server` serves a small query page and three JSON endpoints:
+## GriddingMachineServer meant for local query
+
+`GriddingMachineServer` (located in the server folder) serves a small query page and three JSON endpoints:
+```bash
+git clone https://github.com/CliMA/GriddingMachine.jl.git
+cd GriddingMachine/server
+julia --project
+```
 
 ```julia
-julia> using GriddingMachine.Collector, GriddingMachine.Server;
-julia> Collector.update_database!();
-julia> Server.setup_url_input_routes!();
-julia> Server.up_servers!(5055);
+julia> using GriddingMachineServer;
+julia> using GriddingMachine.Collector;
+julia> update_database!();
+julia> setup_url_input_routes!();
+julia> up_servers!(5055);
 ```
 
 Then open `http://localhost:5055/`, or call the endpoints directly:
 
-| Endpoint | Query parameters |
-|:---------|:-----------------|
-| `/sitedata.json` | `tag`, `lat`, `lon`, `cycle`, `include_std`, `user` |
-| `/gmdict.json` | `gmversion` (`gm1`/`gm2`), `year`, `lat`, `lon`, `user` |
-| `/weather.json` | `wdversion` (`wd1`), `year`, `lat`, `lon`, `user` |
+| Endpoint         | Query parameters                                        |
+|:-----------------|:--------------------------------------------------------|
+| `/sitedata.json` | `tag`, `lat`, `lon`, `cycle`, `include_std`, `user`     |
+| `/gmdict.json`   | `gmversion` (`gm1`/`gm2`), `year`, `lat`, `lon`, `user` |
+| `/weather.json`  | `wdversion` (`wd1`), `year`, `lat`, `lon`, `user`       |
 
 `lat` and `lon` are required. Optional settings such as `cycle` or `include_std` fall back to a
 default when they are missing or malformed, but coordinates never do: reporting a different
 grid cell than the one asked about would be worse than refusing the request.
 
-Stop the server with `Server.down_servers!()`.
+Stop the server with
+```julia
+julia> down_servers!()
+```
 
 **This server is meant for a local or trusted intranet network.** It binds `0.0.0.0` and has
 no access control: the `user` parameter is a label written to the request log, not a
@@ -110,14 +119,14 @@ refreshing the catalog; call `Collector.update_database!()` to pick up new publi
 ## Migrating from v0.4 to v0.5
 v0.5 reorganizes the package around dataset distribution, reading, and model-input preparation. The changes that affect user code are:
 
-| v0.4                                        | v0.5                                                        |
-|:--------------------------------------------|:------------------------------------------------------------|
-| `Collector.download_artifact!(tag)`         | `Collector.download_dataset!(tag)`                          |
-| `Collector.query_collection(tag)`           | `Collector.dataset_path(tag)` / `Collector.dataset_info(tag)` |
-| `Indexer.read_LUT(...)`                     | `Indexer.read_dataset(...)` (`read_LUT` kept as an alias)    |
-| `Requestor.request_site_data(tag, lat, lon)` | `Requestor.request_site_data(server, user, tag, lat, lon)`  |
-| `Blender.regrid(...)`                       | `using PkgUtility.MathTools: regrid`                        |
-| `Fetcher` (download raw ungridded data)     | moved to [GriddingMachineDatasets](https://github.com/jhOo1/GriddingMachineDatasets) |
+| v0.4                                         | v0.5                                                                                 |
+|:---------------------------------------------|:-------------------------------------------------------------------------------------|
+| `Collector.download_artifact!(tag)`          | `Collector.download_dataset!(tag)`                                                   |
+| `Collector.query_collection(tag)`            | `Collector.dataset_path(tag)` / `Collector.dataset_info(tag)`                        |
+| `Indexer.read_LUT(...)`                      | `Indexer.read_dataset(...)` (`read_LUT` kept as an alias)                            |
+| `Requestor.request_site_data(tag, lat, lon)` | `Requestor.request_site_data(server, user, tag, lat, lon)`                           |
+| `Blender.regrid(...)`                        | `using PkgUtility.MathTools: regrid`                                                 |
+| `Fetcher` (download raw ungridded data)      | moved to [GriddingMachineDatasets](https://github.com/jhOo1/GriddingMachineDatasets) |
 
 Other notes:
 - `Blender`, `Fetcher`, `Partitioner`, and `Processer` are no longer part of the package. `Partitioner` and `Processer` were never enabled in v0.4. The remaining sources are kept under `deprecated/` for reference only.
@@ -181,9 +190,6 @@ The reprocessed NetCDF file should contain (only) the following fields:
 | std   | 2D/3D     | Error of data in the center of a grid | same as data |
 |||||
 
-For data contributors who have limited knowledge about Github and Julia, we recommend to contribute your reprocessed data to us by tag an issue via the button
-    [New issue](https://github.com/CliMA/GriddingMachine.jl/issues) in the Issues Tab. See an example table [here](https://github.com/CliMA/GriddingMachine.jl/issues/62#issuecomment-1097063134). See
-    [this google doc](https://docs.google.com/document/d/1Q1M9SZAG_domwy8Awe5iFNZRv53RDkNG29qVuQQFYG4/edit?usp=sharing) for an example of this data reprocessing and deployment.
+For data contributors who have limited knowledge about Github and Julia, we recommend to contribute your reprocessed data to us by tag an issue via the button [New issue](https://github.com/CliMA/GriddingMachine.jl/issues) in the Issues Tab. See an example table [here](https://github.com/CliMA/GriddingMachine.jl/issues/62#issuecomment-1097063134). See [this google doc](https://docs.google.com/document/d/1Q1M9SZAG_domwy8Awe5iFNZRv53RDkNG29qVuQQFYG4/edit?usp=sharing) for an example of this data reprocessing and deployment.
 
-For data contributors who are experienced Github and Julia users, we also welcome that your contribution of code directly. See this [pull request](https://github.com/CliMA/GriddingMachine.jl/pull/68)
-    for an example of the pull request.
+For data contributors who are experienced Github and Julia users, we also welcome that your contribution of code directly. See this [pull request](https://github.com/CliMA/GriddingMachine.jl/pull/68) for an example of the pull request.
