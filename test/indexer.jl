@@ -34,10 +34,13 @@ using Test
     end;
 
     # read the weather drivers at a specific lat/lon grid
-    @testset "Read Grid Weather" begin
-        gridwthd = grid_weather(Indexer.WeatherDriverLabels("wd1", 2019), 30.25, 115.25);
-        @test gridwthd isa Dict || gridwthd isa OrderedDict;
-        @test length(gridwthd["VPD"]) == 8760;
-        @test all(.!isnan.(gridwthd["VPD"]));
+    # do not run it on GitHub Actions because the data is too large to download
+    if get(ENV, "CI", nothing) != "true"
+        @testset "Read Grid Weather" begin
+            gridwthd = grid_weather(Indexer.WeatherDriverLabels("wd1", 2019), 30.25, 115.25);
+            @test gridwthd isa Dict || gridwthd isa OrderedDict;
+            @test length(gridwthd["VPD"]) == 8760;
+            @test all(.!isnan.(gridwthd["VPD"]));
+        end;
     end;
 end;
