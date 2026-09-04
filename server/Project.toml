@@ -9,6 +9,9 @@ GriddingMachine = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
+[sources]
+GriddingMachine = {path = ".."}
+
 [compat]
 Genie = "5.33.18, 6.0.4"
 GriddingMachine = "0.5.0"

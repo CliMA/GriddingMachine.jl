@@ -1,5 +1,6 @@
 using Documenter
 using GriddingMachine
+using GriddingMachineServer
 
 
 # define default docs pages
@@ -33,7 +34,7 @@ makedocs(
     checkdocs = :none,
     clean = false,
     format = format,
-    modules = [GriddingMachine],
+    modules = [GriddingMachine, GriddingMachineServer],
     pages = pages,
 );
 
