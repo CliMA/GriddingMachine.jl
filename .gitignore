@@ -1,5 +1,8 @@
 Manifest.toml
 
+*.cov
+lcov.info
+
 docs/build/*
 docs/src/generated/*
 docs/src/paper*
@@ -20,3 +23,5 @@ test/testcase_creation*
 test/test_*.jl
 
 testcase_creation*
+
+!/data/*

@@ -1,0 +1,32 @@
+module Indexer
+
+using NetcdfIO: read_nc, read_dims, read_varnames
+using OrderedCollections: OrderedDict
+using PkgUtility.DataIO: read_csv
+using PkgUtility.MathTools: gapfill_data!, nanmax, nanmean, regrid, resample
+using PkgUtility.PrettyDisplay: pretty_display!
+using PkgUtility.RecursiveTools: NaN_test
+
+using ..Collector: download_dataset!
+
+export grid_dict, grid_weather, lat_ind, lon_ind, read_dataset, read_LUT
+
+
+# load the CO2 datasets
+CCS_1Y = read_csv("$(@__DIR__)/../../data/CO2-1Y.csv");
+CCS_1M = read_csv("$(@__DIR__)/../../data/CO2-1M.csv");
+
+
+include("dataset-index.jl");
+include("dataset-read.jl");
+
+include("emerald-co2.jl");
+include("emerald-clm.jl");
+include("emerald-land-datasets.jl");
+include("emerald-weather-drivers.jl");
+
+include("grid-dict.jl");
+include("grid-weather.jl");
+
+
+end; # module

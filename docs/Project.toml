@@ -1,3 +1,8 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 GriddingMachine = "f20cf718-bf4d-4727-bc8f-485b1f283ac6"
+GriddingMachineServer = "7f38581c-0e6f-4f3e-850c-56b8d7b45907"
+
+[sources]
+GriddingMachine = {path = ".."}
+GriddingMachineServer = {path = "../server"}
