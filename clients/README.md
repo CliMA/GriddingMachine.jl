@@ -10,11 +10,17 @@ are used from every language.
 For a direct file URL:
 
 ```text
+# macOS and Linux
 python3 clients/download.py --url URL --output FILE
+
+# Windows
+python clients/download.py --url URL --output FILE
 ```
 
 The C and Fortran programs are intentionally minimal and can be compiled with
-the platform compiler. MATLAB/Octave and R call the same command from their
-native functions. A tag-based download is available through `--tag TAG
---catalog Artifacts.yaml`; the catalog parser accepts the current `PATH`,
-`URL`, `SIZE`, and `SHA256` fields.
+the platform compiler. They use `python` on Windows and `python3` on macOS and
+Linux; set `GM_PYTHON` to an explicit Python 3 executable when needed.
+MATLAB/Octave and R call the same command from their native functions. A
+tag-based download is available through `--tag TAG --catalog Artifacts.yaml`;
+the catalog parser accepts the current `PATH`, `URL`, `SIZE`, and `SHA256`
+fields.
