@@ -5,7 +5,7 @@
 Validate the repaired automatic-download interfaces without installing new
 runtimes on the original macOS host. No public scientific files are needed: tests
 serve a deterministic fixture from a temporary loopback HTTP server and download
-into temporary directories. Toolchain installation is the only external download.
+into temporary directories. Runtime installation and official cloud batch licensing use external services.
 All changed or added logical code sections must retain English comments.
 
 ## Option A: isolated hosted runners
@@ -15,9 +15,12 @@ Push `release/v0.5.0` to GitHub. `.github/workflows/ClientDownloads.yml` trigger
 
 - Linux: Python, compiled C/Fortran, R and Octave.
 - Windows: Python and compiled C/Fortran.
-- Matlab: run separately on a licensed device; Octave does not replace Matlab validation.
+- Matlab: `.github/workflows/MatlabDownloads.yml` runs six actual `.m` calls in a
+  licensed Matlab R2025b session on Linux when relevant source or workflow files change.
+  Official MathWorks actions provide batch licensing for this public repository;
+  this workflow uses `system` to call Python, rather than a Matlab Engine API.
 
-Inspect both jobs and their individual test results in GitHub Actions. A green
+Inspect the cross-language jobs and the separate Matlab workflow in GitHub Actions. A green
 job requires all requested runtimes, successful compilation and successful tests.
 If GitHub does not start a run (for example, repository Actions policy), use the
 following device procedure instead. Do not interpret the absence of a run as a pass.
@@ -80,6 +83,8 @@ On 2026-10-13, Python's 13 fixture tests passed locally. The original host compi
 the C wrapper, but the OS terminated the executable with SIGKILL; this is not a
 completed runtime validation. Further local dependency downloads were stopped at
 the user's request. Hosted Linux and Windows validation subsequently completed successfully for
-C, Fortran, R and Octave as recorded in `VALIDATION.md`. The remaining cross-device
-step is independent Matlab runtime validation. The 2026-09-25 Windows record
+C, Fortran, R and Octave as recorded in `VALIDATION.md`. Independent Matlab cloud
+validation subsequently passed all six cases using R2025b Update 7. All six
+non-Julia language entry points now have actual runtime evidence. Further device
+runs can extend version and platform coverage. The 2026-09-25 Windows record
 describes the earlier implementation, rather than this expanded test suite.

@@ -96,6 +96,34 @@ runners. No further local runtime installation is needed for the above results.
 The earlier Windows compiler record remains historical evidence for the prior
 implementation; the hosted run tests the expanded interfaces.
 
-Matlab's independent runtime validation remains a separate step in
-[VALIDATION_PLAN.md](VALIDATION_PLAN.md). The shared `.m` function passed all six
-cases in Octave; this does not count as an actual Matlab run.
+## Independent Matlab cloud validation, 2026-10-13
+
+Validated source: `107a133a02c7a4ed67f6601b09c087ed4de4d9a6`.
+[Hosted Matlab run 38398605598](https://github.com/CliMA/GriddingMachine.jl/actions/runs/38398605598)
+completed successfully using the official MathWorks public-project batch actions.
+
+- Runner: GitHub-hosted Linux (`ubuntu-latest`).
+- Actual runtime: Matlab `25.2.0.3360999 (R2025b) Update 7`.
+- Native entry point: the installed copy of `clients/gm_download.m`.
+- Result: all six runtime cases passed in one licensed Matlab session.
+
+| Case | Result |
+|---|---|
+| Original two-argument URL call | PASS |
+| URL with byte count and SHA-256 checks | PASS |
+| Catalog tag with failed-first-mirror fallback | PASS |
+| Incorrect SHA-256, explicit integrity error and unchanged previous file | PASS |
+| Incorrect catalog SIZE, explicit integrity error and unchanged previous file | PASS |
+| Explicit downloader-script path | PASS |
+
+The session ran outside the source directory, with the installed client path
+containing spaces and output names containing Chinese, spaces, quotes, percent,
+ampersand and exclamation characters. Successful files matched all binary fixture
+bytes; failure cases preserved previous bytes, and no `.part` residue remained.
+Matlab invoked the shared Python implementation through its native `system`
+interface. No Matlab Engine API or substitute interpreter was used.
+
+`MatlabDownloads.yml` retains this independent check for future Matlab-client
+changes. The job uploads `matlab_results.json`, the Matlab log and the fixture-server
+log as `matlab-download-validation`. Cross-device instructions remain available
+in [VALIDATION_PLAN.md](VALIDATION_PLAN.md) for additional runtimes or platforms.

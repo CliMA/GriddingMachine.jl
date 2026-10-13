@@ -88,4 +88,7 @@ fixtures. Required missing runtimes fail the command. To additionally test Matla
 pass `--matlab-exe /path/to/matlab` and include `matlab` in the required list.
 See [VALIDATION_PLAN.md](VALIDATION_PLAN.md) for cross-device instructions and
 [VALIDATION.md](VALIDATION.md) for recorded results. Hosted CI runs Linux and
-Windows checks without downloading any public scientific dataset.
+Windows checks without downloading any public scientific dataset. The separate
+`Matlab downloads` workflow uses official MathWorks setup and batch actions to
+exercise all six Matlab cases in a real Matlab session on a hosted Linux runner;
+its JSON results and logs are uploaded as a validation artifact.
