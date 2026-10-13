@@ -37,16 +37,17 @@ jobs:
           python-version: '3.11'
       # Use native MinGW executables with the hosted Windows Python interpreter.
       - uses: msys2/setup-msys2@v2
+        id: msys2
         with:
           msystem: UCRT64
           update: true
           install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gcc-fortran
       - name: Expose native compiler binaries
         shell: pwsh
-        run: Add-Content -Path $env:GITHUB_PATH -Value 'C:\msys64\ucrt64\bin'
+        run: Add-Content -Path $env:GITHUB_PATH -Value '${{ steps.msys2.outputs.msys2-location }}\ucrt64\bin'
       - name: Validate native C and Fortran clients
         shell: pwsh
         # Prefer the installed UCRT64 toolchain over any preinstalled compiler.
         run: |
-          $env:PATH = "C:\msys64\ucrt64\bin;$env:PATH"
+          $env:PATH = "${{ steps.msys2.outputs.msys2-location }}\ucrt64\bin;$env:PATH"
           python clients/run_validation.py --require-languages c,fortran
