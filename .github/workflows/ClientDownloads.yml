@@ -1,0 +1,48 @@
+name: Cross-language downloads
+
+# Validate client changes on isolated hosted runners without accessing research data.
+on:
+  push:
+    branches: [release/v0.5.0]
+    paths: ['clients/**', '.github/workflows/ClientDownloads.yml']
+  pull_request:
+    paths: ['clients/**', '.github/workflows/ClientDownloads.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      # Install native runtimes only inside the disposable runner.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install C, Fortran, R and Octave runtimes
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y gcc gfortran r-base octave
+      # Missing native runtimes must fail instead of silently skipping validation.
+      - name: Validate all open-source language clients
+        run: python clients/run_validation.py --require-languages c,fortran,r,octave
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # Use native MinGW executables with the hosted Windows Python interpreter.
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gcc-fortran
+      - name: Expose native compiler binaries
+        shell: pwsh
+        run: Add-Content -Path $env:GITHUB_PATH -Value 'C:\msys64\ucrt64\bin'
+      - name: Validate native C and Fortran clients
+        run: python clients/run_validation.py --require-languages c,fortran

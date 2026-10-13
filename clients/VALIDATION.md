@@ -65,3 +65,18 @@ explicit Python 3 executable.
 The recorded PASS results apply to the repaired source derived from the
 baseline commit above. The repository history records the resulting validation
 commit.
+
+## Expanded validation, 2026-10-13
+
+The repaired clients add atomic promotion, preservation of previous files on
+failure, consistent error propagation, explicit script/interpreter selection and
+catalog/integrity parameters across all wrappers. The new test suite uses only
+loopback HTTP fixtures, including failed mirrors and invalid integrity metadata.
+
+- Python: 11 tests passed on the original macOS host.
+- C: compiled with strict warnings; local runtime was terminated by SIGKILL.
+- Fortran, R, Octave and Matlab: expanded native cases pending a suitable runtime.
+
+The original-host dependency download was stopped. The hosted workflow and
+[validation plan](VALIDATION_PLAN.md) provide the remaining execution path.
+This section will be updated with actual hosted or cross-device results.
