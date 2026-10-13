@@ -70,13 +70,32 @@ commit.
 
 The repaired clients add atomic promotion, preservation of previous files on
 failure, consistent error propagation, explicit script/interpreter selection and
-catalog/integrity parameters across all wrappers. The new test suite uses only
-loopback HTTP fixtures, including failed mirrors and invalid integrity metadata.
+catalog/integrity parameters across all wrappers. Tests use loopback HTTP
+fixtures, including failed mirrors and invalid integrity metadata.
 
-- Python: 13 tests passed on the original macOS host.
-- C: compiled with strict warnings; local runtime was terminated by SIGKILL.
-- Fortran, R, Octave and Matlab: expanded native cases pending a suitable runtime.
+Validated source: `477c5ba8463f9b10efcde942806b48d1e33e7796`.
+[Hosted run 38391975413](https://github.com/CliMA/GriddingMachine.jl/actions/runs/38391975413)
+completed successfully in both jobs.
 
-The original-host dependency download was stopped. The hosted workflow and
-[validation plan](VALIDATION_PLAN.md) provide the remaining execution path.
-This section will be updated with actual hosted or cross-device results.
+| Runner | Python fixture cases | Native wrapper cases passed | Skipped languages |
+|---|---:|---:|---|
+| Linux | 13 | 24: C, Fortran, R, Octave; six each | Matlab |
+| Windows | 13 | 18: C, Fortran, R; six each | Matlab, Octave |
+
+The native cases exercise the original two-argument URL call, explicit integrity
+checks, catalog tags with mirror fallback, wrong SHA-256, wrong catalog SIZE and
+an explicit script override. Incorrect-integrity cases must report the expected
+checksum/size error, return failure, preserve previous bytes and leave no
+`.part` file. Successful cases must match the fixture exactly. Execution uses an
+unrelated working directory, installed client paths with spaces, and output
+names with shell punctuation; Linux output names additionally contain Chinese.
+
+The original macOS host passed the 13 Python cases and strict C compilation.
+Its OS killed the local C executable, so native execution was moved to hosted
+runners. No further local runtime installation is needed for the above results.
+The earlier Windows compiler record remains historical evidence for the prior
+implementation; the hosted run tests the expanded interfaces.
+
+Matlab's independent runtime validation remains a separate step in
+[VALIDATION_PLAN.md](VALIDATION_PLAN.md). The shared `.m` function passed all six
+cases in Octave; this does not count as an actual Matlab run.

@@ -79,6 +79,7 @@ Native Windows non-ASCII executable-path support is not established by these cas
 On 2026-10-13, Python's 13 fixture tests passed locally. The original host compiled
 the C wrapper, but the OS terminated the executable with SIGKILL; this is not a
 completed runtime validation. Further local dependency downloads were stopped at
-the user's request. The new native-wrapper cases therefore need hosted or
-cross-device results before they are recorded as passed. The 2026-09-25 Windows
-record describes the earlier implementation, rather than this expanded test suite.
+the user's request. Hosted Linux and Windows validation subsequently completed successfully for
+C, Fortran, R and Octave as recorded in `VALIDATION.md`. The remaining cross-device
+step is independent Matlab runtime validation. The 2026-09-25 Windows record
+describes the earlier implementation, rather than this expanded test suite.
