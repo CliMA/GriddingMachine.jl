@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import sys
 import tempfile
+import time
 import urllib.request
 
 
@@ -76,6 +77,19 @@ def entry(catalog, tag):
     raise ValueError("tag not found: " + tag)
 
 
+def _promote(temporary, destination):
+    # Windows scanners and concurrent writers may briefly deny atomic replacement.
+    # Retry only Windows sharing/access errors; persistent failures preserve the old file.
+    for attempt in range(8):
+        try:
+            os.replace(temporary, destination)
+            return
+        except PermissionError as error:
+            if getattr(error, "winerror", None) not in (5, 32, 33) or attempt == 7:
+                raise
+            time.sleep(min(0.01 * 2 ** attempt, 0.25))
+
+
 def download(url, output, size=None, sha=None):
     """Verify a unique temporary file before atomically replacing the destination."""
     size, sha = _integrity(size, sha)
@@ -109,7 +123,7 @@ def download(url, output, size=None, sha=None):
             dst.flush()
             os.fsync(dst.fileno())
         # Close both streams before promotion, including on Windows.
-        os.replace(temporary, destination)
+        _promote(temporary, destination)
         return str(destination)
     finally:
         # Failed transfers and integrity checks never modify the previous target.
@@ -118,6 +132,10 @@ def download(url, output, size=None, sha=None):
 
 
 def main(argv=None):
+    # A narrow terminal encoding must not turn a completed Unicode-path download into failure.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
     argv = list(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(description=__doc__)
     source = parser.add_mutually_exclusive_group(required=True)

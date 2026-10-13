@@ -45,4 +45,8 @@ jobs:
         shell: pwsh
         run: Add-Content -Path $env:GITHUB_PATH -Value 'C:\msys64\ucrt64\bin'
       - name: Validate native C and Fortran clients
-        run: python clients/run_validation.py --require-languages c,fortran
+        shell: pwsh
+        # Prefer the installed UCRT64 toolchain over any preinstalled compiler.
+        run: |
+          $env:PATH = "C:\msys64\ucrt64\bin;$env:PATH"
+          python clients/run_validation.py --require-languages c,fortran

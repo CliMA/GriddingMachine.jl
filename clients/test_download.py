@@ -4,11 +4,13 @@ import concurrent.futures
 import hashlib
 import http.server
 import importlib.util
+import os
 import subprocess
 import sys
 import tempfile
 import threading
 import unittest
+from unittest import mock
 from pathlib import Path
 from urllib.parse import quote
 
@@ -68,6 +70,8 @@ class DownloadTests(unittest.TestCase):
         # Invoke the CLI outside the repository to avoid accidental working-directory assumptions.
         return subprocess.run(
             [sys.executable, str(ROOT / "download.py"), *map(str, arguments)],
+            # Exercise output reporting on a narrow terminal encoding as well.
+            env={**os.environ, "PYTHONIOENCODING": "ascii"},
             cwd=self.root, check=False, capture_output=True, text=True,
         )
 
@@ -186,6 +190,39 @@ class DownloadTests(unittest.TestCase):
             with self.subTest(arguments=arguments):
                 self.assertNotEqual(self.run_downloader(*arguments).returncode, 0)
                 self.assertFalse(destination.exists())
+
+    def test_transient_windows_replacement_error_is_retried(self):
+        # Model a scanner holding the destination once, followed by a successful promotion.
+        destination = self.output / "retry.nc"
+        destination.write_bytes(b"previous file")
+        error = PermissionError("temporary Windows sharing violation")
+        error.winerror = 32
+        replace = core.os.replace
+        calls = []
+
+        def intermittent(source, target):
+            calls.append(target)
+            if len(calls) == 1:
+                raise error
+            replace(source, target)
+
+        with mock.patch.object(core.os, "replace", side_effect=intermittent), mock.patch.object(core.time, "sleep"):
+            core.download(self.url, destination, len(self.payload), self.digest)
+        self.assertEqual(len(calls), 2)
+        self.assert_download(destination)
+
+    def test_persistent_replacement_error_preserves_previous_file(self):
+        # Exhausting bounded retries must leave the previous file and clean the temporary file.
+        destination = self.output / "locked.nc"
+        destination.write_bytes(b"previous file")
+        error = PermissionError("persistent Windows access denial")
+        error.winerror = 5
+        with mock.patch.object(core.os, "replace", side_effect=error) as replace, mock.patch.object(core.time, "sleep"):
+            with self.assertRaises(PermissionError):
+                core.download(self.url, destination, len(self.payload), self.digest)
+            self.assertEqual(replace.call_count, 8)
+        self.assertEqual(destination.read_bytes(), b"previous file")
+        self.assertEqual(list(self.output.glob("*.part")), [])
 
     def test_concurrent_downloads_use_independent_temporary_files(self):
         destination = self.output / "concurrent.nc"
