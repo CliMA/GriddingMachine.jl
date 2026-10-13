@@ -66,6 +66,9 @@ program gm_download
     end if
   end do
 
+  ! cmd.exe strips the first and last quotes unless the full command has an outer pair.
+  if (windows) command = '"'//command//'"'
+
   ! Report launch errors separately from transfer or integrity failures.
   exit_status = 0
   call execute_command_line(command, exitstat=exit_status, cmdstat=command_status, cmdmsg=message)
