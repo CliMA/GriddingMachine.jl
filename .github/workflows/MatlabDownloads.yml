@@ -1,0 +1,76 @@
+name: Matlab downloads
+
+# Run real MATLAB without installing dependencies on the original workstation.
+on:
+  push:
+    branches: [release/v0.5.0]
+    paths:
+      - 'clients/download.py'
+      - 'clients/gm_download.m'
+      - 'clients/test_wrappers.py'
+      - 'clients/test_matlab.m'
+      - 'clients/matlab_fixture.py'
+      - '.github/workflows/MatlabDownloads.yml'
+  pull_request:
+    paths:
+      - 'clients/download.py'
+      - 'clients/gm_download.m'
+      - 'clients/test_wrappers.py'
+      - 'clients/test_matlab.m'
+      - 'clients/matlab_fixture.py'
+      - '.github/workflows/MatlabDownloads.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  matlab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # MathWorks licenses public-project batch execution through its official actions.
+      - uses: matlab-actions/setup-matlab@v3
+        with:
+          release: R2025b
+      - name: Start local binary fixture server
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/gm-matlab"
+          python clients/matlab_fixture.py --directory "$RUNNER_TEMP/gm-matlab" > "$RUNNER_TEMP/gm-matlab/server.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/gm-matlab/server.pid"
+          for attempt in {1..30}; do
+            if test -f "$RUNNER_TEMP/gm-matlab/fixture.json"; then exit 0; fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/gm-matlab/server.log"
+          exit 1
+      # One licensed MATLAB session tests the native .m API against loopback fixtures.
+      - name: Validate Matlab automatic downloads
+        uses: matlab-actions/run-command@v3
+        env:
+          GM_PYTHON: ${{ env.pythonLocation }}/bin/python
+        with:
+          command: addpath('clients'); test_matlab(fullfile(getenv('RUNNER_TEMP'), 'gm-matlab'));
+          startup-options: -logfile "${{ runner.temp }}/gm-matlab/matlab.log"
+      - name: Preserve validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: matlab-download-validation
+          path: |
+            ${{ runner.temp }}/gm-matlab/matlab_results.json
+            ${{ runner.temp }}/gm-matlab/matlab.log
+            ${{ runner.temp }}/gm-matlab/server.log
+      # Stop only this job's temporary server, including after a failed test.
+      - name: Stop fixture server
+        if: always()
+        shell: bash
+        run: |
+          if test -f "$RUNNER_TEMP/gm-matlab/server.pid"; then
+            kill "$(cat "$RUNNER_TEMP/gm-matlab/server.pid")" || true
+          fi
