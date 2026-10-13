@@ -76,7 +76,7 @@ Native Windows non-ASCII executable-path support is not established by these cas
 
 ## Original-host record and next action
 
-On 2026-10-13, Python's 11 fixture tests passed locally. The original host compiled
+On 2026-10-13, Python's 13 fixture tests passed locally. The original host compiled
 the C wrapper, but the OS terminated the executable with SIGKILL; this is not a
 completed runtime validation. Further local dependency downloads were stopped at
 the user's request. The new native-wrapper cases therefore need hosted or

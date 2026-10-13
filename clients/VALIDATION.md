@@ -73,7 +73,7 @@ failure, consistent error propagation, explicit script/interpreter selection and
 catalog/integrity parameters across all wrappers. The new test suite uses only
 loopback HTTP fixtures, including failed mirrors and invalid integrity metadata.
 
-- Python: 11 tests passed on the original macOS host.
+- Python: 13 tests passed on the original macOS host.
 - C: compiled with strict warnings; local runtime was terminated by SIGKILL.
 - Fortran, R, Octave and Matlab: expanded native cases pending a suitable runtime.
 

@@ -140,6 +140,9 @@ class WrapperTests(unittest.TestCase):
         )
         if failure:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+            # A failed process launch must not count as a successful integrity-failure case.
+            expected = "SHA256 mismatch" if scenario == "bad_sha" else "size mismatch"
+            self.assertIn(expected, result.stdout + result.stderr)
             self.assertEqual(output.read_bytes(), b"previous-valid-file")
         else:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
